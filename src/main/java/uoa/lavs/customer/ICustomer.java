@@ -1,6 +1,6 @@
 package uoa.lavs.customer;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface ICustomer {
   public String getCustomerId();
@@ -13,7 +13,7 @@ public interface ICustomer {
 
   public String getLastName();
 
-  public Date getDateOfBirth();
+  public LocalDate getDateOfBirth();
 
   public String getOccupation();
 
@@ -33,11 +33,11 @@ public interface ICustomer {
 
   public void setFirstName(String firstName);
 
-  public void setMiddleNames(String middleName);
+  public void setMiddleName(String middleName);
 
   public void setLastName(String lastName);
 
-  public void setDateOfBirth(Date date);
+  public void setDateOfBirth(LocalDate date);
 
   public void setOccupation(String occupation);
 

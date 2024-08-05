@@ -1,6 +1,6 @@
 package uoa.lavs.customer;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class IndividualCustomer extends Customer {
   public IndividualCustomer(
@@ -9,7 +9,7 @@ public class IndividualCustomer extends Customer {
       String firstName,
       String middleName,
       String lastName,
-      Date dateOfBirth,
+      LocalDate dateOfBirth,
       String occupation,
       String residency,
       Address physicalAddress,

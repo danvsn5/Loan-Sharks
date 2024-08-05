@@ -1,6 +1,6 @@
 package uoa.lavs.customer;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class Customer implements ICustomer {
   private String customerId;
@@ -8,7 +8,7 @@ public abstract class Customer implements ICustomer {
   private String firstName;
   private String middleName;
   private String lastName;
-  private Date dateOfBirth;
+  private LocalDate dateOfBirth;
   private String occupation;
   private String residency;
   private Address physicalAddress;
@@ -22,7 +22,7 @@ public abstract class Customer implements ICustomer {
       String firstName,
       String middleName,
       String lastName,
-      Date dateOfBirth,
+      LocalDate dateOfBirth,
       String occupation,
       String residency,
       Address physicalAddress,
@@ -63,7 +63,7 @@ public abstract class Customer implements ICustomer {
     return this.lastName;
   }
 
-  public Date getDateOfBirth() {
+  public LocalDate getDateOfBirth() {
     return this.dateOfBirth;
   }
 
@@ -103,7 +103,7 @@ public abstract class Customer implements ICustomer {
     this.firstName = firstName;
   }
 
-  public void setMiddleNames(String middleName) {
+  public void setMiddleName(String middleName) {
     this.middleName = middleName;
   }
 
@@ -111,7 +111,7 @@ public abstract class Customer implements ICustomer {
     this.lastName = lastName;
   }
 
-  public void setDateOfBirth(Date date) {
+  public void setDateOfBirth(LocalDate date) {
     this.dateOfBirth = date;
   }
 

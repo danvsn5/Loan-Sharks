@@ -1,19 +1,19 @@
 package uoa.lavs.loan;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class LoanDuration {
-  private Date startDate;
+  private LocalDate startDate;
   private Integer period;
   private Integer loanTerm;
 
-  public LoanDuration(Date startDate, Integer period, Integer loanTerm) {
+  public LoanDuration(LocalDate startDate, Integer period, Integer loanTerm) {
     this.startDate = startDate;
     this.period = period;
     this.loanTerm = loanTerm;
   }
 
-  public Date getStartDate() {
+  public LocalDate getStartDate() {
     return startDate;
   }
 
@@ -25,7 +25,7 @@ public class LoanDuration {
     return loanTerm;
   }
 
-  public void setStartDate(Date startDate) {
+  public void setStartDate(LocalDate startDate) {
     this.startDate = startDate;
   }
 
