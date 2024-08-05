@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class LoanDuration {
   private LocalDate startDate;
-  private Integer period;
-  private Integer loanTerm;
+  private int period;
+  private int loanTerm;
 
-  public LoanDuration(LocalDate startDate, Integer period, Integer loanTerm) {
+  public LoanDuration(LocalDate startDate, int period, int loanTerm) {
     this.startDate = startDate;
     this.period = period;
     this.loanTerm = loanTerm;
@@ -17,11 +17,11 @@ public class LoanDuration {
     return startDate;
   }
 
-  public Integer getPeriod() {
+  public int getPeriod() {
     return period;
   }
 
-  public Integer getLoanTerm() {
+  public int getLoanTerm() {
     return loanTerm;
   }
 
@@ -29,11 +29,11 @@ public class LoanDuration {
     this.startDate = startDate;
   }
 
-  public void setPeriod(Integer period) {
+  public void setPeriod(int period) {
     this.period = period;
   }
 
-  public void setLoanTerm(Integer loanTerm) {
+  public void setLoanTerm(int loanTerm) {
     this.loanTerm = loanTerm;
   }
 }

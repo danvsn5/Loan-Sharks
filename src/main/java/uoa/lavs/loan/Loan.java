@@ -3,20 +3,20 @@ package uoa.lavs.loan;
 import java.util.ArrayList;
 
 public abstract class Loan implements ILoan {
-  private Integer loanId;
+  private int loanId;
   private String customerId;
   private ArrayList<String> coborrowerIds;
-  private Float principal;
-  private Float rate;
+  private Double principal;
+  private Double rate;
   private LoanDuration duration;
   private LoanPayment payment;
 
   public Loan(
-      Integer loanId,
+      int loanId,
       String customerId,
       ArrayList<String> coborrowerIds,
-      Float principal,
-      Float rate,
+      Double principal,
+      Double rate,
       LoanDuration duration,
       LoanPayment payment) {
     this.loanId = loanId;
@@ -28,7 +28,7 @@ public abstract class Loan implements ILoan {
     this.payment = payment;
   }
 
-  public Integer getLoanId() {
+  public int getLoanId() {
     return loanId;
   }
 
@@ -40,11 +40,11 @@ public abstract class Loan implements ILoan {
     return coborrowerIds;
   }
 
-  public Float getPrincipal() {
+  public Double getPrincipal() {
     return principal;
   }
 
-  public Float getRate() {
+  public Double getRate() {
     return rate;
   }
 
@@ -56,7 +56,7 @@ public abstract class Loan implements ILoan {
     return payment;
   }
 
-  public void setLoanId(Integer loanId) {
+  public void setLoanId(int loanId) {
     this.loanId = loanId;
   }
 
@@ -68,11 +68,11 @@ public abstract class Loan implements ILoan {
     this.coborrowerIds = coborrowerIds;
   }
 
-  public void setPrincipal(Float principal) {
+  public void setPrincipal(Double principal) {
     this.principal = principal;
   }
 
-  public void setRate(Float rate) {
+  public void setRate(Double rate) {
     this.rate = rate;
   }
 
