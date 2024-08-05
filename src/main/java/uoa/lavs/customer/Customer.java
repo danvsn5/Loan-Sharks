@@ -32,7 +32,7 @@ public abstract class Customer implements ICustomer {
     this.customerId = customerId;
     this.title = title;
     this.firstName = firstName;
-    this.middleName = middleName;
+    this.middleName = (middleName != null) ? middleName : "";
     this.lastName = lastName;
     this.dateOfBirth = dateOfBirth;
     this.occupation = occupation;

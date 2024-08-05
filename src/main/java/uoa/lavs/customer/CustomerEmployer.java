@@ -6,14 +6,21 @@ public class CustomerEmployer {
   private String employerEmail;
   private String employerWebsite;
   private String employerPhone;
+  private boolean ownerOfCompany;
 
   public CustomerEmployer(
-      String name, Address address, String email, String website, String phone) {
+      String name,
+      Address address,
+      String email,
+      String website,
+      String phone,
+      boolean ownerOfCompany) {
     this.employerName = name;
     this.employerAddress = address;
-    this.employerEmail = email;
-    this.employerWebsite = website;
-    this.employerPhone = phone;
+    this.employerEmail = (email != null) ? email : "";
+    this.employerWebsite = (website != null) ? website : "";
+    this.employerPhone = (phone != null) ? phone : "";
+    this.ownerOfCompany = ownerOfCompany;
   }
 
   public String getEmployerName() {
@@ -36,6 +43,10 @@ public class CustomerEmployer {
     return this.employerPhone;
   }
 
+  public boolean getOwnerOfCompany() {
+    return this.ownerOfCompany;
+  }
+
   public void setEmployerName(String name) {
     this.employerName = name;
   }
@@ -54,5 +65,9 @@ public class CustomerEmployer {
 
   public void setEmployerPhone(String phone) {
     this.employerPhone = phone;
+  }
+
+  public void setOwnerOfCompany(boolean owner) {
+    this.ownerOfCompany = owner;
   }
 }

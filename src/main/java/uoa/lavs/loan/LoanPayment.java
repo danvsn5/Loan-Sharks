@@ -4,10 +4,10 @@ public class LoanPayment {
   private String compounding;
   private String paymentFrequency;
   private String paymentAmount;
-  private Boolean interestOnly;
+  private boolean interestOnly;
 
   public LoanPayment(
-      String compounding, String paymentFrequency, String paymentAmount, Boolean interestOnly) {
+      String compounding, String paymentFrequency, String paymentAmount, boolean interestOnly) {
     this.compounding = compounding;
     this.paymentFrequency = paymentFrequency;
     this.paymentAmount = paymentAmount;
@@ -26,7 +26,7 @@ public class LoanPayment {
     return paymentAmount;
   }
 
-  public Boolean getInterestOnly() {
+  public boolean getInterestOnly() {
     return interestOnly;
   }
 
@@ -42,7 +42,7 @@ public class LoanPayment {
     this.paymentAmount = paymentAmount;
   }
 
-  public void setInterestOnly(Boolean interestOnly) {
+  public void setInterestOnly(boolean interestOnly) {
     this.interestOnly = interestOnly;
   }
 }
