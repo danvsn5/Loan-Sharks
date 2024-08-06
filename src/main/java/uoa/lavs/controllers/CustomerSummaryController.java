@@ -7,42 +7,42 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class CustomerSummaryController {
-  @FXML private Label customerTitle;
-  @FXML private Label customerFirstName;
-  @FXML private Label customerMiddleName;
-  @FXML private Label customerLastName;
-  @FXML private Label customerDOB;
-  @FXML private Label customerOccupation;
-  @FXML private Label customerResidencyStatus;
+  @FXML private Label customerTitleLabel;
+  @FXML private Label customerFirstNameLabel;
+  @FXML private Label customerMiddleNameLabel;
+  @FXML private Label customerLastNameLabel;
+  @FXML private Label customerDOBLabel;
+  @FXML private Label customerOccupationLabel;
+  @FXML private Label customerResidencyStatusLabel;
 
-  @FXML private Label customerAddressType;
-  @FXML private Label customerAddress1;
-  @FXML private Label customerAddress2;
-  @FXML private Label customerSuburb;
-  @FXML private Label customerCity;
-  @FXML private Label customerPostCode;
-  @FXML private CheckBox customerPrimaryAddress;
-  @FXML private CheckBox customerMailingAddress;
+  @FXML private Label customerAddressTypeLabel;
+  @FXML private Label customerAddress1Label;
+  @FXML private Label customerAddress2Label;
+  @FXML private Label customerSuburbLabel;
+  @FXML private Label customerCityLabel;
+  @FXML private Label customerPostCodeLabel;
+  @FXML private CheckBox customerPrimaryAddressCheckBox;
+  @FXML private CheckBox customerMailingAddressCheckBox;
 
-  @FXML private Label customerEmail;
-  @FXML private Label customerPhoneNumType;
-  @FXML private Label customerPhoneNum;
-  @FXML private Label customerPreferredContact;
-  @FXML private Label customerAlternateContact;
+  @FXML private Label customerEmailLabel;
+  @FXML private Label customerPhoneNumTypeLabel;
+  @FXML private Label customerPhoneNumLabel;
+  @FXML private Label customerPreferredContactLabel;
+  @FXML private Label customerAlternateContactLabel;
 
-  @FXML private Label employerName;
-  @FXML private Label employerAddress1;
-  @FXML private Label employerAddress2;
-  @FXML private Label employerSuburb;
-  @FXML private Label employerCity;
-  @FXML private Label employerPostCode;
-  @FXML private Label employerCountry;
-  @FXML private Label employerEmail;
-  @FXML private Label employerWebsite;
-  @FXML private Label employerPhoneNum;
-  @FXML private CheckBox isCustomerOwner;
+  @FXML private Label employerNameLabel;
+  @FXML private Label employerAddress1Label;
+  @FXML private Label employerAddress2Label;
+  @FXML private Label employerSuburbLabel;
+  @FXML private Label employerCityLabel;
+  @FXML private Label employerPostCodeLabel;
+  @FXML private Label employerCountryLabel;
+  @FXML private Label employerEmailLabel;
+  @FXML private Label employerWebsiteLabel;
+  @FXML private Label employerPhoneNumLabel;
+  @FXML private CheckBox isCustomerOwnerCheckBox;
 
-  @FXML private TextField customerNotes;
+  @FXML private TextField customerNotesTextField;
 
   @FXML private Button editDetailsButton;
 
