@@ -39,9 +39,9 @@ public class CustomerInputConfirmController {
   @FXML private Label employerEmailLabel;
   @FXML private Label employerWebsiteLabel;
   @FXML private Label employerPhoneNumLabel;
-  @FXML private CheckBox isCustomerOwnerCheckBox;
+  @FXML private CheckBox employerCustomerOwnerCheckBox;
 
-  @FXML private Label customerNotesTextField;
+  @FXML private Label customerNotesLabel;
 
   @FXML private Button backButton;
   @FXML private Button exitButton;

@@ -11,7 +11,7 @@ public class CustomerInputDetailsController {
   @FXML private TextField customerFirstNameField;
   @FXML private TextField customerMiddleNameField;
   @FXML private TextField customerLastNameField;
-  @FXML private DatePicker customerDOBField;
+  @FXML private DatePicker customerDOBPicker;
   @FXML private TextField customerOccupationField;
   @FXML private ComboBox<String> customerResidencyStatus;
 

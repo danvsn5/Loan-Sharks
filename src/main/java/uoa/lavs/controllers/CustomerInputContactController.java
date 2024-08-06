@@ -6,11 +6,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class CustomerInputContactController {
-  @FXML private TextField customerEmail;
-  @FXML private ComboBox<String> customerPhoneTypeBox;
+  @FXML private TextField customerEmailTextField;
+  @FXML private ComboBox<String> customerPhoneTypeComboBox;
   @FXML private TextField customerPhoneNumber;
   @FXML private Button addNewPhoneButton;
   @FXML private Button deletePhoneButton;
+  // Both of these fields only appear if the add button was clicked, otherwise keep them hidden.
+  @FXML private ComboBox<String> customerPhoneTypeSecondComboBox;
+  @FXML private TextField customerPhoneNumberSecond;
+
   @FXML private ComboBox<String> customerPreffredContactBox;
   @FXML private ComboBox<String> customerAltContactBox;
 

@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 public class LoanMenuController {
   @FXML private Button createNewLoanButton;
 
-  @FXML private Button findLoan;
+  @FXML private Button findLoanButton;
 
   @FXML private Button customerButton;
 
