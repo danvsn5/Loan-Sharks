@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
-public class CustomerSummaryController {
+public class CustomerInputConfirmController {
   @FXML private Label customerTitleLabel;
   @FXML private Label customerFirstNameLabel;
   @FXML private Label customerMiddleNameLabel;
@@ -43,18 +43,13 @@ public class CustomerSummaryController {
 
   @FXML private Label customerNotesTextField;
 
-  @FXML private Button editDetailsButton;
   @FXML private Button backButton;
   @FXML private Button exitButton;
+  @FXML private Button confirmButton;
 
   @FXML
   private void initialize() {
     // Add initialization code here
-  }
-
-  @FXML
-  private void handleEditDetailsButtonAction() {
-    // Add edit details button action code here
   }
 
   @FXML
@@ -65,5 +60,10 @@ public class CustomerSummaryController {
   @FXML
   private void handleExitButtonAction() {
     // Add exit button action code here
+  }
+
+  @FXML
+  private void handleConfirmButtonAction() {
+    // Add confirm button action code here
   }
 }
