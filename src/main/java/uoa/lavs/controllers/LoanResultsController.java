@@ -4,9 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 
-public class CustomerResultsController {
+public class LoanResultsController {
   // Table will need to be populated with data from the database
-  @FXML private TableView<?> customerResultsTable;
+  @FXML private TableView<?> loanResultsTable;
 
   @FXML private Button backButton;
 
@@ -29,6 +29,6 @@ public class CustomerResultsController {
   }
 
   // Need to implement method when clicking on a row in the table
-  // to view the customer's details
+  // to view the loan details
 
 }
