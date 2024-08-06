@@ -6,10 +6,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
-public class CustomerSearchController {
+public class LoanCreationCustomerSearchController {
   @FXML private Label searchWithCustomerIDLabel; // When click label, reveal text box.
 
   @FXML private Label searchWithNameLabel; // When click label, reveal text box.
+
+  @FXML private Button createCustomerButton;
 
   @FXML private Button backButton;
 
@@ -38,6 +40,11 @@ public class CustomerSearchController {
   @FXML
   private void handleSearchWithNameLabelAction() {
     // Add search with name label action code here
+  }
+
+  @FXML
+  private void handleCreateCustomerButtonAction() {
+    // Add create customer button action code here
   }
 
   @FXML

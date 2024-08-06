@@ -3,6 +3,7 @@ package uoa.lavs.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class CustomerInputDetailsController {
@@ -10,7 +11,7 @@ public class CustomerInputDetailsController {
   @FXML private TextField customerFirstNameField;
   @FXML private TextField customerMiddleNameField;
   @FXML private TextField customerLastNameField;
-  @FXML private TextField customerDOBField;
+  @FXML private DatePicker customerDOBField;
   @FXML private TextField customerOccupationField;
   @FXML private ComboBox<String> customerResidencyStatus;
 
