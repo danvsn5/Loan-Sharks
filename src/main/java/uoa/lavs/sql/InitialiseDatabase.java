@@ -47,7 +47,6 @@ public class InitialiseDatabase {
 
   private void createCustomerContactEntity(Connection conn) {
     String sql = "CREATE TABLE IF NOT EXISTS customer_contact (\n"
-        + "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
         + "  customer_id INTEGER NOT NULL,\n"
         + "  email TEXT NOT NULL,\n"
         + "  pref_contact TEXT NOT NULL,\n"
@@ -64,7 +63,6 @@ public class InitialiseDatabase {
 
   private void createCustomerPhonesEntity(Connection conn) {
     String sql = "CREATE TABLE IF NOT EXISTS customer_phones (\n"
-        + "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
         + "  contact_id TEXT NOT NULL,\n"
         + "  home_phone TEXT NOT NULL,\n"
         + "  work_phone TEXT NOT NULL,\n"
@@ -88,6 +86,7 @@ public class InitialiseDatabase {
         + "  suburb TEXT NOT NULL,\n"
         + "  post_code TEXT NOT NULL,\n"
         + "  city TEXT NOT NULL,\n"
+        + "  address_type TEXT NOT NULL,\n"
         + "  FOREIGN KEY (customer_id) REFERENCES customer (id)\n"
         + ");";
 
