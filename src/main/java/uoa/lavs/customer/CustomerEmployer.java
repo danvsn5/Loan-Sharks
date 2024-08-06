@@ -17,9 +17,9 @@ public class CustomerEmployer {
       boolean ownerOfCompany) {
     this.employerName = name;
     this.employerAddress = address;
-    this.employerEmail = (email != null) ? email : "";
-    this.employerWebsite = (website != null) ? website : "";
-    this.employerPhone = (phone != null) ? phone : "";
+    this.employerEmail = email;
+    this.employerWebsite = website;
+    this.employerPhone = phone;
     this.ownerOfCompany = ownerOfCompany;
   }
 

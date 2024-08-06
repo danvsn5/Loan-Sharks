@@ -9,9 +9,9 @@ public interface ILoan {
 
   public ArrayList<String> getCoborrowerIds();
 
-  public Double getPrincipal();
+  public double getPrincipal();
 
-  public Double getRate();
+  public double getRate();
 
   public LoanDuration getDuration();
 
@@ -23,9 +23,9 @@ public interface ILoan {
 
   public void setCoborrowerIds(ArrayList<String> coborrowerIds);
 
-  public void setPrincipal(Double principal);
+  public void setPrincipal(double principal);
 
-  public void setRate(Double rate);
+  public void setRate(double rate);
 
   public void setDuration(LoanDuration duration);
 

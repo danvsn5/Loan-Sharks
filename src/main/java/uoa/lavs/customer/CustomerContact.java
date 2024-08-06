@@ -15,7 +15,7 @@ public class CustomerContact {
       String alternateContact) {
     this.customerEmail = email;
     this.phoneOne = phoneOne;
-    this.phoneTwo = (phoneTwo != null) ? phoneTwo : "";
+    this.phoneTwo = phoneTwo;
     this.preferredContact = preferredContact;
     this.alternateContact = alternateContact;
   }

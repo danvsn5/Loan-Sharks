@@ -7,8 +7,8 @@ public class PersonalLoan extends Loan {
       int loanId,
       String customerId,
       ArrayList<String> coborrowerIds,
-      Double principal,
-      Double rate,
+      double principal,
+      double rate,
       LoanDuration duration,
       LoanPayment payment) {
     super(loanId, customerId, coborrowerIds, principal, rate, duration, payment);

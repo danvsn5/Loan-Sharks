@@ -6,8 +6,8 @@ public abstract class Loan implements ILoan {
   private int loanId;
   private String customerId;
   private ArrayList<String> coborrowerIds;
-  private Double principal;
-  private Double rate;
+  private double principal;
+  private double rate;
   private LoanDuration duration;
   private LoanPayment payment;
 
@@ -15,8 +15,8 @@ public abstract class Loan implements ILoan {
       int loanId,
       String customerId,
       ArrayList<String> coborrowerIds,
-      Double principal,
-      Double rate,
+      double principal,
+      double rate,
       LoanDuration duration,
       LoanPayment payment) {
     this.loanId = loanId;
@@ -28,58 +28,72 @@ public abstract class Loan implements ILoan {
     this.payment = payment;
   }
 
+  @Override
   public int getLoanId() {
     return loanId;
   }
 
+  @Override
   public String getCustomerId() {
     return customerId;
   }
 
+  @Override
   public ArrayList<String> getCoborrowerIds() {
     return coborrowerIds;
   }
 
-  public Double getPrincipal() {
+  @Override
+  public double getPrincipal() {
     return principal;
   }
 
-  public Double getRate() {
+  @Override
+  public double getRate() {
     return rate;
   }
 
+  @Override
   public LoanDuration getDuration() {
     return duration;
   }
 
+  @Override
   public LoanPayment getPayment() {
     return payment;
   }
 
+  @Override
   public void setLoanId(int loanId) {
     this.loanId = loanId;
   }
 
+  @Override
   public void setCustomerId(String customerId) {
     this.customerId = customerId;
   }
 
+  @Override
   public void setCoborrowerIds(ArrayList<String> coborrowerIds) {
     this.coborrowerIds = coborrowerIds;
   }
 
-  public void setPrincipal(Double principal) {
+  @Override
+  public void setPrincipal(double principal) {
     this.principal = principal;
   }
 
-  public void setRate(Double rate) {
+  @Override
+  public void setRate(double rate) {
     this.rate = rate;
   }
 
+  @Override
   public void setDuration(LoanDuration duration) {
     this.duration = duration;
   }
 
+  @Override
   public void setPayment(LoanPayment payment) {
     this.payment = payment;
   }
