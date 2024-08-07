@@ -2,24 +2,34 @@ package uoa.lavs.sql.customer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import uoa.lavs.customer.CustomerContact;
-import uoa.lavs.customer.ICustomer;
 import uoa.lavs.sql.DatabaseConnection;
 
 public class CustomerContactDAO {
-  public void addCustomerContact(ICustomer customer) {
-    CustomerContact contact = customer.getContact();
-    String sql = "INSERT INTO customer_contact (customer_id, customer_email, preferred_contact, alternate_contact) VALUES (?, ?, ?, ?)";
-    try (Connection conn = DatabaseConnection.connect();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, customer.getCustomerId());
-      pstmt.setString(2, contact.getCustomerEmail());
-      pstmt.setString(3, contact.getPreferredContact());
-      pstmt.setString(4, contact.getAlternateContact());
-      pstmt.executeUpdate();
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
+
+    public void addCustomerContact(CustomerContact contact) {
+        String sql = "INSERT INTO customer_contact (contactId, customerEmail, phoneOne, phoneTwo, preferredContact, alternateContact) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, contact.getContactId());
+            pstmt.setString(2, contact.getCustomerEmail());
+            pstmt.setString(3, contact.getPhoneOne());
+            pstmt.setString(4, contact.getPhoneTwo());
+            pstmt.setString(5, contact.getPreferredContact());
+            pstmt.setString(6, contact.getAlternateContact());
+            pstmt.executeUpdate();
+
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+              if (generatedKeys.next()) {
+                  int generatedId = generatedKeys.getInt(1);
+                  contact.setContactId(generatedId);
+              }
+          }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
-  }
 }

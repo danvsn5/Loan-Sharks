@@ -56,7 +56,7 @@ public class InitialiseDatabase {
   private void createCustomerContactEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_contact (\n"
-            + "contactId VARCHAR(50) PRIMARY KEY, "
+            + "contactId INT AUTO_INCREMENT PRIMARY KEY, "
             + "customerEmail VARCHAR(100), "
             + "phoneOne VARCHAR(20), "
             + "phoneTwo VARCHAR(20), "
@@ -74,7 +74,7 @@ public class InitialiseDatabase {
   private void createCustomerAddressEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_address (\n"
-            + "addressId VARCHAR(50) PRIMARY KEY, "
+            + "addressId INT AUTO_INCREMENT PRIMARY KEY, "
             + "addressType VARCHAR(50), "
             + "addressLineOne VARCHAR(100), "
             + "addressLineTwo VARCHAR(100), "
@@ -94,7 +94,7 @@ public class InitialiseDatabase {
   private void createCustomerEmployerEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_employer ("
-            + "employerId VARCHAR(50) PRIMARY KEY, "
+            + "employerId INT AUTO_INCREMENT PRIMARY KEY, "
             + "employerName VARCHAR(100), "
             + "employerAddressId VARCHAR(50), "
             + "employerEmail VARCHAR(100), "

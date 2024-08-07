@@ -1,7 +1,7 @@
 package uoa.lavs.customer;
 
 public class Address {
-  private String addressId; 
+  private int addressId; 
   private String addressType;
   private String addressLineOne;
   private String addressLineTwo;
@@ -27,7 +27,7 @@ public class Address {
     this.country = country;
   }
 
-  public String getAddressId() {
+  public int getAddressId() {
     return this.addressId;
   }
 
@@ -59,7 +59,7 @@ public class Address {
     return this.country;
   }
 
-  public void setAddressId(String addressId) {
+  public void setAddressId(int addressId) {
     this.addressId = addressId;
   }
 
