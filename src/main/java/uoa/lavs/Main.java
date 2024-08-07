@@ -20,7 +20,6 @@ public class Main extends Application {
   public static Scene scene;
 
   public static void main(String[] args) {
-    launch();
 
     // the following shows two ways of using the mainframe interface
     // approach #1: use the singleton instance - this way is recommended as it provides a single
@@ -45,6 +44,7 @@ public class Main extends Application {
     // you can use another approach if desired, but make sure you document how the markers can
     // change the
     // connection implementation.
+    launch();
   }
 
   private static void executeTestMessage(Connection connection) {
@@ -73,6 +73,8 @@ public class Main extends Application {
   }
 
   private static Parent loadFxml(final String fxml) throws IOException {
+    String fxmlPath = "/fxml/" + fxml + ".fxml";
+    System.out.println("Loading FXML from path: " + fxmlPath);
     return new FXMLLoader(Main.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
@@ -82,8 +84,8 @@ public class Main extends Application {
 
   @Override
   public void start(final Stage stage) throws IOException {
-    SceneManager.addScene(AppUI.LOGIN, loadFxml("Login"));
-
+    SceneManager.addScene(AppUI.LOGIN, loadFxml("login"));
+    System.out.println("Loading login scene");
     scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1920, 1080);
 
     stage.setScene(scene);
