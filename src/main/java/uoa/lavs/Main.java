@@ -86,7 +86,7 @@ public class Main extends Application {
   public void start(final Stage stage) throws IOException {
     SceneManager.addScene(AppUI.LOGIN, loadFxml("login"));
     System.out.println("Loading login scene");
-    scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1920, 1080);
+    scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1000, 900);
 
     stage.setScene(scene);
     stage.show();
