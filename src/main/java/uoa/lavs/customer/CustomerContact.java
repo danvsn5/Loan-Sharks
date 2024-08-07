@@ -1,6 +1,7 @@
 package uoa.lavs.customer;
 
 public class CustomerContact {
+  private String contactId;
   private String customerEmail;
   private String phoneOne;
   private String phoneTwo;
@@ -18,6 +19,10 @@ public class CustomerContact {
     this.phoneTwo = phoneTwo;
     this.preferredContact = preferredContact;
     this.alternateContact = alternateContact;
+  }
+
+  public String getContactId() {
+    return this.contactId;
   }
 
   public String getCustomerEmail() {
@@ -38,6 +43,10 @@ public class CustomerContact {
 
   public String getAlternateContact() {
     return this.alternateContact;
+  }
+
+  public void setContactId(String id) {
+    this.contactId = id;
   }
 
   public void setCustomerEmail(String email) {
