@@ -14,7 +14,6 @@ public class InitialiseDatabase {
     try (Connection conn = DatabaseConnection.connect()) {
       createCustomerEntity(conn);
       createCustomerContactEntity(conn);
-      createCustomerPhonesEntity(conn);
       createCustomerAddressEntity(conn);
       createCustomerEmployerEntity(conn);
       createLoanEntity(conn);
@@ -27,16 +26,25 @@ public class InitialiseDatabase {
   }
 
   private void createCustomerEntity(Connection conn) {
-    String sql = "CREATE TABLE IF NOT EXISTS customer (\n"
-        + "  id TEXT NOT NULL,\n"
-        + "  title TEXT NOT NULL,\n"
-        + "  first_name TEXT NOT NULL,\n"
-        + "  middle_name TEXT NOT NULL,\n"
-        + "  last_name TEXT NOT NULL,\n"
-        + "  date_of_birth TEXT NOT NULL,\n"
-        + "  occupation TEXT NOT NULL,\n"
-        + "  notes TEXT NOT NULL\n"
-        + ");";
+    String sql =
+        "CREATE TABLE IF NOT EXISTS customer ("
+            + "customerId VARCHAR(50) PRIMARY KEY, "
+            + "title VARCHAR(10), "
+            + "firstName VARCHAR(50), "
+            + "middleName VARCHAR(50), "
+            + "lastName VARCHAR(50), "
+            + "dateOfBirth DATE, "
+            + "occupation VARCHAR(100), "
+            + "residency VARCHAR(50), "
+            + "physicalAddressId VARCHAR(50), "
+            + "mailingAddressId VARCHAR(50), "
+            + "contactId VARCHAR(50), "
+            + "employerId VARCHAR(50), "
+            + "FOREIGN KEY (physicalAddressId) REFERENCES Address(addressId), "
+            + "FOREIGN KEY (mailingAddressId) REFERENCES Address(addressId), "
+            + "FOREIGN KEY (contactId) REFERENCES CustomerContact(contactId), "
+            + "FOREIGN KEY (employerId) REFERENCES CustomerEmployer(employerId)"
+            + ");";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
@@ -46,29 +54,15 @@ public class InitialiseDatabase {
   }
 
   private void createCustomerContactEntity(Connection conn) {
-    String sql = "CREATE TABLE IF NOT EXISTS customer_contact (\n"
-        + "  customer_id INTEGER NOT NULL,\n"
-        + "  email TEXT NOT NULL,\n"
-        + "  pref_contact TEXT NOT NULL,\n"
-        + "  alt_contact TEXT NOT NULL,\n"
-        + "  FOREIGN KEY (customer_id) REFERENCES customer (id)\n"
-        + ");";
-
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-  }
-
-  private void createCustomerPhonesEntity(Connection conn) {
-    String sql = "CREATE TABLE IF NOT EXISTS customer_phones (\n"
-        + "  contact_id TEXT NOT NULL,\n"
-        + "  home_phone TEXT NOT NULL,\n"
-        + "  work_phone TEXT NOT NULL,\n"
-        + "  mobile_phone TEXT NOT NULL,\n"
-        + "  FOREIGN KEY (contact_id) REFERENCES customer_contact (customer_id)\n"
-        + ");";
+    String sql =
+        "CREATE TABLE IF NOT EXISTS customer_contact (\n"
+            + "contactId VARCHAR(50) PRIMARY KEY, "
+            + "customerEmail VARCHAR(100), "
+            + "phoneOne VARCHAR(20), "
+            + "phoneTwo VARCHAR(20), "
+            + "preferredContact VARCHAR(50), "
+            + "alternateContact VARCHAR(50)"
+            + ");";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
@@ -78,17 +72,17 @@ public class InitialiseDatabase {
   }
 
   private void createCustomerAddressEntity(Connection conn) {
-    String sql = "CREATE TABLE IF NOT EXISTS customer_address (\n"
-        + "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-        + "  customer_id TEXT NOT NULL,\n"
-        + "  addresss_line_one TEXT NOT NULL,\n"
-        + "  addresss_line_two TEXT NOT NULL,\n"
-        + "  suburb TEXT NOT NULL,\n"
-        + "  post_code TEXT NOT NULL,\n"
-        + "  city TEXT NOT NULL,\n"
-        + "  address_type TEXT NOT NULL,\n"
-        + "  FOREIGN KEY (customer_id) REFERENCES customer (id)\n"
-        + ");";
+    String sql =
+        "CREATE TABLE IF NOT EXISTS customer_address (\n"
+            + "addressId VARCHAR(50) PRIMARY KEY, "
+            + "addressType VARCHAR(50), "
+            + "addressLineOne VARCHAR(100), "
+            + "addressLineTwo VARCHAR(100), "
+            + "suburb VARCHAR(50), "
+            + "postCode VARCHAR(20), "
+            + "city VARCHAR(50), "
+            + "country VARCHAR(50)"
+            + ");";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
@@ -98,16 +92,17 @@ public class InitialiseDatabase {
   }
 
   private void createCustomerEmployerEntity(Connection conn) {
-    String sql = "CREATE TABLE IF NOT EXISTS customer_employer (\n"
-        + "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-        + "  customer_id TEXT NOT NULL,\n"
-        + "  employer_name TEXT NOT NULL,\n"
-        + "  addresss TEXT NOT NULL,\n"
-        + "  website TEXT NOT NULL,\n"
-        + "  phone TEXT NOT NULL,\n"
-        + "  owner_of_company BOOLEAN NOT NULL,\n"
-        + "  FOREIGN KEY (customer_id) REFERENCES customer (id)\n"
-        + ");";
+    String sql =
+        "CREATE TABLE IF NOT EXISTS customer_employer ("
+            + "employerId VARCHAR(50) PRIMARY KEY, "
+            + "employerName VARCHAR(100), "
+            + "employerAddressId VARCHAR(50), "
+            + "employerEmail VARCHAR(100), "
+            + "employerWebsite VARCHAR(100), "
+            + "employerPhone VARCHAR(20), "
+            + "ownerOfCompany BOOLEAN, "
+            + "FOREIGN KEY (employerAddressId) REFERENCES Address(addressId)"
+            + ");";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
@@ -117,15 +112,18 @@ public class InitialiseDatabase {
   }
 
   private void createLoanEntity(Connection conn) {
-    String sql = "CREATE TABLE IF NOT EXISTS loan (\n"
-        + "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-        + "  customer_id TEXT NOT NULL,\n"
-        + "  coborrower_ids TEXT NOT NULL,\n"
-        + "  principal,\n"
-        + "  loan_purpose TEXT NOT NULL,\n"
-        + "  loan_status TEXT NOT NULL,\n"
-        + "  FOREIGN KEY (customer_id) REFERENCES customer (id)\n"
-        + ");";
+    String sql =
+        "CREATE TABLE IF NOT EXISTS loan (\n"
+            + "loanId INT PRIMARY KEY, "
+            + "customerId VARCHAR(50), "
+            + "principal DOUBLE, "
+            + "rate DOUBLE, "
+            + "durationId INT, "
+            + "paymentId INT, "
+            + "FOREIGN KEY (customerId) REFERENCES Customer(customerId), "
+            + "FOREIGN KEY (durationId) REFERENCES LoanDuration(durationId), "
+            + "FOREIGN KEY (paymentId) REFERENCES LoanPayment(paymentId)"
+            + ");";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
@@ -135,14 +133,13 @@ public class InitialiseDatabase {
   }
 
   private void createLoanDurationEntity(Connection conn) {
-    String sql = "CREATE TABLE IF NOT EXISTS loan_duration (\n"
-        + "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-        + "  loan_id TEXT NOT NULL,\n"
-        + "  start_date TEXT NOT NULL,\n"
-        + "  period INTEGER NOT NULL,\n"
-        + "  loan_term INTEGER NOT NULL,\n"
-        + "  FOREIGN KEY (loan_id) REFERENCES loan (id)\n"
-        + ");";
+    String sql =
+        "CREATE TABLE IF NOT EXISTS loan_duration (\n"
+            + "durationId INT PRIMARY KEY, "
+            + "startDate DATE, "
+            + "period INT, "
+            + "loanTerm INT"
+            + ");";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
@@ -152,15 +149,14 @@ public class InitialiseDatabase {
   }
 
   private void createLoanPaymentEntity(Connection conn) {
-    String sql = "CREATE TABLE IF NOT EXISTS loan_payment (\n"
-        + "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-        + "  loan_id TEXT NOT NULL,\n"
-        + "  compounding TEXT NOT NULL,\n"
-        + "  payment_frequency TEXT NOT NULL,\n"
-        + "  payment_amount TEXT NOT NULL,\n"
-        + "  interest_only BOOLEAN NOT NULL,\n"
-        + "  FOREIGN KEY (loan_id) REFERENCES loan (id)\n"
-        + ");";
+    String sql =
+        "CREATE TABLE IF NOT EXISTS loan_payment (\n"
+            + "paymentId INT PRIMARY KEY, "
+            + "compounding VARCHAR(50), "
+            + "paymentFrequency VARCHAR(50), "
+            + "paymentAmount VARCHAR(50), "
+            + "interestOnly BOOLEAN"
+            + ");";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
@@ -170,15 +166,15 @@ public class InitialiseDatabase {
   }
 
   private void createLoanCoborrowerEntity(Connection conn) {
-    String sql = "CREATE TABLE IF NOT EXISTS loan_coborrower (\n"
-        + "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-        + "  loan_id TEXT NOT NULL,\n"
-        + "  coborrower_id TEXT NOT NULL,\n"
-        + "  FOREIGN KEY (loan_id) REFERENCES loan (id),\n"
-        + "  FOREIGN KEY (coborrower_id) REFERENCES customer (id)\n"
-        + ");";
+    String sql =
+        "CREATE TABLE IF NOT EXISTS loan_coborrower (\n" + 
+        "loanId INT, " +
+        "coborrowerId VARCHAR(50), " +
+        "PRIMARY KEY (loanId, coborrowerId), " +
+        "FOREIGN KEY (loanId) REFERENCES Loan(loanId), " +
+        "FOREIGN KEY (coborrowerId) REFERENCES Customer(customerId)" +
+        ");";
 
-    
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
     } catch (SQLException e) {
