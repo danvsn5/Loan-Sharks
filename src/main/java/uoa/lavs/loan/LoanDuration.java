@@ -3,6 +3,7 @@ package uoa.lavs.loan;
 import java.time.LocalDate;
 
 public class LoanDuration {
+  private int durationId;
   private LocalDate startDate;
   private int period;
   private int loanTerm;
@@ -11,6 +12,10 @@ public class LoanDuration {
     this.startDate = startDate;
     this.period = period;
     this.loanTerm = loanTerm;
+  }
+
+  public int getDurationId() {
+    return durationId;
   }
 
   public LocalDate getStartDate() {
@@ -23,6 +28,10 @@ public class LoanDuration {
 
   public int getLoanTerm() {
     return loanTerm;
+  }
+
+  public void setDurationId(int durationId) {
+    this.durationId = durationId;
   }
 
   public void setStartDate(LocalDate startDate) {
