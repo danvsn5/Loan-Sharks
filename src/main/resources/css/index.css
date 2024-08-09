@@ -1,0 +1,15 @@
+.root {
+    -fx-color-dark-blue: #3289d5;
+    -fx-color-light-blue: #a2fdff;
+    -fx-color-cream: #ffdaca;
+    -fx-color-text: #333333;
+}
+
+.input-fields {
+    -fx-background-color: #ffdaca;
+    -fx-border-width: 2px;
+    -fx-border-color: #008ace;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 25px;
+    -fx-text-fill: #333333;
+}
