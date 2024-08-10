@@ -11,7 +11,8 @@ public class ResetDatabase {
     }
 
     private void resetDatabase() {
-        try (Connection conn = DatabaseConnection.connect();
+        DatabaseConnection connection = new DatabaseConnection();
+        try (Connection conn = connection.connect();
              Statement stmt = conn.createStatement()) {
             dropLoanCoborrowerEntity(stmt);
             dropLoanEntity(stmt);

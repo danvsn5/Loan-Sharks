@@ -14,7 +14,8 @@ public class AddressDAO {
     String sql =
         "INSERT INTO customer_address (addressType, addressLineOne, addressLineTwo, suburb,"
             + " postCode, city, country) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    try (Connection conn = DatabaseConnection.connect();
+    DatabaseConnection connection = new DatabaseConnection();
+    try (Connection conn = connection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
       pstmt.setString(1, address.getAddressType());
@@ -42,7 +43,8 @@ public class AddressDAO {
     String sql =
         "UPDATE customer_address SET addressType = ?, addressLineOne = ?, addressLineTwo = ?,"
             + " suburb = ?, postCode = ?, city = ?, country = ? WHERE addressId = ?";
-    try (Connection conn = DatabaseConnection.connect();
+    DatabaseConnection connection = new DatabaseConnection();
+    try (Connection conn = connection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
       pstmt.setString(1, address.getAddressType());
