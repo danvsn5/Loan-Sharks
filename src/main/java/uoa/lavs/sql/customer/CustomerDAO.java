@@ -49,6 +49,41 @@ public class CustomerDAO {
     }
   }
 
+  public void updateCustomer(ICustomer customer) {
+    String sql =
+        "UPDATE customer SET title = ?, firstName = ?, middleName = ?, lastName = ?, dateOfBirth = ?,"
+            + " occupation = ?, residency = ?, physicalAddressId = ?, mailingAddressId = ?, contactId = ?, employerId = ?"
+            + " WHERE customerId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, customer.getTitle());
+      pstmt.setString(2, customer.getFirstName());
+      pstmt.setString(3, customer.getMiddleName());
+      pstmt.setString(4, customer.getLastName());
+      pstmt.setDate(5, Date.valueOf(customer.getDateOfBirth()));
+      pstmt.setString(6, customer.getOccupation());
+      pstmt.setString(7, customer.getResidency());
+      pstmt.setInt(
+          8,
+          customer.getPhysicalAddress() != null
+              ? customer.getPhysicalAddress().getAddressId()
+              : null);
+      pstmt.setInt(
+          9,
+          customer.getMailingAddress() != null
+              ? customer.getMailingAddress().getAddressId()
+              : null);
+      pstmt.setInt(10, customer.getContact() != null ? customer.getContact().getContactId() : null);
+      pstmt.setInt(
+          11, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
+      pstmt.setString(12, customer.getCustomerId());
+
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
   public static void main(String[] args) {
     Customer customer;
     LocalDate dateOfBirth;

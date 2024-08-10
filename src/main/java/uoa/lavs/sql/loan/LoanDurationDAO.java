@@ -29,4 +29,18 @@ public class LoanDurationDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public void updateLoanDuration(LoanDuration duration) {
+        String sql = "UPDATE loan_duration SET startDate = ?, period = ?, loanTerm = ? WHERE durationId = ?";
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setDate(1, Date.valueOf(duration.getStartDate()));
+            pstmt.setInt(2, duration.getPeriod());
+            pstmt.setInt(3, duration.getLoanTerm());
+            pstmt.setInt(4, duration.getDurationId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
