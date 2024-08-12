@@ -86,7 +86,7 @@ public class Main extends Application {
   @Override
   public void start(final Stage stage) throws IOException {
 
-    SceneManager.addScene(AppUI.LOGIN, loadFxml("customer_search_results"));
+    SceneManager.addScene(AppUI.LOGIN, loadFxml("primary_address_details_summary"));
     System.out.println("Loading login scene");
     scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1280, 720);
 
