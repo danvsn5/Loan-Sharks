@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/login_image.png" />
          </image>
       </ImageView>
-      <TextField layoutX="83.0" layoutY="437.0" prefHeight="58.0" prefWidth="323.0" styleClass="input-fields" stylesheets="@../css/index.css">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="126.0" layoutX="66.0" layoutY="585.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
+      <Button layoutX="91.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Log In">
          <font>
-            <Font name="Nunito Regular" size="20.0" />
-         </font></TextField>
-      <TextField layoutX="83.0" layoutY="575.0" prefHeight="58.0" prefWidth="323.0" style="-fx-background-color: #ffdaca; -fx-border-width: 2px; -fx-border-color: #008ace; -fx-border-radius: 20px; -fx-background-radius: 25px;">
+            <Font size="27.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextField layoutX="72.0" layoutY="383.0" prefHeight="48.0" prefWidth="280.2" styleClass="input-fields" stylesheets="@../css/index.css">
          <font>
-            <Font name="Nunito Regular" size="20.0" />
+            <Font name="Ink Free" size="12.0" />
          </font>
       </TextField>
-      <PasswordField layoutX="83.0" layoutY="575.0" prefHeight="58.0" prefWidth="323.0" styleClass="input-fields" stylesheets="@../css/index.css">
-         <font>
-            <Font name="Nunito Regular" size="20.0" />
-         </font>
-      </PasswordField>
+      <PasswordField layoutX="71.0" layoutY="522.0" prefHeight="48.0" prefWidth="282.0" styleClass="input-fields" stylesheets="@../css/index.css" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="14.0" layoutX="84.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="280.0" />
    </children>
 </Pane>
