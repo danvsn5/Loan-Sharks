@@ -7,21 +7,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class DatabaseConnectTest {
+public class DatabaseConnectionTest {
   DatabaseConnection conn;
-  private static final String DB_URL = "jdbc:sqlite:src/test/java/uoa/lavs/sql/test.db";
-  private static File dbFile = new File("src/test/java/uoa/lavs/sql/test.db");
+  static File dbFile;
 
   @BeforeEach
   public void setUp() {
-    conn = new DatabaseConnection(DB_URL);
+    DatabaseState.setActiveDB(true);
+    dbFile = DatabaseState.DB_TEST_FILE;
   }
 
   @Test
   public void testConnect() {
-    Connection connection = conn.connect();
+    Connection connection = DatabaseConnection.connect();
     Assertions.assertNotNull(connection);
-    conn.close(connection);
+    DatabaseConnection.close(connection);
   }
 
   @AfterAll
