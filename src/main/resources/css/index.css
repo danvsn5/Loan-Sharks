@@ -1,10 +1,3 @@
-.root {
-    -fx-color-dark-blue: #3289d5;
-    -fx-color-light-blue: #a2fdff;
-    -fx-color-cream: #ffdaca;
-    -fx-color-text: #333333;
-}
-
 .input-fields {
     -fx-background-color: #ffdaca;
     -fx-border-width: 2px;
