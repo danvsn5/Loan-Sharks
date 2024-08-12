@@ -18,13 +18,12 @@ import uoa.lavs.sql.InitialiseDatabase;
 
 public class InitialiseDatabaseTest {
   DatabaseConnection conn;
-  InitialiseDatabase init;
   static File dbFile;
 
   @BeforeEach
   public void setUp() {
     DatabaseState.setActiveDB(true);
-    init = new InitialiseDatabase();
+    InitialiseDatabase.createDatabase();
     dbFile = DatabaseState.DB_TEST_FILE;
   }
 
