@@ -19,8 +19,7 @@ public class CustomerDAO {
         "INSERT INTO customer (customerId, title, firstName, middleName, lastName, dateOfBirth,"
             + " occupation, residency, physicalAddressId, mailingAddressId, contactId, employerId)"
             + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    DatabaseConnection connection = new DatabaseConnection();
-    try (Connection conn = connection.connect();
+    try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customer.getCustomerId());
       pstmt.setString(2, customer.getTitle());
@@ -52,11 +51,10 @@ public class CustomerDAO {
 
   public void updateCustomer(ICustomer customer) {
     String sql =
-        "UPDATE customer SET title = ?, firstName = ?, middleName = ?, lastName = ?, dateOfBirth ="
-            + " ?, occupation = ?, residency = ?, physicalAddressId = ?, mailingAddressId = ?,"
-            + " contactId = ?, employerId = ? WHERE customerId = ?";
-    DatabaseConnection connection = new DatabaseConnection();
-    try (Connection conn = connection.connect();
+        "UPDATE customer SET title = ?, firstName = ?, middleName = ?, lastName = ?, dateOfBirth = ?,"
+            + " occupation = ?, residency = ?, physicalAddressId = ?, mailingAddressId = ?, contactId = ?, employerId = ?"
+            + " WHERE customerId = ?";
+    try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customer.getTitle());
       pstmt.setString(2, customer.getFirstName());
@@ -100,9 +98,7 @@ public class CustomerDAO {
     employerAddress =
         new Address(
             "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe");
-    employer =
-        new CustomerEmployer(
-            "Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
+    employer = new CustomerEmployer("Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
 
     customer =
         new IndividualCustomer(
@@ -118,20 +114,21 @@ public class CustomerDAO {
             physicalAddress,
             contact,
             employer);
+    
 
     AddressDAO addressdao = new AddressDAO();
     CustomerContactDAO contactdao = new CustomerContactDAO();
     CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
-    CustomerDAO dao = new CustomerDAO();
+    CustomerDAO dao = new CustomerDAO();  
 
     addressdao.addAddress(customer.getPhysicalAddress());
     addressdao.addAddress(customer.getMailingAddress());
     addressdao.addAddress(customer.getEmployer().getEmployerAddress());
-
+    
     contactdao.addCustomerContact(customer.getContact());
-
+    
     employerdao.addCustomerEmployer(customer.getEmployer());
-
+ 
     dao.addCustomer(customer);
   }
 }

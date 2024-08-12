@@ -15,7 +15,7 @@ public class DatabaseConnection {
     DB_URL = dbUrl;
   }
 
-  public Connection connect() {
+  public static Connection connect() {
     Connection conn = null;
     try {
       conn = DriverManager.getConnection(DB_URL);
@@ -25,7 +25,7 @@ public class DatabaseConnection {
     return conn;
   }
 
-  public void close(Connection conn) {
+  public static void close(Connection conn) {
     try {
       if (conn != null) {
         conn.close();

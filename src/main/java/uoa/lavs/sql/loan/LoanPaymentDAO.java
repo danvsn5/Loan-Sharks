@@ -13,8 +13,7 @@ public class LoanPaymentDAO {
     String sql =
         "INSERT INTO loan_payment (compounding, paymentFrequency, paymentAmount, interestOnly)"
             + " VALUES (?, ?, ?, ?)";
-    DatabaseConnection connection = new DatabaseConnection();
-    try (Connection conn = connection.connect();
+    try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
       pstmt.setString(1, payment.getCompounding());
       pstmt.setString(2, payment.getPaymentFrequency());
@@ -36,8 +35,7 @@ public class LoanPaymentDAO {
     String sql =
         "UPDATE loan_payment SET compounding = ?, paymentFrequency = ?, paymentAmount = ?,"
             + " interestOnly = ? WHERE paymentId = ?";
-    DatabaseConnection connection = new DatabaseConnection();
-    try (Connection conn = connection.connect();
+    try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, payment.getCompounding());
       pstmt.setString(2, payment.getPaymentFrequency());

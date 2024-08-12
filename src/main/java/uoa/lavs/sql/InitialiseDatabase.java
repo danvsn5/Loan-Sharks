@@ -11,8 +11,7 @@ public class InitialiseDatabase {
   }
 
   private void createDatabase() {
-    DatabaseConnection connection = new DatabaseConnection();
-    try (Connection conn = connection.connect()) {
+    try (Connection conn = DatabaseConnection.connect()) {
       createCustomerEntity(conn);
       createCustomerContactEntity(conn);
       createCustomerAddressEntity(conn);
