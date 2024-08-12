@@ -32,3 +32,9 @@
     -fx-font-size: 50px;
     -fx-text-fill: #333333;
 }
+
+.regular-subtitle {
+    -fx-font-family: 'Quicksand Bold';
+    -fx-font-size: 23px;
+    -fx-text-fill: #333333;
+}
