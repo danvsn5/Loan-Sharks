@@ -17,8 +17,12 @@
     -fx-background-radius: 25px;
     -fx-border-radius: 20px;
     -fx-cursor: hand;
+    -fx-font-size: 26px;
+    -fx-font-family: 'Quicksand Bold';
 }
 
 .scene-titles {
+    -fx-font-family: 'Quicksand Bold';
+    -fx-font-size: 75px;
     -fx-text-fill: #333333;
 }
