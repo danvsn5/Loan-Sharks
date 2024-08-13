@@ -19,6 +19,8 @@ public interface ICustomer {
 
   public String getResidency();
 
+  public String getNotes();
+
   public Address getPhysicalAddress();
 
   public Address getMailingAddress();
@@ -42,6 +44,8 @@ public interface ICustomer {
   public void setOccupation(String occupation);
 
   public void setResidency(String residency);
+
+  public void setNotes(String notes);
 
   public void setPhysicalAddress(Address physicalAddress);
 

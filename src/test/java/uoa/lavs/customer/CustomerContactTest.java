@@ -6,11 +6,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CustomerContactTest {
-  CustomerContact contact;
+  private CustomerContact contact;
+  private Phone phoneOne;
+  private Phone phoneTwo;
 
   @BeforeEach
   public void setUp() {
-    contact = new CustomerContact("email", "1234567890", "0987654321", "mobile sms", "email");
+    phoneOne = new Phone("mobile", "1234567890");
+    phoneTwo = new Phone("home", "0987654321");
+    contact = new CustomerContact("email", phoneOne, phoneTwo, "mobile sms", "email");
   }
 
   @Test
@@ -26,24 +30,24 @@ public class CustomerContactTest {
 
   @Test
   public void testGetPhoneOne() {
-    assertEquals("1234567890", contact.getPhoneOne());
+    assertEquals(phoneOne, contact.getPhoneOne());
   }
 
   @Test
   public void testSetPhoneOne() {
-    contact.setPhoneOne("0987654321");
-    assertEquals("0987654321", contact.getPhoneOne());
+    contact.setPhoneOne(phoneTwo);
+    assertEquals(phoneTwo, contact.getPhoneOne());
   }
 
   @Test
   public void testGetPhoneTwo() {
-    assertEquals("0987654321", contact.getPhoneTwo());
+    assertEquals(phoneTwo, contact.getPhoneTwo());
   }
 
   @Test
   public void testSetPhoneTwo() {
-    contact.setPhoneTwo("1234567890");
-    assertEquals("1234567890", contact.getPhoneTwo());
+    contact.setPhoneTwo(phoneOne);
+    assertEquals(phoneOne, contact.getPhoneTwo());
   }
 
   @Test

@@ -32,6 +32,7 @@ public class InitialiseDatabase {
             + "dateOfBirth DATE, "
             + "occupation VARCHAR(100), "
             + "residency VARCHAR(50), "
+            + "notes VARCHAR(200), "
             + "physicalAddressId VARCHAR(50), "
             + "mailingAddressId VARCHAR(50), "
             + "contactId VARCHAR(50), "
@@ -54,8 +55,10 @@ public class InitialiseDatabase {
         "CREATE TABLE IF NOT EXISTS customer_contact (\n"
             + "contactId INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "customerEmail VARCHAR(100), "
-            + "phoneOne VARCHAR(20), "
-            + "phoneTwo VARCHAR(20), "
+            + "phoneOneType VARCHAR(20), "
+            + "phoneOneNumber VARCHAR(20), "
+            + "phoneTwoType VARCHAR(20), "
+            + "phoneTwoNumber VARCHAR(20), "
             + "preferredContact VARCHAR(50), "
             + "alternateContact VARCHAR(50)"
             + ");";
@@ -163,13 +166,13 @@ public class InitialiseDatabase {
 
   private static void createLoanCoborrowerEntity(Connection conn) {
     String sql =
-        "CREATE TABLE IF NOT EXISTS loan_coborrower (\n" + 
-        "loanId INT, " +
-        "coborrowerId VARCHAR(50), " +
-        "PRIMARY KEY (loanId, coborrowerId), " +
-        "FOREIGN KEY (loanId) REFERENCES Loan(loanId), " +
-        "FOREIGN KEY (coborrowerId) REFERENCES Customer(customerId)" +
-        ");";
+        "CREATE TABLE IF NOT EXISTS loan_coborrower (\n"
+            + "loanId INT, "
+            + "coborrowerId VARCHAR(50), "
+            + "PRIMARY KEY (loanId, coborrowerId), "
+            + "FOREIGN KEY (loanId) REFERENCES Loan(loanId), "
+            + "FOREIGN KEY (coborrowerId) REFERENCES Customer(customerId)"
+            + ");";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
