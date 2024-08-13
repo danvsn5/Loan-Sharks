@@ -85,14 +85,16 @@ public class Main extends Application {
 
   @Override
   public void start(final Stage stage) throws IOException {
+    // activates antialiasing for text in application !IMPORTANT
+    System.setProperty("prism.lcdtext", "false");
 
-    SceneManager.addScene(AppUI.LOGIN, loadFxml("primary_address_details_summary"));
+    SceneManager.addScene(AppUI.LOGIN, loadFxml("customer_contact_summary"));
     System.out.println("Loading login scene");
     scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1280, 720);
-
+    // imports main index.css file
     String cssPath = getClass().getResource("/css/index.css").toExternalForm();
     scene.getStylesheets().add(cssPath);
-
+    // imports fonts that are implemented through css
     Font.loadFont(getClass().getResourceAsStream("/font/Quicksand-Regular.ttf"), 14);
     Font.loadFont(getClass().getResourceAsStream("/font/Quicksand-Bold.ttf"), 14);
     Font.loadFont(getClass().getResourceAsStream("/font/Quicksand-Medium.ttf"), 14);

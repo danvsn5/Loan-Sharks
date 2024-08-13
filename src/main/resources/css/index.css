@@ -25,6 +25,7 @@
     -fx-font-family: 'Quicksand Bold';
     -fx-font-size: 75px;
     -fx-text-fill: #333333;
+    /* -fx-font-smoothing-type: black; */
 }
 
 .large-subtitle {
