@@ -34,4 +34,17 @@ public class LoanCoborrowersDAO {
         }
     }
 
+    public void updateCoborrowers(int loanId, ArrayList<String> coborrowerIds) {
+        String sql = "DELETE FROM loan_coborrower WHERE loanId = ?";
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, loanId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        addCoborrowers(loanId, coborrowerIds);
+    }
+
 }

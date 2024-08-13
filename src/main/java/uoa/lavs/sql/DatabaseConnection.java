@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-  private static final String DB_URL = "jdbc:sqlite:src/main/resources/db/lavs.db";
+  private static String DB_URL = DatabaseState.getActiveDB();
+
+  public DatabaseConnection() {
+  }
 
   public static Connection connect() {
     Connection conn = null;

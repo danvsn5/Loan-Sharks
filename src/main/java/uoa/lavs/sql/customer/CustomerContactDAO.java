@@ -32,4 +32,20 @@ public class CustomerContactDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public void updateCustomerContact(CustomerContact contact) {
+        String sql = "UPDATE customer_contact SET customerEmail = ?, phoneOne = ?, phoneTwo = ?, preferredContact = ?, alternateContact = ? WHERE contactId = ?";
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, contact.getCustomerEmail());
+            pstmt.setString(2, contact.getPhoneOne());
+            pstmt.setString(3, contact.getPhoneTwo());
+            pstmt.setString(4, contact.getPreferredContact());
+            pstmt.setString(5, contact.getAlternateContact());
+            pstmt.setInt(6, contact.getContactId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

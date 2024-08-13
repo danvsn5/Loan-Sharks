@@ -25,4 +25,20 @@ public class LoanDAO {
         }
     }
 
+    public void updateLoan(ILoan loan) {
+        String sql = "UPDATE loan SET customerId = ?, principal = ?, rate = ?, durationId = ?, paymentId = ? WHERE loanId = ?";
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, loan.getCustomerId());
+            pstmt.setDouble(2, loan.getPrincipal());
+            pstmt.setDouble(3, loan.getRate());
+            pstmt.setInt(4, loan.getDuration().getDurationId());
+            pstmt.setInt(5, loan.getPayment().getPaymentId());
+            pstmt.setInt(6, loan.getLoanId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

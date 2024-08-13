@@ -35,4 +35,23 @@ public class CustomerEmployerDAO {
           System.out.println(e.getMessage());
       }
   }
+
+    public void updateCustomerEmployer(CustomerEmployer employer) {
+        String sql = "UPDATE customer_employer SET employerName = ?, employerAddressId = ?, employerEmail = ?, employerWebsite = ?, employerPhone = ?, ownerOfCompany = ? WHERE employerId = ?";
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    
+            pstmt.setString(1, employer.getEmployerName());
+            pstmt.setInt(2, employer.getEmployerAddress().getAddressId());
+            pstmt.setString(3, employer.getEmployerEmail());
+            pstmt.setString(4, employer.getEmployerWebsite());
+            pstmt.setString(5, employer.getEmployerPhone());
+            pstmt.setBoolean(6, employer.getOwnerOfCompany());
+            pstmt.setInt(7, employer.getEmployerId());
+    
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
