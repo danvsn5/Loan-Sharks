@@ -32,6 +32,7 @@ public class InitialiseDatabase {
             + "dateOfBirth DATE, "
             + "occupation VARCHAR(100), "
             + "residency VARCHAR(50), "
+            + "notes VARCHAR(200), "
             + "physicalAddressId VARCHAR(50), "
             + "mailingAddressId VARCHAR(50), "
             + "contactId VARCHAR(50), "

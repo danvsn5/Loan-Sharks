@@ -66,6 +66,7 @@ public class CustomerDAOTest {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
+            "Allergic to peanuts",
             physicalAddress,
             physicalAddress,
             contact,
@@ -97,6 +98,7 @@ public class CustomerDAOTest {
         Assertions.assertEquals(LocalDate.of(2024, 8, 6), actualDateOfBirth);
         Assertions.assertEquals("Engineer", rs.getString("occupation"));
         Assertions.assertEquals("NZ Citizen", rs.getString("residency"));
+        Assertions.assertEquals("Allergic to peanuts", rs.getString("notes"));
         Assertions.assertEquals(physicalAddress.getAddressId(), rs.getInt("physicalAddressId"));
         Assertions.assertEquals(physicalAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
@@ -120,6 +122,7 @@ public class CustomerDAOTest {
     customer.setDateOfBirth(LocalDate.of(2024, 8, 7));
     customer.setOccupation("Doctor");
     customer.setResidency("NZ Permanent Resident");
+    customer.setNotes("Smells like burning crayons");
     customer.setPhysicalAddress(employerAddress);
     customer.setMailingAddress(employerAddress);
     customer.setContact(contact);
@@ -143,6 +146,7 @@ public class CustomerDAOTest {
         Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
         Assertions.assertEquals("NZ Permanent Resident", rs.getString("residency"));
+        Assertions.assertEquals("Smells like burning crayons", rs.getString("notes"));
         Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("physicalAddressId"));
         Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));

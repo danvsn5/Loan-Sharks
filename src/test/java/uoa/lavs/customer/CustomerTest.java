@@ -39,6 +39,7 @@ public class CustomerTest {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
+            "Smells like burning crayons",
             physicalAddress,
             physicalAddress,
             contact,
@@ -132,6 +133,17 @@ public class CustomerTest {
   public void testSetResidency() {
     customer.setResidency("AUS Citizen");
     assertEquals("AUS Citizen", customer.getResidency());
+  }
+
+  @Test
+  public void testGetNotes() {
+    assertEquals("Smells like burning crayons", customer.getNotes());
+  }
+
+  @Test
+  public void testSetNotes() {
+    customer.setNotes("Allergic to curry");
+    assertEquals("Allergic to curry", customer.getNotes());
   }
 
   @Test

@@ -11,6 +11,7 @@ public abstract class Customer implements ICustomer {
   private LocalDate dateOfBirth;
   private String occupation;
   private String residency;
+  private String notes;
   private Address physicalAddress;
   private Address mailingAddress;
   private CustomerContact contact;
@@ -25,6 +26,7 @@ public abstract class Customer implements ICustomer {
       LocalDate dateOfBirth,
       String occupation,
       String residency,
+      String notes,
       Address physicalAddress,
       Address mailingAddress,
       CustomerContact contact,
@@ -37,6 +39,7 @@ public abstract class Customer implements ICustomer {
     this.dateOfBirth = dateOfBirth;
     this.occupation = occupation;
     this.residency = residency;
+    this.notes = notes;
     this.physicalAddress = physicalAddress;
     this.mailingAddress = mailingAddress;
     this.contact = contact;
@@ -81,6 +84,11 @@ public abstract class Customer implements ICustomer {
   @Override
   public String getResidency() {
     return this.residency;
+  }
+
+  @Override
+  public String getNotes() {
+    return this.notes;
   }
 
   @Override
@@ -141,6 +149,11 @@ public abstract class Customer implements ICustomer {
   @Override
   public void setResidency(String residency) {
     this.residency = residency;
+  }
+
+  @Override
+  public void setNotes(String notes) {
+    this.notes = notes;
   }
 
   @Override

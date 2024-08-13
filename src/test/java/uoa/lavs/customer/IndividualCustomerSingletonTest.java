@@ -44,6 +44,7 @@ public class IndividualCustomerSingletonTest {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
+            "Allergic to peanuts",
             physicalAddress,
             physicalAddress,
             contact,

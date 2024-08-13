@@ -43,6 +43,7 @@ public class IndividualCustomerTest {
             dateOfBirth,
             "Software Engineer",
             "NZ Citizen",
+            "Allergic to peanuts",
             physicalAddress,
             physicalAddress,
             contact,
@@ -60,6 +61,7 @@ public class IndividualCustomerTest {
     assertEquals(dateOfBirth, individualCustomer.getDateOfBirth());
     assertEquals("Software Engineer", individualCustomer.getOccupation());
     assertEquals("NZ Citizen", individualCustomer.getResidency());
+    assertEquals("Allergic to peanuts", individualCustomer.getNotes());
     assertEquals(physicalAddress, individualCustomer.getPhysicalAddress());
     assertEquals(physicalAddress, individualCustomer.getMailingAddress());
     assertEquals(contact, individualCustomer.getContact());

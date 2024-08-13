@@ -18,8 +18,8 @@ public class CustomerDAO {
   public void addCustomer(ICustomer customer) {
     String sql =
         "INSERT INTO customer (customerId, title, firstName, middleName, lastName, dateOfBirth,"
-            + " occupation, residency, physicalAddressId, mailingAddressId, contactId, employerId)"
-            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + " occupation, residency, notes, physicalAddressId, mailingAddressId, contactId,"
+            + " employerId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customer.getCustomerId());
@@ -30,6 +30,42 @@ public class CustomerDAO {
       pstmt.setDate(6, Date.valueOf(customer.getDateOfBirth()));
       pstmt.setString(7, customer.getOccupation());
       pstmt.setString(8, customer.getResidency());
+      pstmt.setString(9, customer.getNotes());
+      pstmt.setInt(
+          10,
+          customer.getPhysicalAddress() != null
+              ? customer.getPhysicalAddress().getAddressId()
+              : null);
+      pstmt.setInt(
+          11,
+          customer.getMailingAddress() != null
+              ? customer.getMailingAddress().getAddressId()
+              : null);
+      pstmt.setInt(12, customer.getContact() != null ? customer.getContact().getContactId() : null);
+      pstmt.setInt(
+          13, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
+
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public void updateCustomer(ICustomer customer) {
+    String sql =
+        "UPDATE customer SET title = ?, firstName = ?, middleName = ?, lastName = ?, dateOfBirth ="
+            + " ?, occupation = ?, residency = ?, notes = ?, physicalAddressId = ?,"
+            + " mailingAddressId = ?, contactId = ?, employerId = ? WHERE customerId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, customer.getTitle());
+      pstmt.setString(2, customer.getFirstName());
+      pstmt.setString(3, customer.getMiddleName());
+      pstmt.setString(4, customer.getLastName());
+      pstmt.setDate(5, Date.valueOf(customer.getDateOfBirth()));
+      pstmt.setString(6, customer.getOccupation());
+      pstmt.setString(7, customer.getResidency());
+      pstmt.setString(8, customer.getNotes());
       pstmt.setInt(
           9,
           customer.getPhysicalAddress() != null
@@ -43,41 +79,7 @@ public class CustomerDAO {
       pstmt.setInt(11, customer.getContact() != null ? customer.getContact().getContactId() : null);
       pstmt.setInt(
           12, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
-
-      pstmt.executeUpdate();
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-  }
-
-  public void updateCustomer(ICustomer customer) {
-    String sql =
-        "UPDATE customer SET title = ?, firstName = ?, middleName = ?, lastName = ?, dateOfBirth ="
-            + " ?, occupation = ?, residency = ?, physicalAddressId = ?, mailingAddressId = ?,"
-            + " contactId = ?, employerId = ? WHERE customerId = ?";
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, customer.getTitle());
-      pstmt.setString(2, customer.getFirstName());
-      pstmt.setString(3, customer.getMiddleName());
-      pstmt.setString(4, customer.getLastName());
-      pstmt.setDate(5, Date.valueOf(customer.getDateOfBirth()));
-      pstmt.setString(6, customer.getOccupation());
-      pstmt.setString(7, customer.getResidency());
-      pstmt.setInt(
-          8,
-          customer.getPhysicalAddress() != null
-              ? customer.getPhysicalAddress().getAddressId()
-              : null);
-      pstmt.setInt(
-          9,
-          customer.getMailingAddress() != null
-              ? customer.getMailingAddress().getAddressId()
-              : null);
-      pstmt.setInt(10, customer.getContact() != null ? customer.getContact().getContactId() : null);
-      pstmt.setInt(
-          11, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
-      pstmt.setString(12, customer.getCustomerId());
+      pstmt.setString(13, customer.getCustomerId());
 
       pstmt.executeUpdate();
     } catch (SQLException e) {
@@ -118,6 +120,7 @@ public class CustomerDAO {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
+            "Smells like burning crayons",
             physicalAddress,
             physicalAddress,
             contact,
