@@ -59,4 +59,29 @@ public class AddressDAO {
       System.out.println(e.getMessage());
     }
   }
+
+  public Address getAddress(int addressId) {
+    String sql = "SELECT * FROM customer_address WHERE addressId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, addressId);
+      ResultSet rs = pstmt.executeQuery();
+
+      if (rs.next()) {
+        String addressType = rs.getString("addressType");
+        String addressLineOne = rs.getString("addressLineOne");
+        String addressLineTwo = rs.getString("addressLineTwo");
+        String suburb = rs.getString("suburb");
+        String postCode = rs.getString("postCode");
+        String city = rs.getString("city");
+        String country = rs.getString("country");
+
+        return new Address(
+            addressType, addressLineOne, addressLineTwo, suburb, postCode, city, country);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return null;
+  }
 }

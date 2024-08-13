@@ -98,11 +98,46 @@ public class AddressDAOTest {
     }
   }
 
+  @Test
+  public void testGetAddress() {
+    Address address =
+        new Address("Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+    addressDAO.addAddress(address);
+    int addressId = address.getAddressId();
+
+    Address retrievedAddress = addressDAO.getAddress(addressId);
+
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement stmt =
+            conn.prepareStatement("SELECT * FROM customer_address WHERE addressId = ?")) {
+      stmt.setInt(1, addressId);
+
+      try (ResultSet rs = stmt.executeQuery()) {
+        Assertions.assertTrue(rs.next(), "Address should be updated in the database");
+        Assertions.assertEquals(retrievedAddress.getAddressType(), rs.getString("addressType"));
+        Assertions.assertEquals(
+            retrievedAddress.getAddressLineOne(), rs.getString("addressLineOne"));
+        Assertions.assertEquals(
+            retrievedAddress.getAddressLineTwo(), rs.getString("addressLineTwo"));
+        Assertions.assertEquals(retrievedAddress.getSuburb(), rs.getString("suburb"));
+        Assertions.assertEquals(retrievedAddress.getPostCode(), rs.getString("postCode"));
+        Assertions.assertEquals(retrievedAddress.getCity(), rs.getString("city"));
+        Assertions.assertEquals(retrievedAddress.getCountry(), rs.getString("country"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      Assertions.fail("Database query failed");
+    } finally {
+      DatabaseConnection.close(null);
+    }
+  }
+
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);
     if (!dbFile.delete()) {
-      throw new RuntimeException("Failed to delete test database file: " + dbFile.getAbsolutePath());
+      throw new RuntimeException(
+          "Failed to delete test database file: " + dbFile.getAbsolutePath());
     }
   }
 }
