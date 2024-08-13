@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +14,7 @@ import uoa.lavs.customer.Address;
 import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.Phone;
 import uoa.lavs.sql.DatabaseConnection;
 import uoa.lavs.sql.DatabaseState;
 import uoa.lavs.sql.InitialiseDatabase;
@@ -31,6 +31,8 @@ public class CustomerDAOTest {
   CustomerDAO customerDAO;
   IndividualCustomer customer;
   LocalDate dateOfBirth;
+  Phone phoneOne;
+  Phone phoneTwo;
 
   static File dbFile;
 
@@ -46,7 +48,9 @@ public class CustomerDAOTest {
     dateOfBirth = LocalDate.of(2024, 8, 6);
     physicalAddress =
         new Address("Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe");
-    contact = new CustomerContact("abc@gmail.com", "123456789", "987654321", "mobile sms", "email");
+    phoneOne = new Phone("mobile", "1234567890");
+    phoneTwo = new Phone("home", "0987654321");
+    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
     employerAddress =
         new Address(
             "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe");
@@ -66,12 +70,11 @@ public class CustomerDAOTest {
             physicalAddress,
             contact,
             employer);
-    
-      addressDAO.addAddress(physicalAddress);
-      addressDAO.addAddress(employerAddress);
-      contactDAO.addCustomerContact(contact);
-      employerDAO.addCustomerEmployer(employer);
 
+    addressDAO.addAddress(physicalAddress);
+    addressDAO.addAddress(employerAddress);
+    contactDAO.addCustomerContact(contact);
+    employerDAO.addCustomerEmployer(employer);
   }
 
   @Test
@@ -79,7 +82,8 @@ public class CustomerDAOTest {
     customerDAO.addCustomer(customer);
 
     try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM customer WHERE customerId = ?")) {
+        PreparedStatement stmt =
+            conn.prepareStatement("SELECT * FROM customer WHERE customerId = ?")) {
       stmt.setString(1, "000001");
 
       try (ResultSet rs = stmt.executeQuery()) {
@@ -90,7 +94,7 @@ public class CustomerDAOTest {
         Assertions.assertEquals("Mun", rs.getString("middleName"));
         Assertions.assertEquals("Guy", rs.getString("lastName"));
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
-            Assertions.assertEquals(LocalDate.of(2024, 8, 6), actualDateOfBirth);
+        Assertions.assertEquals(LocalDate.of(2024, 8, 6), actualDateOfBirth);
         Assertions.assertEquals("Engineer", rs.getString("occupation"));
         Assertions.assertEquals("NZ Citizen", rs.getString("residency"));
         Assertions.assertEquals(physicalAddress.getAddressId(), rs.getInt("physicalAddressId"));
@@ -124,7 +128,8 @@ public class CustomerDAOTest {
     customerDAO.updateCustomer(customer);
 
     try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM customer WHERE customerId = ?")) {
+        PreparedStatement stmt =
+            conn.prepareStatement("SELECT * FROM customer WHERE customerId = ?")) {
       stmt.setString(1, "000001");
 
       try (ResultSet rs = stmt.executeQuery()) {
@@ -135,7 +140,7 @@ public class CustomerDAOTest {
         Assertions.assertEquals("Mun Mun", rs.getString("middleName"));
         Assertions.assertEquals("Guy Guy", rs.getString("lastName"));
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
-            Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
+        Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
         Assertions.assertEquals("NZ Permanent Resident", rs.getString("residency"));
         Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("physicalAddressId"));
@@ -155,7 +160,8 @@ public class CustomerDAOTest {
   public void tearDown() {
     DatabaseState.setActiveDB(false);
     if (!dbFile.delete()) {
-      throw new RuntimeException("Failed to delete test database file: " + dbFile.getAbsolutePath());
+      throw new RuntimeException(
+          "Failed to delete test database file: " + dbFile.getAbsolutePath());
     }
   }
 }

@@ -11,6 +11,7 @@ import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.ICustomer;
 import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.Phone;
 import uoa.lavs.sql.DatabaseConnection;
 
 public class CustomerDAO {
@@ -51,9 +52,9 @@ public class CustomerDAO {
 
   public void updateCustomer(ICustomer customer) {
     String sql =
-        "UPDATE customer SET title = ?, firstName = ?, middleName = ?, lastName = ?, dateOfBirth = ?,"
-            + " occupation = ?, residency = ?, physicalAddressId = ?, mailingAddressId = ?, contactId = ?, employerId = ?"
-            + " WHERE customerId = ?";
+        "UPDATE customer SET title = ?, firstName = ?, middleName = ?, lastName = ?, dateOfBirth ="
+            + " ?, occupation = ?, residency = ?, physicalAddressId = ?, mailingAddressId = ?,"
+            + " contactId = ?, employerId = ? WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customer.getTitle());
@@ -91,14 +92,21 @@ public class CustomerDAO {
     CustomerContact contact;
     Address employerAddress;
     CustomerEmployer employer;
+    Phone phoneOne;
+    Phone phoneTwo;
+
     dateOfBirth = LocalDate.of(2024, 8, 6);
     physicalAddress =
         new Address("Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe");
-    contact = new CustomerContact("abc@gmail.com", "123456789", "987654321", "mobile sms", "email");
+    phoneOne = new Phone("mobile", "1234567890");
+    phoneTwo = new Phone("home", "0987654321");
+    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
     employerAddress =
         new Address(
             "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe");
-    employer = new CustomerEmployer("Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
+    employer =
+        new CustomerEmployer(
+            "Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
 
     customer =
         new IndividualCustomer(
@@ -114,21 +122,20 @@ public class CustomerDAO {
             physicalAddress,
             contact,
             employer);
-    
 
     AddressDAO addressdao = new AddressDAO();
     CustomerContactDAO contactdao = new CustomerContactDAO();
     CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
-    CustomerDAO dao = new CustomerDAO();  
+    CustomerDAO dao = new CustomerDAO();
 
     addressdao.addAddress(customer.getPhysicalAddress());
     addressdao.addAddress(customer.getMailingAddress());
     addressdao.addAddress(customer.getEmployer().getEmployerAddress());
-    
+
     contactdao.addCustomerContact(customer.getContact());
-    
+
     employerdao.addCustomerEmployer(customer.getEmployer());
- 
+
     dao.addCustomer(customer);
   }
 }

@@ -11,6 +11,8 @@ public class IndividualCustomerTest {
   private IndividualCustomer individualCustomer;
   private LocalDate dateOfBirth;
   private Address physicalAddress;
+  private Phone phoneOne;
+  private Phone phoneTwo;
   private CustomerContact contact;
   private Address employerAddress;
   private CustomerEmployer employer;
@@ -20,8 +22,11 @@ public class IndividualCustomerTest {
     dateOfBirth = LocalDate.of(2000, 1, 1);
     physicalAddress =
         new Address("Commercial", "999 Unreal Pl", "", "Arashiyama", "6160007", "Kyoto", "Japan");
+    phoneOne = new Phone("mobile", "1234567890");
+    phoneTwo = new Phone("home", "0987654321");
     contact =
-        new CustomerContact("thisplaceisunreal@gmail.com", "10101010", "", "mobile call", "email");
+        new CustomerContact(
+            "thisplaceisunreal@gmail.com", phoneOne, phoneTwo, "mobile call", "email");
     employerAddress =
         new Address("Rural", "1 Real Pl", "", "Auckland CBD", "1010", "Auckland", "New Zealand");
     employer =

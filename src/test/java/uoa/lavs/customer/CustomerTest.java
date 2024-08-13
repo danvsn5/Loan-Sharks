@@ -10,6 +10,8 @@ public class CustomerTest {
   private Customer customer;
   private LocalDate dateOfBirth;
   private Address physicalAddress;
+  private Phone phoneOne;
+  private Phone phoneTwo;
   private CustomerContact contact;
   private Address employerAddress;
   private CustomerEmployer employer;
@@ -19,7 +21,9 @@ public class CustomerTest {
     dateOfBirth = LocalDate.of(2024, 8, 6);
     physicalAddress =
         new Address("Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe");
-    contact = new CustomerContact("abc@gmail.com", "123456789", "987654321", "mobile sms", "email");
+    phoneOne = new Phone("mobile", "1234567890");
+    phoneTwo = new Phone("home", "0987654321");
+    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
     employerAddress =
         new Address(
             "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe");
@@ -160,7 +164,7 @@ public class CustomerTest {
   @Test
   public void testSetContact() {
     CustomerContact newContact =
-        new CustomerContact("123@gmail.com", "999999999", "", "mobile call", "home call");
+        new CustomerContact("123@gmail.com", phoneTwo, phoneOne, "mobile call", "home call");
     customer.setContact(newContact);
     assertEquals(newContact, customer.getContact());
   }
