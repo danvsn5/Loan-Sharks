@@ -101,6 +101,8 @@ public class AddressDAOTest {
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);
-
+    if (!dbFile.delete()) {
+      throw new RuntimeException("Failed to delete test database file: " + dbFile.getAbsolutePath());
+    }
   }
 }
