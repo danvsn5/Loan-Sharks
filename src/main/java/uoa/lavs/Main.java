@@ -88,7 +88,7 @@ public class Main extends Application {
     // activates antialiasing for text in application !IMPORTANT
     System.setProperty("prism.lcdtext", "false");
 
-    SceneManager.addScene(AppUI.LOGIN, loadFxml("customer_contact_summary"));
+    SceneManager.addScene(AppUI.LOGIN, loadFxml("primary_address_details_summary"));
     System.out.println("Loading login scene");
     scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1280, 720);
     // imports main index.css file
