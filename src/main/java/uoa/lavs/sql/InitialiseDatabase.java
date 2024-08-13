@@ -52,7 +52,7 @@ public class InitialiseDatabase {
   private static void createCustomerContactEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_contact (\n"
-            + "contactId INT AUTO_INCREMENT PRIMARY KEY, "
+            + "contactId INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "customerEmail VARCHAR(100), "
             + "phoneOne VARCHAR(20), "
             + "phoneTwo VARCHAR(20), "
@@ -70,7 +70,7 @@ public class InitialiseDatabase {
   private static void createCustomerAddressEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_address (\n"
-            + "addressId INT AUTO_INCREMENT PRIMARY KEY, "
+            + "addressId INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "addressType VARCHAR(50), "
             + "addressLineOne VARCHAR(100), "
             + "addressLineTwo VARCHAR(100), "
@@ -90,7 +90,7 @@ public class InitialiseDatabase {
   private static void createCustomerEmployerEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_employer ("
-            + "employerId INT AUTO_INCREMENT PRIMARY KEY, "
+            + "employerId INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "employerName VARCHAR(100), "
             + "employerAddressId VARCHAR(50), "
             + "employerEmail VARCHAR(100), "
@@ -110,7 +110,7 @@ public class InitialiseDatabase {
   private static void createLoanEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan (\n"
-            + "loanId INT PRIMARY KEY, "
+            + "loanId INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "customerId VARCHAR(50), "
             + "principal DOUBLE, "
             + "rate DOUBLE, "
@@ -131,7 +131,7 @@ public class InitialiseDatabase {
   private static void createLoanDurationEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_duration (\n"
-            + "durationId INT PRIMARY KEY, "
+            + "durationId INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "startDate DATE, "
             + "period INT, "
             + "loanTerm INT"
@@ -147,7 +147,7 @@ public class InitialiseDatabase {
   private static void createLoanPaymentEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_payment (\n"
-            + "paymentId INT PRIMARY KEY, "
+            + "paymentId INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "compounding VARCHAR(50), "
             + "paymentFrequency VARCHAR(50), "
             + "paymentAmount VARCHAR(50), "
