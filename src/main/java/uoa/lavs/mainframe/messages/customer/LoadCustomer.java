@@ -12,7 +12,7 @@ public class LoadCustomer implements Message, MessageDescription {
 
     public class Fields {
         public static final String[] INPUT = {"id"};
-        public static final String[] OUTPUT = {"citizenship", "dob", "name", "occupation", "title", "visa"};
+        public static final String[] OUTPUT = {"citizenship", "dob", "name", "occupation", "status", "title", "visa"};
 
         public static final String CUSTOMER_ID = "id";
         public static final String TITLE = "title";
@@ -21,12 +21,13 @@ public class LoadCustomer implements Message, MessageDescription {
         public static final String OCCUPATION = "occupation";
         public static final String CITIZENSHIP = "citizenship";
         public static final String VISA = "visa";
+        public static final String STATUS = "status";
     }
 
     @Override
     public Status send(Connection connection) {
         Request request = new Request(REQUEST_CODE);
-        if (customerId != null) request.setValue(Fields.CUSTOMER_ID, customerId.toString());
+        if (customerId != null) request.setValue(Fields.CUSTOMER_ID, customerId);
         response = connection.send(request);
         return response.getStatus();
     }
@@ -83,6 +84,13 @@ public class LoadCustomer implements Message, MessageDescription {
     public String getVisaFromServer()
      {
         String key = Fields.VISA;
+        return response.getValue(key);
+     }
+
+    // gets status from server
+    public String getStatusFromServer()
+     {
+        String key = Fields.STATUS;
         return response.getValue(key);
      }
 

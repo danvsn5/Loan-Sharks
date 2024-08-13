@@ -2,7 +2,7 @@ package uoa.lavs.mainframe.messages.customer;
 
 import uoa.lavs.mainframe.*;
 
-public class UpdateCustomerPhoneNumber implements Message, MessageDescription {
+public class UpdateCustomerPhoneNumber implements Message, MessageDescription, UpdateCustomerChildMessage {
     public static final int REQUEST_CODE = 1203;
     private Response response;
     private String customerId;
@@ -14,7 +14,7 @@ public class UpdateCustomerPhoneNumber implements Message, MessageDescription {
 
     public class Fields {
         public static final String[] INPUT = {"flags", "id", "number", "phone", "prefix", "type"};
-        public static final String[] OUTPUT = {"flags", "phone", "prefix", "type"};
+        public static final String[] OUTPUT = {"flags", "number", "phone", "prefix", "type"};
 
         public static final String CUSTOMER_ID = "id";
         public static final String NUMBER = "number";
@@ -28,11 +28,11 @@ public class UpdateCustomerPhoneNumber implements Message, MessageDescription {
     @Override
     public Status send(Connection connection) {
         Request request = new Request(REQUEST_CODE);
-        if (customerId != null) request.setValue(Fields.CUSTOMER_ID, customerId.toString());
+        if (customerId != null) request.setValue(Fields.CUSTOMER_ID, customerId);
         if (number != null) request.setValue(Fields.NUMBER, number.toString());
-        if (type != null) request.setValue(Fields.TYPE, type.toString());
-        if (prefix != null) request.setValue(Fields.PREFIX, prefix.toString());
-        if (phoneNumber != null) request.setValue(Fields.PHONE_NUMBER, phoneNumber.toString());
+        if (type != null) request.setValue(Fields.TYPE, type);
+        if (prefix != null) request.setValue(Fields.PREFIX, prefix);
+        if (phoneNumber != null) request.setValue(Fields.PHONE_NUMBER, phoneNumber);
         if (flags != null) request.setValue(Fields.IS_PRIMARY, flags.toString());
         if (flags != null) request.setValue(Fields.CAN_SEND_TXT, flags.toString());
         response = connection.send(request);
@@ -85,6 +85,15 @@ public class UpdateCustomerPhoneNumber implements Message, MessageDescription {
      {
         flags &= 253;
         if (value) flags |= 2;
+     }
+
+    // gets number from server
+    public Integer getNumberFromServer()
+     {
+        String key = Fields.NUMBER;
+        String value = response.getValue(key);
+        if (value == null) return null;
+        return Integer.parseInt(value);
      }
 
     // gets type from server

@@ -30,6 +30,7 @@ public class DatabaseHelper {
                 .put(LoadCustomer.Fields.DATE_OF_BIRTH, "12-03-1945")
                 .put(LoadCustomer.Fields.NAME, name)
                 .put(LoadCustomer.Fields.OCCUPATION, "Test dummy")
+                .put(LoadCustomer.Fields.STATUS, "Active")
                 .put(LoadCustomer.Fields.TITLE, "Mr")
                 .put(LoadCustomer.Fields.VISA, "n/a")
                 .put(NitriteConnection.Internal.NEXT_LOAN_ID, 10);
@@ -112,6 +113,8 @@ public class DatabaseHelper {
 
     private static Document appendCustomerEmployer(Document document) {
         Document employer = Document.createDocument()
+                .put(LoadCustomerEmployer.Fields.NUMBER, "1")
+                .put(LoadCustomerEmployer.Fields.NAME, "The Best Employer")
                 .put(LoadCustomerEmployer.Fields.LINE_1, "5 Somewhere Lane")
                 .put(LoadCustomerEmployer.Fields.LINE_2, "Nowhere")
                 .put(LoadCustomerEmployer.Fields.SUBURB, "Important")

@@ -3,15 +3,15 @@ package uoa.lavs.customer;
 public class CustomerContact {
   private int contactId;
   private String customerEmail;
-  private String phoneOne;
-  private String phoneTwo;
+  private Phone phoneOne;
+  private Phone phoneTwo;
   private String preferredContact;
   private String alternateContact;
 
   public CustomerContact(
       String email,
-      String phoneOne,
-      String phoneTwo,
+      Phone phoneOne,
+      Phone phoneTwo,
       String preferredContact,
       String alternateContact) {
     this.customerEmail = email;
@@ -29,11 +29,11 @@ public class CustomerContact {
     return this.customerEmail;
   }
 
-  public String getPhoneOne() {
+  public Phone getPhoneOne() {
     return this.phoneOne;
   }
 
-  public String getPhoneTwo() {
+  public Phone getPhoneTwo() {
     return this.phoneTwo;
   }
 
@@ -53,11 +53,11 @@ public class CustomerContact {
     this.customerEmail = email;
   }
 
-  public void setPhoneOne(String phone) {
+  public void setPhoneOne(Phone phone) {
     this.phoneOne = phone;
   }
 
-  public void setPhoneTwo(String phone) {
+  public void setPhoneTwo(Phone phone) {
     this.phoneTwo = phone;
   }
 

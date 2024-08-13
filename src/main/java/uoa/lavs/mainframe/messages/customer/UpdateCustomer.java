@@ -18,7 +18,7 @@ public class UpdateCustomer implements Message, MessageDescription {
 
     public class Fields {
         public static final String[] INPUT = {"citizenship", "dob", "id", "name", "occupation", "title", "visa"};
-        public static final String[] OUTPUT = {"citizenship", "dob", "id", "name", "occupation", "title", "visa"};
+        public static final String[] OUTPUT = {"citizenship", "dob", "id", "name", "occupation", "status", "title", "visa"};
 
         public static final String CUSTOMER_ID = "id";
         public static final String TITLE = "title";
@@ -27,21 +27,22 @@ public class UpdateCustomer implements Message, MessageDescription {
         public static final String OCCUPATION = "occupation";
         public static final String CITIZENSHIP = "citizenship";
         public static final String VISA = "visa";
+        public static final String STATUS = "status";
     }
 
     @Override
     public Status send(Connection connection) {
         Request request = new Request(REQUEST_CODE);
-        if (customerId != null) request.setValue(Fields.CUSTOMER_ID, customerId.toString());
-        if (title != null) request.setValue(Fields.TITLE, title.toString());
-        if (name != null) request.setValue(Fields.NAME, name.toString());
+        if (customerId != null) request.setValue(Fields.CUSTOMER_ID, customerId);
+        if (title != null) request.setValue(Fields.TITLE, title);
+        if (name != null) request.setValue(Fields.NAME, name);
         if (dateOfBirth != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             request.setValue(Fields.DATE_OF_BIRTH, formatter.format(dateOfBirth));
         }
-        if (occupation != null) request.setValue(Fields.OCCUPATION, occupation.toString());
-        if (citizenship != null) request.setValue(Fields.CITIZENSHIP, citizenship.toString());
-        if (visa != null) request.setValue(Fields.VISA, visa.toString());
+        if (occupation != null) request.setValue(Fields.OCCUPATION, occupation);
+        if (citizenship != null) request.setValue(Fields.CITIZENSHIP, citizenship);
+        if (visa != null) request.setValue(Fields.VISA, visa);
         response = connection.send(request);
         return response.getStatus();
     }
@@ -161,6 +162,13 @@ public class UpdateCustomer implements Message, MessageDescription {
     public String getVisaFromServer()
      {
         String key = Fields.VISA;
+        return response.getValue(key);
+     }
+
+    // gets status from server
+    public String getStatusFromServer()
+     {
+        String key = Fields.STATUS;
         return response.getValue(key);
      }
 

@@ -48,6 +48,7 @@ public class NitriteConnection implements Connection {
     private void initializeMessageProcessors() {
         messageProcessors.put(All.FindCustomer, new FindCustomerProcessor(database));
         messageProcessors.put(All.FindCustomerAdvanced, new FindCustomerAdvancedProcessor(database));
+        messageProcessors.put(All.FindLoan, new FindLoanProcessor(database));
         messageProcessors.put(All.LoadCustomer, new LoadCustomerProcessor(database));
         messageProcessors.put(All.LoadCustomerAddress,
                 new LoadCustomerItemProcessor(database,
@@ -66,6 +67,7 @@ public class NitriteConnection implements Connection {
                         "employers",
                         MessageErrorStatus.CUSTOMER_EMPLOYER_NOT_FOUND,
                         LoadCustomerEmployer.Fields.OUTPUT));
+        messageProcessors.put(All.LoadCustomerEmployers, new LoadCustomerEmployersProcessor(database));
         messageProcessors.put(All.LoadCustomerPhoneNumber,
                 new LoadCustomerItemProcessor(database,
                         "phoneNumbers",
