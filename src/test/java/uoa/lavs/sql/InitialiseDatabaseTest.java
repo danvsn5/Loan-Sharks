@@ -1,4 +1,4 @@
-package uoa.lavs.sql.customer;
+package uoa.lavs.sql;
 
 import java.io.File;
 import java.sql.Connection;
@@ -12,9 +12,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uoa.lavs.sql.DatabaseConnection;
-import uoa.lavs.sql.DatabaseState;
-import uoa.lavs.sql.InitialiseDatabase;
 
 public class InitialiseDatabaseTest {
   DatabaseConnection conn;
