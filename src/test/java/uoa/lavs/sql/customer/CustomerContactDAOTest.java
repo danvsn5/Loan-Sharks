@@ -107,6 +107,46 @@ public class CustomerContactDAOTest {
     }
   }
 
+  @Test
+  public void testGetCustomerContact() {
+    Phone phoneOne = new Phone("mobile", "1234567890");
+    Phone phoneTwo = new Phone("home", "0987654321");
+    CustomerContact contact =
+        new CustomerContact("tingtingguyguy@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
+    customerContactDAO.addCustomerContact(contact);
+
+    int contactId = contact.getContactId();
+    CustomerContact retrievedContact = customerContactDAO.getCustomerContact(contactId);
+
+    try (Connection conn = DatabaseConnection.connect()) {
+      PreparedStatement stmt =
+          conn.prepareStatement("SELECT * FROM customer_contact WHERE contactId = ?");
+      stmt.setInt(1, contactId);
+
+      try (ResultSet rs = stmt.executeQuery()) {
+        Assertions.assertTrue(rs.next(), "Customer contact should be in the database");
+        Assertions.assertEquals(retrievedContact.getCustomerEmail(), rs.getString("customerEmail"));
+        Assertions.assertEquals(
+            retrievedContact.getPhoneOne().getType(), rs.getString("phoneOneType"));
+        Assertions.assertEquals(
+            retrievedContact.getPhoneOne().getPhoneNumber(), rs.getString("phoneOneNumber"));
+        Assertions.assertEquals(
+            retrievedContact.getPhoneTwo().getType(), rs.getString("phoneTwoType"));
+        Assertions.assertEquals(
+            retrievedContact.getPhoneTwo().getPhoneNumber(), rs.getString("phoneTwoNumber"));
+        Assertions.assertEquals(
+            retrievedContact.getPreferredContact(), rs.getString("preferredContact"));
+        Assertions.assertEquals(
+            retrievedContact.getAlternateContact(), rs.getString("alternateContact"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      Assertions.fail("Database query failed");
+    } finally {
+      DatabaseConnection.close(null);
+    }
+  }
+
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);

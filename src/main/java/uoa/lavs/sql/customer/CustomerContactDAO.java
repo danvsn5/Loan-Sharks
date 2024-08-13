@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import uoa.lavs.customer.CustomerContact;
+import uoa.lavs.customer.Phone;
 import uoa.lavs.sql.DatabaseConnection;
 
 public class CustomerContactDAO {
@@ -56,5 +57,28 @@ public class CustomerContactDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+  }
+
+  public CustomerContact getCustomerContact(int contactId) {
+    String sql = "SELECT * FROM customer_contact WHERE contactId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, contactId);
+      ResultSet rs = pstmt.executeQuery();
+
+      if (rs.next()) {
+        String customerEmail = rs.getString("customerEmail");
+        Phone phoneOne = new Phone(rs.getString("phoneOneType"), rs.getString("phoneOneNumber"));
+        Phone phoneTwo = new Phone(rs.getString("phoneTwoType"), rs.getString("phoneTwoNumber"));
+        String preferredContact = rs.getString("preferredContact");
+        String alternateContact = rs.getString("alternateContact");
+
+        return new CustomerContact(
+            customerEmail, phoneOne, phoneTwo, preferredContact, alternateContact);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return null;
   }
 }
