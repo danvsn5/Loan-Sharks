@@ -88,7 +88,7 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Cumulative Interest" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="654.0" layoutY="482.0" prefHeight="30.0" prefWidth="284.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Cumulative Loan Cost" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1019.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Payoff Date" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="26.0" prefHeight="86.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../css/index.css" text="Loan Summary" textFill="#333333" textOverrun="CLIP">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../css/index.css" text="Loan Summary" textFill="#333333" textOverrun="CLIP">
          <font>
             <Font size="41.0" />
          </font>
