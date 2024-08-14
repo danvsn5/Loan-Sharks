@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uoa.lavs.customer.Address;
+import uoa.lavs.customer.Customer;
 import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.IndividualCustomer;
@@ -151,6 +152,46 @@ public class CustomerDAOTest {
         Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
         Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      Assertions.fail("Database query failed");
+    } finally {
+      DatabaseConnection.close(null);
+    }
+  }
+
+  @Test
+  public void testGetCustomer() {
+    customerDAO.addCustomer(customer);
+
+    Customer retrievedCustomer = customerDAO.getCustomer(customer.getCustomerId());
+
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement stmt =
+            conn.prepareStatement("SELECT * FROM customer WHERE customerId = ?")) {
+      stmt.setString(1, customer.getCustomerId());
+
+      try (ResultSet rs = stmt.executeQuery()) {
+        Assertions.assertTrue(rs.next(), "Customer should be in the database");
+        Assertions.assertEquals(retrievedCustomer.getCustomerId(), rs.getString("customerId"));
+        Assertions.assertEquals(retrievedCustomer.getTitle(), rs.getString("title"));
+        Assertions.assertEquals(retrievedCustomer.getFirstName(), rs.getString("firstName"));
+        Assertions.assertEquals(retrievedCustomer.getMiddleName(), rs.getString("middleName"));
+        Assertions.assertEquals(retrievedCustomer.getLastName(), rs.getString("lastName"));
+        LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
+        Assertions.assertEquals(retrievedCustomer.getDateOfBirth(), actualDateOfBirth);
+        Assertions.assertEquals(retrievedCustomer.getOccupation(), rs.getString("occupation"));
+        Assertions.assertEquals(retrievedCustomer.getResidency(), rs.getString("residency"));
+        Assertions.assertEquals(retrievedCustomer.getNotes(), rs.getString("notes"));
+        Assertions.assertEquals(
+            retrievedCustomer.getPhysicalAddress().getAddressId(), rs.getInt("physicalAddressId"));
+        Assertions.assertEquals(
+            retrievedCustomer.getMailingAddress().getAddressId(), rs.getInt("mailingAddressId"));
+        Assertions.assertEquals(
+            retrievedCustomer.getContact().getContactId(), rs.getInt("contactId"));
+        Assertions.assertEquals(
+            retrievedCustomer.getEmployer().getEmployerId(), rs.getInt("employerId"));
       }
     } catch (SQLException e) {
       e.printStackTrace();

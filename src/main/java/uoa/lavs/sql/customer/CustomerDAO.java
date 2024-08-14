@@ -3,6 +3,7 @@ package uoa.lavs.sql.customer;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import uoa.lavs.customer.Address;
@@ -85,6 +86,58 @@ public class CustomerDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+  }
+
+  public Customer getCustomer(String customerId) {
+    String sql = "SELECT * FROM customer WHERE customerId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, customerId);
+      ResultSet rs = pstmt.executeQuery();
+
+      if (rs.next()) {
+        String title = rs.getString("title");
+        String firstName = rs.getString("firstName");
+        String middleName = rs.getString("middleName");
+        String lastName = rs.getString("lastName");
+        LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
+        String occupation = rs.getString("occupation");
+        String residency = rs.getString("residency");
+        String notes = rs.getString("notes");
+        int physicalAddressId = rs.getInt("physicalAddressId");
+        int mailingAddressId = rs.getInt("mailingAddressId");
+        int contactId = rs.getInt("contactId");
+        int employerId = rs.getInt("employerId");
+
+        // Retrieve related entities
+        AddressDAO addressdao = new AddressDAO();
+        CustomerContactDAO contactdao = new CustomerContactDAO();
+        CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
+
+        Address physicalAddress = addressdao.getAddress(physicalAddressId);
+        Address mailingAddress = addressdao.getAddress(mailingAddressId);
+        CustomerContact contact = contactdao.getCustomerContact(contactId);
+        CustomerEmployer employer = employerdao.getCustomerEmployer(employerId);
+
+        return new IndividualCustomer(
+            customerId,
+            title,
+            firstName,
+            middleName,
+            lastName,
+            dateOfBirth,
+            occupation,
+            residency,
+            notes,
+            physicalAddress,
+            mailingAddress,
+            contact,
+            employer);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return null;
   }
 
   public static void main(String[] args) {
