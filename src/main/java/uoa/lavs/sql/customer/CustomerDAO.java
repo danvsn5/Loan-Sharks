@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import uoa.lavs.customer.Address;
 import uoa.lavs.customer.Customer;
 import uoa.lavs.customer.CustomerContact;
@@ -109,7 +110,6 @@ public class CustomerDAO {
         int contactId = rs.getInt("contactId");
         int employerId = rs.getInt("employerId");
 
-        // Retrieve related entities
         AddressDAO addressdao = new AddressDAO();
         CustomerContactDAO contactdao = new CustomerContactDAO();
         CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
@@ -134,6 +134,121 @@ public class CustomerDAO {
             contact,
             employer);
       }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return null;
+  }
+
+  public ArrayList<Customer> getCustomersByName(
+      String firstName, String middleName, String lastName) {
+    ArrayList<Customer> customers = new ArrayList<>();
+
+    String sql = "SELECT * FROM customer WHERE firstName = ? AND middleName = ? AND lastName = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, firstName);
+      pstmt.setString(2, middleName);
+      pstmt.setString(3, lastName);
+
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        String customerId = rs.getString("customerId");
+        String title = rs.getString("title");
+        LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
+        String occupation = rs.getString("occupation");
+        String residency = rs.getString("residency");
+        String notes = rs.getString("notes");
+        int physicalAddressId = rs.getInt("physicalAddressId");
+        int mailingAddressId = rs.getInt("mailingAddressId");
+        int contactId = rs.getInt("contactId");
+        int employerId = rs.getInt("employerId");
+
+        AddressDAO addressdao = new AddressDAO();
+        CustomerContactDAO contactdao = new CustomerContactDAO();
+        CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
+
+        Address physicalAddress = addressdao.getAddress(physicalAddressId);
+        Address mailingAddress = addressdao.getAddress(mailingAddressId);
+        CustomerContact contact = contactdao.getCustomerContact(contactId);
+        CustomerEmployer employer = employerdao.getCustomerEmployer(employerId);
+
+        Customer customer =
+            new IndividualCustomer(
+                customerId,
+                title,
+                firstName,
+                middleName,
+                lastName,
+                dateOfBirth,
+                occupation,
+                residency,
+                notes,
+                physicalAddress,
+                mailingAddress,
+                contact,
+                employer);
+        customers.add(customer);
+      }
+      return customers;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return null;
+  }
+
+  public ArrayList<Customer> getCustomersByBirth(LocalDate date) {
+    ArrayList<Customer> customers = new ArrayList<>();
+
+    String sql = "SELECT * FROM customer WHERE dateOfBirth = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setDate(1, Date.valueOf(date));
+
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        String customerId = rs.getString("customerId");
+        String title = rs.getString("title");
+        String firstName = rs.getString("firstName");
+        String middleName = rs.getString("middleName");
+        String lastName = rs.getString("lastName");
+        String occupation = rs.getString("occupation");
+        String residency = rs.getString("residency");
+        String notes = rs.getString("notes");
+        int physicalAddressId = rs.getInt("physicalAddressId");
+        int mailingAddressId = rs.getInt("mailingAddressId");
+        int contactId = rs.getInt("contactId");
+        int employerId = rs.getInt("employerId");
+
+        AddressDAO addressdao = new AddressDAO();
+        CustomerContactDAO contactdao = new CustomerContactDAO();
+        CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
+
+        Address physicalAddress = addressdao.getAddress(physicalAddressId);
+        Address mailingAddress = addressdao.getAddress(mailingAddressId);
+        CustomerContact contact = contactdao.getCustomerContact(contactId);
+        CustomerEmployer employer = employerdao.getCustomerEmployer(employerId);
+
+        Customer customer =
+            new IndividualCustomer(
+                customerId,
+                title,
+                firstName,
+                middleName,
+                lastName,
+                date,
+                occupation,
+                residency,
+                notes,
+                physicalAddress,
+                mailingAddress,
+                contact,
+                employer);
+        customers.add(customer);
+      }
+      return customers;
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
