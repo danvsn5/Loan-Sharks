@@ -12,15 +12,15 @@
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/customer_notes.png" />
+            <Image url="@../../../images/customer_notes.png" />
          </image>
       </ImageView>
-      <TextArea layoutX="168.0" layoutY="260.0" prefHeight="387.0" prefWidth="944.0" styleClass="notes" stylesheets="@../css/index.css" wrapText="true">
+      <TextArea layoutX="168.0" layoutY="260.0" prefHeight="387.0" prefWidth="944.0" styleClass="notes" stylesheets="@../../../css/index.css" wrapText="true">
          <cursor>
             <Cursor fx:constant="CROSSHAIR" />
          </cursor>
       </TextArea>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../css/index.css" text="Customer Notes" textFill="#333333" textOverrun="CLIP">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../../css/index.css" text="Customer Notes" textFill="#333333" textOverrun="CLIP">
          <font>
             <Font size="41.0" />
          </font>

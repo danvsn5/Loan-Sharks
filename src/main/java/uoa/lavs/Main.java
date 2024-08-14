@@ -89,7 +89,7 @@ public class Main extends Application {
     System.setProperty("prism.lcdtext", "false");
 
     SceneManager.addScene(
-        AppUI.LOGIN, loadFxml("customer/customer_details/customer_details_details"));
+        AppUI.LOGIN, loadFxml("customer/customer_details/primary_address_details_details"));
     System.out.println("Loading login scene");
     scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1280, 720);
     // imports main index.css file
