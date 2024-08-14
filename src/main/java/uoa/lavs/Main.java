@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import uoa.lavs.SceneManager.AppUI;
@@ -84,9 +85,19 @@ public class Main extends Application {
 
   @Override
   public void start(final Stage stage) throws IOException {
-    SceneManager.addScene(AppUI.LOGIN, loadFxml("login"));
+    // activates antialiasing for text in application !IMPORTANT
+    System.setProperty("prism.lcdtext", "false");
+
+    SceneManager.addScene(AppUI.LOGIN, loadFxml("customer_notes"));
     System.out.println("Loading login scene");
-    scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1000, 900);
+    scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1280, 720);
+    // imports main index.css file
+    String cssPath = getClass().getResource("/css/index.css").toExternalForm();
+    scene.getStylesheets().add(cssPath);
+    // imports fonts that are implemented through css
+    Font.loadFont(getClass().getResourceAsStream("/font/Quicksand-Regular.ttf"), 14);
+    Font.loadFont(getClass().getResourceAsStream("/font/Quicksand-Bold.ttf"), 14);
+    Font.loadFont(getClass().getResourceAsStream("/font/Quicksand-Medium.ttf"), 14);
 
     stage.setScene(scene);
     stage.show();

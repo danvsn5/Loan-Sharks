@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/customer_details.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="194.0" layoutX="46.0" layoutY="449.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1198.0" />
+      <Button layoutX="518.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Edit Details">
+         <font>
+            <Font size="27.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="494.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
+      <TextField alignment="CENTER" editable="false" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </TextField>
+      <TextField alignment="CENTER" editable="false" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </TextField>
+      <TextField alignment="CENTER" editable="false" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </TextField>
+      <TextField alignment="CENTER" editable="false" layoutX="535.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </TextField>
+      <TextField alignment="CENTER" editable="false" layoutX="915.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </TextField>
+      <TextField alignment="CENTER" editable="false" layoutX="155.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </TextField>
+      <Button graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Contact Info">
+         <font>
+            <Font size="27.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="621.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
+      <Button graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Employer Details">
+         <font>
+            <Font size="27.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="873.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
+      <Button graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Addresses">
+         <font>
+            <Font size="27.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="372.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="379.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
+      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Customer Details">
+         <font>
+            <Font size="27.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="126.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Address Line One">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="535.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Address Line Two" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="915.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Suburb" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Postal Code" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="535.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="City" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="915.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Address Type" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../css/index.css" text="Summary of ID: &lt;123456-789&gt;" textFill="#333333" textOverrun="CLIP">
+         <font>
+            <Font size="41.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="62.0" layoutX="86.0" layoutY="266.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
+      <Button layoutX="961.0" layoutY="269.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="118.0" styleClass="accessory-button" stylesheets="@../css/index.css" text="Address">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="13.0" layoutX="114.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1057.0" />
+   </children>
+</Pane>
