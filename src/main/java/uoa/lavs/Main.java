@@ -21,12 +21,6 @@ public class Main extends Application {
   public static Scene scene;
 
   public static void main(String[] args) {
-
-    // you can use another approach if desired, but make sure you document how the markers can
-    // change the
-    // connection implementation.
-    launch();
-
     // the following shows two ways of using the mainframe interface
     // approach #1: use the singleton instance - this way is recommended as it provides a single
     // configuration
@@ -46,6 +40,11 @@ public class Main extends Application {
       connection = new SimpleReplayConnection(dataPath);
     }
     executeTestMessage(connection);
+
+    // you can use another approach if desired, but make sure you document how the markers can
+    // change the
+    // connection implementation.
+    launch();
   }
 
   private static void executeTestMessage(Connection connection) {
