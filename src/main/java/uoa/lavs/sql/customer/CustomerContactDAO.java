@@ -73,8 +73,11 @@ public class CustomerContactDAO {
         String preferredContact = rs.getString("preferredContact");
         String alternateContact = rs.getString("alternateContact");
 
-        return new CustomerContact(
-            customerEmail, phoneOne, phoneTwo, preferredContact, alternateContact);
+        CustomerContact retrievedContact =
+            new CustomerContact(
+                customerEmail, phoneOne, phoneTwo, preferredContact, alternateContact);
+        retrievedContact.setContactId(contactId);
+        return retrievedContact;
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());

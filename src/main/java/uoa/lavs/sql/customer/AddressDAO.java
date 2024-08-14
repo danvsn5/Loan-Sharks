@@ -76,9 +76,13 @@ public class AddressDAO {
         String city = rs.getString("city");
         String country = rs.getString("country");
 
-        return new Address(
-            addressType, addressLineOne, addressLineTwo, suburb, postCode, city, country);
+        Address retrievedAddress =
+            new Address(
+                addressType, addressLineOne, addressLineTwo, suburb, postCode, city, country);
+        retrievedAddress.setAddressId(addressId);
+        return retrievedAddress;
       }
+
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
