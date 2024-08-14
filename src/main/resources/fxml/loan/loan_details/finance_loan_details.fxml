@@ -15,12 +15,12 @@
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/customer_details.png" />
+            <Image url="@../../../images/customer_details.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="194.0" layoutX="46.0" layoutY="308.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1198.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="194.0" layoutX="46.0" layoutY="454.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1198.0" />
-      <Button layoutX="518.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="View Summary">
+      <Button layoutX="518.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="View Summary">
          <font>
             <Font size="27.0" />
          </font>
@@ -29,7 +29,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="494.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Duration Info">
+      <Button graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Duration Info">
          <font>
             <Font size="27.0" />
          </font>
@@ -38,7 +38,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="621.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Finance Info">
+      <Button graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Finance Info">
          <font>
             <Font size="27.0" />
          </font>
@@ -47,7 +47,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="873.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Co-Borrowers">
+      <Button graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Co-Borrowers">
          <font>
             <Font size="27.0" />
          </font>
@@ -57,7 +57,7 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="372.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="379.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Primary Details">
+      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Primary Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -67,30 +67,30 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="126.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="46.0" layoutX="114.0" layoutY="266.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="145.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../css/index.css" text="Loan Details" textFill="#333333" textOverrun="CLIP">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="145.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../../css/index.css" text="Loan Details" textFill="#333333" textOverrun="CLIP">
          <font>
             <Font size="41.0" />
          </font>
       </Label>
-      <TextField alignment="CENTER" layoutX="378.0" layoutY="428.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="378.0" layoutY="428.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="690.0" layoutY="428.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="690.0" layoutY="428.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="49.0" layoutY="428.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="49.0" layoutY="428.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Compounding" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="378.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Payment Frequency" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="690.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Payment Value" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1018.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Interest Only" />
-      <RadioButton layoutX="1106.0" layoutY="427.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../css/index.css" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Compounding" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="378.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Payment Frequency" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="690.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Payment Value" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1018.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Interest Only" />
+      <RadioButton layoutX="1106.0" layoutY="427.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
    </children>
 </Pane>

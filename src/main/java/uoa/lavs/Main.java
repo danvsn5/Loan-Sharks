@@ -21,7 +21,6 @@ public class Main extends Application {
   public static Scene scene;
 
   public static void main(String[] args) {
-
     // the following shows two ways of using the mainframe interface
     // approach #1: use the singleton instance - this way is recommended as it provides a single
     // configuration
@@ -88,7 +87,7 @@ public class Main extends Application {
     // activates antialiasing for text in application !IMPORTANT
     System.setProperty("prism.lcdtext", "false");
 
-    SceneManager.addScene(AppUI.LOGIN, loadFxml("customer_notes"));
+    SceneManager.addScene(AppUI.LOGIN, loadFxml("loan/loan_search"));
     System.out.println("Loading login scene");
     scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1280, 720);
     // imports main index.css file

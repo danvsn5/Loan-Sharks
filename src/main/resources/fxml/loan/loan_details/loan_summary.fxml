@@ -14,11 +14,11 @@
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/customer_details.png" />
+            <Image url="@../../../images/customer_details.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="338.0" layoutX="22.0" layoutY="362.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1217.0" />
-      <Button layoutX="151.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Confirm Loan">
+      <Button layoutX="151.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Confirm Loan">
          <font>
             <Font size="27.0" />
          </font>
@@ -26,27 +26,27 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TextField alignment="CENTER" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="691.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="691.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="1019.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="1019.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="50.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="50.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <Button graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Contact Info">
+      <Button graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Contact Info">
          <font>
             <Font size="27.0" />
          </font>
@@ -55,7 +55,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="621.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Employer Details">
+      <Button graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Employer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -64,7 +64,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="873.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Addresses">
+      <Button graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Addresses">
          <font>
             <Font size="27.0" />
          </font>
@@ -74,7 +74,7 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="372.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="379.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Customer Details">
+      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Customer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -84,40 +84,40 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="126.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="46.0" layoutX="114.0" layoutY="266.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Payment Value" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Cumulative Interest" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="654.0" layoutY="482.0" prefHeight="30.0" prefWidth="284.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Cumulative Loan Cost" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1019.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Payoff Date" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../css/index.css" text="Loan Summary" textFill="#333333" textOverrun="CLIP">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Payment Value" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Cumulative Interest" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="654.0" layoutY="482.0" prefHeight="30.0" prefWidth="284.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Cumulative Loan Cost" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1019.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Payoff Date" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../../css/index.css" text="Loan Summary" textFill="#333333" textOverrun="CLIP">
          <font>
             <Font size="41.0" />
          </font>
       </Label>
-      <TextField alignment="CENTER" layoutX="379.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="379.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="691.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="691.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="1019.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="1019.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="50.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../css/index.css">
+      <TextField alignment="CENTER" layoutX="50.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Principal" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Annual Rate" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Loan Term" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1019.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../css/index.css" text="Payment Frequency" />
-      <Button layoutX="897.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="View Payments">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Principal" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Annual Rate" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Loan Term" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1019.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Payment Frequency" />
+      <Button layoutX="897.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="View Payments">
          <font>
             <Font size="27.0" />
          </font>

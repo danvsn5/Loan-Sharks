@@ -14,11 +14,11 @@
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/login_image.png" />
+            <Image url="@../../images/login_image.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="126.0" layoutX="66.0" layoutY="585.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button layoutX="91.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../css/index.css" text="Log In">
+      <Button layoutX="91.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../css/index.css" text="Log In">
          <font>
             <Font size="27.0" />
          </font>
@@ -26,12 +26,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TextField layoutX="72.0" layoutY="383.0" prefHeight="48.0" prefWidth="280.2" styleClass="input-fields" stylesheets="@../css/index.css">
+      <TextField layoutX="72.0" layoutY="383.0" prefHeight="48.0" prefWidth="280.2" styleClass="input-fields" stylesheets="@../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <PasswordField layoutX="71.0" layoutY="522.0" prefHeight="48.0" prefWidth="282.0" styleClass="input-fields" stylesheets="@../css/index.css" />
+      <PasswordField layoutX="71.0" layoutY="522.0" prefHeight="48.0" prefWidth="282.0" styleClass="input-fields" stylesheets="@../../css/index.css" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="14.0" layoutX="84.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="280.0" />
    </children>
 </Pane>
