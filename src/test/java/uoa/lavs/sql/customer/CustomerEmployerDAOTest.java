@@ -102,11 +102,46 @@ public class CustomerEmployerDAOTest {
     }
   }
 
+  @Test
+  public void testGetCustomerEmployer() {
+    employerDAO.addCustomerEmployer(employer);
+    int employerId = employer.getEmployerId();
+
+    CustomerEmployer retrievedEmployer = employerDAO.getCustomerEmployer(employerId);
+
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement stmt =
+            conn.prepareStatement("SELECT * FROM customer_employer WHERE employerId = ?")) {
+      stmt.setInt(1, employerId);
+
+      try (ResultSet rs = stmt.executeQuery()) {
+        Assertions.assertTrue(rs.next(), "Employer should be in the database");
+        Assertions.assertEquals(retrievedEmployer.getEmployerName(), rs.getString("employerName"));
+        Assertions.assertEquals(
+            retrievedEmployer.getEmployerAddress().getAddressId(), rs.getInt("employerAddressId"));
+        Assertions.assertEquals(
+            retrievedEmployer.getEmployerEmail(), rs.getString("employerEmail"));
+        Assertions.assertEquals(
+            retrievedEmployer.getEmployerWebsite(), rs.getString("employerWebsite"));
+        Assertions.assertEquals(
+            retrievedEmployer.getEmployerPhone(), rs.getString("employerPhone"));
+        Assertions.assertEquals(
+            retrievedEmployer.getOwnerOfCompany(), rs.getBoolean("ownerOfCompany"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      Assertions.fail("Database query failed");
+    } finally {
+      DatabaseConnection.close(null);
+    }
+  }
+
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);
     if (!dbFile.delete()) {
-      throw new RuntimeException("Failed to delete test database file: " + dbFile.getAbsolutePath());
+      throw new RuntimeException(
+          "Failed to delete test database file: " + dbFile.getAbsolutePath());
     }
   }
 }
