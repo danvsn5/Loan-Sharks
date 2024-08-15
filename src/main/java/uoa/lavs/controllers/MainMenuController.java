@@ -3,6 +3,7 @@ package uoa.lavs.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
@@ -17,9 +18,11 @@ public class MainMenuController {
 
   @FXML private Label welcomeLabel;
 
+  @FXML private ImageView staticReturnImagebutton;
+
   @FXML
   private void initialize() {
-    welcomeLabel.setText("Welcome, " + uoa.lavs.AppState.userName + "!");
+    welcomeLabel.setText("Welcome!");
   }
 
   @FXML
