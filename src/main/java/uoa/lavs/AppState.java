@@ -37,4 +37,10 @@ public class AppState {
     SceneManager.addScene(
         AppUI.CI_EMPLOYER_ADDRESS, loadFxml("customer/customer_details/employer_address_details"));
   }
+
+  public static void loadCustomerSearchResults(String searchString) throws IOException {
+    // Actual search logic needed here
+    SceneManager.addScene(AppUI.CUSTOMER_RESULTS, loadFxml("customer/customer_search_results"));
+    Main.setUi(AppUI.CUSTOMER_RESULTS);
+  }
 }
