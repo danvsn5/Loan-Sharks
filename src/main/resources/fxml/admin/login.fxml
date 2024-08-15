@@ -26,12 +26,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TextField fx:id="usernameField" layoutX="72.0" layoutY="383.0" prefHeight="48.0" prefWidth="280.2" styleClass="input-fields" stylesheets="@../../css/index.css">
+      <TextField fx:id="usernameField" layoutX="72.0" layoutY="383.0" onKeyReleased="#onEnterPressed" prefHeight="48.0" prefWidth="280.2" styleClass="input-fields" stylesheets="@../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="passwordField" layoutX="71.0" layoutY="522.0" prefHeight="48.0" prefWidth="282.0" styleClass="input-fields" stylesheets="@../../css/index.css" />
+      <PasswordField fx:id="passwordField" layoutX="71.0" layoutY="522.0" onKeyReleased="#onEnterPressed" prefHeight="48.0" prefWidth="282.0" styleClass="input-fields" stylesheets="@../../css/index.css" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="14.0" layoutX="84.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="280.0" />
    </children>
 </Pane>
