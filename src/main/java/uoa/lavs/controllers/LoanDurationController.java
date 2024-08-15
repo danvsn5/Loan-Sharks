@@ -6,22 +6,13 @@ import javafx.scene.control.TextField;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
-public class LoanSummaryController {
-  @FXML private TextField principalfField;
-  @FXML private TextField annualRateField;
+public class LoanDurationController {
+  @FXML private TextField startDateField;
+  @FXML private TextField periodField;
   @FXML private TextField termField;
-  @FXML private TextField paymentFrequencyField;
-  @FXML private TextField paymentValueField;
-  @FXML private TextField culmuativeInterestField;
-  @FXML private TextField culumutiveLoanCostField;
-  @FXML private TextField payOffDateField;
-
-  @FXML private Button confirmLoanButton;
-  @FXML private Button viewPaymentsButton;
 
   @FXML private Button primaryButton;
   @FXML private Button coborrowerButton;
-  @FXML private Button durationButton;
   @FXML private Button financeButton;
   @FXML private Button summaryButton;
   @FXML private Button backButton;
@@ -31,16 +22,7 @@ public class LoanSummaryController {
     // Add initialization code here
   }
 
-  @FXML
-  private void handleConfirmLoanButtonAction() {
-    // Add action code here
-  }
-
-  @FXML
-  private void handleViewPaymentsButtonAction() {
-    // Add action code here
-  }
-
+  // Add methods for all buttons
   @FXML
   private void handlePrimaryButtonAction() {
     Main.setUi(AppUI.LC_PRIMARY);
@@ -49,11 +31,6 @@ public class LoanSummaryController {
   @FXML
   private void handleCoborrowerButtonAction() {
     Main.setUi(AppUI.LC_COBORROWER);
-  }
-
-  @FXML
-  private void handleDurationButtonAction() {
-    Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML

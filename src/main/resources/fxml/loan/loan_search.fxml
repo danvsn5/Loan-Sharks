@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.LoanSearchController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.LoanSearchController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -22,7 +22,7 @@
             <Font size="41.0" />
          </font>
       </Label>
-      <Button layoutX="518.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../css/index.css" text="Search">
+      <Button fx:id="searchButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#onClickSearchButton" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../css/index.css" text="Search">
          <font>
             <Font size="27.0" />
          </font>
@@ -31,17 +31,17 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="494.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <TextField alignment="CENTER" layoutX="388.0" layoutY="295.0" prefHeight="48.0" prefWidth="504.0" styleClass="input-fields" stylesheets="@../../css/index.css">
+      <TextField fx:id="idField" alignment="CENTER" layoutX="388.0" layoutY="295.0" onKeyPressed="#onEnterPressed" prefHeight="48.0" prefWidth="504.0" styleClass="input-fields" stylesheets="@../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" layoutX="388.0" layoutY="492.0" prefHeight="48.0" prefWidth="504.0" styleClass="input-fields" stylesheets="@../../css/index.css">
+      <TextField fx:id="nameField" alignment="CENTER" layoutX="388.0" layoutY="492.0" onKeyPressed="#onEnterPressed" prefHeight="48.0" prefWidth="504.0" styleClass="input-fields" stylesheets="@../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="222.0" prefHeight="18.0" prefWidth="504.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with Loan ID" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="419.0" prefHeight="18.0" prefWidth="800.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with Customer Name" />
+      <Label fx:id="searchWithLoanIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="222.0" onMouseClicked="#enableIDSearch" prefHeight="18.0" prefWidth="504.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with Loan ID" />
+      <Label fx:id="searchWithNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="419.0" onMouseClicked="#enableNameSearch" prefHeight="18.0" prefWidth="800.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with Customer Name" />
    </children>
 </Pane>

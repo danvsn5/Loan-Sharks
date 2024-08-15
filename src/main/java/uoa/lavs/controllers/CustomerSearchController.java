@@ -1,10 +1,13 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import uoa.lavs.AppState;
 
 public class CustomerSearchController {
   @FXML private Label searchWithCustomerIDLabel; // When click label, reveal text box.
@@ -13,40 +16,73 @@ public class CustomerSearchController {
 
   @FXML private Button backButton;
 
-  @FXML private Button exitButton;
-
   @FXML private TextField usernameField;
 
   @FXML private TextField idField;
 
+  @FXML private Button searchButton;
+
+  String state;
+
   @FXML
   private void initialize() {
-    // Add initialization code here
+    usernameField.setVisible(false);
+    idField.setVisible(false);
   }
 
   // When enter key is pressed, perform search.
   @FXML
   private void onEnterPressed(KeyEvent event) {
-    // Add code here
+    if (event.getCode() == KeyCode.ENTER) {
+      try {
+        onClickSearchButton();
+      } catch (Exception e) {
+        System.out.println("Something went wrong " + e.getMessage());
+      }
+    }
   }
 
   @FXML
-  private void handleSearchWithCustomerIDLabelAction() {
-    // Add search with ID label action code here
+  private void onClickSearchButton() throws IOException {
+    if (idField.getText().isEmpty() && usernameField.getText().isEmpty()) {
+      return;
+    }
+    if (state.equals("id")) {
+      handleSearchWithCustomerIDLabelAction();
+    } else {
+      handleSearchWithNameLabelAction();
+    }
   }
 
   @FXML
-  private void handleSearchWithNameLabelAction() {
-    // Add search with name label action code here
+  private void enableIDSearch() {
+    usernameField.setVisible(false);
+    idField.setVisible(true);
+    state = "id";
+  }
+
+  @FXML
+  private void enableNameSearch() {
+    idField.setVisible(false);
+    usernameField.setVisible(true);
+    state = "name";
+  }
+
+  @FXML
+  private void handleSearchWithCustomerIDLabelAction() throws IOException {
+    // implement that jamie
+    String searchString = idField.getText();
+    AppState.loadCustomerSearchResults(searchString);
+  }
+
+  @FXML
+  private void handleSearchWithNameLabelAction() throws IOException {
+    String searchString = usernameField.getText();
+    AppState.loadCustomerSearchResults(searchString);
   }
 
   @FXML
   private void handleBackButtonAction() {
     // Add back button action code here
-  }
-
-  @FXML
-  private void handleExitButtonAction() {
-    // Add leave button action code here
   }
 }

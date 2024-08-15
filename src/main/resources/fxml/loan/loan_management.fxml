@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.LoanMenuController" >
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.LoanMenuController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -21,7 +21,7 @@
             <Font size="41.0" />
          </font>
       </Label>
-      <Button layoutX="479.0" layoutY="269.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="323.0" styleClass="regular-button" stylesheets="@../../css/index.css" text="Create Loan">
+      <Button fx:id="createNewLoanButton" layoutX="479.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#handleCreateNewLoanButtonAction" prefHeight="91.0" prefWidth="323.0" styleClass="regular-button" stylesheets="@../../css/index.css" text="Create Loan">
          <font>
             <Font size="27.0" />
          </font>
@@ -30,7 +30,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="9.0" layoutX="464.0" layoutY="360.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="327.0" />
-      <Button layoutX="479.0" layoutY="450.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="323.0" styleClass="regular-button" stylesheets="@../../css/index.css" text="Find Loan with ID">
+      <Button fx:id="findLoanButton" layoutX="479.0" layoutY="450.0" mnemonicParsing="false" onMouseClicked="#handleFindLoanButtonAction" prefHeight="91.0" prefWidth="323.0" styleClass="regular-button" stylesheets="@../../css/index.css" text="Find Loan with ID">
          <font>
             <Font size="27.0" />
          </font>

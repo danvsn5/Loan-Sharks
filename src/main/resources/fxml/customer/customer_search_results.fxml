@@ -4,31 +4,38 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerResultsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerResultsController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/customer_search_results.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="145.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../css/index.css" text="Customer Search Results" textFill="#333333" textOverrun="CLIP">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" prefHeight="145.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../css/index.css" text="Customer Search Results" textFill="#333333" textOverrun="CLIP">
          <font>
             <Font size="41.0" />
          </font>
       </Label>
-      <Label layoutX="166.0" layoutY="277.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="664.0" layoutY="277.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="166.0" layoutY="343.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="664.0" layoutY="343.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="166.0" layoutY="407.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="664.0" layoutY="407.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="166.0" layoutY="473.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="664.0" layoutY="473.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="166.0" layoutY="534.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="664.0" layoutY="534.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="166.0" layoutY="600.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
-      <Label layoutX="664.0" layoutY="600.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsNameLabel1" layoutX="166.0" layoutY="277.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsIDLabel1" layoutX="664.0" layoutY="277.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsNameLabel2" layoutX="166.0" layoutY="343.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsIDLabel2" layoutX="664.0" layoutY="343.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsNameLabel3" layoutX="166.0" layoutY="407.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsIDLabel3" layoutX="664.0" layoutY="407.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsNameLabel4" layoutX="166.0" layoutY="473.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsIDLabel4" layoutX="664.0" layoutY="473.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsNameLabel5" layoutX="166.0" layoutY="534.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsIDLabel5" layoutX="664.0" layoutY="534.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsNameLabel6" layoutX="166.0" layoutY="600.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="searchResultsIDLabel6" layoutX="664.0" layoutY="600.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Rectangle fx:id="searchResultsRectangle1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="62.0" layoutX="145.0" layoutY="263.0" onMouseClicked="#handleSearchResultsRectangle1Action" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
+      <Rectangle fx:id="searchResultsRectangle2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="62.0" layoutX="145.0" layoutY="326.0" onMouseClicked="#handleSearchResultsRectangle2Action" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
+      <Rectangle fx:id="searchResultsRectangle3" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="62.0" layoutX="145.0" layoutY="388.0" onMouseClicked="#handleSearchResultsRectangle3Action" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
+      <Rectangle fx:id="searchResultsRectangle4" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="62.0" layoutX="145.0" layoutY="459.0" onMouseClicked="#handleSearchResultsRectangle4Action" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
+      <Rectangle fx:id="searchResultsRectangle5" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="62.0" layoutX="145.0" layoutY="520.0" onMouseClicked="#handleSearchResultsRectangle5Action" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
+      <Rectangle fx:id="searchResultsRectangle6" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="62.0" layoutX="145.0" layoutY="582.0" onMouseClicked="#handleSearchResultsRectangle6Action" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
    </children>
 </Pane>
