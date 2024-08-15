@@ -6,7 +6,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-public class CustomerInputPrimaryAddressController {
+public class CustomerInputAddressController {
   @FXML private ComboBox<String> customerAddressTypeComboBox;
   @FXML private TextField customerAddressLine1Field;
   @FXML private TextField customerAddressLine2Field;

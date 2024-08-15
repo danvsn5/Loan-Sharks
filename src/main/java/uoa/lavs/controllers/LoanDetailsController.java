@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
-public class LoanFinanceDetails {
+public class LoanDetailsController {
   @FXML private Label loanIDLabel;
   @FXML private Label loanStatusLabel;
   @FXML private Label loanCustomerNamelLabel;
