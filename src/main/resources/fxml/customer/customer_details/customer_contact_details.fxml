@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerInputContactController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerInputContactController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -18,7 +18,7 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="194.0" layoutX="46.0" layoutY="454.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1198.0" />
-      <Button layoutX="518.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
+      <Button fx:id="editButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -27,27 +27,27 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="494.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <TextField alignment="CENTER" editable="false" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerEmailTextField" alignment="CENTER" editable="false" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerPhoneNumberOne" alignment="CENTER" editable="false" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerPhoneNumberTwo" alignment="CENTER" editable="false" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerPreffredContactBox" alignment="CENTER" editable="false" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="691.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerAltContactBox" alignment="CENTER" editable="false" layoutX="691.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
@@ -61,7 +61,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="621.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Employer Details">
+      <Button fx:id="customerEmployerButton" graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleCustomerEmployerButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Employer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -70,7 +70,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="873.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Addresses">
+      <Button fx:id="customerAddressButton" graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleCustomerAddressButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Addresses">
          <font>
             <Font size="27.0" />
          </font>
@@ -80,7 +80,7 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="372.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="379.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Customer Details">
+      <Button fx:id="customerDetailsButton" graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleCustomerDetailsButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Customer Details">
          <font>
             <Font size="27.0" />
          </font>
