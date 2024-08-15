@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
-public class CustomerInputConfirmController {
+public class LoanCoborrower {
   @FXML private Label customerTitleLabel;
   @FXML private Label customerFirstNameLabel;
   @FXML private Label customerMiddleNameLabel;
@@ -39,17 +39,28 @@ public class CustomerInputConfirmController {
   @FXML private Label employerEmailLabel;
   @FXML private Label employerWebsiteLabel;
   @FXML private Label employerPhoneNumLabel;
-  @FXML private CheckBox employerCustomerOwnerCheckBox;
+  @FXML private CheckBox isCustomerOwnerCheckBox;
 
-  @FXML private Label customerNotesLabel;
+  @FXML private Label customerNotesTextField;
 
+  @FXML private Button createLoanButton;
+  @FXML private Button editDetailsButton;
   @FXML private Button backButton;
   @FXML private Button exitButton;
-  @FXML private Button confirmButton;
 
   @FXML
   private void initialize() {
     // Add initialization code here
+  }
+
+  @FXML
+  private void handleCreateLoanButtonAction() {
+    // Add create loan button action code here
+  }
+
+  @FXML
+  private void handleEditDetailsButtonAction() {
+    // Add edit details button action code here
   }
 
   @FXML
@@ -60,10 +71,5 @@ public class CustomerInputConfirmController {
   @FXML
   private void handleExitButtonAction() {
     // Add exit button action code here
-  }
-
-  @FXML
-  private void handleConfirmButtonAction() {
-    // Add confirm button action code here
   }
 }

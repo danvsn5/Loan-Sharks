@@ -4,9 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 
-public class LoanCreationCustomerResultsController {
-  @FXML private TableView<?> customerResultsTable;
-
+public class LoanPaymentScheduleController {
+  @FXML private TableView<?> LoanPaymentsTable;
   @FXML private Button backButton;
   @FXML private Button exitButton;
 
@@ -14,8 +13,6 @@ public class LoanCreationCustomerResultsController {
   private void initialize() {
     // Add initialization code here
   }
-
-  // Need to create method for clicking on rows in table to move onto customer details screen
 
   @FXML
   private void handleBackButtonAction() {
