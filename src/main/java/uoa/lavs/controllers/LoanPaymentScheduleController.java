@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 
-public class PaymentScheduleController {
+public class LoanPaymentScheduleController {
   @FXML private TableView<?> LoanPaymentsTable;
   @FXML private Button backButton;
   @FXML private Button exitButton;
