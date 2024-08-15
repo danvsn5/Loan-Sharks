@@ -3,12 +3,13 @@ package uoa.lavs.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import uoa.lavs.Main;
+import uoa.lavs.SceneManager.AppUI;
 
 public class CustomerInputNotesController {
   @FXML private TextArea customerNotesField;
 
-  @FXML private Button exitButton;
-  @FXML private Button nextButton;
+  @FXML private Button editButton;
   @FXML private Button backButton;
 
   @FXML
@@ -17,17 +18,12 @@ public class CustomerInputNotesController {
   }
 
   @FXML
-  private void handleExitButtonAction() {
-    // Add exit button action code here
-  }
-
-  @FXML
-  private void handleNextButtonAction() {
+  private void handleEditButtonAction() {
     // Add next button action code here
   }
 
   @FXML
   private void handleBackButtonAction() {
-    // Add back button action code here
+    Main.setUi(AppUI.CI_DETAILS);
   }
 }

@@ -19,7 +19,7 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="194.0" layoutX="46.0" layoutY="450.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1198.0" />
-      <Button layoutX="518.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
+      <Button fx:id="editButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -101,5 +101,10 @@
          </font>
       </Label>
       <RadioButton layoutX="779.0" layoutY="511.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <Button fx:id="employerAddressButton" layoutX="961.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#handleEmployerAddressButtonAction" prefHeight="36.0" prefWidth="118.0" styleClass="accessory-button" stylesheets="@../../../css/index.css" text="Address">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </Pane>

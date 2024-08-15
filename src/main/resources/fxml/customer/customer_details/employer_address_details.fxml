@@ -19,7 +19,7 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="194.0" layoutX="46.0" layoutY="449.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1198.0" />
-      <Button layoutX="518.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
+      <Button fx:id="editButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -28,22 +28,22 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="494.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <TextField fx:id="customerAddressLine1Field" alignment="CENTER" editable="false" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="mployerAddressLine1Field" alignment="CENTER" editable="false" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="customerAddressLine2Field" alignment="CENTER" editable="false" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="employerAddressLine2Field" alignment="CENTER" editable="false" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="customerSuburbField" alignment="CENTER" editable="false" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="employerSuburbField" alignment="CENTER" editable="false" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="customerCityField" alignment="CENTER" editable="false" layoutX="535.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="employerCityField" alignment="CENTER" editable="false" layoutX="535.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
@@ -53,7 +53,7 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="customerPostcodeField" alignment="CENTER" editable="false" layoutX="155.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="employerPostcodeField" alignment="CENTER" editable="false" layoutX="155.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
@@ -117,6 +117,6 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="13.0" layoutX="114.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1057.0" />
-      <ComboBox fx:id="customerAddressTypeComboBox" layoutX="925.0" layoutY="517.0" prefHeight="20.0" prefWidth="188.0" />
+      <ComboBox fx:id="employerAddressTypeComboBox" layoutX="925.0" layoutY="517.0" prefHeight="20.0" prefWidth="188.0" />
    </children>
 </Pane>

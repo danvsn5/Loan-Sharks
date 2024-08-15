@@ -8,12 +8,12 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
 public class CustomerInputEmployerAddressController {
-  @FXML private ComboBox<String> customerAddressTypeComboBox;
-  @FXML private TextField customerAddressLine1Field;
-  @FXML private TextField customerAddressLine2Field;
-  @FXML private TextField customerSuburbField;
-  @FXML private TextField customerCityField;
-  @FXML private TextField customerPostcodeField;
+  @FXML private ComboBox<String> employerAddressTypeComboBox;
+  @FXML private TextField employerAddressLine1Field;
+  @FXML private TextField employerAddressLine2Field;
+  @FXML private TextField employerSuburbField;
+  @FXML private TextField employerCityField;
+  @FXML private TextField employerPostcodeField;
 
   @FXML private Button detailsButton;
   @FXML private Button addressButton;
