@@ -2,6 +2,7 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
@@ -19,7 +20,8 @@ public class LoanMenuController {
 
   @FXML
   private void handleCreateNewLoanButtonAction() {
-    Main.setUi(AppUI.LC_INPUT);
+    AppState.isCreatingLoan = true;
+    Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 
   @FXML
@@ -30,5 +32,6 @@ public class LoanMenuController {
   @FXML
   private void handleBackButtonAction() {
     // Add back button action code here
+    AppState.isCreatingLoan = false;
   }
 }

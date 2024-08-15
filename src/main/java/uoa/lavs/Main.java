@@ -98,6 +98,7 @@ public class Main extends Application {
 
     // Add all static loan screens
     SceneManager.addScene(AppUI.LOAN_MENU, loadFxml("loan/loan_management"));
+    SceneManager.addScene(AppUI.LOAN_SEARCH, loadFxml("loan/loan_search"));
 
     // CURRENTLY BYPASSING LOGIN SCREEN
     scene = new Scene(SceneManager.getScene(AppUI.MAIN_MENU), 1280, 720);

@@ -10,7 +10,8 @@ public class AppState {
   // state of the application
 
   public static String userName;
-  public static String customerDetailsAccessType; // CREATE, EDIT, VIEW
+  public static String customerDetailsAccessType; // CREATE, EDIT, VIEW, LOAN-EDIT, LOAN-VIEW
+  public static Boolean isCreatingLoan;
 
   public static Parent loadFxml(final String fxml) throws IOException {
     String fxmlPath = "/fxml/" + fxml + ".fxml";
@@ -38,9 +39,24 @@ public class AppState {
         AppUI.CI_EMPLOYER_ADDRESS, loadFxml("customer/customer_details/employer_address_details"));
   }
 
+  public static void loadLoans() throws IOException {
+    // Add all loan scenes
+    SceneManager.addScene(AppUI.LC_COBORROWER, loadFxml("loan/coborrower_loan_details"));
+    SceneManager.addScene(AppUI.LC_DURATION, loadFxml("loan/duration_loan_details"));
+    SceneManager.addScene(AppUI.LC_FINANCE, loadFxml("loan/finance_loan_details"));
+    SceneManager.addScene(AppUI.LC_PRIMARY, loadFxml("loan/primary_loan_details"));
+    SceneManager.addScene(AppUI.LC_SUMMARY, loadFxml("loan/loan_summary"));
+  }
+
   public static void loadCustomerSearchResults(String searchString) throws IOException {
     // Actual search logic needed here
     SceneManager.addScene(AppUI.CUSTOMER_RESULTS, loadFxml("customer/customer_search_results"));
     Main.setUi(AppUI.CUSTOMER_RESULTS);
+  }
+
+  public static void loadLoanSearchResults(String searchString) throws IOException {
+    // Actual search logic needed here
+    SceneManager.addScene(AppUI.LOAN_RESULTS, loadFxml("customer/loan_search_results"));
+    Main.setUi(AppUI.LOAN_RESULTS);
   }
 }
