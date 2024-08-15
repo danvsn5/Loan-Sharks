@@ -40,13 +40,15 @@ public class AppState {
         AppUI.CI_EMPLOYER_ADDRESS, loadFxml("customer/customer_details/employer_address_details"));
   }
 
-  public static void loadLoans() throws IOException {
+  public static void loadLoans(String accessType) throws IOException {
+    loanDetailsAccessType = accessType;
     // Add all loan scenes
-    SceneManager.addScene(AppUI.LC_COBORROWER, loadFxml("loan/coborrower_loan_details"));
-    SceneManager.addScene(AppUI.LC_DURATION, loadFxml("loan/duration_loan_details"));
-    SceneManager.addScene(AppUI.LC_FINANCE, loadFxml("loan/finance_loan_details"));
-    SceneManager.addScene(AppUI.LC_PRIMARY, loadFxml("loan/primary_loan_details"));
-    SceneManager.addScene(AppUI.LC_SUMMARY, loadFxml("loan/loan_summary"));
+    SceneManager.addScene(
+        AppUI.LC_COBORROWER, loadFxml("loan/loan_details/coborrower_loan_details"));
+    SceneManager.addScene(AppUI.LC_DURATION, loadFxml("loan/loan_details/duration_loan_details"));
+    SceneManager.addScene(AppUI.LC_FINANCE, loadFxml("loan/loan_details/finance_loan_details"));
+    SceneManager.addScene(AppUI.LC_PRIMARY, loadFxml("loan/loan_details/primary_loan_details"));
+    SceneManager.addScene(AppUI.LC_SUMMARY, loadFxml("loan/loan_details/loan_summary"));
   }
 
   public static void loadCustomerSearchResults(String searchString) throws IOException {
