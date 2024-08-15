@@ -9,7 +9,7 @@ public class IndividualCustomerSingleton {
     if (instance == null) {
       // Initialize with placeholder values
       instance =
-          new IndividualCustomer("", "", "", "", "", null, "", "", "", null, null, null, null);
+          new IndividualCustomer("", "", "", null, "", "", "", null, null, null, null);
     }
     return instance;
   }

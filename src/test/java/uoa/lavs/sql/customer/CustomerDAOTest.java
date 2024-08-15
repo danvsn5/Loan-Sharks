@@ -66,9 +66,7 @@ public class CustomerDAOTest {
         new IndividualCustomer(
             "000001",
             "Mr",
-            "Ting",
-            "Mun",
-            "Guy",
+            "Ting Mun Guy",
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
@@ -97,9 +95,7 @@ public class CustomerDAOTest {
         Assertions.assertTrue(rs.next(), "Customer should be added to the database");
         Assertions.assertEquals("000001", rs.getString("customerId"));
         Assertions.assertEquals("Mr", rs.getString("title"));
-        Assertions.assertEquals("Ting", rs.getString("firstName"));
-        Assertions.assertEquals("Mun", rs.getString("middleName"));
-        Assertions.assertEquals("Guy", rs.getString("lastName"));
+        Assertions.assertEquals("Ting Mun Guy", rs.getString("name"));
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         Assertions.assertEquals(LocalDate.of(2024, 8, 6), actualDateOfBirth);
         Assertions.assertEquals("Engineer", rs.getString("occupation"));
@@ -122,9 +118,7 @@ public class CustomerDAOTest {
   public void testUpdateCustomer() {
     customerDAO.addCustomer(customer);
     customer.setTitle("Mrs");
-    customer.setFirstName("Ting Ting");
-    customer.setMiddleName("Mun Mun");
-    customer.setLastName("Guy Guy");
+    customer.setName("Ting Ting Mun Mun Guy Guy");
     customer.setDateOfBirth(LocalDate.of(2024, 8, 7));
     customer.setOccupation("Doctor");
     customer.setResidency("NZ Permanent Resident");
@@ -145,9 +139,7 @@ public class CustomerDAOTest {
         Assertions.assertTrue(rs.next(), "Customer should be updated in the database");
         Assertions.assertEquals("000001", rs.getString("customerId"));
         Assertions.assertEquals("Mrs", rs.getString("title"));
-        Assertions.assertEquals("Ting Ting", rs.getString("firstName"));
-        Assertions.assertEquals("Mun Mun", rs.getString("middleName"));
-        Assertions.assertEquals("Guy Guy", rs.getString("lastName"));
+        Assertions.assertEquals("Ting Ting Mun Mun Guy Guy", rs.getString("name"));
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
@@ -181,9 +173,7 @@ public class CustomerDAOTest {
         Assertions.assertTrue(rs.next(), "Customer should be in the database");
         Assertions.assertEquals(retrievedCustomer.getCustomerId(), rs.getString("customerId"));
         Assertions.assertEquals(retrievedCustomer.getTitle(), rs.getString("title"));
-        Assertions.assertEquals(retrievedCustomer.getFirstName(), rs.getString("firstName"));
-        Assertions.assertEquals(retrievedCustomer.getMiddleName(), rs.getString("middleName"));
-        Assertions.assertEquals(retrievedCustomer.getLastName(), rs.getString("lastName"));
+        Assertions.assertEquals(retrievedCustomer.getName(), rs.getString("name"));
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         Assertions.assertEquals(retrievedCustomer.getDateOfBirth(), actualDateOfBirth);
         Assertions.assertEquals(retrievedCustomer.getOccupation(), rs.getString("occupation"));
@@ -235,17 +225,13 @@ public class CustomerDAOTest {
             "1234567890",
             false);
 
-    String firstName = "Ting";
-    String middleName = "Mun";
-    String lastName = "Guy";
+    String name = "Ting Mun Guy";
 
     IndividualCustomer customer2 =
         new IndividualCustomer(
             "000002",
             "Mrs",
-            firstName,
-            middleName,
-            lastName,
+            name,
             dateOfBirth2,
             "Professional",
             "NZ Permanent Resident",
@@ -256,7 +242,7 @@ public class CustomerDAOTest {
             employer2);
     customerDAO.addCustomer(customer2);
 
-    ArrayList<Customer> customers = customerDAO.getCustomersByName(firstName, middleName, lastName);
+    ArrayList<Customer> customers = customerDAO.getCustomersByName(name);
 
     Assertions.assertEquals(
         2, customers.size(), "There should be two customers with the same name");
@@ -265,16 +251,12 @@ public class CustomerDAOTest {
 
     Assertions.assertEquals(customer.getCustomerId(), retrievedCustomer1.getCustomerId());
     Assertions.assertEquals(customer.getTitle(), retrievedCustomer1.getTitle());
-    Assertions.assertEquals(customer.getFirstName(), retrievedCustomer1.getFirstName());
-    Assertions.assertEquals(customer.getMiddleName(), retrievedCustomer1.getMiddleName());
-    Assertions.assertEquals(customer.getLastName(), retrievedCustomer1.getLastName());
+    Assertions.assertEquals(customer.getName(), retrievedCustomer1.getName());
     Assertions.assertEquals(customer.getDateOfBirth(), retrievedCustomer1.getDateOfBirth());
 
     Assertions.assertEquals(customer2.getCustomerId(), retrievedCustomer2.getCustomerId());
     Assertions.assertEquals(customer2.getTitle(), retrievedCustomer2.getTitle());
-    Assertions.assertEquals(customer2.getFirstName(), retrievedCustomer2.getFirstName());
-    Assertions.assertEquals(customer2.getMiddleName(), retrievedCustomer2.getMiddleName());
-    Assertions.assertEquals(customer2.getLastName(), retrievedCustomer2.getLastName());
+    Assertions.assertEquals(customer2.getName(), retrievedCustomer2.getName());
     Assertions.assertEquals(dateOfBirth2, retrievedCustomer2.getDateOfBirth());
   }
 
@@ -310,9 +292,7 @@ public class CustomerDAOTest {
         new IndividualCustomer(
             "000002",
             "Mrs",
-            "Zing",
-            "",
-            "Dingus",
+            "Zing Dingus",
             dateOfBirth,
             "Professional",
             "NZ Permanent Resident",
@@ -332,16 +312,12 @@ public class CustomerDAOTest {
 
     Assertions.assertEquals(customer.getCustomerId(), retrievedCustomer1.getCustomerId());
     Assertions.assertEquals(customer.getTitle(), retrievedCustomer1.getTitle());
-    Assertions.assertEquals(customer.getFirstName(), retrievedCustomer1.getFirstName());
-    Assertions.assertEquals(customer.getMiddleName(), retrievedCustomer1.getMiddleName());
-    Assertions.assertEquals(customer.getLastName(), retrievedCustomer1.getLastName());
+    Assertions.assertEquals(customer.getName(), retrievedCustomer1.getName());
     Assertions.assertEquals(customer.getDateOfBirth(), retrievedCustomer1.getDateOfBirth());
 
     Assertions.assertEquals(customer2.getCustomerId(), retrievedCustomer2.getCustomerId());
     Assertions.assertEquals(customer2.getTitle(), retrievedCustomer2.getTitle());
-    Assertions.assertEquals(customer2.getFirstName(), retrievedCustomer2.getFirstName());
-    Assertions.assertEquals(customer2.getMiddleName(), retrievedCustomer2.getMiddleName());
-    Assertions.assertEquals(customer2.getLastName(), retrievedCustomer2.getLastName());
+    Assertions.assertEquals(customer2.getName(), retrievedCustomer2.getName()); 
     Assertions.assertEquals(customer2.getDateOfBirth(), retrievedCustomer2.getDateOfBirth());
   }
 

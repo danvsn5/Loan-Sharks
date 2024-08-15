@@ -19,33 +19,31 @@ import uoa.lavs.sql.DatabaseConnection;
 public class CustomerDAO {
   public void addCustomer(ICustomer customer) {
     String sql =
-        "INSERT INTO customer (customerId, title, firstName, middleName, lastName, dateOfBirth,"
+        "INSERT INTO customer (customerId, title, name, dateOfBirth,"
             + " occupation, residency, notes, physicalAddressId, mailingAddressId, contactId,"
-            + " employerId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + " employerId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customer.getCustomerId());
       pstmt.setString(2, customer.getTitle());
-      pstmt.setString(3, customer.getFirstName());
-      pstmt.setString(4, customer.getMiddleName());
-      pstmt.setString(5, customer.getLastName());
-      pstmt.setDate(6, Date.valueOf(customer.getDateOfBirth()));
-      pstmt.setString(7, customer.getOccupation());
-      pstmt.setString(8, customer.getResidency());
-      pstmt.setString(9, customer.getNotes());
+      pstmt.setString(3, customer.getName());
+      pstmt.setDate(4, Date.valueOf(customer.getDateOfBirth()));
+      pstmt.setString(5, customer.getOccupation());
+      pstmt.setString(6, customer.getResidency());
+      pstmt.setString(7, customer.getNotes());
       pstmt.setInt(
-          10,
+          8,
           customer.getPhysicalAddress() != null
               ? customer.getPhysicalAddress().getAddressId()
               : null);
       pstmt.setInt(
-          11,
+          9,
           customer.getMailingAddress() != null
               ? customer.getMailingAddress().getAddressId()
               : null);
-      pstmt.setInt(12, customer.getContact() != null ? customer.getContact().getContactId() : null);
+      pstmt.setInt(10, customer.getContact() != null ? customer.getContact().getContactId() : null);
       pstmt.setInt(
-          13, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
+          11, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
 
       pstmt.executeUpdate();
     } catch (SQLException e) {
@@ -55,33 +53,31 @@ public class CustomerDAO {
 
   public void updateCustomer(ICustomer customer) {
     String sql =
-        "UPDATE customer SET title = ?, firstName = ?, middleName = ?, lastName = ?, dateOfBirth ="
+        "UPDATE customer SET title = ?, name = ?, dateOfBirth ="
             + " ?, occupation = ?, residency = ?, notes = ?, physicalAddressId = ?,"
             + " mailingAddressId = ?, contactId = ?, employerId = ? WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customer.getTitle());
-      pstmt.setString(2, customer.getFirstName());
-      pstmt.setString(3, customer.getMiddleName());
-      pstmt.setString(4, customer.getLastName());
-      pstmt.setDate(5, Date.valueOf(customer.getDateOfBirth()));
-      pstmt.setString(6, customer.getOccupation());
-      pstmt.setString(7, customer.getResidency());
-      pstmt.setString(8, customer.getNotes());
+      pstmt.setString(2, customer.getName());
+      pstmt.setDate(3, Date.valueOf(customer.getDateOfBirth()));
+      pstmt.setString(4, customer.getOccupation());
+      pstmt.setString(5, customer.getResidency());
+      pstmt.setString(6, customer.getNotes());
       pstmt.setInt(
-          9,
+          7,
           customer.getPhysicalAddress() != null
               ? customer.getPhysicalAddress().getAddressId()
               : null);
       pstmt.setInt(
-          10,
+          8,
           customer.getMailingAddress() != null
               ? customer.getMailingAddress().getAddressId()
               : null);
-      pstmt.setInt(11, customer.getContact() != null ? customer.getContact().getContactId() : null);
+      pstmt.setInt(9, customer.getContact() != null ? customer.getContact().getContactId() : null);
       pstmt.setInt(
-          12, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
-      pstmt.setString(13, customer.getCustomerId());
+          10, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
+      pstmt.setString(11, customer.getCustomerId());
 
       pstmt.executeUpdate();
     } catch (SQLException e) {
@@ -98,9 +94,7 @@ public class CustomerDAO {
 
       if (rs.next()) {
         String title = rs.getString("title");
-        String firstName = rs.getString("firstName");
-        String middleName = rs.getString("middleName");
-        String lastName = rs.getString("lastName");
+        String name = rs.getString("name");
         LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         String occupation = rs.getString("occupation");
         String residency = rs.getString("residency");
@@ -122,9 +116,7 @@ public class CustomerDAO {
         return new IndividualCustomer(
             customerId,
             title,
-            firstName,
-            middleName,
-            lastName,
+            name,
             dateOfBirth,
             occupation,
             residency,
@@ -141,15 +133,13 @@ public class CustomerDAO {
   }
 
   public ArrayList<Customer> getCustomersByName(
-      String firstName, String middleName, String lastName) {
+      String name) {
     ArrayList<Customer> customers = new ArrayList<>();
 
-    String sql = "SELECT * FROM customer WHERE firstName = ? AND middleName = ? AND lastName = ?";
+    String sql = "SELECT * FROM customer WHERE name = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, firstName);
-      pstmt.setString(2, middleName);
-      pstmt.setString(3, lastName);
+      pstmt.setString(1, name);
 
       ResultSet rs = pstmt.executeQuery();
 
@@ -178,9 +168,7 @@ public class CustomerDAO {
             new IndividualCustomer(
                 customerId,
                 title,
-                firstName,
-                middleName,
-                lastName,
+                name,
                 dateOfBirth,
                 occupation,
                 residency,
@@ -211,9 +199,7 @@ public class CustomerDAO {
       while (rs.next()) {
         String customerId = rs.getString("customerId");
         String title = rs.getString("title");
-        String firstName = rs.getString("firstName");
-        String middleName = rs.getString("middleName");
-        String lastName = rs.getString("lastName");
+        String name = rs.getString("name");
         String occupation = rs.getString("occupation");
         String residency = rs.getString("residency");
         String notes = rs.getString("notes");
@@ -235,9 +221,7 @@ public class CustomerDAO {
             new IndividualCustomer(
                 customerId,
                 title,
-                firstName,
-                middleName,
-                lastName,
+                name,
                 date,
                 occupation,
                 residency,
@@ -282,9 +266,7 @@ public class CustomerDAO {
         new IndividualCustomer(
             "000001",
             "Mr",
-            "Ting",
-            "Mun",
-            "Guy",
+            "Ting Mun Guy",
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
