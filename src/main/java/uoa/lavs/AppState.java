@@ -12,6 +12,7 @@ public class AppState {
   public static String userName;
   public static String customerDetailsAccessType; // CREATE, EDIT, VIEW, LOAN-EDIT, LOAN-VIEW
   public static Boolean isCreatingLoan;
+  public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
 
   public static Parent loadFxml(final String fxml) throws IOException {
     String fxmlPath = "/fxml/" + fxml + ".fxml";
@@ -56,7 +57,7 @@ public class AppState {
 
   public static void loadLoanSearchResults(String searchString) throws IOException {
     // Actual search logic needed here
-    SceneManager.addScene(AppUI.LOAN_RESULTS, loadFxml("customer/loan_search_results"));
+    SceneManager.addScene(AppUI.LOAN_RESULTS, loadFxml("loan/loan_search_results"));
     Main.setUi(AppUI.LOAN_RESULTS);
   }
 }

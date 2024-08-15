@@ -22,13 +22,13 @@ public class CustomerSearchController {
 
   @FXML private Button searchButton;
 
+  String state;
+
   @FXML
   private void initialize() {
     usernameField.setVisible(false);
     idField.setVisible(false);
   }
-
-  String state;
 
   // When enter key is pressed, perform search.
   @FXML
@@ -37,8 +37,7 @@ public class CustomerSearchController {
       try {
         onClickSearchButton();
       } catch (Exception e) {
-        System.out.println(
-            "Something went wrong - could not login! The message is " + e.getMessage());
+        System.out.println("Something went wrong " + e.getMessage());
       }
     }
   }
