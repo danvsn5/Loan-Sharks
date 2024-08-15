@@ -1,4 +1,4 @@
-package uoa.lavs.sql.customer;
+package uoa.lavs.sql.oop_to_sql.customer;
 
 import java.sql.Connection;
 import java.sql.Date;

@@ -14,6 +14,8 @@ import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.sql.DatabaseConnection;
 import uoa.lavs.sql.DatabaseState;
 import uoa.lavs.sql.InitialiseDatabase;
+import uoa.lavs.sql.oop_to_sql.customer.AddressDAO;
+import uoa.lavs.sql.oop_to_sql.customer.CustomerEmployerDAO;
 
 public class CustomerEmployerDAOTest {
   DatabaseConnection conn;

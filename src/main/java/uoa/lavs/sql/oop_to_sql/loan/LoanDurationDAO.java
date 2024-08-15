@@ -1,4 +1,4 @@
-package uoa.lavs.sql.loan;
+package uoa.lavs.sql.oop_to_sql.loan;
 
 import java.sql.Connection;
 import java.sql.Date;
