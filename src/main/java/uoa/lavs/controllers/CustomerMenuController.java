@@ -2,15 +2,13 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import uoa.lavs.Main;
+import uoa.lavs.SceneManager.AppUI;
 
 public class CustomerMenuController {
   @FXML private Button addNewCustomerButton;
 
   @FXML private Button findCustomerButton;
-
-  @FXML private Button loanButton;
-
-  @FXML private Button exitButton;
 
   @FXML private Button backButton;
 
@@ -21,26 +19,16 @@ public class CustomerMenuController {
 
   @FXML
   private void handleAddNewCustomerButtonAction() {
-    // Add add new customer button action code here
+    Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleFindCustomerButtonAction() {
-    // Add find customer button action code here
-  }
-
-  @FXML
-  private void handleLoanButtonAction() {
-    // Add loan button action code here
-  }
-
-  @FXML
-  private void handleExitButtonAction() {
-    // Add exit button action code here
+    Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 
   @FXML
   private void handleBackButtonAction() {
-    // Add back button action code here
+    Main.setUi(AppUI.MAIN_MENU);
   }
 }
