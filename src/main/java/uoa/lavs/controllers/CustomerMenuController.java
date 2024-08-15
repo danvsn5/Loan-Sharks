@@ -1,7 +1,9 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
@@ -18,7 +20,8 @@ public class CustomerMenuController {
   }
 
   @FXML
-  private void handleAddNewCustomerButtonAction() {
+  private void handleAddNewCustomerButtonAction() throws IOException {
+    AppState.loadAllCustomerDetails("CREATE");
     Main.setUi(AppUI.CI_DETAILS);
   }
 

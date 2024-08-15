@@ -2,6 +2,8 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -10,14 +12,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerInputDetailsController" >
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerInputDetailsController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/customer_details.png" />
          </image>
       </ImageView>
-      <Button layoutX="518.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
+      <Button fx:id="editButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -26,17 +28,17 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="494.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <TextField alignment="CENTER" editable="false" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerFirstNameField" alignment="CENTER" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerMiddleNameField" alignment="CENTER" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerLastNameField" alignment="CENTER" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
@@ -51,17 +53,12 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="1019.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerOccupationField" alignment="CENTER" layoutX="1019.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="50.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="12.0" />
-         </font>
-      </TextField>
-      <Button graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Contact Info">
+      <Button fx:id="contactButton" graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleContactButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Contact Info">
          <font>
             <Font size="27.0" />
          </font>
@@ -70,7 +67,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="621.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Employer Details">
+      <Button fx:id="employerButton" graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleEmployerButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Employer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -79,7 +76,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="873.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Addresses">
+      <Button fx:id="addressButton" graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleAddressButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Addresses">
          <font>
             <Font size="27.0" />
          </font>
@@ -97,7 +94,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="202.0" layoutY="269.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="118.0" styleClass="accessory-button" stylesheets="@../../../css/index.css" text="Notes">
+      <Button fx:id="notesButton" layoutX="202.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#handleNotesButtonAction" prefHeight="36.0" prefWidth="118.0" styleClass="accessory-button" stylesheets="@../../../css/index.css" text="Notes">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -115,10 +112,13 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Citizenship" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Date of Birth" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1019.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Occupation" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../../css/index.css" text="Summary of ID: &lt;123456-789&gt;" textFill="#333333" textOverrun="CLIP">
+      <Label fx:id="customerIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../../css/index.css" text="Summary of ID: &lt;123456-789&gt;" textFill="#333333" textOverrun="CLIP">
          <font>
             <Font size="41.0" />
          </font>
       </Label>
+      <ComboBox fx:id="customerTitleComboBox" layoutX="60.0" layoutY="517.0" prefHeight="25.0" prefWidth="183.0" />
+      <ComboBox fx:id="customerCitizenshipBox" layoutX="409.0" layoutY="517.0" prefWidth="150.0" />
+      <DatePicker fx:id="customerDOBPicker" layoutX="699.0" layoutY="517.0" prefHeight="25.0" prefWidth="195.0" />
    </children>
 </Pane>

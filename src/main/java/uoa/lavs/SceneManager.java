@@ -5,11 +5,13 @@ import javafx.scene.Parent;
 
 public class SceneManager {
   public enum AppUI {
-    CI_ADDRESS,
+    CI_PRIMARY_ADDRESS,
+    CI_MAILING_ADDRESS,
     CI_CONFIRM,
     CI_CONTACT,
     CI_DETAILS,
     CI_EMPLOYER,
+    CI_EMPLOYER_ADDRESS,
     CI_NOTES,
     CUSTOMER_MENU,
     CUSTOMER_RESULTS,
