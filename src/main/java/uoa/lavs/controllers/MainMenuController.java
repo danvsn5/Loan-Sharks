@@ -30,12 +30,14 @@ public class MainMenuController {
   private void onClickCustomerButton() {
     Main.setUi(AppUI.CUSTOMER_MENU);
     AppState.setCurrentUiName(AppUI.CUSTOMER_MENU);
+    AppState.setPreviousUi(AppUI.MAIN_MENU);
   }
 
   @FXML
   private void handleLoanButtonAction() {
     Main.setUi(AppUI.LOAN_MENU);
     AppState.setCurrentUiName(AppUI.LOAN_MENU);
+    AppState.setPreviousUi(AppUI.MAIN_MENU);
   }
 
   @FXML
@@ -52,7 +54,8 @@ public class MainMenuController {
 
   @FXML
   private void onClickReturnButton() {
-    AppState.setPreviousUi(AppState.getCurrentUiName());
+    AppState.setCurrentUiName(AppState.getPreviousUi());
     Main.setUi(AppState.getPreviousUi());
+    AppState.setPreviousUi(AppState.getCurrentUiName());
   }
 }
