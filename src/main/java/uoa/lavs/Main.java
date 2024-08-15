@@ -112,6 +112,8 @@ public class Main extends Application {
 
     stage.setScene(scene);
     stage.show();
+    AppState.setCurrentUiName(AppUI.MAIN_MENU);
+    System.out.println(AppState.getCurrentUiName());
     stage.setOnCloseRequest(
         new EventHandler<WindowEvent>() {
           @Override

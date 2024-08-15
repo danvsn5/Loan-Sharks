@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.AppState;
 
 public class MainMenuController {
   @FXML private Button customerButton;
@@ -18,7 +19,7 @@ public class MainMenuController {
 
   @FXML private Label welcomeLabel;
 
-  @FXML private ImageView staticReturnImagebutton;
+  @FXML private ImageView staticReturnImageView;
 
   @FXML
   private void initialize() {
@@ -28,21 +29,30 @@ public class MainMenuController {
   @FXML
   private void onClickCustomerButton() {
     Main.setUi(AppUI.CUSTOMER_MENU);
+    AppState.setCurrentUiName(AppUI.CUSTOMER_MENU);
   }
 
   @FXML
   private void handleLoanButtonAction() {
     Main.setUi(AppUI.LOAN_MENU);
+    AppState.setCurrentUiName(AppUI.LOAN_MENU);
   }
 
   @FXML
   private void handleLogOutButtonAction() {
     Main.setUi(AppUI.LOGIN);
+    AppState.setCurrentUiName(AppUI.LOGIN);
   }
 
   @FXML
   private void handleinstructionsButtonAction() {
     // There is no instruction page, so we will just print a message
     System.out.println("Instructions button clicked");
+  }
+
+  @FXML
+  private void onClickReturnButton() {
+    AppState.setPreviousUi(AppState.getCurrentUiName());
+    Main.setUi(AppState.getPreviousUi());
   }
 }
