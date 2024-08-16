@@ -9,6 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import uoa.lavs.AppState;
+import uoa.lavs.Main;
+import uoa.lavs.SceneManager.AppUI;
 
 public class CustomerSearchController {
   @FXML private Label searchWithCustomerIDLabel; // When click label, reveal text box.
@@ -84,6 +86,6 @@ public class CustomerSearchController {
 
   @FXML
   private void handleBackButtonAction() {
-    // Add back button action code here
+    Main.setUi(AppUI.CUSTOMER_MENU);
   }
 }

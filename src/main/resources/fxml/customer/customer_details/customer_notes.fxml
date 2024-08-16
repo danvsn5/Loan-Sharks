@@ -16,7 +16,7 @@
             <Image url="@../../../images/customer_notes.png" />
          </image>
       </ImageView>
-      <TextArea layoutX="168.0" layoutY="260.0" prefHeight="387.0" prefWidth="944.0" styleClass="notes" stylesheets="@../../../css/index.css" wrapText="true">
+      <TextArea fx:id="customerNotesField" layoutX="168.0" layoutY="260.0" prefHeight="387.0" prefWidth="944.0" styleClass="notes" stylesheets="@../../../css/index.css" wrapText="true">
          <cursor>
             <Cursor fx:constant="CROSSHAIR" />
          </cursor>

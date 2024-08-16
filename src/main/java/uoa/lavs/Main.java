@@ -100,8 +100,7 @@ public class Main extends Application {
     SceneManager.addScene(AppUI.LOAN_MENU, loadFxml("loan/loan_management"));
     SceneManager.addScene(AppUI.LOAN_SEARCH, loadFxml("loan/loan_search"));
 
-    // CURRENTLY BYPASSING LOGIN SCREEN
-    scene = new Scene(SceneManager.getScene(AppUI.MAIN_MENU), 1280, 720);
+    scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1280, 720);
     // imports main index.css file
     String cssPath = getClass().getResource("/css/index.css").toExternalForm();
     scene.getStylesheets().add(cssPath);
@@ -112,7 +111,7 @@ public class Main extends Application {
 
     stage.setScene(scene);
     stage.show();
-    AppState.setCurrentUiName(AppUI.MAIN_MENU);
+    AppState.setCurrentUiName(AppUI.LOGIN);
     System.out.println(AppState.getCurrentUiName());
     stage.setOnCloseRequest(
         new EventHandler<WindowEvent>() {
