@@ -3,6 +3,7 @@ package uoa.lavs.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomer;
@@ -12,7 +13,7 @@ public class CustomerInputNotesController {
   @FXML private TextArea customerNotesField;
 
   @FXML private Button editButton;
-  @FXML private Button backButton;
+  @FXML private ImageView staticReturnImageView;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 

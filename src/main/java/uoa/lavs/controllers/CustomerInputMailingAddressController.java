@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
@@ -26,7 +27,7 @@ public class CustomerInputMailingAddressController {
   @FXML private Button employerButton;
 
   @FXML private Button editButton;
-  @FXML private Button backButton;
+  @FXML private ImageView staticReturnImageView;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 

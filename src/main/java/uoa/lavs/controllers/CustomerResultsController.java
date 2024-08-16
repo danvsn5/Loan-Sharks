@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
@@ -35,7 +36,7 @@ public class CustomerResultsController {
   @FXML private Rectangle searchResultsRectangle6;
 
   @FXML private Button nextButton;
-  @FXML private Button backButton;
+  @FXML private ImageView staticReturnImageView;
 
   ArrayList<String> searchResultsNameList = new ArrayList<>();
   ArrayList<String> searchResultsIDList = new ArrayList<>();

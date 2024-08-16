@@ -3,6 +3,7 @@ package uoa.lavs.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
@@ -24,7 +25,7 @@ public class CustomerInputContactController {
   @FXML private Button customerEmployerButton;
 
   @FXML private Button editButton;
-  @FXML private Button backButton;
+  @FXML private ImageView staticReturnImageView;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 

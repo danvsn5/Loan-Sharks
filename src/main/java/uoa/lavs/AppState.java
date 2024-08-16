@@ -14,6 +14,10 @@ public class AppState {
   public static Boolean isCreatingLoan;
   public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
 
+  // Previous and current UI screens for return functionality
+  public static AppUI previousUi;
+  public static AppUI currentUiName;
+
   public static Parent loadFxml(final String fxml) throws IOException {
     String fxmlPath = "/fxml/" + fxml + ".fxml";
     System.out.println("Loading FXML from path: " + fxmlPath);
@@ -61,5 +65,20 @@ public class AppState {
     // Actual search logic needed here
     SceneManager.addScene(AppUI.LOAN_RESULTS, loadFxml("loan/loan_search_results"));
     Main.setUi(AppUI.LOAN_RESULTS);
+  }
+
+  public static AppUI getCurrentUiName() {
+    return currentUiName;
+  }
+
+  public static void setCurrentUiName(AppUI currentUi) {
+    AppState.currentUiName = currentUi;
+  }
+
+  public static AppUI getPreviousUi() {
+    return previousUi;
+  }
+  public static void setPreviousUi(AppUI previousUi) {
+    AppState.previousUi = previousUi;
   }
 }

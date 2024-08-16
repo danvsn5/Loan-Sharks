@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import uoa.lavs.AppState;
@@ -14,7 +15,7 @@ public class CustomerSearchController {
 
   @FXML private Label searchWithNameLabel; // When click label, reveal text box.
 
-  @FXML private Button backButton;
+  @FXML private ImageView staticReturnImageView;
 
   @FXML private TextField usernameField;
 
