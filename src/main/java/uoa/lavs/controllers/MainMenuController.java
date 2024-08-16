@@ -24,6 +24,8 @@ public class MainMenuController {
   @FXML
   private void initialize() {
     welcomeLabel.setText("Welcome!");
+    staticReturnImageView.setDisable(true);
+    staticReturnImageView.setVisible(false);
   }
 
   @FXML
@@ -54,8 +56,6 @@ public class MainMenuController {
 
   @FXML
   private void onClickReturnButton() {
-    AppState.setCurrentUiName(AppState.getPreviousUi());
-    Main.setUi(AppState.getPreviousUi());
-    AppState.setPreviousUi(AppState.getCurrentUiName());
+    // There is no return button, so we will just print a message
   }
 }
