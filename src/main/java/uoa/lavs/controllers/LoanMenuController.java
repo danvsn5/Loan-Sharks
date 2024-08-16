@@ -2,17 +2,17 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import uoa.lavs.AppState;
+import uoa.lavs.Main;
+import uoa.lavs.SceneManager.AppUI;
 
 public class LoanMenuController {
   @FXML private Button createNewLoanButton;
 
   @FXML private Button findLoanButton;
 
-  @FXML private Button customerButton;
-
-  @FXML private Button exitButton;
-
-  @FXML private Button backButton;
+  @FXML private ImageView staticReturnImageView;
 
   @FXML
   private void initialize() {
@@ -21,26 +21,19 @@ public class LoanMenuController {
 
   @FXML
   private void handleCreateNewLoanButtonAction() {
-    // Add add new customer button action code here
+    AppState.isCreatingLoan = true;
+    Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 
   @FXML
   private void handleFindLoanButtonAction() {
-    // Add find customer button action code here
-  }
-
-  @FXML
-  private void handleCustomerButtonAction() {
-    // Add loan button action code here
-  }
-
-  @FXML
-  private void handleExitButtonAction() {
-    // Add exit button action code here
+    Main.setUi(AppUI.LOAN_SEARCH);
   }
 
   @FXML
   private void handleBackButtonAction() {
     // Add back button action code here
+    AppState.isCreatingLoan = false;
+    Main.setUi(AppUI.MAIN_MENU);
   }
 }

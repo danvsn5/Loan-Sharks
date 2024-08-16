@@ -2,74 +2,50 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import uoa.lavs.Main;
+import uoa.lavs.SceneManager.AppUI;
 
 public class LoanCoborrower {
-  @FXML private Label customerTitleLabel;
-  @FXML private Label customerFirstNameLabel;
-  @FXML private Label customerMiddleNameLabel;
-  @FXML private Label customerLastNameLabel;
-  @FXML private Label customerDOBLabel;
-  @FXML private Label customerOccupationLabel;
-  @FXML private Label customerResidencyStatusLabel;
+  @FXML private TextField coborrowerIDField1;
+  @FXML private TextField coborrowerIDField2;
+  @FXML private TextField coborrowerIDField3;
 
-  @FXML private Label customerAddressTypeLabel;
-  @FXML private Label customerAddress1Label;
-  @FXML private Label customerAddress2Label;
-  @FXML private Label customerSuburbLabel;
-  @FXML private Label customerCityLabel;
-  @FXML private Label customerPostCodeLabel;
-  @FXML private CheckBox customerPrimaryAddressCheckBox;
-  @FXML private CheckBox customerMailingAddressCheckBox;
-
-  @FXML private Label customerEmailLabel;
-  @FXML private Label customerPhoneNumTypeLabel;
-  @FXML private Label customerPhoneNumLabel;
-  @FXML private Label customerPreferredContactLabel;
-  @FXML private Label customerAlternateContactLabel;
-
-  @FXML private Label employerNameLabel;
-  @FXML private Label employerAddress1Label;
-  @FXML private Label employerAddress2Label;
-  @FXML private Label employerSuburbLabel;
-  @FXML private Label employerCityLabel;
-  @FXML private Label employerPostCodeLabel;
-  @FXML private Label employerCountryLabel;
-  @FXML private Label employerEmailLabel;
-  @FXML private Label employerWebsiteLabel;
-  @FXML private Label employerPhoneNumLabel;
-  @FXML private CheckBox isCustomerOwnerCheckBox;
-
-  @FXML private Label customerNotesTextField;
-
-  @FXML private Button createLoanButton;
-  @FXML private Button editDetailsButton;
-  @FXML private Button backButton;
-  @FXML private Button exitButton;
+  @FXML private Button primaryButton;
+  @FXML private Button durationButton;
+  @FXML private Button financeButton;
+  @FXML private Button summaryButton;
+  @FXML private ImageView staticReturnImageView;
 
   @FXML
   private void initialize() {
     // Add initialization code here
   }
 
+  // Add methods for all buttons
   @FXML
-  private void handleCreateLoanButtonAction() {
-    // Add create loan button action code here
+  private void handlePrimaryButtonAction() {
+    Main.setUi(AppUI.LC_PRIMARY);
   }
 
   @FXML
-  private void handleEditDetailsButtonAction() {
-    // Add edit details button action code here
+  private void handleDurationButtonAction() {
+    Main.setUi(AppUI.LC_DURATION);
+  }
+
+  @FXML
+  private void handleFinanceButtonAction() {
+    Main.setUi(AppUI.LC_FINANCE);
+  }
+
+  @FXML
+  private void handleSummaryButtonAction() {
+    Main.setUi(AppUI.LC_SUMMARY);
   }
 
   @FXML
   private void handleBackButtonAction() {
-    // Add back button action code here
-  }
-
-  @FXML
-  private void handleExitButtonAction() {
-    // Add exit button action code here
+    Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 }

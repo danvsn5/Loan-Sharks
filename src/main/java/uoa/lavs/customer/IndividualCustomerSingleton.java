@@ -8,8 +8,29 @@ public class IndividualCustomerSingleton {
   public static IndividualCustomer getInstance() {
     if (instance == null) {
       // Initialize with placeholder values
+      Address physicalAddress = new Address("", "", "", "", "", "", "");
+      Address mailingAddress = new Address("", "", "", "", "", "", "");
+      Address employerAddress = new Address("", "", "", "", "", "", "");
+
+      Phone phoneOne = new Phone("", "");
+      Phone phoneTwo = new Phone("", "");
+      CustomerContact contact = new CustomerContact("", phoneOne, phoneTwo, "", "");
+      CustomerEmployer employer = new CustomerEmployer("", employerAddress, "", "", "", false);
+
       instance =
-          new IndividualCustomer("", "", "", null, "", "", "", null, null, null, null);
+          new IndividualCustomer(
+              "",
+              "",
+              "",
+              "",
+              null,
+              "",
+              "",
+              "",
+              physicalAddress,
+              mailingAddress,
+              contact,
+              employer);
     }
     return instance;
   }

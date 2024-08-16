@@ -2,6 +2,11 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import uoa.lavs.Main;
+import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.AppState;
 
 public class MainMenuController {
   @FXML private Button customerButton;
@@ -10,30 +15,47 @@ public class MainMenuController {
 
   @FXML private Button logOutButton;
 
-  @FXML private Button exitButton;
+  @FXML private Button instructionsButton;
+
+  @FXML private Label welcomeLabel;
+
+  @FXML private ImageView staticReturnImageView;
 
   @FXML
   private void initialize() {
-    // Add initialization code here
+    welcomeLabel.setText("Welcome!");
+    staticReturnImageView.setDisable(true);
+    staticReturnImageView.setVisible(false);
   }
 
   @FXML
-  private void handleCustomerButtonAction() {
-    // Add customer button action code here
+  private void onClickCustomerButton() {
+    Main.setUi(AppUI.CUSTOMER_MENU);
+    AppState.setCurrentUiName(AppUI.CUSTOMER_MENU);
+    AppState.setPreviousUi(AppUI.MAIN_MENU);
   }
 
   @FXML
   private void handleLoanButtonAction() {
-    // Add loan button action code here
+    Main.setUi(AppUI.LOAN_MENU);
+    AppState.setCurrentUiName(AppUI.LOAN_MENU);
+    AppState.setPreviousUi(AppUI.MAIN_MENU);
   }
 
   @FXML
   private void handleLogOutButtonAction() {
-    // Add log out button action code here
+    Main.setUi(AppUI.LOGIN);
+    AppState.setCurrentUiName(AppUI.LOGIN);
   }
 
   @FXML
-  private void handleExitButtonAction() {
-    // Add exit button action code here
+  private void handleinstructionsButtonAction() {
+    // There is no instruction page, so we will just print a message
+    System.out.println("Instructions button clicked");
+  }
+
+  @FXML
+  private void onClickReturnButton() {
+    // There is no return button, so we will just print a message
   }
 }

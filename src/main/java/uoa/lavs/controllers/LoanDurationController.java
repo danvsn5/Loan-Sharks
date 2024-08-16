@@ -2,21 +2,19 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
-public class LoanFinanceDetails {
-  @FXML private TextField compoundingField;
-  @FXML private TextField paymentFrequencyField;
-  @FXML private TextField paymentValueField;
-  @FXML private RadioButton interestOnlyButton;
+public class LoanDurationController {
+  @FXML private TextField startDateField;
+  @FXML private TextField periodField;
+  @FXML private TextField termField;
 
   @FXML private Button primaryButton;
   @FXML private Button coborrowerButton;
-  @FXML private Button durationButton;
+  @FXML private Button financeButton;
   @FXML private Button summaryButton;
   @FXML private ImageView staticReturnImageView;
 
@@ -25,6 +23,7 @@ public class LoanFinanceDetails {
     // Add initialization code here
   }
 
+  // Add methods for all buttons
   @FXML
   private void handlePrimaryButtonAction() {
     Main.setUi(AppUI.LC_PRIMARY);
@@ -36,8 +35,8 @@ public class LoanFinanceDetails {
   }
 
   @FXML
-  private void handleDurationButtonAction() {
-    Main.setUi(AppUI.LC_DURATION);
+  private void handleFinanceButtonAction() {
+    Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML

@@ -2,23 +2,25 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerInputPrimaryAddressController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerInputPrimaryAddressController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/customer_details.png" />
          </image>
       </ImageView>
-      <Button layoutX="518.0" layoutY="613.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
+      <Button fx:id="editButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -27,22 +29,22 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="494.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <TextField alignment="CENTER" editable="false" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerAddressLine1Field" alignment="CENTER" editable="false" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerAddressLine2Field" alignment="CENTER" editable="false" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerSuburbField" alignment="CENTER" editable="false" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerCityField" alignment="CENTER" editable="false" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
@@ -52,12 +54,12 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="50.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerPostcodeField" alignment="CENTER" editable="false" layoutX="50.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <Button graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Contact Info">
+      <Button fx:id="contactButton" graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleContactButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Contact Info">
          <font>
             <Font size="27.0" />
          </font>
@@ -66,7 +68,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="621.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Employer Details">
+      <Button fx:id="employerButton" graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleEmployerButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Employer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -85,7 +87,7 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="372.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="379.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Customer Details">
+      <Button fx:id="detailsButton" graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleDetailsButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Customer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -116,13 +118,25 @@
          </font>
       </Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="62.0" layoutX="978.0" layoutY="510.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <RadioButton layoutX="1107.0" layoutY="511.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <RadioButton fx:id="mailingAddressRadio" layoutX="1107.0" layoutY="511.0" mnemonicParsing="false" onMouseClicked="#handleMailingAddressRadioAction" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="62.0" layoutX="86.0" layoutY="266.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button layoutX="518.0" layoutY="269.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="118.0" styleClass="accessory-button" stylesheets="@../../../css/index.css" text="Mailing">
+      <Button fx:id="mailingAddressButton" layoutX="518.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#handleMailingAddressButtonAction" prefHeight="36.0" prefWidth="118.0" styleClass="accessory-button" stylesheets="@../../../css/index.css" text="Mailing">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="13.0" layoutX="114.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1057.0" />
+      <ComboBox fx:id="customerAddressTypeComboBox" layoutX="702.0" layoutY="517.0" prefHeight="20.0" prefWidth="188.0" />
+      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/static-return.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </Pane>

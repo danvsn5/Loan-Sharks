@@ -2,25 +2,30 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import uoa.lavs.Main;
+import uoa.lavs.SceneManager.AppUI;
 
 public class LoanSummaryController {
-  @FXML private Label loanIDLabel;
-  @FXML private Label loanStatusLabel;
-  @FXML private Label loanCustomerNamelLabel;
-  @FXML private Label loanCustomerIDLabel;
-  @FXML private Label startDateLabel;
-  @FXML private Label coborrowersLabel;
-  @FXML private Label loanTermLabel;
-  @FXML private Label loanCompoundingLabel;
-  @FXML private Label loanPrincipalLabel;
-  @FXML private Label loanFrequencyLabel;
-  @FXML private Label paymentAmountLabel;
-  @FXML private CheckBox interestOnlyCheckBox;
+  @FXML private TextField principalfField;
+  @FXML private TextField annualRateField;
+  @FXML private TextField termField;
+  @FXML private TextField paymentFrequencyField;
+  @FXML private TextField paymentValueField;
+  @FXML private TextField culmuativeInterestField;
+  @FXML private TextField culumutiveLoanCostField;
+  @FXML private TextField payOffDateField;
 
-  @FXML private Button backButton;
-  @FXML private Button exitButton;
+  @FXML private Button confirmLoanButton;
+  @FXML private Button viewPaymentsButton;
+
+  @FXML private Button primaryButton;
+  @FXML private Button coborrowerButton;
+  @FXML private Button durationButton;
+  @FXML private Button financeButton;
+  @FXML private Button summaryButton;
+  @FXML private ImageView staticReturnImageView;
 
   @FXML
   private void initialize() {
@@ -28,12 +33,42 @@ public class LoanSummaryController {
   }
 
   @FXML
-  private void handleBackButtonAction() {
-    // Add back button action code here
+  private void handleConfirmLoanButtonAction() {
+    // Add action code here
   }
 
   @FXML
-  private void handleExitButtonAction() {
-    // Add exit button action code here
+  private void handleViewPaymentsButtonAction() {
+    // Add action code here
+  }
+
+  @FXML
+  private void handlePrimaryButtonAction() {
+    Main.setUi(AppUI.LC_PRIMARY);
+  }
+
+  @FXML
+  private void handleCoborrowerButtonAction() {
+    Main.setUi(AppUI.LC_COBORROWER);
+  }
+
+  @FXML
+  private void handleDurationButtonAction() {
+    Main.setUi(AppUI.LC_DURATION);
+  }
+
+  @FXML
+  private void handleFinanceButtonAction() {
+    Main.setUi(AppUI.LC_FINANCE);
+  }
+
+  @FXML
+  private void handleSummaryButtonAction() {
+    Main.setUi(AppUI.LC_SUMMARY);
+  }
+
+  @FXML
+  private void handleBackButtonAction() {
+    Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 }
