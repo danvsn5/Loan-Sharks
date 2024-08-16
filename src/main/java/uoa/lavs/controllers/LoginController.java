@@ -11,6 +11,7 @@ import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.sql.InitialiseDatabase;
 
 public class LoginController {
   @FXML private Button loginButton;
@@ -35,6 +36,9 @@ public class LoginController {
           AppUI.MAIN_MENU,
           new FXMLLoader(Main.class.getResource("/fxml/admin/welcome.fxml")).load());
       Main.setUi(AppUI.MAIN_MENU);
+
+      InitialiseDatabase.createDatabase();
+
       usernameField.clear();
       passwordField.clear();
     } else {
