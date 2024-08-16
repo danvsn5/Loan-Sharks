@@ -93,7 +93,7 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="690.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Payment Value" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1018.0" layoutY="398.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Interest Only" />
       <RadioButton fx:id="interestOnlyButton" layoutX="1106.0" layoutY="427.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
-      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="23.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/static-return.png" />
          </image>

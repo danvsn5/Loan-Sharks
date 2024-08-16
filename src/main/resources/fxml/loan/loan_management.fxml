@@ -40,7 +40,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="9.0" layoutX="464.0" layoutY="541.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="327.0" />
-      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="23.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/static-return.png" />
          </image>
