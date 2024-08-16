@@ -16,6 +16,7 @@ public class InitialiseDatabase {
       createLoanDurationEntity(conn);
       createLoanPaymentEntity(conn);
       createLoanCoborrowerEntity(conn);
+      createSyncInfoEntity(conn);
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
@@ -185,6 +186,23 @@ public class InitialiseDatabase {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+  }
+
+  private static void createSyncInfoEntity(Connection conn) {
+    String sql =
+        "CREATE TABLE IF NOT EXISTS sync_info (\n"
+            + "id INTEGER PRIMARY KEY, "
+            + "lastSyncTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
+    
+    String insert = "INSERT INTO sync_info (id) VALUES (1);";
+
+    try (Statement stmt = conn.createStatement()) {
+      stmt.execute(sql);
+      stmt.execute(insert);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    
   }
 
   public static void main(String[] args) {
