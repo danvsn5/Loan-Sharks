@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
@@ -31,7 +32,7 @@ public class CustomerInputDetailsController {
   @FXML private Button employerButton;
 
   @FXML private Button editButton;
-  @FXML private Button backButton;
+  @FXML private ImageView staticReturnImageView;
 
   Random random = new Random();
 

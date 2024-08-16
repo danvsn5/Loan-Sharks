@@ -48,8 +48,6 @@ public class CustomerMenuController {
 
   @FXML
   private void onClickReturnButton() {
-    AppState.setCurrentUiName(AppState.getPreviousUi());
-    Main.setUi(AppState.getPreviousUi());
-    AppState.setPreviousUi(AppState.getCurrentUiName());
+    Main.setUi(AppUI.MAIN_MENU);
   }
 }

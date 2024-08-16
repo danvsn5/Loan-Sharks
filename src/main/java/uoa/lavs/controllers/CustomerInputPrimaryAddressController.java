@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
@@ -23,7 +24,7 @@ public class CustomerInputPrimaryAddressController {
   @FXML private Button employerButton;
 
   @FXML private Button editButton;
-  @FXML private Button backButton;
+  @FXML private ImageView staticReturnImageView;
 
   @FXML
   private void initialize() {

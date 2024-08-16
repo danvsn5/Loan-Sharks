@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -43,5 +44,16 @@
       </TextField>
       <Label fx:id="searchWithLoanIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="222.0" onMouseClicked="#enableIDSearch" prefHeight="18.0" prefWidth="504.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with Loan ID" />
       <Label fx:id="searchWithNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="419.0" onMouseClicked="#enableNameSearch" prefHeight="18.0" prefWidth="800.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with Customer Name" />
+      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/static-return.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </Pane>

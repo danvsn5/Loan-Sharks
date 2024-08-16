@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -37,5 +39,16 @@
       <Rectangle fx:id="searchResultsRectangle4" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="62.0" layoutX="145.0" layoutY="459.0" onMouseClicked="#handleSearchResultsRectangle4Action" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
       <Rectangle fx:id="searchResultsRectangle5" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="62.0" layoutX="145.0" layoutY="520.0" onMouseClicked="#handleSearchResultsRectangle5Action" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
       <Rectangle fx:id="searchResultsRectangle6" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="62.0" layoutX="145.0" layoutY="582.0" onMouseClicked="#handleSearchResultsRectangle6Action" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
+      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="23.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/static-return.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </Pane>

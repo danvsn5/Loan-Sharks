@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
@@ -17,7 +18,7 @@ public class LoanFinanceDetails {
   @FXML private Button coborrowerButton;
   @FXML private Button durationButton;
   @FXML private Button summaryButton;
-  @FXML private Button backButton;
+  @FXML private ImageView staticReturnImageView;
 
   @FXML
   private void initialize() {
