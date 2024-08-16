@@ -17,7 +17,7 @@
             <Image url="@../../images/customer_management.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../css/index.css" text="Customer Management" textFill="#333333" textOverrun="CLIP">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../css/index.css" text="Customer Management" textFill="#333333" textOverrun="CLIP">
          <font>
             <Font size="41.0" />
          </font>
