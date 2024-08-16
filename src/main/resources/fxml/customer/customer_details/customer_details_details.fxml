@@ -49,11 +49,6 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="691.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="12.0" />
-         </font>
-      </TextField>
       <TextField fx:id="customerOccupationField" alignment="CENTER" layoutX="1019.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
@@ -120,7 +115,6 @@
       </Label>
       <ComboBox fx:id="customerTitleComboBox" layoutX="60.0" layoutY="517.0" prefHeight="25.0" prefWidth="183.0" />
       <ComboBox fx:id="customerCitizenshipBox" layoutX="409.0" layoutY="517.0" prefWidth="150.0" />
-      <DatePicker fx:id="customerDOBPicker" layoutX="699.0" layoutY="517.0" prefHeight="25.0" prefWidth="195.0" />
       <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/static-return.png" />
@@ -132,5 +126,8 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="91.0" layoutX="655.0" layoutY="512.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
+      <DatePicker fx:id="customerDOBPicker" layoutX="691.0" layoutY="514.0" prefHeight="33.0" prefWidth="210.0" stylesheets="@../../../css/index.css" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="641.0" layoutY="548.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
    </children>
 </Pane>
