@@ -35,6 +35,7 @@ public class InitialiseDatabase {
             + "mailingAddressId VARCHAR(50), "
             + "contactId VARCHAR(50), "
             + "employerId VARCHAR(50), "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "FOREIGN KEY (physicalAddressId) REFERENCES Address(addressId), "
             + "FOREIGN KEY (mailingAddressId) REFERENCES Address(addressId), "
             + "FOREIGN KEY (contactId) REFERENCES CustomerContact(contactId), "
@@ -58,7 +59,8 @@ public class InitialiseDatabase {
             + "phoneTwoType VARCHAR(20), "
             + "phoneTwoNumber VARCHAR(20), "
             + "preferredContact VARCHAR(50), "
-            + "alternateContact VARCHAR(50)"
+            + "alternateContact VARCHAR(50), "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {
@@ -78,7 +80,8 @@ public class InitialiseDatabase {
             + "suburb VARCHAR(50), "
             + "postCode VARCHAR(20), "
             + "city VARCHAR(50), "
-            + "country VARCHAR(50)"
+            + "country VARCHAR(50), "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {
@@ -98,6 +101,7 @@ public class InitialiseDatabase {
             + "employerWebsite VARCHAR(100), "
             + "employerPhone VARCHAR(20), "
             + "ownerOfCompany BOOLEAN, "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "FOREIGN KEY (employerAddressId) REFERENCES Address(addressId)"
             + ");";
 
@@ -117,6 +121,7 @@ public class InitialiseDatabase {
             + "rate DOUBLE, "
             + "durationId INT, "
             + "paymentId INT, "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "FOREIGN KEY (customerId) REFERENCES Customer(customerId), "
             + "FOREIGN KEY (durationId) REFERENCES LoanDuration(durationId), "
             + "FOREIGN KEY (paymentId) REFERENCES LoanPayment(paymentId)"
@@ -135,7 +140,8 @@ public class InitialiseDatabase {
             + "durationId INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "startDate DATE, "
             + "period INT, "
-            + "loanTerm INT"
+            + "loanTerm INT, "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {
@@ -152,7 +158,8 @@ public class InitialiseDatabase {
             + "compounding VARCHAR(50), "
             + "paymentFrequency VARCHAR(50), "
             + "paymentAmount VARCHAR(50), "
-            + "interestOnly BOOLEAN"
+            + "interestOnly BOOLEAN, "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {
@@ -167,6 +174,7 @@ public class InitialiseDatabase {
         "CREATE TABLE IF NOT EXISTS loan_coborrower (\n"
             + "loanId INT, "
             + "coborrowerId VARCHAR(50), "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "PRIMARY KEY (loanId, coborrowerId), "
             + "FOREIGN KEY (loanId) REFERENCES Loan(loanId), "
             + "FOREIGN KEY (coborrowerId) REFERENCES Customer(customerId)"
