@@ -5,8 +5,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.CustomerEmployer;
+import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.utility.CustomerCreationHelper;
 
 public class CustomerInputEmployerController {
   @FXML private TextField employerNameField;
@@ -24,34 +29,54 @@ public class CustomerInputEmployerController {
   @FXML private Button editButton;
   @FXML private Button backButton;
 
+  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
+
   @FXML
   private void initialize() {
     // Add initialization code here
   }
 
+  private void setEmployerDetails() {
+    CustomerEmployer employer = customer.getEmployer();
+    employer.setEmployerName(employerNameField.getText());
+    employer.setEmployerEmail(employerEmailField.getText());
+    employer.setEmployerWebsite(employerWebsiteField.getText());
+    employer.setEmployerPhone(employerPhoneField.getText());
+    employer.setOwnerOfCompany(customerIsEmployerCheckbox.isSelected());
+  }
+
   @FXML
   private void handleDetailsButtonAction() {
+    setEmployerDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleAddressButtonAction() {
+    setEmployerDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
+    setEmployerDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerAddressButtonAction() {
+    setEmployerDetails();
     Main.setUi(AppUI.CI_EMPLOYER_ADDRESS);
   }
 
   @FXML
   private void handleEditButtonAction() {
     // Add edit button action code here
+    if (AppState.customerDetailsAccessType == "CREATE") {
+      // send customer to sql database
+      setEmployerDetails();
+      CustomerCreationHelper.createCustomer(customer);
+    }
   }
 
   @FXML

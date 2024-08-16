@@ -5,8 +5,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.Address;
+import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.utility.CustomerCreationHelper;
 
 public class CustomerInputPrimaryAddressController {
   @FXML private ComboBox<String> customerAddressTypeComboBox;
@@ -25,9 +30,29 @@ public class CustomerInputPrimaryAddressController {
   @FXML private Button editButton;
   @FXML private Button backButton;
 
+  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
+
   @FXML
   private void initialize() {
     // Add initialization code here
+  }
+
+  private void setAddressDetails() {
+    Address address = customer.getPhysicalAddress();
+    address.setAddressLineOne(customerAddressLine1Field.getText());
+    address.setAddressLineTwo(customerAddressLine2Field.getText());
+    address.setSuburb(customerSuburbField.getText());
+    address.setCity(customerCityField.getText());
+    address.setPostCode(customerPostcodeField.getText());
+    address.setAddressType(customerAddressTypeComboBox.getValue());
+
+    // Autosetting to New Zealand
+    address.setCountry("New Zealand");
+
+    // handle mailing address
+    if (mailingAddressRadio.isSelected()) {
+      customer.setMailingAddress(address);
+    }
   }
 
   @FXML
@@ -53,6 +78,11 @@ public class CustomerInputPrimaryAddressController {
   @FXML
   private void handleEditButtonAction() {
     // Add edit button action code here
+    if (AppState.customerDetailsAccessType == "CREATE") {
+      // send customer to sql database
+      setAddressDetails();
+      CustomerCreationHelper.createCustomer(customer);
+    }
   }
 
   @FXML
@@ -63,5 +93,6 @@ public class CustomerInputPrimaryAddressController {
   @FXML
   private void handleMailingAddressRadioAction() {
     // Add mailing address radio button action code here
+
   }
 }
