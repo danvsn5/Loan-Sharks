@@ -14,8 +14,6 @@ import uoa.lavs.mainframe.Connection;
 import uoa.lavs.mainframe.Instance;
 import uoa.lavs.mainframe.Status;
 import uoa.lavs.mainframe.messages.customer.LoadCustomer;
-import uoa.lavs.mainframe.simulator.RecorderConnection;
-import uoa.lavs.mainframe.simulator.SimpleReplayConnection;
 
 public class Main extends Application {
   public static Scene scene;
@@ -33,14 +31,16 @@ public class Main extends Application {
     // to change when needed (e.g., based on a command-line argument.) But it means that the
     // connection must be
     // passed around in the application.
-    String dataPath = args.length > 1 ? args[1] : "lavs-data.txt";
-    if (args.length > 0 && args[0].equals("record")) {
-      connection = new RecorderConnection(dataPath);
-    } else {
-      connection = new SimpleReplayConnection(dataPath);
-    }
-    executeTestMessage(connection);
 
+    // Below is code that would have connected to the database.
+    /*   String dataPath = args.length > 1 ? args[1] : "lavs-data.txt";
+        if (args.length > 0 && args[0].equals("record")) {
+          connection = new RecorderConnection(dataPath);
+        } else {
+          connection = new SimpleReplayConnection(dataPath);
+        }
+        executeTestMessage(connection);
+    */
     // you can use another approach if desired, but make sure you document how the markers can
     // change the
     // connection implementation.
