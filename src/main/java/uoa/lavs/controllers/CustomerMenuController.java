@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.IndividualCustomerSingleton;
 
 public class CustomerMenuController {
   @FXML private Button addNewCustomerButton;
@@ -21,6 +22,7 @@ public class CustomerMenuController {
 
   @FXML
   private void handleAddNewCustomerButtonAction() throws IOException {
+    IndividualCustomerSingleton.resetInstance();
     AppState.loadAllCustomerDetails("CREATE");
     Main.setUi(AppUI.CI_DETAILS);
   }
