@@ -53,9 +53,9 @@ public class CustomerDAO {
 
   public void updateCustomer(ICustomer customer) {
     String sql =
-        "UPDATE customer SET title = ?, name = ?, dateOfBirth ="
-            + " ?, occupation = ?, residency = ?, notes = ?, physicalAddressId = ?,"
-            + " mailingAddressId = ?, contactId = ?, employerId = ? WHERE customerId = ?";
+        "UPDATE customer SET title = ?, name = ?, dateOfBirth = ?, occupation = ?, residency = ?,"
+            + " notes = ?, physicalAddressId = ?, mailingAddressId = ?, contactId = ?, employerId ="
+            + " ?, lastModified = CURRENT_TIMESTAMP WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customer.getTitle());
@@ -132,8 +132,7 @@ public class CustomerDAO {
     return null;
   }
 
-  public ArrayList<Customer> getCustomersByName(
-      String name) {
+  public ArrayList<Customer> getCustomersByName(String name) {
     ArrayList<Customer> customers = new ArrayList<>();
 
     String sql = "SELECT * FROM customer WHERE name = ?";
