@@ -38,9 +38,7 @@ public class IndividualCustomerSingletonTest {
         new IndividualCustomer(
             "000001",
             "Mr",
-            "Ting",
-            "Mun",
-            "Guy",
+            "Ting Mun Guy",
             dateOfBirth,
             "Engineer",
             "NZ Citizen",

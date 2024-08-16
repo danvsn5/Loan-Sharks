@@ -37,9 +37,7 @@ public class IndividualCustomerTest {
         new IndividualCustomer(
             "000001",
             "Mr",
-            "Rule",
-            "Number",
-            "Ten",
+            "Rule Number Ten",
             dateOfBirth,
             "Software Engineer",
             "NZ Citizen",
@@ -55,9 +53,7 @@ public class IndividualCustomerTest {
     assertNotNull(individualCustomer);
     assertEquals("000001", individualCustomer.getCustomerId());
     assertEquals("Mr", individualCustomer.getTitle());
-    assertEquals("Rule", individualCustomer.getFirstName());
-    assertEquals("Number", individualCustomer.getMiddleName());
-    assertEquals("Ten", individualCustomer.getLastName());
+    assertEquals("Rule Number Ten", individualCustomer.getName());
     assertEquals(dateOfBirth, individualCustomer.getDateOfBirth());
     assertEquals("Software Engineer", individualCustomer.getOccupation());
     assertEquals("NZ Citizen", individualCustomer.getResidency());

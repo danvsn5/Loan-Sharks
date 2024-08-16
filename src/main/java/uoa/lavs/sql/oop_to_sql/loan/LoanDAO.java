@@ -1,4 +1,4 @@
-package uoa.lavs.sql.loan;
+package uoa.lavs.sql.oop_to_sql.loan;
 
 import uoa.lavs.loan.ILoan;
 import uoa.lavs.sql.DatabaseConnection;

@@ -33,9 +33,7 @@ public class CustomerTest {
         new IndividualCustomer(
             "000001",
             "Mr",
-            "Ting",
-            "Mun",
-            "Guy",
+            "Ting Mun Guy",
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
@@ -69,36 +67,14 @@ public class CustomerTest {
   }
 
   @Test
-  public void testGetFirstName() {
-    assertEquals("Ting", customer.getFirstName());
+  public void testGetName() {
+    assertEquals("Ting Mun Guy", customer.getName());
   }
 
   @Test
-  public void testSetFirstName() {
-    customer.setFirstName("Ting Ting");
-    assertEquals("Ting Ting", customer.getFirstName());
-  }
-
-  @Test
-  public void testGetMiddleName() {
-    assertEquals("Mun", customer.getMiddleName());
-  }
-
-  @Test
-  public void testSetMiddleName() {
-    customer.setMiddleName("Mun Mun");
-    assertEquals("Mun Mun", customer.getMiddleName());
-  }
-
-  @Test
-  public void testGetLastName() {
-    assertEquals("Guy", customer.getLastName());
-  }
-
-  @Test
-  public void testSetLastName() {
-    customer.setLastName("Guy Guy");
-    assertEquals("Guy Guy", customer.getLastName());
+  public void testSetName() {
+    customer.setName("Guy Guy Guy");
+    assertEquals("Guy Guy Guy", customer.getName());
   }
 
   @Test

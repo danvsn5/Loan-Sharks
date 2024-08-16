@@ -13,6 +13,7 @@ import uoa.lavs.customer.Address;
 import uoa.lavs.sql.DatabaseConnection;
 import uoa.lavs.sql.DatabaseState;
 import uoa.lavs.sql.InitialiseDatabase;
+import uoa.lavs.sql.oop_to_sql.customer.AddressDAO;
 
 public class AddressDAOTest {
   DatabaseConnection conn;

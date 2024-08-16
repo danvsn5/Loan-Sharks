@@ -14,6 +14,7 @@ import uoa.lavs.customer.Phone;
 import uoa.lavs.sql.DatabaseConnection;
 import uoa.lavs.sql.DatabaseState;
 import uoa.lavs.sql.InitialiseDatabase;
+import uoa.lavs.sql.oop_to_sql.customer.CustomerContactDAO;
 
 public class CustomerContactDAOTest {
   DatabaseConnection conn;

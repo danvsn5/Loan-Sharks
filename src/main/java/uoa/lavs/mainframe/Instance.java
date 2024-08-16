@@ -1,6 +1,8 @@
 package uoa.lavs.mainframe;
 
-import uoa.lavs.mainframe.simulator.SimpleReplayConnection;
+import java.io.File;
+
+import uoa.lavs.mainframe.simulator.NitriteConnection;
 
 // implements the singleton pattern for a mainframe connection
 public class Instance {
@@ -13,11 +15,16 @@ public class Instance {
     // internal class to initialize the singleton, this enables lazy-loading
     // for the singleton
     private static class SingletonHelper {
-        private static final Connection INSTANCE = new SimpleReplayConnection(dataPath);
+        private static final Connection INSTANCE = new NitriteConnection(dataPath);
+
     }
 
     // return the underlying connection
     public static Connection getConnection() {
+        File file = new File(dataPath);
+        if (!file.exists()) {
+            throw new IllegalArgumentException("Data file does not exist");
+        }
         return SingletonHelper.INSTANCE;
     }
 }

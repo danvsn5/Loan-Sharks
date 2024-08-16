@@ -6,9 +6,7 @@ public class IndividualCustomer extends Customer {
   public IndividualCustomer(
       String customerId,
       String title,
-      String firstName,
-      String middleName,
-      String lastName,
+      String name,
       LocalDate dateOfBirth,
       String occupation,
       String residency,
@@ -20,9 +18,7 @@ public class IndividualCustomer extends Customer {
     super(
         customerId,
         title,
-        firstName,
-        middleName,
-        lastName,
+        name,
         dateOfBirth,
         occupation,
         residency,

@@ -7,11 +7,7 @@ public interface ICustomer {
 
   public String getTitle();
 
-  public String getFirstName();
-
-  public String getMiddleName();
-
-  public String getLastName();
+  public String getName();
 
   public LocalDate getDateOfBirth();
 
@@ -33,11 +29,7 @@ public interface ICustomer {
 
   public void setTitle(String title);
 
-  public void setFirstName(String firstName);
-
-  public void setMiddleName(String middleName);
-
-  public void setLastName(String lastName);
+  public void setName(String name);
 
   public void setDateOfBirth(LocalDate date);
 

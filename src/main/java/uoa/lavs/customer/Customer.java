@@ -5,9 +5,7 @@ import java.time.LocalDate;
 public abstract class Customer implements ICustomer {
   private String customerId;
   private String title;
-  private String firstName;
-  private String middleName;
-  private String lastName;
+  private String name;
   private LocalDate dateOfBirth;
   private String occupation;
   private String residency;
@@ -20,9 +18,7 @@ public abstract class Customer implements ICustomer {
   public Customer(
       String customerId,
       String title,
-      String firstName,
-      String middleName,
-      String lastName,
+      String name,
       LocalDate dateOfBirth,
       String occupation,
       String residency,
@@ -33,9 +29,7 @@ public abstract class Customer implements ICustomer {
       CustomerEmployer employer) {
     this.customerId = customerId;
     this.title = title;
-    this.firstName = firstName;
-    this.middleName = middleName;
-    this.lastName = lastName;
+    this.name = name;
     this.dateOfBirth = dateOfBirth;
     this.occupation = occupation;
     this.residency = residency;
@@ -57,18 +51,8 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public String getFirstName() {
-    return this.firstName;
-  }
-
-  @Override
-  public String getMiddleName() {
-    return this.middleName;
-  }
-
-  @Override
-  public String getLastName() {
-    return this.lastName;
+  public String getName() {
+    return this.name;
   }
 
   @Override
@@ -122,18 +106,8 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  @Override
-  public void setMiddleName(String middleName) {
-    this.middleName = middleName;
-  }
-
-  @Override
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   @Override
