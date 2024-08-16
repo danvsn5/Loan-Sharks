@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.IndividualCustomerSingleton;
 
 public class CustomerMenuController {
   @FXML
@@ -28,6 +29,7 @@ public class CustomerMenuController {
 
   @FXML
   private void handleAddNewCustomerButtonAction() throws IOException {
+    IndividualCustomerSingleton.resetInstance();
     AppState.loadAllCustomerDetails("CREATE");
     Main.setUi(AppUI.CI_DETAILS);
     AppState.setCurrentUiName(AppUI.CI_DETAILS);

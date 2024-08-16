@@ -6,6 +6,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.IndividualCustomerSingleton;
 
 public class CustomerInputNotesController {
   @FXML private TextArea customerNotesField;
@@ -13,18 +15,26 @@ public class CustomerInputNotesController {
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
 
+  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
+
   @FXML
   private void initialize() {
     // Add initialization code here
   }
 
+  private void setNotes() {
+    customer.setNotes(customerNotesField.getText());
+  }
+
   @FXML
   private void handleEditButtonAction() {
+    setNotes();
     // Add next button action code here
   }
 
   @FXML
   private void handleBackButtonAction() {
+    setNotes();
     Main.setUi(AppUI.CI_DETAILS);
   }
 }

@@ -14,6 +14,9 @@ import javafx.util.StringConverter;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.utility.CustomerCreationHelper;
 
 public class CustomerInputDetailsController {
   @FXML private Label customerIDLabel;
@@ -33,6 +36,8 @@ public class CustomerInputDetailsController {
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
+
+  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   Random random = new Random();
 
@@ -101,28 +106,49 @@ public class CustomerInputDetailsController {
     }
   }
 
+  private void setCustomerDetails() {
+    customer.setTitle(customerTitleComboBox.getValue());
+
+    // TODO Uncomment once jamie's branch is merged in
+    // customer.setName(customerFirstNameField.getText() + " " + customerMiddleNameField.getText() +
+    // " " + customerLastNameField.getText());
+
+    customer.setDateOfBirth(customerDOBPicker.getValue());
+    customer.setOccupation(customerOccupationField.getText());
+    customer.setResidency(customerCitizenshipBox.getValue());
+  }
+
   @FXML
   private void handleEditButtonAction() {
     // Add edit button / create customer action code here
+    if (AppState.customerDetailsAccessType == "CREATE") {
+      // send customer to sql database
+      setCustomerDetails();
+      CustomerCreationHelper.createCustomer(customer);
+    }
   }
 
   @FXML
   private void handleNotesButtonAction() {
+    setCustomerDetails();
     Main.setUi(AppUI.CI_NOTES);
   }
 
   @FXML
   private void handleAddressButtonAction() {
+    setCustomerDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
+    setCustomerDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
+    setCustomerDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 

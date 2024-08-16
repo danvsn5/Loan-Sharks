@@ -43,7 +43,7 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="customerPreffredContactBox" alignment="CENTER" editable="false" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerPreferredContactBox" alignment="CENTER" editable="false" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>

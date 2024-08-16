@@ -101,7 +101,7 @@
             <Font size="41.0" />
          </font>
       </Label>
-      <RadioButton layoutX="779.0" layoutY="511.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <RadioButton fx:id="customerIsEmployerCheckbox" layoutX="779.0" layoutY="511.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
       <Button fx:id="employerAddressButton" layoutX="961.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#handleEmployerAddressButtonAction" prefHeight="36.0" prefWidth="118.0" styleClass="accessory-button" stylesheets="@../../../css/index.css" text="Address">
          <cursor>
             <Cursor fx:constant="HAND" />
