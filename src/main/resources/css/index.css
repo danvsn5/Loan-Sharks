@@ -249,3 +249,53 @@
 .date-picker-popup .spinner .button {
     -fx-background-color: -fx-primary-color;
 }
+
+/* —————————————————————————————————————————— Dropdown —————————————————————————————————————————— */
+
+.combo-box {
+    -fx-border-color: -fx-primary-color;
+    -fx-border-width: 0px;
+    -fx-padding: 0 0 0 0;
+    -fx-border-radius: 100px !important;
+    -fx-background-radius: 100px !important;
+    -fx-font-family: 'Quicksand Medium';
+    -fx-font-size: 14px;
+}
+
+.combo-box .selected {
+    -fx-border-color: #000;
+    -fx-border-width: 5px;
+    -fx-border-radius: 100px !important;
+    -fx-background-radius: 100px !important;
+    -fx-font-family: 'Quicksand Medium';
+    -fx-font-size: 14px;
+}
+
+.combo-box .arrow-button{
+    -fx-background-color: -fx-primary-color;
+    -fx-border-radius: 0px 100px 100px 0px!important;
+    -fx-background-radius: 0px 100px 100px 0px!important;
+}
+
+.combo-box-base .text-field{
+    -fx-background-color: #ffdaca;
+    -fx-border-radius: 100px 0px 0px 100px!important;
+    -fx-background-radius: 100px 0px 0px 100px!important;
+    -fx-border-width: 2px;
+}
+
+/* .combo-box * {
+    -fx-border-width: 0px;
+    -fx-background-color: #ffdaca;
+    -fx-background-radius: 20px 0px 0px 20px;
+} */
+
+.combo-box .list-view {
+    -fx-background-color: #ffdaca;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: #ffdaca;
+}
