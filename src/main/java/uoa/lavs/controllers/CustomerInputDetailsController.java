@@ -109,10 +109,12 @@ public class CustomerInputDetailsController {
   private void setCustomerDetails() {
     customer.setTitle(customerTitleComboBox.getValue());
 
-    // TODO Uncomment once jamie's branch is merged in
-    // customer.setName(customerFirstNameField.getText() + " " + customerMiddleNameField.getText() +
-    // " " + customerLastNameField.getText());
-
+    customer.setName(
+        customerFirstNameField.getText()
+            + " "
+            + customerMiddleNameField.getText()
+            + " "
+            + customerLastNameField.getText());
     customer.setDateOfBirth(customerDOBPicker.getValue());
     customer.setOccupation(customerOccupationField.getText());
     customer.setResidency(customerCitizenshipBox.getValue());
