@@ -78,6 +78,7 @@ public class AppState {
   public static AppUI getPreviousUi() {
     return previousUi;
   }
+
   public static void setPreviousUi(AppUI previousUi) {
     AppState.previousUi = previousUi;
   }
