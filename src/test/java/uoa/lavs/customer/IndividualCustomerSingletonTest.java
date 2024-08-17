@@ -14,7 +14,6 @@ public class IndividualCustomerSingletonTest {
   private LocalDate dateOfBirth;
   private Address physicalAddress;
   private CustomerContact contact;
-  private Address employerAddress;
   private CustomerEmployer employer;
   private IndividualCustomer newCustomer;
   private Phone phoneOne;
@@ -42,19 +41,7 @@ public class IndividualCustomerSingletonTest {
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employerAddress =
-        new Address(
-            "000001",
-            "Commercial",
-            "123 Stonesuckle Ct",
-            "",
-            "Sunnynook",
-            "12345",
-            "Auckland",
-            "Zimbabwe",
-            true,
-            false);
-    employer = new CustomerEmployer("Countdown", employerAddress, null, null, null, false);
+    employer = new CustomerEmployer("Countdown", "", "", "", "", "", "", null, null, null, false);
 
     notes = new ArrayList<>();
     note = new Note("000002", new String[] {"Allergic to peanuts"});

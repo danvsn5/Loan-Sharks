@@ -30,7 +30,6 @@ public class CustomerDAOTest {
   DatabaseConnection conn;
   CustomerEmployerDAO employerDAO;
   CustomerEmployer employer;
-  Address employerAddress;
   AddressDAO addressDAO;
   ArrayList<Note> notes;
   Note note;
@@ -75,19 +74,19 @@ public class CustomerDAOTest {
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employerAddress =
-        new Address(
-            "000002",
-            "Commercial",
+    employer =
+        new CustomerEmployer(
+            "Countdown",
             "123 Stonesuckle Ct",
             "",
             "Sunnynook",
-            "12345",
             "Auckland",
+            "12345",
             "Zimbabwe",
-            true,
-            true);
-    employer = new CustomerEmployer("Countdown", primaryAddress, null, null, null, false);
+            null,
+            null,
+            null,
+            false);
 
     customer =
         new IndividualCustomer(
@@ -104,7 +103,6 @@ public class CustomerDAOTest {
             employer);
 
     addressDAO.addAddress(primaryAddress);
-    addressDAO.addAddress(employerAddress);
     contactDAO.addCustomerContact(contact);
     employerDAO.addCustomerEmployer(employer);
   }
@@ -155,8 +153,8 @@ public class CustomerDAOTest {
     customer.setDateOfBirth(LocalDate.of(2024, 8, 7));
     customer.setOccupation("Doctor");
     customer.setResidency("NZ Permanent Resident");
-    customer.setPhysicalAddress(employerAddress);
-    customer.setMailingAddress(employerAddress);
+    customer.setPhysicalAddress(primaryAddress);
+    customer.setMailingAddress(primaryAddress);
     customer.setContact(contact);
     customer.setEmployer(employer);
 
@@ -176,8 +174,8 @@ public class CustomerDAOTest {
         Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
         Assertions.assertEquals("NZ Permanent Resident", rs.getString("residency"));
-        Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("primaryAddressId"));
-        Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("mailingAddressId"));
+        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
+        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
         Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
       }
@@ -247,22 +245,15 @@ public class CustomerDAOTest {
     Phone phoneTwo2 = new Phone("work", "0987654321");
     CustomerContact contact2 =
         new CustomerContact("abc@gmail.com", phoneOne2, phoneTwo2, "mobile sms", "email");
-    Address employerAddress2 =
-        new Address(
-            "000002",
-            "Residential",
-            "123 Stonesuckle Ct",
-            "",
-            "Sunnynook",
-            "12345",
-            "Auckland",
-            "New Zealand",
-            true,
-            true);
     CustomerEmployer employer2 =
         new CustomerEmployer(
             "Countdown",
-            employerAddress2,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "manager@store.veryworth.org.au",
             "www.veryworth.org.au",
             "1234567890",
@@ -327,22 +318,15 @@ public class CustomerDAOTest {
     Phone phoneTwo2 = new Phone("work", "0987654321");
     CustomerContact contact2 =
         new CustomerContact("abc@gmail.com", phoneOne2, phoneTwo2, "mobile sms", "email");
-    Address employerAddress2 =
-        new Address(
-            "000002",
-            "Residential",
-            "123 Stonesuckle Ct",
-            "",
-            "Sunnynook",
-            "12345",
-            "Auckland",
-            "New Zealand",
-            true,
-            true);
     CustomerEmployer employer2 =
         new CustomerEmployer(
             "Countdown",
-            employerAddress2,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "manager@store.veryworth.org.au",
             "www.veryworth.org.au",
             "1234567890",

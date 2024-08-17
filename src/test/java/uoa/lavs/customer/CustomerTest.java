@@ -14,7 +14,6 @@ public class CustomerTest {
   private Phone phoneOne;
   private Phone phoneTwo;
   private CustomerContact contact;
-  private Address employerAddress;
   private CustomerEmployer employer;
   ArrayList<Note> notes;
   Note note;
@@ -37,19 +36,19 @@ public class CustomerTest {
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employerAddress =
-        new Address(
-            "000001",
-            "Commercial",
+    employer =
+        new CustomerEmployer(
+            "Countdown",
             "123 Stonesuckle Ct",
             "",
             "Sunnynook",
-            "12345",
             "Auckland",
+            "12345",
             "Zimbabwe",
-            true,
-            true);
-    employer = new CustomerEmployer("Countdown", physicalAddress, null, null, null, false);
+            null,
+            null,
+            null,
+            false);
 
     notes = new ArrayList<>();
     note = new Note("000001", new String[] {"Allergic to peanuts"});
@@ -155,8 +154,8 @@ public class CustomerTest {
 
   @Test
   public void testSetPhysicalAddress() {
-    customer.setPhysicalAddress(employerAddress);
-    assertEquals(employerAddress, customer.getPhysicalAddress());
+    customer.setPhysicalAddress(physicalAddress);
+    assertEquals(physicalAddress, customer.getPhysicalAddress());
   }
 
   @Test
@@ -166,8 +165,8 @@ public class CustomerTest {
 
   @Test
   public void testSetMailingAddress() {
-    customer.setMailingAddress(employerAddress);
-    assertEquals(employerAddress, customer.getMailingAddress());
+    customer.setMailingAddress(physicalAddress);
+    assertEquals(physicalAddress, customer.getMailingAddress());
   }
 
   @Test
@@ -191,7 +190,18 @@ public class CustomerTest {
   @Test
   public void testSetEmployer() {
     CustomerEmployer newEmployer =
-        new CustomerEmployer("BES", employerAddress, "besisbest@gmail.com", null, null, true);
+        new CustomerEmployer(
+            "BES",
+            "123 Stonesuckle Ct",
+            "",
+            "Sunnynook",
+            "Auckland",
+            "12345",
+            "Zimbabwe",
+            "besisbest@gmail.com",
+            null,
+            null,
+            true);
     customer.setEmployer(newEmployer);
     assertEquals(newEmployer, customer.getEmployer());
   }

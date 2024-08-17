@@ -16,12 +16,12 @@ public class IndividualCustomerSingleton {
 
       Address physicalAddress = new Address("", "", "", "", "", "", "", "", true, false);
       Address mailingAddress = new Address("", "", "", "", "", "", "", "", false, true);
-      Address employerAddress = new Address("", "", "", "", "", "", "", "", true, true);
 
       Phone phoneOne = new Phone("", "");
       Phone phoneTwo = new Phone("", "");
       CustomerContact contact = new CustomerContact("", phoneOne, phoneTwo, "", "");
-      CustomerEmployer employer = new CustomerEmployer("", employerAddress, "", "", "", false);
+      CustomerEmployer employer =
+          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", false);
 
       instance =
           new IndividualCustomer(

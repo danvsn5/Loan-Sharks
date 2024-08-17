@@ -121,13 +121,17 @@ public class InitialiseDatabase {
         "CREATE TABLE IF NOT EXISTS customer_employer ("
             + "employerId INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "employerName VARCHAR(100), "
-            + "employerAddressId VARCHAR(50), "
+            + "addressLineOne VARCHAR(100), "
+            + "addressLineTwo VARCHAR(100), "
+            + "suburb VARCHAR(50), "
+            + "postCode VARCHAR(20), "
+            + "city VARCHAR(50), "
+            + "country VARCHAR(50), "
             + "employerEmail VARCHAR(100), "
             + "employerWebsite VARCHAR(100), "
             + "employerPhone VARCHAR(20), "
             + "ownerOfCompany BOOLEAN, "
-            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-            + "FOREIGN KEY (employerAddressId) REFERENCES Address(addressId)"
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {

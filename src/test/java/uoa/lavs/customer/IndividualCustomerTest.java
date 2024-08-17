@@ -15,7 +15,6 @@ public class IndividualCustomerTest {
   private Phone phoneOne;
   private Phone phoneTwo;
   private CustomerContact contact;
-  private Address employerAddress;
   private CustomerEmployer employer;
   private ArrayList<Note> notes;
   private Note note;
@@ -40,21 +39,19 @@ public class IndividualCustomerTest {
     contact =
         new CustomerContact(
             "thisplaceisunreal@gmail.com", phoneOne, phoneTwo, "mobile call", "email");
-    employerAddress =
-        new Address(
-            "000001",
-            "Rural",
+    employer =
+        new CustomerEmployer(
+            "Company",
             "1 Real Pl",
             "",
             "Auckland CBD",
-            "1010",
             "Auckland",
+            "1010",
             "New Zealand",
-            true,
+            "thisplaceisprettyreal@gmail.com",
+            null,
+            null,
             false);
-    employer =
-        new CustomerEmployer(
-            "Company", employerAddress, "thisplaceisprettyreal@gmail.com", null, null, false);
 
     notes = new ArrayList<>();
     note = new Note("000002", new String[] {"Allergic to peanuts"});

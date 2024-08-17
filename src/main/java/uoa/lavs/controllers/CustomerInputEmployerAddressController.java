@@ -13,7 +13,7 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
-import uoa.lavs.customer.Address;
+import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
@@ -60,16 +60,14 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
   }
 
   private void setAddressDetails() {
-    Address address = customer.getEmployer().getEmployerAddress();
+    CustomerEmployer employer = customer.getEmployer();
+    employer.setLineOne(employerAddressLine1Field.getText());
+    employer.setLineTwo(employerAddressLine2Field.getText());
+    employer.setSuburb(employerSuburbField.getText());
+    employer.setCity(employerCityField.getText());
+    employer.setPostCode(employerPostcodeField.getText());
 
-    address.setAddressLineOne(employerAddressLine1Field.getText());
-    address.setAddressLineTwo(employerAddressLine2Field.getText());
-    address.setSuburb(employerSuburbField.getText());
-    address.setCity(employerCityField.getText());
-    address.setPostCode(employerPostcodeField.getText());
-
-    // Autosetting to New Zealand
-    address.setCountry("New Zealand");
+    employer.setCountry("New Zealand");
   }
 
   @FXML
