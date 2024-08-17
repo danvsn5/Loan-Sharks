@@ -127,4 +127,10 @@ public class AddressDAO {
     }
     return null;
   }
+
+  public static void main(String[] args) {
+    AddressDAO addressDAO = new AddressDAO();
+    Address address = new Address("000001", "Residential", "123 Main St", "", "Auckland", "1010", "Auckland", "New Zealand", true, true);
+    addressDAO.addAddress(address);
+  }
 }

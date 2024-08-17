@@ -345,7 +345,7 @@ public class CustomerDAO {
     physicalAddress =
         new Address(
             customerId,
-            "Rural",
+            "Commercial",
             "304 Rose St",
             "46",
             "Sunnynook",
@@ -368,7 +368,7 @@ public class CustomerDAO {
             "Auckland",
             "Zimbabwe",
             true,
-            true);
+            false);
     employer =
         new CustomerEmployer(
             "Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
@@ -398,6 +398,6 @@ public class CustomerDAO {
   }
 
   public static void main(String[] args) {
-    addCustomerTest();
+    updateCustomerTest("1");
   }
 }
