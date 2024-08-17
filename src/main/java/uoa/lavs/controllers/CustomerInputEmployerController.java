@@ -36,7 +36,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
 
   @FXML
   private void initialize() {
-    AccessTypeNotifier.registerObserver(this);
+    AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
   }
 
@@ -100,7 +100,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
       setEmployerDetails();
       AppState.customerDetailsAccessType = "VIEW";
     }
-    AccessTypeNotifier.notifyObservers();
+    AccessTypeNotifier.notifyCustomerObservers();
     updateUIBasedOnAccessType();
   }
 

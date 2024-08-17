@@ -70,7 +70,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
             }
           }
         });
-    AccessTypeNotifier.registerObserver(this);
+    AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
   }
 
@@ -122,7 +122,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       // Save changes to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
     }
-    AccessTypeNotifier.notifyObservers();
+    AccessTypeNotifier.notifyCustomerObservers();
     updateUIBasedOnAccessType();
   }
 

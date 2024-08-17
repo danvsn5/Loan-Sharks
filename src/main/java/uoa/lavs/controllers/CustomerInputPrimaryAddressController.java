@@ -3,18 +3,21 @@ package uoa.lavs.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
+import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.Address;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
-import uoa.lavs.utility.CustomerCreationHelper;
 
-public class CustomerInputPrimaryAddressController {
+public class CustomerInputPrimaryAddressController implements AccessTypeObserver {
   @FXML private ComboBox<String> customerAddressTypeComboBox;
   @FXML private TextField customerAddressLine1Field;
   @FXML private TextField customerAddressLine2Field;
@@ -35,7 +38,27 @@ public class CustomerInputPrimaryAddressController {
 
   @FXML
   private void initialize() {
-    // Add initialization code here
+    AccessTypeNotifier.registerCustomerObserver(this);
+    updateUIBasedOnAccessType();
+  }
+
+  @FXML
+  @Override
+  public void updateUIBasedOnAccessType() {
+    ControllerHelper.updateUIBasedOnAccessType(
+        AppState.customerDetailsAccessType,
+        editButton,
+        new TextField[] {
+          customerAddressLine1Field,
+          customerAddressLine2Field,
+          customerSuburbField,
+          customerCityField,
+          customerPostcodeField
+        },
+        new ComboBox<?>[] {customerAddressTypeComboBox},
+        new DatePicker[] {},
+        new RadioButton[] {mailingAddressRadio});
+    System.out.println("Contact Controller Invoked");
   }
 
   private void setAddressDetails() {
@@ -78,12 +101,17 @@ public class CustomerInputPrimaryAddressController {
 
   @FXML
   private void handleEditButtonAction() {
-    // Add edit button action code here
-    if (AppState.customerDetailsAccessType == "CREATE") {
-      // send customer to sql database
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
       setAddressDetails();
-      CustomerCreationHelper.createCustomer(customer);
+      AppState.customerDetailsAccessType = "VIEW";
+    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
+      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      setAddressDetails();
+      AppState.customerDetailsAccessType = "VIEW";
     }
+    AccessTypeNotifier.notifyCustomerObservers();
+    updateUIBasedOnAccessType();
   }
 
   @FXML

@@ -37,7 +37,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML
   private void initialize() {
-    AccessTypeNotifier.registerObserver(this);
+    AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
   }
 
@@ -109,7 +109,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
       setAddressDetails();
       AppState.customerDetailsAccessType = "VIEW";
     }
-    AccessTypeNotifier.notifyObservers();
+    AccessTypeNotifier.notifyCustomerObservers();
     updateUIBasedOnAccessType();
   }
 

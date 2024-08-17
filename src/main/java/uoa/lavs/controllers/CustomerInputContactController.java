@@ -36,7 +36,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void initialize() {
-    AccessTypeNotifier.registerObserver(this);
+    AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
   }
 
@@ -70,7 +70,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       setContactDetails();
       AppState.customerDetailsAccessType = "VIEW";
     }
-    AccessTypeNotifier.notifyObservers();
+    AccessTypeNotifier.notifyCustomerObservers();
     updateUIBasedOnAccessType();
   }
 
