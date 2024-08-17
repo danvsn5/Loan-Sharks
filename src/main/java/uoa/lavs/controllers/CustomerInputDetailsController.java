@@ -12,11 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
 import uoa.lavs.AppState;
+import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
-import uoa.lavs.utility.CustomerCreationHelper;
 
 public class CustomerInputDetailsController {
   @FXML private Label customerIDLabel;
@@ -68,41 +68,56 @@ public class CustomerInputDetailsController {
           }
         });
 
-    if (AppState.customerDetailsAccessType == "CREATE") {
+    updateUIBasedOnAccessType();
+  }
+
+  @FXML
+  private void updateUIBasedOnAccessType() {
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
       // Set all fields to empty and editable
-      customerTitleComboBox.setDisable(false);
-      customerFirstNameField.setDisable(false);
-      customerMiddleNameField.setDisable(false);
-      customerLastNameField.setDisable(false);
-      customerDOBPicker.setDisable(false);
-      customerOccupationField.setDisable(false);
-      customerCitizenshipBox.setDisable(false);
+      ControllerHelper.resetFields(
+          customerFirstNameField,
+          customerMiddleNameField,
+          customerLastNameField,
+          customerOccupationField);
+      ControllerHelper.resetComboBoxes(customerTitleComboBox, customerCitizenshipBox);
+      ControllerHelper.resetDatePickers(customerDOBPicker);
+
+      ControllerHelper.setFieldsEditable(
+          customerFirstNameField,
+          customerMiddleNameField,
+          customerLastNameField,
+          customerOccupationField);
+      ControllerHelper.setComboBoxesEditable(customerTitleComboBox, customerCitizenshipBox);
+      ControllerHelper.setDatePickersEditable(customerDOBPicker);
 
       editButton.setText("Create Customer");
 
       // Placeholder customer ID
       int customerID = 123456;
       customerIDLabel.setText("Summary of ID: " + customerID);
-    } else if (AppState.customerDetailsAccessType == "EDIT") {
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
       // Set all fields to the current customer details and editable
-      customerTitleComboBox.setDisable(false);
-      customerFirstNameField.setDisable(false);
-      customerMiddleNameField.setDisable(false);
-      customerLastNameField.setDisable(false);
-      customerDOBPicker.setDisable(false);
-      customerOccupationField.setDisable(false);
-      customerCitizenshipBox.setDisable(false);
-      editButton.setText("Save Changes");
-    } else if (AppState.customerDetailsAccessType == "VIEW") {
+      ControllerHelper.setFieldsEditable(
+          customerFirstNameField,
+          customerMiddleNameField,
+          customerLastNameField,
+          customerOccupationField);
+      ControllerHelper.setComboBoxesEditable(customerTitleComboBox, customerCitizenshipBox);
+      ControllerHelper.setDatePickersEditable(customerDOBPicker);
+
+      editButton.setText("Confirm Changes");
+    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       // Make all fields uneditable
-      customerTitleComboBox.setDisable(true);
-      customerFirstNameField.setDisable(true);
-      customerMiddleNameField.setDisable(true);
-      customerLastNameField.setDisable(true);
-      customerDOBPicker.setDisable(true);
-      customerOccupationField.setDisable(true);
-      customerCitizenshipBox.setDisable(true);
-      editButton.setText("Edit Details");
+      ControllerHelper.setFieldsNonEditable(
+          customerFirstNameField,
+          customerMiddleNameField,
+          customerLastNameField,
+          customerOccupationField);
+      ControllerHelper.setComboBoxesNonEditable(customerTitleComboBox, customerCitizenshipBox);
+      ControllerHelper.setDatePickersNonEditable(customerDOBPicker);
+
+      editButton.setText("Edit Customer");
     }
   }
 
@@ -122,11 +137,22 @@ public class CustomerInputDetailsController {
 
   @FXML
   private void handleEditButtonAction() {
-    // Add edit button / create customer action code here
-    if (AppState.customerDetailsAccessType == "CREATE") {
-      // send customer to sql database
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+      // Handle create customer logic
       setCustomerDetails();
-      CustomerCreationHelper.createCustomer(customer);
+      // Save customer to database or perform necessary actions
+      AppState.customerDetailsAccessType = "VIEW";
+      updateUIBasedOnAccessType();
+    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
+      // Switch to edit mode
+      AppState.customerDetailsAccessType = "EDIT";
+      updateUIBasedOnAccessType();
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      // Handle confirm changes logic
+      setCustomerDetails();
+      // Save changes to database or perform necessary actions
+      AppState.customerDetailsAccessType = "VIEW";
+      updateUIBasedOnAccessType();
     }
   }
 
