@@ -31,7 +31,7 @@ public class AddressDAOTest {
   @Test
   public void testAddAddress() {
     Address address =
-        new Address("Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+        new Address("000001", "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
 
     addressDAO.addAddress(address);
 
@@ -63,7 +63,7 @@ public class AddressDAOTest {
   @Test
   public void testUpdateAddress() {
     Address address =
-        new Address("Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+        new Address("000001", "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
     addressDAO.addAddress(address);
 
     address.setAddressType("Residential");
@@ -102,11 +102,11 @@ public class AddressDAOTest {
   @Test
   public void testGetAddress() {
     Address address =
-        new Address("Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+        new Address("000001", "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
     addressDAO.addAddress(address);
     int addressId = address.getAddressId();
 
-    Address retrievedAddress = addressDAO.getAddress(addressId);
+    Address retrievedAddress = addressDAO.getAddress("000001", addressId);
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =

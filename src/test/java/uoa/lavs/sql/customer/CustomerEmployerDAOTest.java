@@ -33,7 +33,7 @@ public class CustomerEmployerDAOTest {
     addressDAO = new AddressDAO();
     dbFile = DatabaseState.DB_TEST_FILE;
     employerAddress =
-        new Address(
+        new Address("000001",
             "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe");
     employer =
         new CustomerEmployer(

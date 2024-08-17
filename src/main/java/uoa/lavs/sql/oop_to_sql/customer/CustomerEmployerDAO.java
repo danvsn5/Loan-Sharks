@@ -75,7 +75,7 @@ public class CustomerEmployerDAO {
         boolean ownerOfCompany = rs.getBoolean("ownerOfCompany");
 
         AddressDAO addressdao = new AddressDAO();
-        Address employerAddress = addressdao.getAddress(employerAddressId);
+        Address employerAddress = addressdao.getAddress("000001", employerAddressId);
 
         CustomerEmployer customerEmployer =
             new CustomerEmployer(

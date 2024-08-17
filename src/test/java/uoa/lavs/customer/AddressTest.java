@@ -10,8 +10,20 @@ public class AddressTest {
 
   @BeforeEach
   public void setUp() {
+    String customerId = "123";
     address =
-        new Address("Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+        new Address(customerId, "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+  }
+
+  @Test
+  public void testGetCustomerId() {
+    assertEquals("123", address.getCustomerId());
+  }
+
+  @Test
+  public void testSetCustomerId() {
+    address.setCustomerId("456");
+    assertEquals("456", address.getCustomerId());
   }
 
   @Test
