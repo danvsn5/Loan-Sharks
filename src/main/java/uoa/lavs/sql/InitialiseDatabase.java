@@ -114,7 +114,7 @@ public class InitialiseDatabase {
             + "employerWebsite VARCHAR(100), "
             + "employerPhone VARCHAR(20), "
             + "ownerOfCompany BOOLEAN, "
-            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {
