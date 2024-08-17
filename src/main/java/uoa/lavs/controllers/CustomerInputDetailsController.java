@@ -73,52 +73,17 @@ public class CustomerInputDetailsController {
 
   @FXML
   private void updateUIBasedOnAccessType() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
-      // Set all fields to empty and editable
-      ControllerHelper.resetFields(
+    ControllerHelper.updateUIBasedOnAccessType(
+        AppState.customerDetailsAccessType,
+        editButton,
+        new TextField[] {
           customerFirstNameField,
           customerMiddleNameField,
           customerLastNameField,
-          customerOccupationField);
-      ControllerHelper.resetComboBoxes(customerTitleComboBox, customerCitizenshipBox);
-      ControllerHelper.resetDatePickers(customerDOBPicker);
-
-      ControllerHelper.setFieldsEditable(
-          customerFirstNameField,
-          customerMiddleNameField,
-          customerLastNameField,
-          customerOccupationField);
-      ControllerHelper.setComboBoxesEditable(customerTitleComboBox, customerCitizenshipBox);
-      ControllerHelper.setDatePickersEditable(customerDOBPicker);
-
-      editButton.setText("Create Customer");
-
-      // Placeholder customer ID
-      int customerID = 123456;
-      customerIDLabel.setText("Summary of ID: " + customerID);
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
-      // Set all fields to the current customer details and editable
-      ControllerHelper.setFieldsEditable(
-          customerFirstNameField,
-          customerMiddleNameField,
-          customerLastNameField,
-          customerOccupationField);
-      ControllerHelper.setComboBoxesEditable(customerTitleComboBox, customerCitizenshipBox);
-      ControllerHelper.setDatePickersEditable(customerDOBPicker);
-
-      editButton.setText("Confirm Changes");
-    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
-      // Make all fields uneditable
-      ControllerHelper.setFieldsNonEditable(
-          customerFirstNameField,
-          customerMiddleNameField,
-          customerLastNameField,
-          customerOccupationField);
-      ControllerHelper.setComboBoxesNonEditable(customerTitleComboBox, customerCitizenshipBox);
-      ControllerHelper.setDatePickersNonEditable(customerDOBPicker);
-
-      editButton.setText("Edit Customer");
-    }
+          customerOccupationField
+        },
+        new ComboBox<?>[] {customerTitleComboBox, customerCitizenshipBox},
+        new DatePicker[] {customerDOBPicker});
   }
 
   private void setCustomerDetails() {

@@ -2,15 +2,17 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AppState;
+import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
-import uoa.lavs.utility.CustomerCreationHelper;
 
 public class CustomerInputContactController {
   @FXML private TextField customerEmailTextField;
@@ -30,7 +32,39 @@ public class CustomerInputContactController {
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   @FXML
-  private void initialize() {}
+  private void initialize() {
+    updateUIBasedOnAccessType();
+  }
+
+  @FXML
+  private void updateUIBasedOnAccessType() {
+    ControllerHelper.updateUIBasedOnAccessType(
+        AppState.customerDetailsAccessType,
+        editButton,
+        new TextField[] {
+          customerEmailTextField,
+          customerPhoneNumberOne,
+          customerPhoneNumberTwo,
+          customerPreferredContactBox,
+          customerAltContactBox
+        },
+        new ComboBox<?>[] {},
+        new DatePicker[] {});
+  }
+
+  @FXML
+  private void handleEditButtonAction() {
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+      setContactDetails();
+      AppState.customerDetailsAccessType = "VIEW";
+    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
+      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      setContactDetails();
+      AppState.customerDetailsAccessType = "VIEW";
+    }
+    updateUIBasedOnAccessType();
+  }
 
   private void setContactDetails() {
     CustomerContact contact = customer.getContact();
@@ -61,16 +95,6 @@ public class CustomerInputContactController {
   private void handleCustomerEmployerButtonAction() {
     setContactDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
-  }
-
-  @FXML
-  private void handleEditButtonAction() {
-    // Add edit button action code here
-    if (AppState.customerDetailsAccessType == "CREATE") {
-      // send customer to sql database
-      setContactDetails();
-      CustomerCreationHelper.createCustomer(customer);
-    }
   }
 
   @FXML

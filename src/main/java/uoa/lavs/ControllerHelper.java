@@ -1,12 +1,43 @@
 package uoa.lavs;
 
-import java.util.Random;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class ControllerHelper {
-  private static final Random random = new Random();
+
+  public static void updateUIBasedOnAccessType(
+      String accessType,
+      Button editButton,
+      TextField[] textFields,
+      ComboBox<?>[] comboBoxes,
+      DatePicker[] datePickers) {
+
+    if (accessType.equals("CREATE")) {
+      resetFields(textFields);
+      resetComboBoxes(comboBoxes);
+      resetDatePickers(datePickers);
+
+      setFieldsEditable(textFields);
+      setComboBoxesEditable(comboBoxes);
+      setDatePickersEditable(datePickers);
+
+      editButton.setText("Create Customer");
+    } else if (accessType.equals("EDIT")) {
+      setFieldsEditable(textFields);
+      setComboBoxesEditable(comboBoxes);
+      setDatePickersEditable(datePickers);
+
+      editButton.setText("Confirm Changes");
+    } else if (accessType.equals("VIEW")) {
+      setFieldsNonEditable(textFields);
+      setComboBoxesNonEditable(comboBoxes);
+      setDatePickersNonEditable(datePickers);
+
+      editButton.setText("Edit Customer");
+    }
+  }
 
   public static void resetFields(TextField... textFields) {
     for (TextField textField : textFields) {
@@ -24,10 +55,6 @@ public class ControllerHelper {
     for (DatePicker datePicker : datePickers) {
       datePicker.setValue(null);
     }
-  }
-
-  public static int generateUniqueCustomerId() {
-    return random.nextInt(1000000); // Generates a random ID between 0 and 999999
   }
 
   public static void setFieldsEditable(TextField... textFields) {
