@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,8 @@ public class IndividualCustomerSingletonTest {
   private IndividualCustomer newCustomer;
   private Phone phoneOne;
   private Phone phoneTwo;
+  ArrayList<Note> notes;
+  Note note;
 
   @BeforeEach
   public void setUp() {
@@ -26,7 +29,16 @@ public class IndividualCustomerSingletonTest {
     dateOfBirth = LocalDate.of(2024, 8, 6);
     physicalAddress =
         new Address(
-            "000001", "Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, false);
+            "000001",
+            "Rural",
+            "304 Rose St",
+            "46",
+            "Sunnynook",
+            "12345",
+            "Auckland",
+            "Zimbabwe",
+            true,
+            false);
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
@@ -39,8 +51,14 @@ public class IndividualCustomerSingletonTest {
             "Sunnynook",
             "12345",
             "Auckland",
-            "Zimbabwe", true, false);
+            "Zimbabwe",
+            true,
+            false);
     employer = new CustomerEmployer("Countdown", employerAddress, null, null, null, false);
+
+    notes = new ArrayList<>();
+    note = new Note("000002", new String[] {"Allergic to peanuts"});
+    notes.add(note);
 
     newCustomer =
         new IndividualCustomer(
@@ -50,7 +68,7 @@ public class IndividualCustomerSingletonTest {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
-            "Allergic to peanuts",
+            notes,
             physicalAddress,
             physicalAddress,
             contact,

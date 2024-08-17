@@ -1,6 +1,7 @@
 package uoa.lavs.customer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public interface ICustomer {
   public String getCustomerId();
@@ -15,7 +16,7 @@ public interface ICustomer {
 
   public String getResidency();
 
-  public String getNotes();
+  public ArrayList<Note> getNotes();
 
   public Address getPhysicalAddress();
 
@@ -37,7 +38,7 @@ public interface ICustomer {
 
   public void setResidency(String residency);
 
-  public void setNotes(String notes);
+  public void setNotes(ArrayList<Note> notes);
 
   public void setPhysicalAddress(Address physicalAddress);
 
