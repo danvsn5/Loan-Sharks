@@ -116,7 +116,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleBackButtonAction() {
-    if (AppState.isCreatingLoan) {
+    if (AppState.isAccessingFromSearch) {
+      AppState.isAccessingFromSearch = false;
       Main.setUi(AppUI.CUSTOMER_RESULTS);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);

@@ -13,6 +13,7 @@ public class AppState {
   public static String customerDetailsAccessType; // CREATE, EDIT, VIEW
   public static Boolean isCreatingLoan;
   public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
+  public static Boolean isAccessingFromSearch;
 
   // Previous and current UI screens for return functionality
   public static AppUI previousUi;
