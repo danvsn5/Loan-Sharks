@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,8 @@ public class IndividualCustomerTest {
   private Phone phoneTwo;
   private CustomerContact contact;
   private CustomerEmployer employer;
+  private ArrayList<Note> notes;
+  private Note note;
 
   @BeforeEach
   public void setUp() {
@@ -50,6 +53,10 @@ public class IndividualCustomerTest {
             null,
             false);
 
+    notes = new ArrayList<>();
+    note = new Note("000002", new String[] {"Allergic to peanuts"});
+    notes.add(note);
+
     individualCustomer =
         new IndividualCustomer(
             "000001",
@@ -58,7 +65,7 @@ public class IndividualCustomerTest {
             dateOfBirth,
             "Software Engineer",
             "NZ Citizen",
-            "Allergic to peanuts",
+            notes,
             physicalAddress,
             physicalAddress,
             contact,
@@ -74,7 +81,7 @@ public class IndividualCustomerTest {
     assertEquals(dateOfBirth, individualCustomer.getDateOfBirth());
     assertEquals("Software Engineer", individualCustomer.getOccupation());
     assertEquals("NZ Citizen", individualCustomer.getResidency());
-    assertEquals("Allergic to peanuts", individualCustomer.getNotes());
+    assertEquals(notes, individualCustomer.getNotes());
     assertEquals(physicalAddress, individualCustomer.getPhysicalAddress());
     assertEquals(physicalAddress, individualCustomer.getMailingAddress());
     assertEquals(contact, individualCustomer.getContact());

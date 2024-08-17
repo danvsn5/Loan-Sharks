@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,8 @@ public class IndividualCustomerSingletonTest {
   private IndividualCustomer newCustomer;
   private Phone phoneOne;
   private Phone phoneTwo;
+  ArrayList<Note> notes;
+  Note note;
 
   @BeforeEach
   public void setUp() {
@@ -40,6 +43,10 @@ public class IndividualCustomerSingletonTest {
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
     employer = new CustomerEmployer("Countdown", "", "", "", "", "", "", null, null, null, false);
 
+    notes = new ArrayList<>();
+    note = new Note("000002", new String[] {"Allergic to peanuts"});
+    notes.add(note);
+
     newCustomer =
         new IndividualCustomer(
             "000001",
@@ -48,7 +55,7 @@ public class IndividualCustomerSingletonTest {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
-            "Allergic to peanuts",
+            notes,
             physicalAddress,
             physicalAddress,
             contact,

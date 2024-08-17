@@ -1,5 +1,7 @@
 package uoa.lavs.customer;
 
+import java.util.ArrayList;
+
 public class IndividualCustomerSingleton {
   private static IndividualCustomer instance;
 
@@ -8,6 +10,10 @@ public class IndividualCustomerSingleton {
   public static IndividualCustomer getInstance() {
     if (instance == null) {
       // Initialize with placeholder values
+      ArrayList<Note> notes = new ArrayList<>();
+      Note note = new Note("", new String[19]);
+      notes.add(note);
+
       Address physicalAddress = new Address("", "", "", "", "", "", "", "", true, false);
       Address mailingAddress = new Address("", "", "", "", "", "", "", "", false, true);
 
@@ -19,7 +25,7 @@ public class IndividualCustomerSingleton {
 
       instance =
           new IndividualCustomer(
-              "", "", "", null, "", "", "", physicalAddress, mailingAddress, contact, employer);
+              "", "", "", null, "", "", notes, physicalAddress, mailingAddress, contact, employer);
     }
     return instance;
   }

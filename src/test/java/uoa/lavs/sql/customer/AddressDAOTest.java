@@ -31,7 +31,17 @@ public class AddressDAOTest {
   @Test
   public void testAddAddress() {
     Address address =
-        new Address("000001", "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG", true, false);
+        new Address(
+            "000001",
+            "Commercial",
+            "123 Guy St",
+            "Apt 1",
+            "Muntown",
+            "12345",
+            "Tingcity",
+            "TMG",
+            true,
+            false);
 
     addressDAO.addAddress(address);
 
@@ -65,7 +75,17 @@ public class AddressDAOTest {
   @Test
   public void testUpdateAddress() {
     Address address =
-        new Address("000001", "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG", false, true);
+        new Address(
+            "000001",
+            "Commercial",
+            "123 Guy St",
+            "Apt 1",
+            "Muntown",
+            "12345",
+            "Tingcity",
+            "TMG",
+            false,
+            true);
     addressDAO.addAddress(address);
 
     address.setAddressType("Residential");
@@ -108,7 +128,17 @@ public class AddressDAOTest {
   @Test
   public void testGetAddress() {
     Address address =
-        new Address("000001", "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG", true, false);
+        new Address(
+            "000001",
+            "Commercial",
+            "123 Guy St",
+            "Apt 1",
+            "Muntown",
+            "12345",
+            "Tingcity",
+            "TMG",
+            true,
+            false);
     addressDAO.addAddress(address);
     int addressId = address.getAddressId();
 

@@ -3,6 +3,7 @@ package uoa.lavs.customer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,8 @@ public class CustomerTest {
   private Phone phoneTwo;
   private CustomerContact contact;
   private CustomerEmployer employer;
+  ArrayList<Note> notes;
+  Note note;
 
   @BeforeEach
   public void setUp() {
@@ -47,6 +50,10 @@ public class CustomerTest {
             null,
             false);
 
+    notes = new ArrayList<>();
+    note = new Note("000001", new String[] {"Allergic to peanuts"});
+    notes.add(note);
+
     customer =
         new IndividualCustomer(
             "000001",
@@ -55,7 +62,7 @@ public class CustomerTest {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
-            "Smells like burning crayons",
+            notes,
             physicalAddress,
             physicalAddress,
             contact,
@@ -131,13 +138,13 @@ public class CustomerTest {
 
   @Test
   public void testGetNotes() {
-    assertEquals("Smells like burning crayons", customer.getNotes());
+    assertEquals(notes, customer.getNotes());
   }
 
   @Test
   public void testSetNotes() {
-    customer.setNotes("Allergic to curry");
-    assertEquals("Allergic to curry", customer.getNotes());
+    customer.setNotes(notes);
+    assertEquals(notes, customer.getNotes());
   }
 
   @Test

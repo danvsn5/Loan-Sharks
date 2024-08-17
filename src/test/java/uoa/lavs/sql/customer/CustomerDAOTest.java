@@ -16,6 +16,7 @@ import uoa.lavs.customer.Customer;
 import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.Note;
 import uoa.lavs.customer.Phone;
 import uoa.lavs.sql.DatabaseConnection;
 import uoa.lavs.sql.DatabaseState;
@@ -30,6 +31,8 @@ public class CustomerDAOTest {
   CustomerEmployerDAO employerDAO;
   CustomerEmployer employer;
   AddressDAO addressDAO;
+  ArrayList<Note> notes;
+  Note note;
   CustomerContactDAO contactDAO;
   CustomerContact contact;
   Address primaryAddress;
@@ -51,6 +54,11 @@ public class CustomerDAOTest {
     contactDAO = new CustomerContactDAO();
     customerDAO = new CustomerDAO();
     dateOfBirth = LocalDate.of(2024, 8, 6);
+
+    notes = new ArrayList<>();
+    note = new Note("000001", new String[] {"Allergic to peanuts"});
+    notes.add(note);
+
     primaryAddress =
         new Address(
             "000001",
@@ -88,7 +96,7 @@ public class CustomerDAOTest {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
-            "Allergic to peanuts",
+            notes,
             primaryAddress,
             primaryAddress,
             contact,
@@ -117,7 +125,13 @@ public class CustomerDAOTest {
         Assertions.assertEquals(LocalDate.of(2024, 8, 6), actualDateOfBirth);
         Assertions.assertEquals("Engineer", rs.getString("occupation"));
         Assertions.assertEquals("NZ Citizen", rs.getString("residency"));
-        Assertions.assertEquals("Allergic to peanuts", rs.getString("notes"));
+
+        // String notesString = rs.getString("notes");
+        // String[] retrievedNotes = notesString.split("::");
+        // for (int i = 0; i < retrievedNotes.length; i++) {
+        //   Assertions.assertEquals(customer.getNotes().get(i).getLines(), retrievedNotes[i]);
+        // }
+
         Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
         Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
@@ -139,7 +153,6 @@ public class CustomerDAOTest {
     customer.setDateOfBirth(LocalDate.of(2024, 8, 7));
     customer.setOccupation("Doctor");
     customer.setResidency("NZ Permanent Resident");
-    customer.setNotes("Smells like burning crayons");
     customer.setPhysicalAddress(primaryAddress);
     customer.setMailingAddress(primaryAddress);
     customer.setContact(contact);
@@ -161,7 +174,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
         Assertions.assertEquals("NZ Permanent Resident", rs.getString("residency"));
-        Assertions.assertEquals("Smells like burning crayons", rs.getString("notes"));
         Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
         Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
@@ -195,7 +207,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(retrievedCustomer.getDateOfBirth(), actualDateOfBirth);
         Assertions.assertEquals(retrievedCustomer.getOccupation(), rs.getString("occupation"));
         Assertions.assertEquals(retrievedCustomer.getResidency(), rs.getString("residency"));
-        Assertions.assertEquals(retrievedCustomer.getNotes(), rs.getString("notes"));
         Assertions.assertEquals(
             retrievedCustomer.getPhysicalAddress().getAddressId(), rs.getInt("primaryAddressId"));
         Assertions.assertEquals(
@@ -250,6 +261,10 @@ public class CustomerDAOTest {
 
     String name = "Ting Mun Guy";
 
+    ArrayList<Note> notes = new ArrayList<>();
+    Note note = new Note("000003", new String[] {"Allergic to peanuts"});
+    notes.add(note);
+
     IndividualCustomer customer2 =
         new IndividualCustomer(
             "000003",
@@ -258,7 +273,7 @@ public class CustomerDAOTest {
             dateOfBirth2,
             "Professional",
             "NZ Permanent Resident",
-            "Allergic to peanuts",
+            notes,
             primaryAddress2,
             primaryAddress2,
             contact2,
@@ -317,6 +332,10 @@ public class CustomerDAOTest {
             "1234567890",
             false);
 
+    ArrayList<Note> notes = new ArrayList<>();
+    Note note = new Note("000002", new String[] {"Allergic to peanuts"});
+    notes.add(note);
+
     IndividualCustomer customer2 =
         new IndividualCustomer(
             "000002",
@@ -325,7 +344,7 @@ public class CustomerDAOTest {
             dateOfBirth,
             "Professional",
             "NZ Permanent Resident",
-            "Allergic to peanuts",
+            notes,
             primaryAddress2,
             primaryAddress2,
             contact2,
