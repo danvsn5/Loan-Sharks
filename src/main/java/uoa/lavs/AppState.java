@@ -11,9 +11,9 @@ public class AppState {
 
   public static String userName;
   public static String customerDetailsAccessType; // CREATE, EDIT, VIEW
-  public static Boolean isCreatingLoan;
+  public static Boolean isCreatingLoan = false;
   public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
-  public static Boolean isAccessingFromSearch;
+  public static Boolean isAccessingFromSearch = false;
 
   // Previous and current UI screens for return functionality
   public static AppUI previousUi;
