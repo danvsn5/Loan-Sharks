@@ -10,6 +10,8 @@ public class Address {
   private String postCode;
   private String city;
   private String country;
+  private boolean isPrimary;
+  private boolean isMailing;
 
   public Address(
       String customerId,
@@ -19,7 +21,9 @@ public class Address {
       String suburb,
       String postCode,
       String city,
-      String country) {
+      String country,
+      boolean isPrimary,
+      boolean isMailing) {
     this.customerId = customerId;
     this.addressType = addressType;
     this.addressLineOne = addressLineOne;
@@ -28,6 +32,8 @@ public class Address {
     this.postCode = postCode;
     this.city = city;
     this.country = country;
+    this.isPrimary = isPrimary;
+    this.isMailing = isMailing;
   }
 
   public String getCustomerId() {
@@ -66,6 +72,14 @@ public class Address {
     return this.country;
   }
 
+  public boolean getIsPrimary() {
+    return this.isPrimary;
+  }
+
+  public boolean getIsMailing() {
+    return this.isMailing;
+  }
+
   public void setCustomerId(String customerId) {
     this.customerId = customerId;
   }
@@ -100,5 +114,13 @@ public class Address {
 
   public void setCountry(String country) {
     this.country = country;
+  }
+
+  public void setIsPrimary(boolean isPrimary) {
+    this.isPrimary = isPrimary;
+  }
+
+  public void setIsMailing(boolean isMailing) {
+    this.isMailing = isMailing;
   }
 }

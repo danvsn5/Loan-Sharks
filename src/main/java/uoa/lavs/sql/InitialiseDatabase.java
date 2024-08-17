@@ -85,6 +85,8 @@ public class InitialiseDatabase {
             + "postCode VARCHAR(20),\n"
             + "city VARCHAR(50),\n"
             + "country VARCHAR(50),\n"
+            + "isPrimary BOOLEAN,\n"
+            + "isMailing BOOLEAN,\n"
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
             + "PRIMARY KEY (customerId, addressId),\n"
             + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"

@@ -12,7 +12,7 @@ public class AddressTest {
   public void setUp() {
     String customerId = "123";
     address =
-        new Address(customerId, "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+        new Address(customerId, "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG", true, false);
   }
 
   @Test
@@ -101,5 +101,23 @@ public class AddressTest {
   public void testSetCountry() {
     address.setCountry("GMT");
     assertEquals("GMT", address.getCountry());
+  }
+
+  @Test void testGetIsPrimary() {
+    assertEquals(true, address.getIsPrimary());
+  }
+
+  @Test void testSetIsPrimary() {
+    address.setIsPrimary(false);
+    assertEquals(false, address.getIsPrimary());
+  }
+
+  @Test void testGetIsMailing() {
+    assertEquals(false, address.getIsMailing());
+  }
+
+  @Test void testSetIsMailing() {
+    address.setIsMailing(true);
+    assertEquals(true, address.getIsMailing());
   }
 }

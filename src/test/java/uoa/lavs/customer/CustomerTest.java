@@ -21,7 +21,7 @@ public class CustomerTest {
     dateOfBirth = LocalDate.of(2024, 8, 6);
     physicalAddress =
         new Address(
-            "000001", "Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe");
+            "000001", "Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, false);
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
@@ -34,7 +34,7 @@ public class CustomerTest {
             "Sunnynook",
             "12345",
             "Auckland",
-            "Zimbabwe");
+            "Zimbabwe", true, true);
     employer = new CustomerEmployer("Countdown", physicalAddress, null, null, null, false);
 
     customer =

@@ -26,7 +26,7 @@ public class IndividualCustomerSingletonTest {
     dateOfBirth = LocalDate.of(2024, 8, 6);
     physicalAddress =
         new Address(
-            "000001", "Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe");
+            "000001", "Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, false);
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
@@ -39,7 +39,7 @@ public class IndividualCustomerSingletonTest {
             "Sunnynook",
             "12345",
             "Auckland",
-            "Zimbabwe");
+            "Zimbabwe", true, false);
     employer = new CustomerEmployer("Countdown", employerAddress, null, null, null, false);
 
     newCustomer =

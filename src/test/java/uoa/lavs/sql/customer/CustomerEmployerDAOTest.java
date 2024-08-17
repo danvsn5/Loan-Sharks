@@ -34,7 +34,7 @@ public class CustomerEmployerDAOTest {
     dbFile = DatabaseState.DB_TEST_FILE;
     employerAddress =
         new Address("000001",
-            "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe");
+            "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, true);
     employer =
         new CustomerEmployer(
             "Countdown",

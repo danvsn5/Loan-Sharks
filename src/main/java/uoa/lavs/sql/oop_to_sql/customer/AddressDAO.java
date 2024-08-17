@@ -16,7 +16,7 @@ public class AddressDAO {
 
     String sql =
         "INSERT INTO customer_address (customerId, addressId, addressType, addressLineOne, "
-            + "addressLineTwo, suburb, postCode, city, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + "addressLineTwo, suburb, postCode, city, country, isPrimary, isMailing) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -29,6 +29,8 @@ public class AddressDAO {
       pstmt.setString(7, address.getPostCode());
       pstmt.setString(8, address.getCity());
       pstmt.setString(9, address.getCountry());
+      pstmt.setBoolean(10, address.getIsPrimary());
+      pstmt.setBoolean(11, address.getIsMailing());
 
       pstmt.executeUpdate();
 
@@ -60,7 +62,7 @@ public class AddressDAO {
   public void updateAddress(Address address) {
     String sql =
         "UPDATE customer_address SET addressType = ?, addressLineOne = ?, addressLineTwo = ?,"
-            + " suburb = ?, postCode = ?, city = ?, country = ? WHERE customerId = ? AND addressId"
+            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ? WHERE customerId = ? AND addressId"
             + " = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -72,8 +74,10 @@ public class AddressDAO {
       pstmt.setString(5, address.getPostCode());
       pstmt.setString(6, address.getCity());
       pstmt.setString(7, address.getCountry());
-      pstmt.setString(8, address.getCustomerId());
-      pstmt.setInt(9, address.getAddressId());
+      pstmt.setBoolean(8, address.getIsPrimary());
+      pstmt.setBoolean(9, address.getIsMailing());
+      pstmt.setString(10, address.getCustomerId());
+      pstmt.setInt(11, address.getAddressId());
 
       pstmt.executeUpdate();
     } catch (SQLException e) {
@@ -98,6 +102,8 @@ public class AddressDAO {
         String postCode = rs.getString("postCode");
         String city = rs.getString("city");
         String country = rs.getString("country");
+        boolean isPrimary = rs.getBoolean("isPrimary");
+        boolean isMailing = rs.getBoolean("isMailing");
 
         Address retrievedAddress =
             new Address(
@@ -108,7 +114,9 @@ public class AddressDAO {
                 suburb,
                 postCode,
                 city,
-                country);
+                country,
+                isPrimary,
+                isMailing);
         retrievedAddress.setAddressId(addressId);
         retrievedAddress.setCustomerId(customerId);
         return retrievedAddress;

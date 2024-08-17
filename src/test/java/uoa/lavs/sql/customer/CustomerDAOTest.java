@@ -54,7 +54,7 @@ public class CustomerDAOTest {
     dateOfBirth = LocalDate.of(2024, 8, 6);
     primaryAddress =
         new Address(
-            "000001", "Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe");
+            "000001", "Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, false);
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
@@ -67,7 +67,7 @@ public class CustomerDAOTest {
             "Sunnynook",
             "12345",
             "Auckland",
-            "Zimbabwe");
+            "Zimbabwe", true, true);
     employer = new CustomerEmployer("Countdown", primaryAddress, null, null, null, false);
 
     customer =
@@ -211,7 +211,7 @@ public class CustomerDAOTest {
     LocalDate dateOfBirth2 = LocalDate.of(2000, 6, 6);
     Address primaryAddress2 =
         new Address(
-            "000001", "Rural", "100 Guy St", "", "Rosedale", "999", "Auckland", "New Zealand");
+            "000001", "Rural", "100 Guy St", "", "Rosedale", "999", "Auckland", "New Zealand", true, false);
     Phone phoneOne2 = new Phone("mobile", "1111111");
     Phone phoneTwo2 = new Phone("work", "0987654321");
     CustomerContact contact2 =
@@ -225,7 +225,7 @@ public class CustomerDAOTest {
             "Sunnynook",
             "12345",
             "Auckland",
-            "New Zealand");
+            "New Zealand", true, true);
     CustomerEmployer employer2 =
         new CustomerEmployer(
             "Countdown",
@@ -275,7 +275,7 @@ public class CustomerDAOTest {
     customerDAO.addCustomer(customer);
 
     Address primaryAddress2 =
-        new Address("000001", "Rural", "100 Guy St", "", "Rosedale", "999", "Auckland", "New Zealand");
+        new Address("000001", "Rural", "100 Guy St", "", "Rosedale", "999", "Auckland", "New Zealand", true, false);
     Phone phoneOne2 = new Phone("mobile", "1111111");
     Phone phoneTwo2 = new Phone("work", "0987654321");
     CustomerContact contact2 =
@@ -288,7 +288,7 @@ public class CustomerDAOTest {
             "Sunnynook",
             "12345",
             "Auckland",
-            "New Zealand");
+            "New Zealand", true, true);
     CustomerEmployer employer2 =
         new CustomerEmployer(
             "Countdown",

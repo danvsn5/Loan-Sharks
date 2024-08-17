@@ -8,9 +8,9 @@ public class IndividualCustomerSingleton {
   public static IndividualCustomer getInstance() {
     if (instance == null) {
       // Initialize with placeholder values
-      Address physicalAddress = new Address("", "", "", "", "", "", "", "");
-      Address mailingAddress = new Address("", "", "", "", "", "", "", "");
-      Address employerAddress = new Address("", "", "", "", "", "", "", "");
+      Address physicalAddress = new Address("", "", "", "", "", "", "", "", true, false);
+      Address mailingAddress = new Address("", "", "", "", "", "", "", "", false, true);
+      Address employerAddress = new Address("", "", "", "", "", "", "", "", true, true);
 
       Phone phoneOne = new Phone("", "");
       Phone phoneTwo = new Phone("", "");
