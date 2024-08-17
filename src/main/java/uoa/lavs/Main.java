@@ -100,8 +100,8 @@ public class Main extends Application {
     SceneManager.addScene(AppUI.LOAN_MENU, loadFxml("loan/loan_management"));
     SceneManager.addScene(AppUI.LOAN_SEARCH, loadFxml("loan/loan_search"));
 
-    // BYPASS TO CUSTOMER MENU
-    scene = new Scene(SceneManager.getScene(AppUI.CUSTOMER_MENU), 1280, 720);
+    // BYPASSING TO LOAN MENU
+    scene = new Scene(SceneManager.getScene(AppUI.LOAN_MENU), 1280, 720);
     // imports main index.css file
     String cssPath = getClass().getResource("/css/index.css").toExternalForm();
     scene.getStylesheets().add(cssPath);
