@@ -12,6 +12,7 @@ public class InitialiseDatabase {
       createCustomerContactEntity(conn);
       createCustomerAddressEntity(conn);
       createCustomerEmployerEntity(conn);
+      createCustomerNotesEntity(conn);
       createLoanEntity(conn);
       createLoanDurationEntity(conn);
       createLoanPaymentEntity(conn);
@@ -31,7 +32,6 @@ public class InitialiseDatabase {
             + "dateOfBirth DATE, \n"
             + "occupation VARCHAR(100), \n"
             + "residency VARCHAR(50), \n"
-            + "notes VARCHAR(1330), \n"
             + "primaryAddressId INTEGER, \n"
             + "mailingAddressId INTEGER, \n"
             + "contactId VARCHAR(50), \n"
@@ -89,6 +89,23 @@ public class InitialiseDatabase {
             + "isMailing BOOLEAN,\n"
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
             + "PRIMARY KEY (customerId, addressId),\n"
+            + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
+            + ");";
+
+    try (Statement stmt = conn.createStatement()) {
+      stmt.execute(sql);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  private static void createCustomerNotesEntity(Connection conn) {
+    String sql =
+        "CREATE TABLE IF NOT EXISTS customer_notes (\n"
+            + "customerId VARCHAR(50),\n"
+            + "noteId INTEGER,\n"
+            + "note VARCHAR(1368),\n"
+            + "PRIMARY KEY (customerId, noteId),\n"
             + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
             + ");";
 

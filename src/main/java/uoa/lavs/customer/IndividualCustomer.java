@@ -1,6 +1,7 @@
 package uoa.lavs.customer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class IndividualCustomer extends Customer {
   public IndividualCustomer(
@@ -10,7 +11,7 @@ public class IndividualCustomer extends Customer {
       LocalDate dateOfBirth,
       String occupation,
       String residency,
-      String notes,
+      ArrayList<Note> notes,
       Address physicalAddress,
       Address mailingAddress,
       CustomerContact contact,

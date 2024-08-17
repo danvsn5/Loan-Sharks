@@ -23,11 +23,13 @@ public class CustomerInputNotesController {
   }
 
   private void setNotes() {
-    if (customerNotesField.getText() != null) {
-      customer.setNotes(customerNotesField.getText());
-    } else {
-      customer.setNotes("");
-    }
+    // TODO once the notes gui is implemented.
+
+    // if (customerNotesField.getText() != null) {
+    //   customer.setNotes(customerNotesField.getText());
+    // } else {
+    //   customer.setNotes("");
+    // }
   }
 
   @FXML

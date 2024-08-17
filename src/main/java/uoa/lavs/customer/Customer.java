@@ -1,6 +1,7 @@
 package uoa.lavs.customer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public abstract class Customer implements ICustomer {
   private String customerId;
@@ -9,7 +10,7 @@ public abstract class Customer implements ICustomer {
   private LocalDate dateOfBirth;
   private String occupation;
   private String residency;
-  private String notes;
+  private ArrayList<Note> notes;
   private Address physicalAddress;
   private Address mailingAddress;
   private CustomerContact contact;
@@ -22,7 +23,7 @@ public abstract class Customer implements ICustomer {
       LocalDate dateOfBirth,
       String occupation,
       String residency,
-      String notes,
+      ArrayList<Note> notes,
       Address physicalAddress,
       Address mailingAddress,
       CustomerContact contact,
@@ -71,7 +72,7 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public String getNotes() {
+  public ArrayList<Note> getNotes() {
     return this.notes;
   }
 
@@ -126,7 +127,7 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public void setNotes(String notes) {
+  public void setNotes(ArrayList<Note> notes) {
     this.notes = notes;
   }
 

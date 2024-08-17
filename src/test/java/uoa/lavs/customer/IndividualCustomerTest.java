@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,22 +17,48 @@ public class IndividualCustomerTest {
   private CustomerContact contact;
   private Address employerAddress;
   private CustomerEmployer employer;
+  private ArrayList<Note> notes;
+  private Note note;
 
   @BeforeEach
   public void setUp() {
     dateOfBirth = LocalDate.of(2000, 1, 1);
     physicalAddress =
-        new Address("000001", "Commercial", "999 Unreal Pl", "", "Arashiyama", "6160007", "Kyoto", "Japan", true, false);
+        new Address(
+            "000001",
+            "Commercial",
+            "999 Unreal Pl",
+            "",
+            "Arashiyama",
+            "6160007",
+            "Kyoto",
+            "Japan",
+            true,
+            false);
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact =
         new CustomerContact(
             "thisplaceisunreal@gmail.com", phoneOne, phoneTwo, "mobile call", "email");
     employerAddress =
-        new Address("000001","Rural", "1 Real Pl", "", "Auckland CBD", "1010", "Auckland", "New Zealand", true, false);
+        new Address(
+            "000001",
+            "Rural",
+            "1 Real Pl",
+            "",
+            "Auckland CBD",
+            "1010",
+            "Auckland",
+            "New Zealand",
+            true,
+            false);
     employer =
         new CustomerEmployer(
             "Company", employerAddress, "thisplaceisprettyreal@gmail.com", null, null, false);
+
+    notes = new ArrayList<>();
+    note = new Note("000002", new String[] {"Allergic to peanuts"});
+    notes.add(note);
 
     individualCustomer =
         new IndividualCustomer(
@@ -41,7 +68,7 @@ public class IndividualCustomerTest {
             dateOfBirth,
             "Software Engineer",
             "NZ Citizen",
-            "Allergic to peanuts",
+            notes,
             physicalAddress,
             physicalAddress,
             contact,
@@ -57,7 +84,7 @@ public class IndividualCustomerTest {
     assertEquals(dateOfBirth, individualCustomer.getDateOfBirth());
     assertEquals("Software Engineer", individualCustomer.getOccupation());
     assertEquals("NZ Citizen", individualCustomer.getResidency());
-    assertEquals("Allergic to peanuts", individualCustomer.getNotes());
+    assertEquals(notes, individualCustomer.getNotes());
     assertEquals(physicalAddress, individualCustomer.getPhysicalAddress());
     assertEquals(physicalAddress, individualCustomer.getMailingAddress());
     assertEquals(contact, individualCustomer.getContact());
