@@ -148,6 +148,7 @@
     -fx-background-radius: 0px 100px 100px 0px !important;
     -fx-border-color: -fx-primary-color;
     -fx-border-width: 2px;
+    -fx-cursor: hand;
 }
 
 .date-picker .text-field {
@@ -156,6 +157,7 @@
     -fx-background-color: #ffdaca;
     -fx-border-color: -fx-primary-color;
     -fx-border-width: 2px;
+    -fx-cursor: default;
 }
 
 .week-number-cell {
@@ -254,27 +256,23 @@
 
 .combo-box {
     -fx-border-color: -fx-primary-color;
-    -fx-border-width: 0px;
+    -fx-border-width: 2px;
     -fx-padding: 0 0 0 0;
     -fx-border-radius: 100px !important;
     -fx-background-radius: 100px !important;
     -fx-font-family: 'Quicksand Medium';
     -fx-font-size: 14px;
-}
-
-.combo-box .selected {
-    -fx-border-color: #000;
-    -fx-border-width: 5px;
-    -fx-border-radius: 100px !important;
-    -fx-background-radius: 100px !important;
-    -fx-font-family: 'Quicksand Medium';
-    -fx-font-size: 14px;
+    -fx-cursor: hand;
 }
 
 .combo-box .arrow-button{
     -fx-background-color: -fx-primary-color;
     -fx-border-radius: 0px 100px 100px 0px!important;
     -fx-background-radius: 0px 100px 100px 0px!important;
+}
+
+.combo-box:hover .arrow-button .arrow{
+    -fx-background-color: #333333;
 }
 
 .combo-box-base .text-field{
@@ -289,6 +287,12 @@
     -fx-background-color: #ffdaca;
     -fx-background-radius: 20px 0px 0px 20px;
 } */
+
+.combo-box .list-cell {
+    -fx-border-width: 10px;
+    -fx-background-color: #ffdaca;
+    -fx-background-radius: 20px 0px 0px 20px;
+}
 
 .combo-box .list-view {
     -fx-background-color: #ffdaca;
