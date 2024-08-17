@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
+import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
@@ -18,7 +20,7 @@ import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
-public class CustomerInputDetailsController {
+public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private Label customerIDLabel;
 
   @FXML private ComboBox<String> customerTitleComboBox;
@@ -67,12 +69,13 @@ public class CustomerInputDetailsController {
             }
           }
         });
-
+    AccessTypeNotifier.registerObserver(this);
     updateUIBasedOnAccessType();
   }
 
+  @Override
   @FXML
-  private void updateUIBasedOnAccessType() {
+  public void updateUIBasedOnAccessType() {
     ControllerHelper.updateUIBasedOnAccessType(
         AppState.customerDetailsAccessType,
         editButton,
@@ -84,6 +87,7 @@ public class CustomerInputDetailsController {
         },
         new ComboBox<?>[] {customerTitleComboBox, customerCitizenshipBox},
         new DatePicker[] {customerDOBPicker});
+    System.out.println("Details Controller Invoked");
   }
 
   private void setCustomerDetails() {
@@ -107,18 +111,17 @@ public class CustomerInputDetailsController {
       setCustomerDetails();
       // Save customer to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
-      updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       // Switch to edit mode
       AppState.customerDetailsAccessType = "EDIT";
-      updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
       // Handle confirm changes logic
       setCustomerDetails();
       // Save changes to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
-      updateUIBasedOnAccessType();
     }
+    AccessTypeNotifier.notifyObservers();
+    updateUIBasedOnAccessType();
   }
 
   @FXML

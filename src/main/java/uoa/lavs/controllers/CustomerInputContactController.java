@@ -6,6 +6,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
@@ -14,7 +16,7 @@ import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
-public class CustomerInputContactController {
+public class CustomerInputContactController implements AccessTypeObserver {
   @FXML private TextField customerEmailTextField;
   @FXML private TextField customerPhoneNumberOne;
   @FXML private TextField customerPhoneNumberTwo;
@@ -33,11 +35,13 @@ public class CustomerInputContactController {
 
   @FXML
   private void initialize() {
+    AccessTypeNotifier.registerObserver(this);
     updateUIBasedOnAccessType();
   }
 
   @FXML
-  private void updateUIBasedOnAccessType() {
+  @Override
+  public void updateUIBasedOnAccessType() {
     ControllerHelper.updateUIBasedOnAccessType(
         AppState.customerDetailsAccessType,
         editButton,
@@ -50,6 +54,7 @@ public class CustomerInputContactController {
         },
         new ComboBox<?>[] {},
         new DatePicker[] {});
+    System.out.println("Contact Controller Invoked");
   }
 
   @FXML
@@ -63,6 +68,7 @@ public class CustomerInputContactController {
       setContactDetails();
       AppState.customerDetailsAccessType = "VIEW";
     }
+    AccessTypeNotifier.notifyObservers();
     updateUIBasedOnAccessType();
   }
 
