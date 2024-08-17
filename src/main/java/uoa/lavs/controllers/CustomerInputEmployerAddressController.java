@@ -18,7 +18,6 @@ import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
 public class CustomerInputEmployerAddressController implements AccessTypeObserver {
-  @FXML private ComboBox<String> employerAddressTypeComboBox;
   @FXML private TextField employerAddressLine1Field;
   @FXML private TextField employerAddressLine2Field;
   @FXML private TextField employerSuburbField;
@@ -54,7 +53,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
           employerCityField,
           employerPostcodeField
         },
-        new ComboBox<?>[] {employerAddressTypeComboBox},
+        new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {});
   }
@@ -67,7 +66,6 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     address.setSuburb(employerSuburbField.getText());
     address.setCity(employerCityField.getText());
     address.setPostCode(employerPostcodeField.getText());
-    address.setAddressType(employerAddressTypeComboBox.getValue());
 
     // Autosetting to New Zealand
     address.setCountry("New Zealand");

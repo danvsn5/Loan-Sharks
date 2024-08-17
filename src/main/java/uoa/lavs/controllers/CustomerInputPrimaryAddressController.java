@@ -38,6 +38,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void initialize() {
+    customerAddressTypeComboBox.getItems().addAll("Home", "Work", "PO Box", "Other");
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
   }

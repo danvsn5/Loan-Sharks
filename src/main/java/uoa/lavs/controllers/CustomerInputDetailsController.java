@@ -46,6 +46,10 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
 
   @FXML
   private void initialize() {
+    customerTitleComboBox.getItems().addAll("Mr", "Mrs", "Ms", "Master");
+    customerCitizenshipBox
+        .getItems()
+        .addAll("NZ Citizen", "NZ Permanent Resident", "AUS Citizen", "NZ Work Visa", "Other");
     DateTimeFormatter storageFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
