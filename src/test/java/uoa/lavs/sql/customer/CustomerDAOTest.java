@@ -29,7 +29,6 @@ public class CustomerDAOTest {
   DatabaseConnection conn;
   CustomerEmployerDAO employerDAO;
   CustomerEmployer employer;
-  Address employerAddress;
   AddressDAO addressDAO;
   CustomerContactDAO contactDAO;
   CustomerContact contact;
@@ -96,7 +95,6 @@ public class CustomerDAOTest {
             employer);
 
     addressDAO.addAddress(primaryAddress);
-    addressDAO.addAddress(employerAddress);
     contactDAO.addCustomerContact(contact);
     employerDAO.addCustomerEmployer(employer);
   }
@@ -142,8 +140,8 @@ public class CustomerDAOTest {
     customer.setOccupation("Doctor");
     customer.setResidency("NZ Permanent Resident");
     customer.setNotes("Smells like burning crayons");
-    customer.setPhysicalAddress(employerAddress);
-    customer.setMailingAddress(employerAddress);
+    customer.setPhysicalAddress(primaryAddress);
+    customer.setMailingAddress(primaryAddress);
     customer.setContact(contact);
     customer.setEmployer(employer);
 
@@ -164,8 +162,8 @@ public class CustomerDAOTest {
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
         Assertions.assertEquals("NZ Permanent Resident", rs.getString("residency"));
         Assertions.assertEquals("Smells like burning crayons", rs.getString("notes"));
-        Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("primaryAddressId"));
-        Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("mailingAddressId"));
+        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
+        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
         Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
       }

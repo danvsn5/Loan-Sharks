@@ -13,7 +13,6 @@ public class CustomerTest {
   private Phone phoneOne;
   private Phone phoneTwo;
   private CustomerContact contact;
-  private Address employerAddress;
   private CustomerEmployer employer;
 
   @BeforeEach
@@ -148,8 +147,8 @@ public class CustomerTest {
 
   @Test
   public void testSetPhysicalAddress() {
-    customer.setPhysicalAddress(employerAddress);
-    assertEquals(employerAddress, customer.getPhysicalAddress());
+    customer.setPhysicalAddress(physicalAddress);
+    assertEquals(physicalAddress, customer.getPhysicalAddress());
   }
 
   @Test
@@ -159,8 +158,8 @@ public class CustomerTest {
 
   @Test
   public void testSetMailingAddress() {
-    customer.setMailingAddress(employerAddress);
-    assertEquals(employerAddress, customer.getMailingAddress());
+    customer.setMailingAddress(physicalAddress);
+    assertEquals(physicalAddress, customer.getMailingAddress());
   }
 
   @Test

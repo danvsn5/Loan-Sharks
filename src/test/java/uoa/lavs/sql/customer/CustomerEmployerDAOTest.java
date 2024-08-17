@@ -9,7 +9,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uoa.lavs.customer.Address;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.sql.DatabaseConnection;
 import uoa.lavs.sql.DatabaseState;
@@ -21,7 +20,6 @@ public class CustomerEmployerDAOTest {
   DatabaseConnection conn;
   CustomerEmployerDAO employerDAO;
   CustomerEmployer employer;
-  Address employerAddress;
   AddressDAO addressDAO;
   static File dbFile;
 
@@ -45,7 +43,6 @@ public class CustomerEmployerDAOTest {
             "www.notworth.org.au",
             "0102030405",
             false);
-    addressDAO.addAddress(employerAddress);
   }
 
   @Test
@@ -63,8 +60,8 @@ public class CustomerEmployerDAOTest {
         Assertions.assertEquals("123 Stonesuckle Ct", rs.getString("addressLineOne"));
         Assertions.assertEquals("", rs.getString("addressLineTwo"));
         Assertions.assertEquals("Sunnynook", rs.getString("suburb"));
-        Assertions.assertEquals("Auckland", rs.getString("city"));
         Assertions.assertEquals("12345", rs.getString("postCode"));
+        Assertions.assertEquals("Auckland", rs.getString("city"));
         Assertions.assertEquals("Zimbabwe", rs.getString("country"));
         Assertions.assertEquals("lowestprices@outlook.com", rs.getString("employerEmail"));
         Assertions.assertEquals("www.notworth.org.au", rs.getString("employerWebsite"));
@@ -100,8 +97,8 @@ public class CustomerEmployerDAOTest {
         Assertions.assertEquals("123 Stonesuckle Ct", rs.getString("addressLineOne"));
         Assertions.assertEquals("", rs.getString("addressLineTwo"));
         Assertions.assertEquals("Sunnynook", rs.getString("suburb"));
-        Assertions.assertEquals("Auckland", rs.getString("city"));
         Assertions.assertEquals("12345", rs.getString("postCode"));
+        Assertions.assertEquals("Auckland", rs.getString("city"));
         Assertions.assertEquals("Zimbabwe", rs.getString("country"));
         Assertions.assertEquals("manager@store.veryworth.org.au", rs.getString("employerEmail"));
         Assertions.assertEquals("www.veryworth.org.au", rs.getString("employerWebsite"));
@@ -134,8 +131,8 @@ public class CustomerEmployerDAOTest {
         Assertions.assertEquals(retrievedEmployer.getLineOne(), rs.getString("addressLineOne"));
         Assertions.assertEquals(retrievedEmployer.getLineTwo(), rs.getString("addressLineTwo"));
         Assertions.assertEquals(retrievedEmployer.getSuburb(), rs.getString("suburb"));
-        Assertions.assertEquals(retrievedEmployer.getCity(), rs.getString("city"));
         Assertions.assertEquals(retrievedEmployer.getPostCode(), rs.getString("postCode"));
+        Assertions.assertEquals(retrievedEmployer.getCity(), rs.getString("city"));
         Assertions.assertEquals(retrievedEmployer.getCountry(), rs.getString("country"));
         Assertions.assertEquals(
             retrievedEmployer.getEmployerEmail(), rs.getString("employerEmail"));
