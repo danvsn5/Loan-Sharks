@@ -10,9 +10,10 @@ public class AppState {
   // state of the application
 
   public static String userName;
-  public static String customerDetailsAccessType; // CREATE, EDIT, VIEW, LOAN-EDIT, LOAN-VIEW
-  public static Boolean isCreatingLoan;
+  public static String customerDetailsAccessType; // CREATE, EDIT, VIEW
+  public static Boolean isCreatingLoan = false;
   public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
+  public static Boolean isAccessingFromSearch = false;
 
   // Previous and current UI screens for return functionality
   public static AppUI previousUi;
@@ -78,6 +79,7 @@ public class AppState {
   public static AppUI getPreviousUi() {
     return previousUi;
   }
+
   public static void setPreviousUi(AppUI previousUi) {
     AppState.previousUi = previousUi;
   }

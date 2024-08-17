@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
@@ -24,7 +26,6 @@ public class LoanSummaryController {
   @FXML private Button coborrowerButton;
   @FXML private Button durationButton;
   @FXML private Button financeButton;
-  @FXML private Button summaryButton;
   @FXML private ImageView staticReturnImageView;
 
   @FXML
@@ -34,7 +35,9 @@ public class LoanSummaryController {
 
   @FXML
   private void handleConfirmLoanButtonAction() {
-    // Add action code here
+    AppState.isCreatingLoan = false;
+    AppState.loanDetailsAccessType = "VIEW";
+    AccessTypeNotifier.notifyLoanObservers();
   }
 
   @FXML
@@ -63,12 +66,8 @@ public class LoanSummaryController {
   }
 
   @FXML
-  private void handleSummaryButtonAction() {
-    Main.setUi(AppUI.LC_SUMMARY);
-  }
-
-  @FXML
   private void handleBackButtonAction() {
+    // Need to add logic if they got here from loan search
     Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 }
