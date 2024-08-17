@@ -86,6 +86,11 @@ public class CustomerSearchController {
 
   @FXML
   private void handleBackButtonAction() {
-    Main.setUi(AppUI.CUSTOMER_MENU);
+    if (AppState.isCreatingLoan) {
+      AppState.isCreatingLoan = false;
+      Main.setUi(AppUI.LOAN_MENU);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_MENU);
+    }
   }
 }
