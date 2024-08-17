@@ -64,20 +64,21 @@ public class ControllerHelper {
       setDatePickersEditable(datePickers);
       setRadioButtonsEditable(radioButtons);
 
-      editButton.setText("Create Customer");
+      editButton.visibleProperty().setValue(false);
     } else if (accessType.equals("EDIT")) {
       setFieldsEditable(textFields);
       setComboBoxesEditable(comboBoxes);
       setDatePickersEditable(datePickers);
       setRadioButtonsEditable(radioButtons);
 
-      editButton.setText("Confirm Changes");
+      editButton.visibleProperty().setValue(false);
     } else if (accessType.equals("VIEW")) {
       setFieldsNonEditable(textFields);
       setComboBoxesNonEditable(comboBoxes);
       setDatePickersNonEditable(datePickers);
       setRadioButtonsNonEditable(radioButtons);
 
+      editButton.visibleProperty().setValue(true);
       editButton.setText("Edit Details");
     }
   }
