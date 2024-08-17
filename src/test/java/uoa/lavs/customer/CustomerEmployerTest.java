@@ -12,8 +12,8 @@ public class CustomerEmployerTest {
   @BeforeEach
   public void setUp() {
     employerAddress =
-        new Address(
-            "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe");
+        new Address("123",
+            "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, true);
     employer = new CustomerEmployer("Countdown", employerAddress, null, null, null, false);
   }
 
@@ -36,8 +36,8 @@ public class CustomerEmployerTest {
   @Test
   public void testSetEmployerAddress() {
     Address newAddress =
-        new Address(
-            "Commercial", "456 Stonesuckle Ct", "34", "Sunnynook", "12345", "Auckland", "Zimbabwe");
+        new Address("123",
+            "Commercial", "456 Stonesuckle Ct", "34", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, true);
     employer.setEmployerAddress(newAddress);
     assertEquals(newAddress, employer.getEmployerAddress());
   }

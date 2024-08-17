@@ -31,7 +31,7 @@ public class AddressDAOTest {
   @Test
   public void testAddAddress() {
     Address address =
-        new Address("Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+        new Address("000001", "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG", true, false);
 
     addressDAO.addAddress(address);
 
@@ -51,6 +51,8 @@ public class AddressDAOTest {
         Assertions.assertEquals("12345", rs.getString("postCode"));
         Assertions.assertEquals("Tingcity", rs.getString("city"));
         Assertions.assertEquals("TMG", rs.getString("country"));
+        Assertions.assertTrue(rs.getBoolean("isPrimary"));
+        Assertions.assertFalse(rs.getBoolean("isMailing"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -63,7 +65,7 @@ public class AddressDAOTest {
   @Test
   public void testUpdateAddress() {
     Address address =
-        new Address("Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+        new Address("000001", "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG", false, true);
     addressDAO.addAddress(address);
 
     address.setAddressType("Residential");
@@ -73,6 +75,8 @@ public class AddressDAOTest {
     address.setPostCode("67890");
     address.setCity("Gooncity");
     address.setCountry("NTG");
+    address.setIsPrimary(true);
+    address.setIsMailing(false);
 
     addressDAO.updateAddress(address);
 
@@ -90,6 +94,8 @@ public class AddressDAOTest {
         Assertions.assertEquals("67890", rs.getString("postCode"));
         Assertions.assertEquals("Gooncity", rs.getString("city"));
         Assertions.assertEquals("NTG", rs.getString("country"));
+        Assertions.assertTrue(rs.getBoolean("isPrimary"));
+        Assertions.assertFalse(rs.getBoolean("isMailing"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -102,11 +108,11 @@ public class AddressDAOTest {
   @Test
   public void testGetAddress() {
     Address address =
-        new Address("Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG");
+        new Address("000001", "Commercial", "123 Guy St", "Apt 1", "Muntown", "12345", "Tingcity", "TMG", true, false);
     addressDAO.addAddress(address);
     int addressId = address.getAddressId();
 
-    Address retrievedAddress = addressDAO.getAddress(addressId);
+    Address retrievedAddress = addressDAO.getAddress("000001", addressId);
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
@@ -124,6 +130,8 @@ public class AddressDAOTest {
         Assertions.assertEquals(retrievedAddress.getPostCode(), rs.getString("postCode"));
         Assertions.assertEquals(retrievedAddress.getCity(), rs.getString("city"));
         Assertions.assertEquals(retrievedAddress.getCountry(), rs.getString("country"));
+        Assertions.assertEquals(retrievedAddress.getIsPrimary(), rs.getBoolean("isPrimary"));
+        Assertions.assertEquals(retrievedAddress.getIsMailing(), rs.getBoolean("isMailing"));
       }
     } catch (SQLException e) {
       e.printStackTrace();

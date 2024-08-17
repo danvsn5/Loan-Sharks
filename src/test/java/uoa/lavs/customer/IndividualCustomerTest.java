@@ -21,14 +21,14 @@ public class IndividualCustomerTest {
   public void setUp() {
     dateOfBirth = LocalDate.of(2000, 1, 1);
     physicalAddress =
-        new Address("Commercial", "999 Unreal Pl", "", "Arashiyama", "6160007", "Kyoto", "Japan");
+        new Address("000001", "Commercial", "999 Unreal Pl", "", "Arashiyama", "6160007", "Kyoto", "Japan", true, false);
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact =
         new CustomerContact(
             "thisplaceisunreal@gmail.com", phoneOne, phoneTwo, "mobile call", "email");
     employerAddress =
-        new Address("Rural", "1 Real Pl", "", "Auckland CBD", "1010", "Auckland", "New Zealand");
+        new Address("000001","Rural", "1 Real Pl", "", "Auckland CBD", "1010", "Auckland", "New Zealand", true, false);
     employer =
         new CustomerEmployer(
             "Company", employerAddress, "thisplaceisprettyreal@gmail.com", null, null, false);

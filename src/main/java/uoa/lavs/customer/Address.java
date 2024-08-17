@@ -1,7 +1,8 @@
 package uoa.lavs.customer;
 
 public class Address {
-  private int addressId; 
+  private String customerId;
+  private int addressId;
   private String addressType;
   private String addressLineOne;
   private String addressLineTwo;
@@ -9,15 +10,21 @@ public class Address {
   private String postCode;
   private String city;
   private String country;
+  private boolean isPrimary;
+  private boolean isMailing;
 
   public Address(
+      String customerId,
       String addressType,
       String addressLineOne,
       String addressLineTwo,
       String suburb,
       String postCode,
       String city,
-      String country) {
+      String country,
+      boolean isPrimary,
+      boolean isMailing) {
+    this.customerId = customerId;
     this.addressType = addressType;
     this.addressLineOne = addressLineOne;
     this.addressLineTwo = addressLineTwo;
@@ -25,6 +32,12 @@ public class Address {
     this.postCode = postCode;
     this.city = city;
     this.country = country;
+    this.isPrimary = isPrimary;
+    this.isMailing = isMailing;
+  }
+
+  public String getCustomerId() {
+    return this.customerId;
   }
 
   public int getAddressId() {
@@ -59,6 +72,18 @@ public class Address {
     return this.country;
   }
 
+  public boolean getIsPrimary() {
+    return this.isPrimary;
+  }
+
+  public boolean getIsMailing() {
+    return this.isMailing;
+  }
+
+  public void setCustomerId(String customerId) {
+    this.customerId = customerId;
+  }
+
   public void setAddressId(int addressId) {
     this.addressId = addressId;
   }
@@ -89,5 +114,13 @@ public class Address {
 
   public void setCountry(String country) {
     this.country = country;
+  }
+
+  public void setIsPrimary(boolean isPrimary) {
+    this.isPrimary = isPrimary;
+  }
+
+  public void setIsMailing(boolean isMailing) {
+    this.isMailing = isMailing;
   }
 }
