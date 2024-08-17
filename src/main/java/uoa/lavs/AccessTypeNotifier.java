@@ -5,13 +5,24 @@ import java.util.List;
 
 public class AccessTypeNotifier {
   private static List<AccessTypeObserver> customerObservers = new ArrayList<>();
+  private static List<AccessTypeObserver> loanObservers = new ArrayList<>();
 
   public static void registerCustomerObserver(AccessTypeObserver observer) {
     customerObservers.add(observer);
   }
 
+  public static void registerLoanObserver(AccessTypeObserver observer) {
+    loanObservers.add(observer);
+  }
+
   public static void notifyCustomerObservers() {
     for (AccessTypeObserver observer : customerObservers) {
+      observer.updateUIBasedOnAccessType();
+    }
+  }
+
+  public static void notifyLoanObservers() {
+    for (AccessTypeObserver observer : loanObservers) {
       observer.updateUIBasedOnAccessType();
     }
   }

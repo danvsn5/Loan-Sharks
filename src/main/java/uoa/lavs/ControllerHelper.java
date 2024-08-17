@@ -45,6 +45,43 @@ public class ControllerHelper {
     }
   }
 
+  public static void updateUIBasedOnAccessTypeLoan(
+      String accessType,
+      Button editButton,
+      TextField[] textFields,
+      ComboBox<?>[] comboBoxes,
+      DatePicker[] datePickers,
+      RadioButton[] radioButtons) {
+
+    if (accessType.equals("CREATE")) {
+      resetFields(textFields);
+      resetComboBoxes(comboBoxes);
+      resetDatePickers(datePickers);
+      resetRadioButtons(radioButtons);
+
+      setFieldsEditable(textFields);
+      setComboBoxesEditable(comboBoxes);
+      setDatePickersEditable(datePickers);
+      setRadioButtonsEditable(radioButtons);
+
+      editButton.setText("Create Customer");
+    } else if (accessType.equals("EDIT")) {
+      setFieldsEditable(textFields);
+      setComboBoxesEditable(comboBoxes);
+      setDatePickersEditable(datePickers);
+      setRadioButtonsEditable(radioButtons);
+
+      editButton.setText("Confirm Changes");
+    } else if (accessType.equals("VIEW")) {
+      setFieldsNonEditable(textFields);
+      setComboBoxesNonEditable(comboBoxes);
+      setDatePickersNonEditable(datePickers);
+      setRadioButtonsNonEditable(radioButtons);
+
+      editButton.setText("Edit Details");
+    }
+  }
+
   public static void resetFields(TextField... textFields) {
     for (TextField textField : textFields) {
       textField.setText("");

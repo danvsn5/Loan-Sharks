@@ -155,6 +155,10 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
-    Main.setUi(AppUI.CUSTOMER_MENU);
+    if (AppState.isCreatingLoan) {
+      Main.setUi(AppUI.CUSTOMER_RESULTS);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_MENU);
+    }
   }
 }

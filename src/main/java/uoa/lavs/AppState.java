@@ -10,7 +10,7 @@ public class AppState {
   // state of the application
 
   public static String userName;
-  public static String customerDetailsAccessType; // CREATE, EDIT, VIEW, LOAN-EDIT, LOAN-VIEW
+  public static String customerDetailsAccessType; // CREATE, EDIT, VIEW
   public static Boolean isCreatingLoan;
   public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
 

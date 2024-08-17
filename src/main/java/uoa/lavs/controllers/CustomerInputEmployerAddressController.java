@@ -112,6 +112,10 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML
   private void handleBackButtonAction() {
-    Main.setUi(AppUI.CUSTOMER_MENU);
+    if (AppState.isCreatingLoan) {
+      Main.setUi(AppUI.CUSTOMER_RESULTS);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_MENU);
+    }
   }
 }
