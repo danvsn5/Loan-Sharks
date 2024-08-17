@@ -238,7 +238,8 @@ public class CustomerDAO {
     return null;
   }
 
-  public static void main(String[] args) {
+  // add customer test
+  public static void addCustomerTest() {
     Customer customer;
     LocalDate dateOfBirth;
     Address physicalAddress;
@@ -289,5 +290,52 @@ public class CustomerDAO {
     employerdao.addCustomerEmployer(customer.getEmployer());
 
     dao.addCustomer(customer);
+  }
+
+  // update customer test
+  public static void updateCustomerTest() {
+    Customer customer;
+    LocalDate dateOfBirth;
+    Address physicalAddress;
+    CustomerContact contact;
+    Address employerAddress;
+    CustomerEmployer employer;
+    Phone phoneOne;
+    Phone phoneTwo;
+
+    dateOfBirth = LocalDate.of(2024, 8, 6);
+    physicalAddress =
+        new Address("Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe");
+    phoneOne = new Phone("mobile", "1234567890");
+    phoneTwo = new Phone("home", "0987654321");
+    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
+    employerAddress =
+        new Address(
+            "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe");
+    employer =
+        new CustomerEmployer(
+            "Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
+    
+            customer =
+    new IndividualCustomer(
+        "1",
+        "Mr",
+        "Guy Goon Ting",
+        dateOfBirth,
+        "Engineer",
+        "NZ Citizen",
+        "Smells like burning crayons",
+        physicalAddress,
+        physicalAddress,
+        contact,
+        employer);
+
+    CustomerDAO dao = new CustomerDAO();  
+    dao.updateCustomer(customer);
+  }
+
+  public static void main(String[] args) {
+    updateCustomerTest();
+    
   }
 }
