@@ -244,7 +244,6 @@ public class CustomerDAO {
     LocalDate dateOfBirth;
     Address physicalAddress;
     CustomerContact contact;
-    Address employerAddress;
     CustomerEmployer employer;
     Phone phoneOne;
     Phone phoneTwo;
@@ -268,21 +267,19 @@ public class CustomerDAO {
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employerAddress =
-        new Address(
-            customerId,
-            "Commercial",
+    employer =
+        new CustomerEmployer(
+            "Countdown",
             "123 Stonesuckle Ct",
             "",
             "Sunnynook",
-            "12345",
             "Auckland",
+            "12345",
             "Zimbabwe",
-            true,
-            true);
-    employer =
-        new CustomerEmployer(
-            "Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
+            "dog@daniil.com",
+            "www.daniil.org.nz",
+            "02222222",
+            false);
 
     customer =
         new IndividualCustomer(
@@ -305,7 +302,6 @@ public class CustomerDAO {
 
     addressdao.addAddress(customer.getPhysicalAddress());
     addressdao.addAddress(customer.getMailingAddress());
-    addressdao.addAddress(customer.getEmployer().getEmployerAddress());
 
     contactdao.addCustomerContact(customer.getContact());
 
@@ -320,7 +316,6 @@ public class CustomerDAO {
     LocalDate dateOfBirth;
     Address physicalAddress;
     CustomerContact contact;
-    Address employerAddress;
     CustomerEmployer employer;
     Phone phoneOne;
     Phone phoneTwo;
@@ -341,21 +336,19 @@ public class CustomerDAO {
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employerAddress =
-        new Address(
-            customerId,
-            "Commercial",
+    employer =
+        new CustomerEmployer(
+            "Countdown",
             "123 Stonesuckle Ct",
             "",
             "Sunnynook",
-            "12345",
             "Auckland",
+            "12345",
             "Zimbabwe",
-            true,
-            true);
-    employer =
-        new CustomerEmployer(
-            "Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
+            "dog@daniil.com",
+            "www.daniil.org.nz",
+            "02222222",
+            false);
 
     customer =
         new IndividualCustomer(

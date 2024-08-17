@@ -3,7 +3,12 @@ package uoa.lavs.customer;
 public class CustomerEmployer {
   private int employerId;
   private String employerName;
-  private Address employerAddress;
+  public String lineOne;
+  public String lineTwo;
+  public String suburb;
+  public String city;
+  public String postCode;
+  public String country;
   private String employerEmail;
   private String employerWebsite;
   private String employerPhone;
@@ -11,13 +16,23 @@ public class CustomerEmployer {
 
   public CustomerEmployer(
       String name,
-      Address address,
+      String lineOne,
+      String lineTwo,
+      String suburb,
+      String city,
+      String postCode,
+      String country,
       String email,
       String website,
       String phone,
       boolean ownerOfCompany) {
     this.employerName = name;
-    this.employerAddress = address;
+    this.lineOne = lineOne;
+    this.lineTwo = lineTwo;
+    this.suburb = suburb;
+    this.city = city;
+    this.postCode = postCode;
+    this.country = country;
     this.employerEmail = email;
     this.employerWebsite = website;
     this.employerPhone = phone;
@@ -32,8 +47,28 @@ public class CustomerEmployer {
     return this.employerName;
   }
 
-  public Address getEmployerAddress() {
-    return this.employerAddress;
+  public String getLineOne() {
+    return this.lineOne;
+  }
+
+  public String getLineTwo() {
+    return this.lineTwo;
+  }
+
+  public String getSuburb() {
+    return this.suburb;
+  }
+
+  public String getCity() {
+    return this.city;
+  }
+
+  public String getPostCode() {
+    return this.postCode;
+  }
+
+  public String getCountry() {
+    return this.country;
   }
 
   public String getEmployerEmail() {
@@ -60,8 +95,28 @@ public class CustomerEmployer {
     this.employerName = name;
   }
 
-  public void setEmployerAddress(Address address) {
-    this.employerAddress = address;
+  public void setLineOne(String lineOne) {
+    this.lineOne = lineOne;
+  }
+
+  public void setLineTwo(String lineTwo) {
+    this.lineTwo = lineTwo;
+  }
+
+  public void setSuburb(String suburb) {
+    this.suburb = suburb;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public void setPostCode(String postCode) {
+    this.postCode = postCode;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
   }
 
   public void setEmployerEmail(String email) {

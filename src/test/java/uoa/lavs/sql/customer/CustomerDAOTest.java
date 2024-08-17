@@ -54,21 +54,32 @@ public class CustomerDAOTest {
     dateOfBirth = LocalDate.of(2024, 8, 6);
     primaryAddress =
         new Address(
-            "000001", "Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, false);
-    phoneOne = new Phone("mobile", "1234567890");
-    phoneTwo = new Phone("home", "0987654321");
-    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employerAddress =
-        new Address(
-            "000002",
-            "Commercial",
-            "123 Stonesuckle Ct",
-            "",
+            "000001",
+            "Rural",
+            "304 Rose St",
+            "46",
             "Sunnynook",
             "12345",
             "Auckland",
-            "Zimbabwe", true, true);
-    employer = new CustomerEmployer("Countdown", primaryAddress, null, null, null, false);
+            "Zimbabwe",
+            true,
+            false);
+    phoneOne = new Phone("mobile", "1234567890");
+    phoneTwo = new Phone("home", "0987654321");
+    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
+    employer =
+        new CustomerEmployer(
+            "Countdown",
+            "123 Stonesuckle Ct",
+            "",
+            "Sunnynook",
+            "Auckland",
+            "12345",
+            "Zimbabwe",
+            null,
+            null,
+            null,
+            false);
 
     customer =
         new IndividualCustomer(
@@ -211,25 +222,29 @@ public class CustomerDAOTest {
     LocalDate dateOfBirth2 = LocalDate.of(2000, 6, 6);
     Address primaryAddress2 =
         new Address(
-            "000001", "Rural", "100 Guy St", "", "Rosedale", "999", "Auckland", "New Zealand", true, false);
+            "000001",
+            "Rural",
+            "100 Guy St",
+            "",
+            "Rosedale",
+            "999",
+            "Auckland",
+            "New Zealand",
+            true,
+            false);
     Phone phoneOne2 = new Phone("mobile", "1111111");
     Phone phoneTwo2 = new Phone("work", "0987654321");
     CustomerContact contact2 =
         new CustomerContact("abc@gmail.com", phoneOne2, phoneTwo2, "mobile sms", "email");
-    Address employerAddress2 =
-        new Address(
-            "000002",
-            "Residential",
-            "123 Stonesuckle Ct",
-            "",
-            "Sunnynook",
-            "12345",
-            "Auckland",
-            "New Zealand", true, true);
     CustomerEmployer employer2 =
         new CustomerEmployer(
             "Countdown",
-            employerAddress2,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "manager@store.veryworth.org.au",
             "www.veryworth.org.au",
             "1234567890",
@@ -275,24 +290,30 @@ public class CustomerDAOTest {
     customerDAO.addCustomer(customer);
 
     Address primaryAddress2 =
-        new Address("000001", "Rural", "100 Guy St", "", "Rosedale", "999", "Auckland", "New Zealand", true, false);
+        new Address(
+            "000001",
+            "Rural",
+            "100 Guy St",
+            "",
+            "Rosedale",
+            "999",
+            "Auckland",
+            "New Zealand",
+            true,
+            false);
     Phone phoneOne2 = new Phone("mobile", "1111111");
     Phone phoneTwo2 = new Phone("work", "0987654321");
     CustomerContact contact2 =
         new CustomerContact("abc@gmail.com", phoneOne2, phoneTwo2, "mobile sms", "email");
-    Address employerAddress2 =
-        new Address("000002",
-            "Residential",
-            "123 Stonesuckle Ct",
-            "",
-            "Sunnynook",
-            "12345",
-            "Auckland",
-            "New Zealand", true, true);
     CustomerEmployer employer2 =
         new CustomerEmployer(
             "Countdown",
-            employerAddress2,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "manager@store.veryworth.org.au",
             "www.veryworth.org.au",
             "1234567890",

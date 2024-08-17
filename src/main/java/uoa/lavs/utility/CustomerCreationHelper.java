@@ -14,7 +14,6 @@ public class CustomerCreationHelper {
     AddressDAO addressdao = new AddressDAO();
     addressdao.addAddress(customer.getPhysicalAddress());
     addressdao.addAddress(customer.getMailingAddress());
-    addressdao.addAddress(customer.getEmployer().getEmployerAddress());
 
     CustomerContactDAO contactdao = new CustomerContactDAO();
     contactdao.addCustomerContact(customer.getContact());

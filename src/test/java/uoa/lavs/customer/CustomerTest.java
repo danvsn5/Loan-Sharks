@@ -21,21 +21,32 @@ public class CustomerTest {
     dateOfBirth = LocalDate.of(2024, 8, 6);
     physicalAddress =
         new Address(
-            "000001", "Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, false);
-    phoneOne = new Phone("mobile", "1234567890");
-    phoneTwo = new Phone("home", "0987654321");
-    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employerAddress =
-        new Address(
             "000001",
-            "Commercial",
-            "123 Stonesuckle Ct",
-            "",
+            "Rural",
+            "304 Rose St",
+            "46",
             "Sunnynook",
             "12345",
             "Auckland",
-            "Zimbabwe", true, true);
-    employer = new CustomerEmployer("Countdown", physicalAddress, null, null, null, false);
+            "Zimbabwe",
+            true,
+            false);
+    phoneOne = new Phone("mobile", "1234567890");
+    phoneTwo = new Phone("home", "0987654321");
+    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
+    employer =
+        new CustomerEmployer(
+            "Countdown",
+            "123 Stonesuckle Ct",
+            "",
+            "Sunnynook",
+            "Auckland",
+            "12345",
+            "Zimbabwe",
+            null,
+            null,
+            null,
+            false);
 
     customer =
         new IndividualCustomer(
@@ -173,7 +184,18 @@ public class CustomerTest {
   @Test
   public void testSetEmployer() {
     CustomerEmployer newEmployer =
-        new CustomerEmployer("BES", employerAddress, "besisbest@gmail.com", null, null, true);
+        new CustomerEmployer(
+            "BES",
+            "123 Stonesuckle Ct",
+            "",
+            "Sunnynook",
+            "Auckland",
+            "12345",
+            "Zimbabwe",
+            "besisbest@gmail.com",
+            null,
+            null,
+            true);
     customer.setEmployer(newEmployer);
     assertEquals(newEmployer, customer.getEmployer());
   }

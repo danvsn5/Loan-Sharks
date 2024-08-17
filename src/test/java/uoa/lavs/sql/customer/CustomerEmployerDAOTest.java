@@ -32,13 +32,15 @@ public class CustomerEmployerDAOTest {
     employerDAO = new CustomerEmployerDAO();
     addressDAO = new AddressDAO();
     dbFile = DatabaseState.DB_TEST_FILE;
-    employerAddress =
-        new Address("000001",
-            "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe", true, true);
     employer =
         new CustomerEmployer(
             "Countdown",
-            employerAddress,
+            "123 Stonesuckle Ct",
+            "",
+            "Sunnynook",
+            "Auckland",
+            "12345",
+            "Zimbabwe",
             "lowestprices@outlook.com",
             "www.notworth.org.au",
             "0102030405",
@@ -58,7 +60,12 @@ public class CustomerEmployerDAOTest {
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Employer should be added to the database");
         Assertions.assertEquals("Countdown", rs.getString("employerName"));
-        Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("employerAddressId"));
+        Assertions.assertEquals("123 Stonesuckle Ct", rs.getString("addressLineOne"));
+        Assertions.assertEquals("", rs.getString("addressLineTwo"));
+        Assertions.assertEquals("Sunnynook", rs.getString("suburb"));
+        Assertions.assertEquals("Auckland", rs.getString("city"));
+        Assertions.assertEquals("12345", rs.getString("postCode"));
+        Assertions.assertEquals("Zimbabwe", rs.getString("country"));
         Assertions.assertEquals("lowestprices@outlook.com", rs.getString("employerEmail"));
         Assertions.assertEquals("www.notworth.org.au", rs.getString("employerWebsite"));
         Assertions.assertEquals("0102030405", rs.getString("employerPhone"));
@@ -90,7 +97,12 @@ public class CustomerEmployerDAOTest {
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Employer should be updated in the database");
         Assertions.assertEquals("Countdown", rs.getString("employerName"));
-        Assertions.assertEquals(employerAddress.getAddressId(), rs.getInt("employerAddressId"));
+        Assertions.assertEquals("123 Stonesuckle Ct", rs.getString("addressLineOne"));
+        Assertions.assertEquals("", rs.getString("addressLineTwo"));
+        Assertions.assertEquals("Sunnynook", rs.getString("suburb"));
+        Assertions.assertEquals("Auckland", rs.getString("city"));
+        Assertions.assertEquals("12345", rs.getString("postCode"));
+        Assertions.assertEquals("Zimbabwe", rs.getString("country"));
         Assertions.assertEquals("manager@store.veryworth.org.au", rs.getString("employerEmail"));
         Assertions.assertEquals("www.veryworth.org.au", rs.getString("employerWebsite"));
         Assertions.assertEquals("1234567890", rs.getString("employerPhone"));
@@ -119,8 +131,12 @@ public class CustomerEmployerDAOTest {
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Employer should be in the database");
         Assertions.assertEquals(retrievedEmployer.getEmployerName(), rs.getString("employerName"));
-        Assertions.assertEquals(
-            retrievedEmployer.getEmployerAddress().getAddressId(), rs.getInt("employerAddressId"));
+        Assertions.assertEquals(retrievedEmployer.getLineOne(), rs.getString("addressLineOne"));
+        Assertions.assertEquals(retrievedEmployer.getLineTwo(), rs.getString("addressLineTwo"));
+        Assertions.assertEquals(retrievedEmployer.getSuburb(), rs.getString("suburb"));
+        Assertions.assertEquals(retrievedEmployer.getCity(), rs.getString("city"));
+        Assertions.assertEquals(retrievedEmployer.getPostCode(), rs.getString("postCode"));
+        Assertions.assertEquals(retrievedEmployer.getCountry(), rs.getString("country"));
         Assertions.assertEquals(
             retrievedEmployer.getEmployerEmail(), rs.getString("employerEmail"));
         Assertions.assertEquals(
