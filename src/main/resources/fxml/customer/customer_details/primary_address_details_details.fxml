@@ -138,5 +138,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="600.0" layoutY="546.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
    </children>
 </Pane>
