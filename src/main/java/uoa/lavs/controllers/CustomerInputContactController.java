@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AccessTypeNotifier;
@@ -53,7 +54,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
           customerAltContactBox
         },
         new ComboBox<?>[] {},
-        new DatePicker[] {});
+        new DatePicker[] {},
+        new RadioButton[] {});
     System.out.println("Contact Controller Invoked");
   }
 

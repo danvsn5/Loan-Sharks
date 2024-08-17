@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
@@ -86,7 +87,8 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
           customerOccupationField
         },
         new ComboBox<?>[] {customerTitleComboBox, customerCitizenshipBox},
-        new DatePicker[] {customerDOBPicker});
+        new DatePicker[] {customerDOBPicker},
+        new RadioButton[] {});
     System.out.println("Details Controller Invoked");
   }
 

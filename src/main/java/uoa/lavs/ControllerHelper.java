@@ -3,6 +3,7 @@ package uoa.lavs;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 public class ControllerHelper {
@@ -12,30 +13,35 @@ public class ControllerHelper {
       Button editButton,
       TextField[] textFields,
       ComboBox<?>[] comboBoxes,
-      DatePicker[] datePickers) {
+      DatePicker[] datePickers,
+      RadioButton[] radioButtons) {
 
     if (accessType.equals("CREATE")) {
       resetFields(textFields);
       resetComboBoxes(comboBoxes);
       resetDatePickers(datePickers);
+      resetRadioButtons(radioButtons);
 
       setFieldsEditable(textFields);
       setComboBoxesEditable(comboBoxes);
       setDatePickersEditable(datePickers);
+      setRadioButtonsEditable(radioButtons);
 
       editButton.setText("Create Customer");
     } else if (accessType.equals("EDIT")) {
       setFieldsEditable(textFields);
       setComboBoxesEditable(comboBoxes);
       setDatePickersEditable(datePickers);
+      setRadioButtonsEditable(radioButtons);
 
       editButton.setText("Confirm Changes");
     } else if (accessType.equals("VIEW")) {
       setFieldsNonEditable(textFields);
       setComboBoxesNonEditable(comboBoxes);
       setDatePickersNonEditable(datePickers);
+      setRadioButtonsNonEditable(radioButtons);
 
-      editButton.setText("Edit Customer");
+      editButton.setText("Edit Details");
     }
   }
 
@@ -54,6 +60,12 @@ public class ControllerHelper {
   public static void resetDatePickers(DatePicker... datePickers) {
     for (DatePicker datePicker : datePickers) {
       datePicker.setValue(null);
+    }
+  }
+
+  public static void resetRadioButtons(RadioButton... radioButtons) {
+    for (RadioButton radioButton : radioButtons) {
+      radioButton.setSelected(false);
     }
   }
 
@@ -76,6 +88,12 @@ public class ControllerHelper {
     }
   }
 
+  public static void setRadioButtonsEditable(RadioButton... radioButtons) {
+    for (RadioButton radioButton : radioButtons) {
+      radioButton.setDisable(false);
+    }
+  }
+
   public static void setFieldsNonEditable(TextField... textFields) {
     for (TextField textField : textFields) {
       textField.setEditable(false);
@@ -92,6 +110,12 @@ public class ControllerHelper {
   public static void setDatePickersNonEditable(DatePicker... datePickers) {
     for (DatePicker datePicker : datePickers) {
       datePicker.setDisable(true);
+    }
+  }
+
+  public static void setRadioButtonsNonEditable(RadioButton... radioButtons) {
+    for (RadioButton radioButton : radioButtons) {
+      radioButton.setDisable(true);
     }
   }
 }

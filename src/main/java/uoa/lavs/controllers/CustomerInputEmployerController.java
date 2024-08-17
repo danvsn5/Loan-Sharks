@@ -3,20 +3,22 @@ package uoa.lavs.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
+import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
-import uoa.lavs.utility.CustomerCreationHelper;
 
-public class CustomerInputEmployerController {
+public class CustomerInputEmployerController implements AccessTypeObserver {
   @FXML private TextField employerNameField;
-  @FXML private ComboBox<String> employerCountryField;
   @FXML private TextField employerEmailField;
   @FXML private TextField employerWebsiteField;
   @FXML private TextField employerPhoneField;
@@ -34,7 +36,24 @@ public class CustomerInputEmployerController {
 
   @FXML
   private void initialize() {
-    // Add initialization code here
+    AccessTypeNotifier.registerObserver(this);
+    updateUIBasedOnAccessType();
+  }
+
+  @FXML
+  @Override
+  public void updateUIBasedOnAccessType() {
+    ControllerHelper.updateUIBasedOnAccessType(
+        AppState.customerDetailsAccessType,
+        editButton,
+        new TextField[] {
+          employerNameField, employerEmailField, employerWebsiteField, employerPhoneField
+        },
+        new ComboBox<?>[] {},
+        new DatePicker[] {},
+        new RadioButton[] {customerIsEmployerCheckbox});
+
+    System.out.println("Contact Controller Invoked");
   }
 
   private void setEmployerDetails() {
@@ -72,12 +91,17 @@ public class CustomerInputEmployerController {
 
   @FXML
   private void handleEditButtonAction() {
-    // Add edit button action code here
-    if (AppState.customerDetailsAccessType == "CREATE") {
-      // send customer to sql database
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
       setEmployerDetails();
-      CustomerCreationHelper.createCustomer(customer);
+      AppState.customerDetailsAccessType = "VIEW";
+    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
+      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      setEmployerDetails();
+      AppState.customerDetailsAccessType = "VIEW";
     }
+    AccessTypeNotifier.notifyObservers();
+    updateUIBasedOnAccessType();
   }
 
   @FXML
