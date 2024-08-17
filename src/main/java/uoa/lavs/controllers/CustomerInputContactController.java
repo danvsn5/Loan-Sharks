@@ -30,9 +30,7 @@ public class CustomerInputContactController {
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   @FXML
-  private void initialize() {
-    // Add initialization code here
-  }
+  private void initialize() {}
 
   private void setContactDetails() {
     CustomerContact contact = customer.getContact();
