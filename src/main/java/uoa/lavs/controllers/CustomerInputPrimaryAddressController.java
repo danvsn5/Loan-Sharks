@@ -59,6 +59,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         new ComboBox<?>[] {customerAddressTypeComboBox},
         new DatePicker[] {},
         new RadioButton[] {mailingAddressRadio});
+    setAddressDetails();
   }
 
   private void setAddressDetails() {
@@ -81,33 +82,35 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleDetailsButtonAction() {
+    setAddressDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleMailingAddressButtonAction() {
+    setAddressDetails();
     Main.setUi(AppUI.CI_MAILING_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
+    setAddressDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
+    setAddressDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
   @FXML
   private void handleEditButtonAction() {
     if (AppState.customerDetailsAccessType.equals("CREATE")) {
-      setAddressDetails();
       AppState.customerDetailsAccessType = "VIEW";
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
     } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
-      setAddressDetails();
       AppState.customerDetailsAccessType = "VIEW";
     }
     AccessTypeNotifier.notifyCustomerObservers();

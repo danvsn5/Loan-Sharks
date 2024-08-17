@@ -41,6 +41,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
       customerNotesField.setEditable(true);
       editButton.setText("Confirm Changes");
     }
+    setNotes();
   }
 
   private void setNotes() {

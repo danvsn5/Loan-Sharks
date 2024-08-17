@@ -56,17 +56,16 @@ public class CustomerInputContactController implements AccessTypeObserver {
         new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {});
+    setContactDetails();
   }
 
   @FXML
   private void handleEditButtonAction() {
     if (AppState.customerDetailsAccessType.equals("CREATE")) {
-      setContactDetails();
       AppState.customerDetailsAccessType = "VIEW";
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
     } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
-      setContactDetails();
       AppState.customerDetailsAccessType = "VIEW";
     }
     AccessTypeNotifier.notifyCustomerObservers();

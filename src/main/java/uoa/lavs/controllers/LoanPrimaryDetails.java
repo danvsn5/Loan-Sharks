@@ -43,17 +43,16 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
         new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {});
+    setPrimaryDetails();
   }
 
   @FXML
   private void handleEditButtonAction() {
     if (AppState.loanDetailsAccessType.equals("CREATE")) {
-      setPrimaryDetails();
       AppState.loanDetailsAccessType = "VIEW";
     } else if (AppState.loanDetailsAccessType.equals("VIEW")) {
       AppState.loanDetailsAccessType = "EDIT";
     } else if (AppState.loanDetailsAccessType.equals("EDIT")) {
-      setPrimaryDetails();
       AppState.loanDetailsAccessType = "VIEW";
     }
     AccessTypeNotifier.notifyLoanObservers();
@@ -67,21 +66,25 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   // Add methods for all buttons
   @FXML
   private void handleCoborrowerButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
   @FXML
   private void handleDurationButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML
   private void handleFinanceButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML
   private void handleSummaryButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_SUMMARY);
   }
 

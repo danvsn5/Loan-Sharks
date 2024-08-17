@@ -52,6 +52,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
         new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {customerIsEmployerCheckbox});
+    setEmployerDetails();
   }
 
   private void setEmployerDetails() {
@@ -90,12 +91,10 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
   @FXML
   private void handleEditButtonAction() {
     if (AppState.customerDetailsAccessType.equals("CREATE")) {
-      setEmployerDetails();
       AppState.customerDetailsAccessType = "VIEW";
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
     } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
-      setEmployerDetails();
       AppState.customerDetailsAccessType = "VIEW";
     }
     AccessTypeNotifier.notifyCustomerObservers();

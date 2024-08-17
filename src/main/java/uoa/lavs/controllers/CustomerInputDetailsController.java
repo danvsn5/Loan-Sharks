@@ -93,6 +93,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
         new ComboBox<?>[] {customerTitleComboBox, customerCitizenshipBox},
         new DatePicker[] {customerDOBPicker},
         new RadioButton[] {});
+    setCustomerDetails();
   }
 
   private void setCustomerDetails() {
@@ -113,7 +114,6 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   private void handleEditButtonAction() {
     if (AppState.customerDetailsAccessType.equals("CREATE")) {
       // Handle create customer logic
-      setCustomerDetails();
       // Save customer to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
@@ -121,7 +121,6 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       AppState.customerDetailsAccessType = "EDIT";
     } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
       // Handle confirm changes logic
-      setCustomerDetails();
       // Save changes to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
     }
