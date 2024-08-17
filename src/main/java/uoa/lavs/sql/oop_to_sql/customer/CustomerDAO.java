@@ -13,6 +13,7 @@ import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.ICustomer;
 import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.Note;
 import uoa.lavs.customer.Phone;
 import uoa.lavs.sql.DatabaseConnection;
 
@@ -20,8 +21,8 @@ public class CustomerDAO {
   public void addCustomer(ICustomer customer) {
     String sql =
         "INSERT INTO customer (customerId, title, name, dateOfBirth,"
-            + " occupation, residency, notes, primaryAddressId, mailingAddressId, contactId,"
-            + " employerId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + " occupation, residency, primaryAddressId, mailingAddressId, contactId,"
+            + " employerId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customer.getCustomerId());
@@ -30,40 +31,6 @@ public class CustomerDAO {
       pstmt.setDate(4, Date.valueOf(customer.getDateOfBirth()));
       pstmt.setString(5, customer.getOccupation());
       pstmt.setString(6, customer.getResidency());
-      pstmt.setString(7, customer.getNotes());
-      pstmt.setInt(
-          8,
-          customer.getPhysicalAddress() != null
-              ? customer.getPhysicalAddress().getAddressId()
-              : null);
-      pstmt.setInt(
-          9,
-          customer.getMailingAddress() != null
-              ? customer.getMailingAddress().getAddressId()
-              : null);
-      pstmt.setInt(10, customer.getContact() != null ? customer.getContact().getContactId() : null);
-      pstmt.setInt(
-          11, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
-
-      pstmt.executeUpdate();
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-  }
-
-  public void updateCustomer(ICustomer customer) {
-    String sql =
-        "UPDATE customer SET title = ?, name = ?, dateOfBirth = ?, occupation = ?, residency = ?,"
-            + " notes = ?, primaryAddressId = ?, mailingAddressId = ?, contactId = ?, employerId ="
-            + " ?, lastModified = CURRENT_TIMESTAMP WHERE customerId = ?";
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, customer.getTitle());
-      pstmt.setString(2, customer.getName());
-      pstmt.setDate(3, Date.valueOf(customer.getDateOfBirth()));
-      pstmt.setString(4, customer.getOccupation());
-      pstmt.setString(5, customer.getResidency());
-      pstmt.setString(6, customer.getNotes());
       pstmt.setInt(
           7,
           customer.getPhysicalAddress() != null
@@ -77,7 +44,39 @@ public class CustomerDAO {
       pstmt.setInt(9, customer.getContact() != null ? customer.getContact().getContactId() : null);
       pstmt.setInt(
           10, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
-      pstmt.setString(11, customer.getCustomerId());
+
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public void updateCustomer(ICustomer customer) {
+    String sql =
+        "UPDATE customer SET title = ?, name = ?, dateOfBirth = ?, occupation = ?, residency = ?,"
+            + " primaryAddressId = ?, mailingAddressId = ?, contactId = ?, employerId ="
+            + " ?, lastModified = CURRENT_TIMESTAMP WHERE customerId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, customer.getTitle());
+      pstmt.setString(2, customer.getName());
+      pstmt.setDate(3, Date.valueOf(customer.getDateOfBirth()));
+      pstmt.setString(4, customer.getOccupation());
+      pstmt.setString(5, customer.getResidency());
+      pstmt.setInt(
+          6,
+          customer.getPhysicalAddress() != null
+              ? customer.getPhysicalAddress().getAddressId()
+              : null);
+      pstmt.setInt(
+          7,
+          customer.getMailingAddress() != null
+              ? customer.getMailingAddress().getAddressId()
+              : null);
+      pstmt.setInt(8, customer.getContact() != null ? customer.getContact().getContactId() : null);
+      pstmt.setInt(
+          9, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
+      pstmt.setString(10, customer.getCustomerId());
 
       pstmt.executeUpdate();
     } catch (SQLException e) {
@@ -98,11 +97,13 @@ public class CustomerDAO {
         LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         String occupation = rs.getString("occupation");
         String residency = rs.getString("residency");
-        String notes = rs.getString("notes");
         int primaryAddressId = rs.getInt("primaryAddressId");
         int mailingAddressId = rs.getInt("mailingAddressId");
         int contactId = rs.getInt("contactId");
         int employerId = rs.getInt("employerId");
+
+        NotesDAO notesdao = new NotesDAO();
+        ArrayList<Note> notes = notesdao.getNotes(customerId);
 
         AddressDAO addressdao = new AddressDAO();
         CustomerContactDAO contactdao = new CustomerContactDAO();
@@ -148,7 +149,6 @@ public class CustomerDAO {
         LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         String occupation = rs.getString("occupation");
         String residency = rs.getString("residency");
-        String notes = rs.getString("notes");
         int primaryAddressId = rs.getInt("primaryAddressId");
         int mailingAddressId = rs.getInt("mailingAddressId");
         int contactId = rs.getInt("contactId");
@@ -157,6 +157,9 @@ public class CustomerDAO {
         AddressDAO addressdao = new AddressDAO();
         CustomerContactDAO contactdao = new CustomerContactDAO();
         CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
+
+        NotesDAO notesdao = new NotesDAO();
+        ArrayList<Note> notes = notesdao.getNotes(customerId);
 
         Address physicalAddress = addressdao.getAddress(customerId, primaryAddressId);
         Address mailingAddress = addressdao.getAddress(customerId, mailingAddressId);
@@ -201,11 +204,13 @@ public class CustomerDAO {
         String name = rs.getString("name");
         String occupation = rs.getString("occupation");
         String residency = rs.getString("residency");
-        String notes = rs.getString("notes");
         int primaryAddressId = rs.getInt("primaryAddressId");
         int mailingAddressId = rs.getInt("mailingAddressId");
         int contactId = rs.getInt("contactId");
         int employerId = rs.getInt("employerId");
+
+        NotesDAO notesdao = new NotesDAO();
+        ArrayList<Note> notes = notesdao.getNotes(customerId);
 
         AddressDAO addressdao = new AddressDAO();
         CustomerContactDAO contactdao = new CustomerContactDAO();
@@ -249,6 +254,8 @@ public class CustomerDAO {
     Phone phoneOne;
     Phone phoneTwo;
     String customerId;
+    ArrayList<Note> notes;
+    Note note;
 
     dateOfBirth = LocalDate.of(2024, 8, 6);
     customerId = "000001";
@@ -284,6 +291,10 @@ public class CustomerDAO {
         new CustomerEmployer(
             "Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
 
+    notes = new ArrayList<>();
+    note = new Note(customerId, new String[] {"Smells like burning crayons"});
+    notes.add(note);
+
     customer =
         new IndividualCustomer(
             customerId,
@@ -292,16 +303,19 @@ public class CustomerDAO {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
-            "Smells like burning crayons",
+            notes,
             physicalAddress,
             physicalAddress,
             contact,
             employer);
 
+    NotesDAO notesdao = new NotesDAO();
     AddressDAO addressdao = new AddressDAO();
     CustomerContactDAO contactdao = new CustomerContactDAO();
     CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
     CustomerDAO dao = new CustomerDAO();
+
+    notesdao.addNotes(notes);
 
     addressdao.addAddress(customer.getPhysicalAddress());
     addressdao.addAddress(customer.getMailingAddress());
@@ -324,6 +338,8 @@ public class CustomerDAO {
     CustomerEmployer employer;
     Phone phoneOne;
     Phone phoneTwo;
+    ArrayList<Note> notes;
+    Note note;
 
     dateOfBirth = LocalDate.of(2024, 8, 6);
     physicalAddress =
@@ -357,6 +373,10 @@ public class CustomerDAO {
         new CustomerEmployer(
             "Countdown", employerAddress, "dog@daniil.com", "www.daniil.org.nz", "02222222", false);
 
+    notes = new ArrayList<>();
+    note = new Note(customerId, new String[] {"Smells like burning crayons"});
+    notes.add(note);
+
     customer =
         new IndividualCustomer(
             "1",
@@ -365,12 +385,14 @@ public class CustomerDAO {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
-            "Smells like burning crayons",
+            notes,
             physicalAddress,
             physicalAddress,
             contact,
             employer);
 
+    NotesDAO notesdao = new NotesDAO();
+    notesdao.addNotes(notes);
     CustomerDAO dao = new CustomerDAO();
     dao.updateCustomer(customer);
   }
