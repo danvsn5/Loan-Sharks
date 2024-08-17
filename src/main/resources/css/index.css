@@ -1,7 +1,7 @@
 .input-fields {
     -fx-background-color: #ffdaca;
     -fx-border-width: 2px;
-    -fx-border-color: #008ace;
+    -fx-border-color: #3289d5;
     -fx-border-radius: 30px;
     -fx-background-radius: 35px;
     -fx-text-fill: #333333;
@@ -12,10 +12,36 @@
 .regular-button {
     -fx-background-color: #ffdaca;
     -fx-border-width: 3px;
-    -fx-border-color: #008ace;
+    -fx-border-color: #3289d5;
     -fx-text-fill: #333333;
     -fx-background-radius: 25px;
     -fx-border-radius: 20px;
+    -fx-cursor: hand;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Quicksand Bold';
+}
+
+.tab-button {
+    -fx-background-color: #ffdaca;
+    -fx-border-width: 2px;
+    -fx-border-color: #3289d5;
+    -fx-text-fill: #333333;
+    -fx-background-radius: 10px;
+    -fx-border-style: solid none solid none;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-font-size: 20px;
+    -fx-font-family: 'Quicksand Bold';
+}
+
+.tab-button-selected {
+    -fx-background-color: #ffdaca;
+    -fx-border-width: 3px;
+    -fx-border-color: #3289d5;
+    -fx-text-fill: #333333;
+    -fx-background-radius: 10px;
+    -fx-border-style: none solid none solid;
+    -fx-border-radius: 5px;
     -fx-cursor: hand;
     -fx-font-size: 20px;
     -fx-font-family: 'Quicksand Bold';
@@ -43,7 +69,7 @@
 .data-fields {
     -fx-background-color: #ffdaca;
     -fx-border-width: 2px;
-    -fx-border-color: #008ace;
+    -fx-border-color: #3289d5;
     -fx-border-radius: 20px;
     -fx-background-radius: 25px;
     -fx-text-fill: #333333;
@@ -60,7 +86,7 @@
 .accessory-button {
     -fx-background-color: #ffdaca;
     -fx-border-width: 3px;
-    -fx-border-color: #008ace;
+    -fx-border-color: #3289d5;
     -fx-text-fill: #333333;
     -fx-background-radius: 15px;
     -fx-border-radius: 10px;
@@ -73,7 +99,7 @@
 
 .radio-button .radio {
     -fx-border-width: 2px;
-    -fx-border-color: #008ace;
+    -fx-border-color: #3289d5;
     -fx-background-color: #ffdaca;
     -fx-border-radius: 20px;
     -fx-background-radius: 100px;
@@ -83,8 +109,8 @@
 
 .radio-button:selected .dot {
     -fx-border-width: 0px;
-    -fx-border-color: #008ace;
-    -fx-background-color: #008ace;
+    -fx-border-color: #3289d5;
+    -fx-background-color: #3289d5;
     -fx-border-radius: 20px;
     -fx-padding: 12px;
     -fx-scale-x: 0.55;
@@ -265,20 +291,20 @@
     -fx-cursor: hand;
 }
 
-.combo-box .arrow-button{
+.combo-box .arrow-button {
     -fx-background-color: -fx-primary-color;
-    -fx-border-radius: 0px 100px 100px 0px!important;
-    -fx-background-radius: 0px 100px 100px 0px!important;
+    -fx-border-radius: 0px 100px 100px 0px !important;
+    -fx-background-radius: 0px 100px 100px 0px !important;
 }
 
-.combo-box:hover .arrow-button .arrow{
+.combo-box:hover .arrow-button .arrow {
     -fx-background-color: #333333;
 }
 
-.combo-box-base .text-field{
+.combo-box-base .text-field {
     -fx-background-color: #ffdaca;
-    -fx-border-radius: 100px 0px 0px 100px!important;
-    -fx-background-radius: 100px 0px 0px 100px!important;
+    -fx-border-radius: 100px 0px 0px 100px !important;
+    -fx-background-radius: 100px 0px 0px 100px !important;
     -fx-border-width: 2px;
 }
 
