@@ -89,7 +89,6 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
         new ComboBox<?>[] {customerTitleComboBox, customerCitizenshipBox},
         new DatePicker[] {customerDOBPicker},
         new RadioButton[] {});
-    System.out.println("Details Controller Invoked");
   }
 
   private void setCustomerDetails() {

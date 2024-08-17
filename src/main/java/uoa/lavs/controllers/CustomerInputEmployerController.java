@@ -52,8 +52,6 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
         new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {customerIsEmployerCheckbox});
-
-    System.out.println("Contact Controller Invoked");
   }
 
   private void setEmployerDetails() {

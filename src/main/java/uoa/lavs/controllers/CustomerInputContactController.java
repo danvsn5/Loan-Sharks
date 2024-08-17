@@ -56,7 +56,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
         new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {});
-    System.out.println("Contact Controller Invoked");
   }
 
   @FXML

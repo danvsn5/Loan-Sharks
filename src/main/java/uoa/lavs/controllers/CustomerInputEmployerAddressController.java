@@ -57,7 +57,6 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
         new ComboBox<?>[] {employerAddressTypeComboBox},
         new DatePicker[] {},
         new RadioButton[] {});
-    System.out.println("Contact Controller Invoked");
   }
 
   private void setAddressDetails() {
