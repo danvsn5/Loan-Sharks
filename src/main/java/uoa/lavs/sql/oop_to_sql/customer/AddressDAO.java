@@ -62,7 +62,7 @@ public class AddressDAO {
   public void updateAddress(Address address) {
     String sql =
         "UPDATE customer_address SET addressType = ?, addressLineOne = ?, addressLineTwo = ?,"
-            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ? WHERE customerId = ? AND addressId"
+            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ?, lastModified = CURRENT_TIMESTAMP WHERE customerId = ? AND addressId"
             + " = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -78,6 +78,8 @@ public class AddressDAO {
       pstmt.setBoolean(9, address.getIsMailing());
       pstmt.setString(10, address.getCustomerId());
       pstmt.setInt(11, address.getAddressId());
+
+      System.out.println("Updating address: " + address.getAddressId());
 
       pstmt.executeUpdate();
     } catch (SQLException e) {
@@ -130,7 +132,8 @@ public class AddressDAO {
 
   public static void main(String[] args) {
     AddressDAO addressDAO = new AddressDAO();
-    Address address = new Address("000001", "Residential", "123 Main St", "", "Auckland", "1010", "Auckland", "New Zealand", true, true);
-    addressDAO.addAddress(address);
+    Address address = addressDAO.getAddress("000001", 1);
+    address.setAddressType("Commerical");
+    addressDAO.updateAddress(address);
   }
 }
