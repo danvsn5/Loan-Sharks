@@ -344,6 +344,8 @@ public class CustomerDAO {
     contact = contactdao.getCustomerContact(Integer.parseInt(customerId));
     employer = employerdao.getCustomerEmployer(customerId);
 
+    employer.setEmployerName("New World");
+
     notes = new ArrayList<>();
     note = new Note(customerId, new String[] {"Smells like burning crayons"});
     notes.add(note);
@@ -357,6 +359,7 @@ public class CustomerDAO {
     customer.setMailingAddress(mailingAddress);
     addressdao.updateAddress(physicalAddress);
     addressdao.updateAddress(mailingAddress);
+    employerdao.updateCustomerEmployer(employer);
 
     dao.updateCustomer(customer);
   }
