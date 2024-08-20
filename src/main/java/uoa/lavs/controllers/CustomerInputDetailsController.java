@@ -128,7 +128,8 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       customerDOBPicker.setStyle("-fx-border-color: red;");
       isValid = false;
     }
-    if (customerOccupationField.getText().isEmpty()) {
+    if (customerOccupationField.getText().isEmpty()
+        || customerOccupationField.getText().length() > 40) {
       customerOccupationField.setStyle("-fx-border-color: red;");
       isValid = false;
     }
@@ -152,11 +153,6 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       customerFirstNameField.setStyle("-fx-border-color: red;");
       customerMiddleNameField.setStyle("-fx-border-color: red;");
       customerLastNameField.setStyle("-fx-border-color: red;");
-      isValid = false;
-    }
-
-    if (customerOccupationField.getText().length() > 40) {
-      customerOccupationField.setStyle("-fx-border-color: red;");
       isValid = false;
     }
 

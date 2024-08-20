@@ -34,9 +34,6 @@ public class AppState {
         AppUI.CI_PRIMARY_ADDRESS,
         loadFxml("customer/customer_details/primary_address_details_details"));
     SceneManager.addScene(
-        AppUI.CI_MAILING_ADDRESS,
-        loadFxml("customer/customer_details/mailing_address_details_details"));
-    SceneManager.addScene(
         AppUI.CI_CONTACT, loadFxml("customer/customer_details/customer_contact_details"));
     SceneManager.addScene(AppUI.CI_NOTES, loadFxml("customer/customer_details/customer_notes"));
     SceneManager.addScene(
