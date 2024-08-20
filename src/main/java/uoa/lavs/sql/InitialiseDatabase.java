@@ -105,6 +105,7 @@ public class InitialiseDatabase {
             + "customerId VARCHAR(50),\n"
             + "noteId INTEGER,\n"
             + "note VARCHAR(1368),\n"
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
             + "PRIMARY KEY (customerId, noteId),\n"
             + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
             + ");";

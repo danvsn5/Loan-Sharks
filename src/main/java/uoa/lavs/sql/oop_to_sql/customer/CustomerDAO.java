@@ -365,6 +365,6 @@ public class CustomerDAO {
   }
 
   public static void main(String[] args) {
-    updateCustomerTest("1");
+    addCustomerTest();
   }
 }
