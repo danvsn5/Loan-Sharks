@@ -99,13 +99,25 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     setCustomerDetails();
   }
 
-  private void setCustomerDetails() {
+  private boolean setCustomerDetails() {
     // Title is fine
     // Name needs to be 60 characters
     // DOB is fine
     // Occupation needs to be 40 characters
     // Citizenship is fine
-    //
+    // Residency is fine
+    // Need to check ALL that they need to be entered
+    if (customerTitleComboBox.getValue() == null
+        || customerFirstNameField.getText().isEmpty()
+        || customerMiddleNameField.getText().isEmpty()
+        || customerLastNameField.getText().isEmpty()
+        || customerDOBPicker.getValue() == null
+        || customerOccupationField.getText().isEmpty()
+        || customerVisaBox.getValue() == null
+        || customerCitizenshipBox.getValue() == null) {
+      return false;
+    }
+
     customer.setTitle(customerTitleComboBox.getValue());
 
     customer.setName(
@@ -117,20 +129,21 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     customer.setDateOfBirth(customerDOBPicker.getValue());
     customer.setOccupation(customerOccupationField.getText());
     customer.setResidency(customerVisaBox.getValue());
+
+    return true;
   }
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.customerDetailsAccessType.equals("CREATE") && setCustomerDetails()) {
       // Handle create customer logic
       // Save customer to database or perform necessary actions
-      setCustomerDetails();
       CustomerCreationHelper.createCustomer(customer);
       AppState.customerDetailsAccessType = "VIEW";
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       // Switch to edit mode
       AppState.customerDetailsAccessType = "EDIT";
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+    } else if (AppState.customerDetailsAccessType.equals("EDIT") && setCustomerDetails()) {
       // Handle confirm changes logic
       // Save changes to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
