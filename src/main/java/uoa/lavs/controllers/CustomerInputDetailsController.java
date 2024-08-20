@@ -20,6 +20,7 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.utility.CustomerCreationHelper;
 
 public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private Label customerIDLabel;
@@ -115,6 +116,8 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType.equals("CREATE")) {
       // Handle create customer logic
       // Save customer to database or perform necessary actions
+      setCustomerDetails();
+      CustomerCreationHelper.createCustomer(customer);
       AppState.customerDetailsAccessType = "VIEW";
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       // Switch to edit mode

@@ -24,7 +24,9 @@ public class CustomerDAO {
             + " employerId) VALUES (?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, customer.getCustomerId());
+
+      String customerId = getNextCustomerId();
+      pstmt.setString(1, customerId);
       pstmt.setString(2, customer.getTitle());
       pstmt.setString(3, customer.getName());
       pstmt.setDate(4, Date.valueOf(customer.getDateOfBirth()));
@@ -34,9 +36,37 @@ public class CustomerDAO {
           7, customer.getEmployer() != null ? customer.getEmployer().getEmployerId() : null);
 
       pstmt.executeUpdate();
+
+      customer.setCustomerId(customerId);
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+  }
+
+  private String getNextCustomerId() {
+    String sql = "SELECT MIN(customerId) AS smallestId FROM customer";
+    String previousId = "-1";
+
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        String smallestId = rs.getString("smallestId");
+
+        if (smallestId != null) {
+          try {
+            int idNumber = Integer.parseInt(smallestId);
+            previousId = String.valueOf(idNumber - 1);
+          } catch (NumberFormatException e) {
+            System.out.println("Error parsing customerId: " + e.getMessage());
+          }
+        }
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+
+    return previousId;
   }
 
   public void updateCustomer(ICustomer customer) {
@@ -262,6 +292,7 @@ public class CustomerDAO {
 
     employer =
         new CustomerEmployer(
+            customerId,
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -302,7 +333,9 @@ public class CustomerDAO {
     CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
     CustomerDAO dao = new CustomerDAO();
 
-    notesdao.addNotes(notes);
+    for (Note n : notes) {
+      notesdao.addNote(n);
+    }
 
     addressdao.addAddress(physicalAddress);
 
@@ -359,6 +392,7 @@ public class CustomerDAO {
 
     employer =
         new CustomerEmployer(
+            customerId,
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -390,7 +424,7 @@ public class CustomerDAO {
             employer);
 
     NotesDAO notesdao = new NotesDAO();
-    notesdao.addNotes(notes);
+    notesdao.addNote(note);
     CustomerDAO dao = new CustomerDAO();
     dao.updateCustomer(customer);
   }

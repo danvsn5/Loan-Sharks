@@ -1,6 +1,7 @@
 package uoa.lavs.customer;
 
 public class CustomerEmployer {
+  private String customerId;
   private int employerId;
   private String employerName;
   public String lineOne;
@@ -15,6 +16,7 @@ public class CustomerEmployer {
   private boolean ownerOfCompany;
 
   public CustomerEmployer(
+      String customerId,
       String name,
       String lineOne,
       String lineTwo,
@@ -26,6 +28,7 @@ public class CustomerEmployer {
       String website,
       String phone,
       boolean ownerOfCompany) {
+    this.customerId = customerId;
     this.employerName = name;
     this.lineOne = lineOne;
     this.lineTwo = lineTwo;
@@ -37,6 +40,10 @@ public class CustomerEmployer {
     this.employerWebsite = website;
     this.employerPhone = phone;
     this.ownerOfCompany = ownerOfCompany;
+  }
+
+  public String getCustomerId() {
+    return this.customerId;
   }
 
   public int getEmployerId() {
@@ -85,6 +92,10 @@ public class CustomerEmployer {
 
   public boolean getOwnerOfCompany() {
     return this.ownerOfCompany;
+  }
+
+  public void setCustomerId(String customerId) {
+    this.customerId = customerId;
   }
 
   public void setEmployerId(int id) {

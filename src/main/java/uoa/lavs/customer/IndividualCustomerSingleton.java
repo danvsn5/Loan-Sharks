@@ -33,7 +33,7 @@ public class IndividualCustomerSingleton {
       }
 
       CustomerEmployer employer =
-          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", false);
+          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false);
 
       instance =
           new IndividualCustomer(

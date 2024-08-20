@@ -12,23 +12,24 @@ public class CustomerEmployerDAO {
 
   public void addCustomerEmployer(CustomerEmployer employer) {
     String sql =
-        "INSERT INTO customer_employer (employerName, addressLineOne, addressLineTwo, suburb,"
-            + " postCode, city, country, employerEmail, employerWebsite, employerPhone,"
-            + " ownerOfCompany) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO customer_employer (customerId, employerName, addressLineOne, addressLineTwo,"
+            + " suburb, postCode, city, country, employerEmail, employerWebsite, employerPhone,"
+            + " ownerOfCompany) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-      pstmt.setString(1, employer.getEmployerName());
-      pstmt.setString(2, employer.getLineOne());
-      pstmt.setString(3, employer.getLineTwo());
-      pstmt.setString(4, employer.getSuburb());
-      pstmt.setString(5, employer.getPostCode());
-      pstmt.setString(6, employer.getCity());
-      pstmt.setString(7, employer.getCountry());
-      pstmt.setString(8, employer.getEmployerEmail());
-      pstmt.setString(9, employer.getEmployerWebsite());
-      pstmt.setString(10, employer.getEmployerPhone());
-      pstmt.setBoolean(11, employer.getOwnerOfCompany());
+      pstmt.setString(1, employer.getCustomerId());
+      pstmt.setString(2, employer.getEmployerName());
+      pstmt.setString(3, employer.getLineOne());
+      pstmt.setString(4, employer.getLineTwo());
+      pstmt.setString(5, employer.getSuburb());
+      pstmt.setString(6, employer.getPostCode());
+      pstmt.setString(7, employer.getCity());
+      pstmt.setString(8, employer.getCountry());
+      pstmt.setString(9, employer.getEmployerEmail());
+      pstmt.setString(10, employer.getEmployerWebsite());
+      pstmt.setString(11, employer.getEmployerPhone());
+      pstmt.setBoolean(12, employer.getOwnerOfCompany());
 
       pstmt.executeUpdate();
 
@@ -78,6 +79,7 @@ public class CustomerEmployerDAO {
       ResultSet rs = pstmt.executeQuery();
 
       if (rs.next()) {
+        String customerId = rs.getString("customerId");
         String employerName = rs.getString("employerName");
         String addressLineOne = rs.getString("addressLineOne");
         String addressLineTwo = rs.getString("addressLineTwo");
@@ -92,6 +94,7 @@ public class CustomerEmployerDAO {
 
         CustomerEmployer customerEmployer =
             new CustomerEmployer(
+                customerId,
                 employerName,
                 addressLineOne,
                 addressLineTwo,

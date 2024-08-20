@@ -31,7 +31,6 @@ public class PhoneDAO {
       pstmt.executeUpdate();
 
       phone.setPhoneId(nextPhoneId);
-      phone.setCustomerId(customerId);
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }

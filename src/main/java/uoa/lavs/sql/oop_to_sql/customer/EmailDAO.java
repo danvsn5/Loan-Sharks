@@ -28,7 +28,6 @@ public class EmailDAO {
       pstmt.executeUpdate();
 
       email.setEmailId(nextEmailId);
-      email.setCustomerId(customerId);
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }

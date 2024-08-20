@@ -117,7 +117,7 @@ public class CustomerDAOTest {
             employer);
 
     addressDAO.addAddress(primaryAddress);
-    notesDAO.addNotes(notes);
+    notesDAO.addNote(note);
     phoneDAO.addPhone(phone);
     emailDAO.addEmail(email);
     employerDAO.addCustomerEmployer(employer);

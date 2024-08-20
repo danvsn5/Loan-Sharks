@@ -9,46 +9,59 @@ import uoa.lavs.customer.Note;
 import uoa.lavs.sql.DatabaseConnection;
 
 public class NotesDAO {
-  public void addNotes(ArrayList<Note> notes) {
-    String customerId = notes.get(0).getCustomerId();
+  public void addNote(Note note) {
+    String customerId = note.getCustomerId();
+    int nextNoteId = getNextNoteIdForCustomer(customerId);
 
-    for (int i = 0; i < notes.size(); i++) {
-      String sql = "INSERT INTO customer_notes (customerId, noteId, note) VALUES (?, ?, ?)";
-      try (Connection conn = DatabaseConnection.connect();
-          PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    String sql = "INSERT INTO customer_notes (customerId, noteId, note) VALUES (?, ?, ?)";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-        pstmt.setString(1, customerId);
-        pstmt.setInt(2, i);
+      pstmt.setString(1, customerId);
+      pstmt.setInt(2, nextNoteId);
+      String noteLines = String.join("::", note.getLines());
+      pstmt.setString(3, noteLines);
 
-        String noteLines = String.join("::", notes.get(i).getLines());
-        pstmt.setString(3, noteLines);
+      pstmt.executeUpdate();
 
-        pstmt.executeUpdate();
-
-        notes.get(i).setNoteId(i);
-        notes.get(i).setCustomerId(customerId);
-      } catch (SQLException e) {
-        System.out.println(e.getMessage());
-      }
+      note.setNoteId(nextNoteId);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
     }
   }
 
-  public void updateNotes(ArrayList<Note> notes) {
-    String customerId = notes.get(0).getCustomerId();
+  private int getNextNoteIdForCustomer(String customerId) {
+    String sql = "SELECT MAX(noteId) FROM customer_notes WHERE customerId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-    for (int i = 0; i < notes.size(); i++) {
-      String sql = "UPDATE customer_notes SET note = ? WHERE customerId = ? AND noteId = ?";
-      try (Connection conn = DatabaseConnection.connect();
-          PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, customerId);
+      ResultSet rs = pstmt.executeQuery();
 
-        pstmt.setString(1, String.join("::", notes.get(i).getLines()));
-        pstmt.setString(2, customerId);
-        pstmt.setInt(3, i);
-
-        pstmt.executeUpdate();
-      } catch (SQLException e) {
-        System.out.println(e.getMessage());
+      if (rs.next()) {
+        int maxNoteId = rs.getInt(1);
+        return maxNoteId + 1;
       }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return 1;
+  }
+
+  public void updateNote(Note note) {
+    String customerId = note.getCustomerId();
+
+    String sql = "UPDATE customer_notes SET note = ? WHERE customerId = ? AND noteId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, String.join("::", note.getLines()));
+      pstmt.setString(2, customerId);
+      pstmt.setInt(3, note.getNoteId());
+
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
     }
   }
 

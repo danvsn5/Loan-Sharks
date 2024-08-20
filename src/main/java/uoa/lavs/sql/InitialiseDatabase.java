@@ -130,13 +130,23 @@ public class InitialiseDatabase {
 
   private static void createCustomerEmployerEntity(Connection conn) {
     String sql =
-        "CREATE TABLE IF NOT EXISTS customer_employer ( customerId VARCHAR(50) UNIQUE, employerId"
-            + " INTEGER PRIMARY KEY AUTOINCREMENT, employerName VARCHAR(100), addressLineOne"
-            + " VARCHAR(100), addressLineTwo VARCHAR(100), suburb VARCHAR(50), postCode"
-            + " VARCHAR(20), city VARCHAR(50), country VARCHAR(50), employerEmail VARCHAR(100),"
-            + " employerWebsite VARCHAR(100), employerPhone VARCHAR(20), ownerOfCompany BOOLEAN,"
-            + " lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (customerId)"
-            + " REFERENCES customer(customerId) );";
+        "CREATE TABLE IF NOT EXISTS customer_employer (\n"
+            + "    customerId VARCHAR(50) UNIQUE,\n"
+            + "    employerId INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+            + "    employerName VARCHAR(100),\n"
+            + "    addressLineOne VARCHAR(100),\n"
+            + "    addressLineTwo VARCHAR(100),\n"
+            + "    suburb VARCHAR(50),\n"
+            + "    postCode VARCHAR(20),\n"
+            + "    city VARCHAR(50),\n"
+            + "    country VARCHAR(50),\n"
+            + "    employerEmail VARCHAR(100),\n"
+            + "    employerWebsite VARCHAR(100),\n"
+            + "    employerPhone VARCHAR(20),\n"
+            + "    ownerOfCompany BOOLEAN,\n"
+            + "    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
+            + "    FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
+            + ");";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);

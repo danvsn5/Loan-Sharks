@@ -37,7 +37,6 @@ public class AddressDAO {
       pstmt.executeUpdate();
 
       address.setAddressId(nextAddressId);
-      address.setCustomerId(customerId);
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
