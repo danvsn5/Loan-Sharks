@@ -1,17 +1,16 @@
 package uoa.lavs.customer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public abstract class Customer implements ICustomer {
   private String customerId;
   private String title;
-  private String firstName;
-  private String middleName;
-  private String lastName;
+  private String name;
   private LocalDate dateOfBirth;
   private String occupation;
   private String residency;
-  private String notes;
+  private ArrayList<Note> notes;
   private Address physicalAddress;
   private Address mailingAddress;
   private CustomerContact contact;
@@ -20,22 +19,18 @@ public abstract class Customer implements ICustomer {
   public Customer(
       String customerId,
       String title,
-      String firstName,
-      String middleName,
-      String lastName,
+      String name,
       LocalDate dateOfBirth,
       String occupation,
       String residency,
-      String notes,
+      ArrayList<Note> notes,
       Address physicalAddress,
       Address mailingAddress,
       CustomerContact contact,
       CustomerEmployer employer) {
     this.customerId = customerId;
     this.title = title;
-    this.firstName = firstName;
-    this.middleName = middleName;
-    this.lastName = lastName;
+    this.name = name;
     this.dateOfBirth = dateOfBirth;
     this.occupation = occupation;
     this.residency = residency;
@@ -57,18 +52,8 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public String getFirstName() {
-    return this.firstName;
-  }
-
-  @Override
-  public String getMiddleName() {
-    return this.middleName;
-  }
-
-  @Override
-  public String getLastName() {
-    return this.lastName;
+  public String getName() {
+    return this.name;
   }
 
   @Override
@@ -87,7 +72,7 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public String getNotes() {
+  public ArrayList<Note> getNotes() {
     return this.notes;
   }
 
@@ -122,18 +107,8 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  @Override
-  public void setMiddleName(String middleName) {
-    this.middleName = middleName;
-  }
-
-  @Override
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   @Override
@@ -152,7 +127,7 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public void setNotes(String notes) {
+  public void setNotes(ArrayList<Note> notes) {
     this.notes = notes;
   }
 

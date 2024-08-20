@@ -3,6 +3,7 @@ package uoa.lavs.customer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,33 +14,55 @@ public class CustomerTest {
   private Phone phoneOne;
   private Phone phoneTwo;
   private CustomerContact contact;
-  private Address employerAddress;
   private CustomerEmployer employer;
+  ArrayList<Note> notes;
+  Note note;
 
   @BeforeEach
   public void setUp() {
     dateOfBirth = LocalDate.of(2024, 8, 6);
     physicalAddress =
-        new Address("Rural", "304 Rose St", "46", "Sunnynook", "12345", "Auckland", "Zimbabwe");
+        new Address(
+            "000001",
+            "Rural",
+            "304 Rose St",
+            "46",
+            "Sunnynook",
+            "12345",
+            "Auckland",
+            "Zimbabwe",
+            true,
+            false);
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employerAddress =
-        new Address(
-            "Commercial", "123 Stonesuckle Ct", "", "Sunnynook", "12345", "Auckland", "Zimbabwe");
-    employer = new CustomerEmployer("Countdown", physicalAddress, null, null, null, false);
+    employer =
+        new CustomerEmployer(
+            "Countdown",
+            "123 Stonesuckle Ct",
+            "",
+            "Sunnynook",
+            "Auckland",
+            "12345",
+            "Zimbabwe",
+            null,
+            null,
+            null,
+            false);
+
+    notes = new ArrayList<>();
+    note = new Note("000001", new String[] {"Allergic to peanuts"});
+    notes.add(note);
 
     customer =
         new IndividualCustomer(
             "000001",
             "Mr",
-            "Ting",
-            "Mun",
-            "Guy",
+            "Ting Mun Guy",
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
-            "Smells like burning crayons",
+            notes,
             physicalAddress,
             physicalAddress,
             contact,
@@ -69,36 +92,14 @@ public class CustomerTest {
   }
 
   @Test
-  public void testGetFirstName() {
-    assertEquals("Ting", customer.getFirstName());
+  public void testGetName() {
+    assertEquals("Ting Mun Guy", customer.getName());
   }
 
   @Test
-  public void testSetFirstName() {
-    customer.setFirstName("Ting Ting");
-    assertEquals("Ting Ting", customer.getFirstName());
-  }
-
-  @Test
-  public void testGetMiddleName() {
-    assertEquals("Mun", customer.getMiddleName());
-  }
-
-  @Test
-  public void testSetMiddleName() {
-    customer.setMiddleName("Mun Mun");
-    assertEquals("Mun Mun", customer.getMiddleName());
-  }
-
-  @Test
-  public void testGetLastName() {
-    assertEquals("Guy", customer.getLastName());
-  }
-
-  @Test
-  public void testSetLastName() {
-    customer.setLastName("Guy Guy");
-    assertEquals("Guy Guy", customer.getLastName());
+  public void testSetName() {
+    customer.setName("Guy Guy Guy");
+    assertEquals("Guy Guy Guy", customer.getName());
   }
 
   @Test
@@ -137,13 +138,13 @@ public class CustomerTest {
 
   @Test
   public void testGetNotes() {
-    assertEquals("Smells like burning crayons", customer.getNotes());
+    assertEquals(notes, customer.getNotes());
   }
 
   @Test
   public void testSetNotes() {
-    customer.setNotes("Allergic to curry");
-    assertEquals("Allergic to curry", customer.getNotes());
+    customer.setNotes(notes);
+    assertEquals(notes, customer.getNotes());
   }
 
   @Test
@@ -153,8 +154,8 @@ public class CustomerTest {
 
   @Test
   public void testSetPhysicalAddress() {
-    customer.setPhysicalAddress(employerAddress);
-    assertEquals(employerAddress, customer.getPhysicalAddress());
+    customer.setPhysicalAddress(physicalAddress);
+    assertEquals(physicalAddress, customer.getPhysicalAddress());
   }
 
   @Test
@@ -164,8 +165,8 @@ public class CustomerTest {
 
   @Test
   public void testSetMailingAddress() {
-    customer.setMailingAddress(employerAddress);
-    assertEquals(employerAddress, customer.getMailingAddress());
+    customer.setMailingAddress(physicalAddress);
+    assertEquals(physicalAddress, customer.getMailingAddress());
   }
 
   @Test
@@ -189,7 +190,18 @@ public class CustomerTest {
   @Test
   public void testSetEmployer() {
     CustomerEmployer newEmployer =
-        new CustomerEmployer("BES", employerAddress, "besisbest@gmail.com", null, null, true);
+        new CustomerEmployer(
+            "BES",
+            "123 Stonesuckle Ct",
+            "",
+            "Sunnynook",
+            "Auckland",
+            "12345",
+            "Zimbabwe",
+            "besisbest@gmail.com",
+            null,
+            null,
+            true);
     customer.setEmployer(newEmployer);
     assertEquals(newEmployer, customer.getEmployer());
   }

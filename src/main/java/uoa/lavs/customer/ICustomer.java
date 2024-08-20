@@ -1,17 +1,14 @@
 package uoa.lavs.customer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public interface ICustomer {
   public String getCustomerId();
 
   public String getTitle();
 
-  public String getFirstName();
-
-  public String getMiddleName();
-
-  public String getLastName();
+  public String getName();
 
   public LocalDate getDateOfBirth();
 
@@ -19,7 +16,7 @@ public interface ICustomer {
 
   public String getResidency();
 
-  public String getNotes();
+  public ArrayList<Note> getNotes();
 
   public Address getPhysicalAddress();
 
@@ -33,11 +30,7 @@ public interface ICustomer {
 
   public void setTitle(String title);
 
-  public void setFirstName(String firstName);
-
-  public void setMiddleName(String middleName);
-
-  public void setLastName(String lastName);
+  public void setName(String name);
 
   public void setDateOfBirth(LocalDate date);
 
@@ -45,7 +38,7 @@ public interface ICustomer {
 
   public void setResidency(String residency);
 
-  public void setNotes(String notes);
+  public void setNotes(ArrayList<Note> notes);
 
   public void setPhysicalAddress(Address physicalAddress);
 

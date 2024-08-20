@@ -104,5 +104,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <Button fx:id="editButton" layoutX="138.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
+         <font>
+            <Font size="27.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </Pane>

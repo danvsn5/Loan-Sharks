@@ -21,6 +21,7 @@ public class ResetDatabase {
             dropCustomerAddressEntity(stmt);
             dropCustomerContactEntity(stmt);
             dropCustomerEntity(stmt);
+            dropSyncInfoEntity(stmt);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -63,6 +64,11 @@ public class ResetDatabase {
 
     private void dropCustomerEntity(Statement stmt) throws SQLException {
         String sql = "DROP TABLE IF EXISTS customer;";
+        stmt.execute(sql);
+    }
+
+    private void dropSyncInfoEntity(Statement stmt) throws SQLException {
+        String sql = "DROP TABLE IF EXISTS sync_info;";
         stmt.execute(sql);
     }
 

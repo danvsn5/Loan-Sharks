@@ -4,12 +4,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AccessTypeObserver;
+import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
-public class CustomerInputNotesController {
+public class CustomerInputNotesController implements AccessTypeObserver {
   @FXML private TextArea customerNotesField;
 
   @FXML private Button editButton;
@@ -19,17 +22,51 @@ public class CustomerInputNotesController {
 
   @FXML
   private void initialize() {
-    // Add initialization code here
+    AccessTypeNotifier.registerCustomerObserver(this);
+    updateUIBasedOnAccessType();
+  }
+
+  @FXML
+  @Override
+  public void updateUIBasedOnAccessType() {
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+      customerNotesField.setEditable(true);
+      editButton.setText("Create Customer");
+    }
+    if (AppState.customerDetailsAccessType.equals("VIEW")) {
+      customerNotesField.setEditable(false);
+      editButton.setText("Edit Details");
+    }
+    if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      customerNotesField.setEditable(true);
+      editButton.setText("Confirm Changes");
+    }
+    setNotes();
   }
 
   private void setNotes() {
-    customer.setNotes(customerNotesField.getText());
+    // TODO once the notes gui is implemented.
+
+    // if (customerNotesField.getText() != null) {
+    //   customer.setNotes(customerNotesField.getText());
+    // } else {
+    //   customer.setNotes("");
+    // }
   }
 
   @FXML
   private void handleEditButtonAction() {
-    setNotes();
-    // Add next button action code here
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+      setNotes();
+      AppState.customerDetailsAccessType = "VIEW";
+    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
+      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      setNotes();
+      AppState.customerDetailsAccessType = "VIEW";
+    }
+    AccessTypeNotifier.notifyCustomerObservers();
+    updateUIBasedOnAccessType();
   }
 
   @FXML

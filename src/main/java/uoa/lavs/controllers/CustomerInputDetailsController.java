@@ -8,17 +8,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
+import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
+import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
-import uoa.lavs.utility.CustomerCreationHelper;
 
-public class CustomerInputDetailsController {
+public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private Label customerIDLabel;
 
   @FXML private ComboBox<String> customerTitleComboBox;
@@ -43,6 +46,10 @@ public class CustomerInputDetailsController {
 
   @FXML
   private void initialize() {
+    customerTitleComboBox.getItems().addAll("Mr", "Mrs", "Ms", "Master");
+    customerCitizenshipBox
+        .getItems()
+        .addAll("NZ Citizen", "NZ Permanent Resident", "AUS Citizen", "NZ Work Visa", "Other");
     DateTimeFormatter storageFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -67,52 +74,37 @@ public class CustomerInputDetailsController {
             }
           }
         });
+    AccessTypeNotifier.registerCustomerObserver(this);
+    updateUIBasedOnAccessType();
+  }
 
-    if (AppState.customerDetailsAccessType == "CREATE") {
-      // Set all fields to empty and editable
-      customerTitleComboBox.setDisable(false);
-      customerFirstNameField.setDisable(false);
-      customerMiddleNameField.setDisable(false);
-      customerLastNameField.setDisable(false);
-      customerDOBPicker.setDisable(false);
-      customerOccupationField.setDisable(false);
-      customerCitizenshipBox.setDisable(false);
-
-      editButton.setText("Create Customer");
-
-      // Placeholder customer ID
-      int customerID = 123456;
-      customerIDLabel.setText("Summary of ID: " + customerID);
-    } else if (AppState.customerDetailsAccessType == "EDIT") {
-      // Set all fields to the current customer details and editable
-      customerTitleComboBox.setDisable(false);
-      customerFirstNameField.setDisable(false);
-      customerMiddleNameField.setDisable(false);
-      customerLastNameField.setDisable(false);
-      customerDOBPicker.setDisable(false);
-      customerOccupationField.setDisable(false);
-      customerCitizenshipBox.setDisable(false);
-      editButton.setText("Save Changes");
-    } else if (AppState.customerDetailsAccessType == "VIEW") {
-      // Make all fields uneditable
-      customerTitleComboBox.setDisable(true);
-      customerFirstNameField.setDisable(true);
-      customerMiddleNameField.setDisable(true);
-      customerLastNameField.setDisable(true);
-      customerDOBPicker.setDisable(true);
-      customerOccupationField.setDisable(true);
-      customerCitizenshipBox.setDisable(true);
-      editButton.setText("Edit Details");
-    }
+  @Override
+  @FXML
+  public void updateUIBasedOnAccessType() {
+    ControllerHelper.updateUIBasedOnAccessType(
+        AppState.customerDetailsAccessType,
+        editButton,
+        new TextField[] {
+          customerFirstNameField,
+          customerMiddleNameField,
+          customerLastNameField,
+          customerOccupationField
+        },
+        new ComboBox<?>[] {customerTitleComboBox, customerCitizenshipBox},
+        new DatePicker[] {customerDOBPicker},
+        new RadioButton[] {});
+    setCustomerDetails();
   }
 
   private void setCustomerDetails() {
     customer.setTitle(customerTitleComboBox.getValue());
 
-    // TODO Uncomment once jamie's branch is merged in
-    // customer.setName(customerFirstNameField.getText() + " " + customerMiddleNameField.getText() +
-    // " " + customerLastNameField.getText());
-
+    customer.setName(
+        customerFirstNameField.getText()
+            + " "
+            + customerMiddleNameField.getText()
+            + " "
+            + customerLastNameField.getText());
     customer.setDateOfBirth(customerDOBPicker.getValue());
     customer.setOccupation(customerOccupationField.getText());
     customer.setResidency(customerCitizenshipBox.getValue());
@@ -120,12 +112,20 @@ public class CustomerInputDetailsController {
 
   @FXML
   private void handleEditButtonAction() {
-    // Add edit button / create customer action code here
-    if (AppState.customerDetailsAccessType == "CREATE") {
-      // send customer to sql database
-      setCustomerDetails();
-      CustomerCreationHelper.createCustomer(customer);
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+      // Handle create customer logic
+      // Save customer to database or perform necessary actions
+      AppState.customerDetailsAccessType = "VIEW";
+    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
+      // Switch to edit mode
+      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      // Handle confirm changes logic
+      // Save changes to database or perform necessary actions
+      AppState.customerDetailsAccessType = "VIEW";
     }
+    AccessTypeNotifier.notifyCustomerObservers();
+    updateUIBasedOnAccessType();
   }
 
   @FXML
@@ -154,6 +154,11 @@ public class CustomerInputDetailsController {
 
   @FXML
   private void handleBackButtonAction() {
-    Main.setUi(AppUI.CUSTOMER_MENU);
+    if (AppState.isAccessingFromSearch) {
+      AppState.isAccessingFromSearch = false;
+      Main.setUi(AppUI.CUSTOMER_RESULTS);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_MENU);
+    }
   }
 }

@@ -3,18 +3,21 @@ package uoa.lavs.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
+import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
-import uoa.lavs.customer.Address;
+import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
-import uoa.lavs.utility.CustomerCreationHelper;
 
-public class CustomerInputEmployerAddressController {
-  @FXML private ComboBox<String> employerAddressTypeComboBox;
+public class CustomerInputEmployerAddressController implements AccessTypeObserver {
   @FXML private TextField employerAddressLine1Field;
   @FXML private TextField employerAddressLine2Field;
   @FXML private TextField employerSuburbField;
@@ -33,21 +36,38 @@ public class CustomerInputEmployerAddressController {
 
   @FXML
   private void initialize() {
-    // Add initialization code here
+    AccessTypeNotifier.registerCustomerObserver(this);
+    updateUIBasedOnAccessType();
+  }
+
+  @FXML
+  @Override
+  public void updateUIBasedOnAccessType() {
+    ControllerHelper.updateUIBasedOnAccessType(
+        AppState.customerDetailsAccessType,
+        editButton,
+        new TextField[] {
+          employerAddressLine1Field,
+          employerAddressLine2Field,
+          employerSuburbField,
+          employerCityField,
+          employerPostcodeField
+        },
+        new ComboBox<?>[] {},
+        new DatePicker[] {},
+        new RadioButton[] {});
+    setAddressDetails();
   }
 
   private void setAddressDetails() {
-    Address address = customer.getEmployer().getEmployerAddress();
+    CustomerEmployer employer = customer.getEmployer();
+    employer.setLineOne(employerAddressLine1Field.getText());
+    employer.setLineTwo(employerAddressLine2Field.getText());
+    employer.setSuburb(employerSuburbField.getText());
+    employer.setCity(employerCityField.getText());
+    employer.setPostCode(employerPostcodeField.getText());
 
-    address.setAddressLineOne(employerAddressLine1Field.getText());
-    address.setAddressLineTwo(employerAddressLine2Field.getText());
-    address.setSuburb(employerSuburbField.getText());
-    address.setCity(employerCityField.getText());
-    address.setPostCode(employerPostcodeField.getText());
-    address.setAddressType(employerAddressTypeComboBox.getValue());
-
-    // Autosetting to New Zealand
-    address.setCountry("New Zealand");
+    employer.setCountry("New Zealand");
   }
 
   @FXML
@@ -76,16 +96,24 @@ public class CustomerInputEmployerAddressController {
 
   @FXML
   private void handleEditButtonAction() {
-    // Add edit button action code here
-    if (AppState.customerDetailsAccessType == "CREATE") {
-      // send customer to sql database
-      setAddressDetails();
-      CustomerCreationHelper.createCustomer(customer);
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+      AppState.customerDetailsAccessType = "VIEW";
+    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
+      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      AppState.customerDetailsAccessType = "VIEW";
     }
+    AccessTypeNotifier.notifyCustomerObservers();
+    updateUIBasedOnAccessType();
   }
 
   @FXML
   private void handleBackButtonAction() {
-    Main.setUi(AppUI.CUSTOMER_MENU);
+    if (AppState.isAccessingFromSearch) {
+      AppState.isAccessingFromSearch = false;
+      Main.setUi(AppUI.CUSTOMER_RESULTS);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_MENU);
+    }
   }
 }

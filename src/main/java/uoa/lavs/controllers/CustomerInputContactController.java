@@ -2,17 +2,22 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
+import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
-import uoa.lavs.utility.CustomerCreationHelper;
 
-public class CustomerInputContactController {
+public class CustomerInputContactController implements AccessTypeObserver {
   @FXML private TextField customerEmailTextField;
   @FXML private TextField customerPhoneNumberOne;
   @FXML private TextField customerPhoneNumberTwo;
@@ -31,7 +36,40 @@ public class CustomerInputContactController {
 
   @FXML
   private void initialize() {
-    // Add initialization code here
+    AccessTypeNotifier.registerCustomerObserver(this);
+    updateUIBasedOnAccessType();
+  }
+
+  @FXML
+  @Override
+  public void updateUIBasedOnAccessType() {
+    ControllerHelper.updateUIBasedOnAccessType(
+        AppState.customerDetailsAccessType,
+        editButton,
+        new TextField[] {
+          customerEmailTextField,
+          customerPhoneNumberOne,
+          customerPhoneNumberTwo,
+          customerPreferredContactBox,
+          customerAltContactBox
+        },
+        new ComboBox<?>[] {},
+        new DatePicker[] {},
+        new RadioButton[] {});
+    setContactDetails();
+  }
+
+  @FXML
+  private void handleEditButtonAction() {
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+      AppState.customerDetailsAccessType = "VIEW";
+    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
+      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      AppState.customerDetailsAccessType = "VIEW";
+    }
+    AccessTypeNotifier.notifyCustomerObservers();
+    updateUIBasedOnAccessType();
   }
 
   private void setContactDetails() {
@@ -66,17 +104,12 @@ public class CustomerInputContactController {
   }
 
   @FXML
-  private void handleEditButtonAction() {
-    // Add edit button action code here
-    if (AppState.customerDetailsAccessType == "CREATE") {
-      // send customer to sql database
-      setContactDetails();
-      CustomerCreationHelper.createCustomer(customer);
-    }
-  }
-
-  @FXML
   private void handleBackButtonAction() {
-    Main.setUi(AppUI.CUSTOMER_MENU);
+    if (AppState.isAccessingFromSearch) {
+      AppState.isAccessingFromSearch = false;
+      Main.setUi(AppUI.CUSTOMER_RESULTS);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_MENU);
+    }
   }
 }

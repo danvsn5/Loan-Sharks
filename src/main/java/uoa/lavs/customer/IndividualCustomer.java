@@ -1,18 +1,17 @@
 package uoa.lavs.customer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class IndividualCustomer extends Customer {
   public IndividualCustomer(
       String customerId,
       String title,
-      String firstName,
-      String middleName,
-      String lastName,
+      String name,
       LocalDate dateOfBirth,
       String occupation,
       String residency,
-      String notes,
+      ArrayList<Note> notes,
       Address physicalAddress,
       Address mailingAddress,
       CustomerContact contact,
@@ -20,9 +19,7 @@ public class IndividualCustomer extends Customer {
     super(
         customerId,
         title,
-        firstName,
-        middleName,
-        lastName,
+        name,
         dateOfBirth,
         occupation,
         residency,

@@ -91,7 +91,13 @@ public class CustomerResultsController {
   private void loadCustomer(int index) throws IOException {
     // String searchId = searchResultsIDList.get(index - 1);
     // searchId method here
-    AppState.loadAllCustomerDetails("VIEW");
-    Main.setUi(AppUI.CI_DETAILS);
+    if (AppState.isCreatingLoan) {
+      AppState.loadLoans("CREATE");
+      Main.setUi(AppUI.LC_PRIMARY);
+    } else {
+      AppState.isAccessingFromSearch = true;
+      AppState.loadAllCustomerDetails("VIEW");
+      Main.setUi(AppUI.CI_DETAILS);
+    }
   }
 }
