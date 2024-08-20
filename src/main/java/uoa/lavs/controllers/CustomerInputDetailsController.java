@@ -96,35 +96,77 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
         new ComboBox<?>[] {customerTitleComboBox, customerVisaBox},
         new DatePicker[] {customerDOBPicker},
         new RadioButton[] {});
-    setCustomerDetails();
   }
 
   private boolean setCustomerDetails() {
-    // Title is fine
-    // Name needs to be 60 characters
-    // DOB is fine
-    // Occupation needs to be 40 characters
-    // Citizenship is fine
-    // Residency is fine
-    // Need to check ALL that they need to be entered
-    if (customerTitleComboBox.getValue() == null
-        || customerFirstNameField.getText().isEmpty()
-        || customerLastNameField.getText().isEmpty()
-        || customerDOBPicker.getValue() == null
-        || customerOccupationField.getText().isEmpty()
-        || customerVisaBox.getValue() == null
-        || customerCitizenshipBox.getValue() == null) {
-      return false;
+    boolean isValid = true;
+
+    // Clear previous error styles
+    customerTitleComboBox.setStyle("");
+    customerFirstNameField.setStyle("");
+    customerMiddleNameField.setStyle("");
+    customerLastNameField.setStyle("");
+    customerDOBPicker.setStyle("");
+    customerOccupationField.setStyle("");
+    customerVisaBox.setStyle("");
+    customerCitizenshipBox.setStyle("");
+
+    // Validate fields and apply error styles if necessary
+    if (customerTitleComboBox.getValue() == null) {
+      customerTitleComboBox.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerFirstNameField.getText().isEmpty()) {
+      customerFirstNameField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerLastNameField.getText().isEmpty()) {
+      customerLastNameField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerDOBPicker.getValue() == null) {
+      customerDOBPicker.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerOccupationField.getText().isEmpty()) {
+      customerOccupationField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerVisaBox.getValue() == null) {
+      customerVisaBox.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerCitizenshipBox.getValue() == null) {
+      customerCitizenshipBox.setStyle("-fx-border-color: red;");
+      isValid = false;
     }
 
-    customer.setTitle(customerTitleComboBox.getValue());
-
-    customer.setName(
+    String customerName =
         customerFirstNameField.getText()
             + " "
             + customerMiddleNameField.getText()
             + " "
-            + customerLastNameField.getText());
+            + customerLastNameField.getText();
+
+    if (customerName.length() > 60) {
+      customerFirstNameField.setStyle("-fx-border-color: red;");
+      customerMiddleNameField.setStyle("-fx-border-color: red;");
+      customerLastNameField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (customerOccupationField.getText().length() > 40) {
+      customerOccupationField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return false;
+    }
+
+    // Set customer details
+    customer.setTitle(customerTitleComboBox.getValue());
+    customer.setName(customerName);
     customer.setDateOfBirth(customerDOBPicker.getValue());
     customer.setOccupation(customerOccupationField.getText());
     customer.setResidency(customerVisaBox.getValue());
@@ -137,18 +179,23 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType.equals("CREATE") && setCustomerDetails()) {
       // Handle create customer logic
       // Save customer to database or perform necessary actions
-      CustomerCreationHelper.createCustomer(customer);
       AppState.customerDetailsAccessType = "VIEW";
+      CustomerCreationHelper.createCustomer(customer);
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
+
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       // Switch to edit mode
       AppState.customerDetailsAccessType = "EDIT";
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("EDIT") && setCustomerDetails()) {
       // Handle confirm changes logic
       // Save changes to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
     }
-    AccessTypeNotifier.notifyCustomerObservers();
-    updateUIBasedOnAccessType();
   }
 
   @FXML
