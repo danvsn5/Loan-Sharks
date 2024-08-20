@@ -12,9 +12,10 @@ public class CustomerTest {
   private LocalDate dateOfBirth;
   private ArrayList<Address> addresses;
   private Address physicalAddress;
-  private Phone phoneOne;
-  private Phone phoneTwo;
-  private CustomerContact contact;
+  private ArrayList<Phone> phones;
+  private Phone phone;
+  private ArrayList<Email> emails;
+  private Email email;
   private CustomerEmployer employer;
   private ArrayList<Note> notes;
   private Note note;
@@ -38,9 +39,13 @@ public class CustomerTest {
     addresses = new ArrayList<>();
     addresses.add(physicalAddress);
 
-    phoneOne = new Phone("mobile", "1234567890");
-    phoneTwo = new Phone("home", "0987654321");
-    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
+    phone = new Phone("000001", "mobile", "1234567890", true, true);
+    phones = new ArrayList<>();
+    phones.add(phone);
+    email = new Email("000001", "abc@gmail.com", true);
+    emails = new ArrayList<>();
+    emails.add(email);
+
     employer =
         new CustomerEmployer(
             "Countdown",
@@ -69,7 +74,8 @@ public class CustomerTest {
             "NZ Citizen",
             notes,
             addresses,
-            contact,
+            phones,
+            emails,
             employer);
   }
 
@@ -163,16 +169,25 @@ public class CustomerTest {
   }
 
   @Test
-  public void testGetContact() {
-    assertEquals(contact, customer.getContact());
+  public void testGetPhones() {
+    assertEquals(phones, customer.getPhones());
   }
 
   @Test
-  public void testSetContact() {
-    CustomerContact newContact =
-        new CustomerContact("123@gmail.com", phoneTwo, phoneOne, "mobile call", "home call");
-    customer.setContact(newContact);
-    assertEquals(newContact, customer.getContact());
+  public void testSetPhones() {
+    customer.setPhones(phones);
+    assertEquals(phones, customer.getPhones());
+  }
+
+  @Test
+  public void testGetEmails() {
+    assertEquals(emails, customer.getEmails());
+  }
+
+  @Test
+  public void testSetEmails() {
+    customer.setEmails(emails);
+    assertEquals(emails, customer.getEmails());
   }
 
   @Test

@@ -12,7 +12,8 @@ public abstract class Customer implements ICustomer {
   private String residency;
   private ArrayList<Note> notes;
   private ArrayList<Address> addresses;
-  private CustomerContact contact;
+  private ArrayList<Phone> phones;
+  private ArrayList<Email> emails;
   private CustomerEmployer employer;
 
   public Customer(
@@ -24,7 +25,8 @@ public abstract class Customer implements ICustomer {
       String residency,
       ArrayList<Note> notes,
       ArrayList<Address> addresses,
-      CustomerContact contact,
+      ArrayList<Phone> phones,
+      ArrayList<Email> emails,
       CustomerEmployer employer) {
     this.customerId = customerId;
     this.title = title;
@@ -34,7 +36,8 @@ public abstract class Customer implements ICustomer {
     this.residency = residency;
     this.notes = notes;
     this.addresses = addresses;
-    this.contact = contact;
+    this.phones = phones;
+    this.emails = emails;
     this.employer = employer;
   }
 
@@ -79,8 +82,13 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public CustomerContact getContact() {
-    return this.contact;
+  public ArrayList<Phone> getPhones() {
+    return this.phones;
+  }
+
+  @Override
+  public ArrayList<Email> getEmails() {
+    return this.emails;
   }
 
   @Override
@@ -129,8 +137,13 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public void setContact(CustomerContact contact) {
-    this.contact = contact;
+  public void setPhones(ArrayList<Phone> phones) {
+    this.phones = phones;
+  }
+
+  @Override
+  public void setEmails(ArrayList<Email> emails) {
+    this.emails = emails;
   }
 
   @Override

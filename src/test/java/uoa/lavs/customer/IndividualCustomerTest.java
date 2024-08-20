@@ -13,9 +13,10 @@ public class IndividualCustomerTest {
   private LocalDate dateOfBirth;
   private ArrayList<Address> addresses;
   private Address physicalAddress;
-  private Phone phoneOne;
-  private Phone phoneTwo;
-  private CustomerContact contact;
+  private ArrayList<Phone> phones;
+  private Phone phone;
+  private ArrayList<Email> emails;
+  private Email email;
   private CustomerEmployer employer;
   private ArrayList<Note> notes;
   private Note note;
@@ -38,11 +39,14 @@ public class IndividualCustomerTest {
     addresses = new ArrayList<>();
     addresses.add(physicalAddress);
 
-    phoneOne = new Phone("mobile", "1234567890");
-    phoneTwo = new Phone("home", "0987654321");
-    contact =
-        new CustomerContact(
-            "thisplaceisunreal@gmail.com", phoneOne, phoneTwo, "mobile call", "email");
+    phone = new Phone("000001", "mobile", "1234567890", true, true);
+    phones = new ArrayList<>();
+    phones.add(phone);
+
+    email = new Email("000001", "aaaa@gmail.com", true);
+    emails = new ArrayList<>();
+    emails.add(email);
+
     employer =
         new CustomerEmployer(
             "Company",
@@ -71,7 +75,8 @@ public class IndividualCustomerTest {
             "NZ Citizen",
             notes,
             addresses,
-            contact,
+            phones,
+            emails,
             employer);
   }
 
@@ -86,7 +91,8 @@ public class IndividualCustomerTest {
     assertEquals("NZ Citizen", individualCustomer.getResidency());
     assertEquals(notes, individualCustomer.getNotes());
     assertEquals(addresses, individualCustomer.getAddresses());
-    assertEquals(contact, individualCustomer.getContact());
+    assertEquals(phones, individualCustomer.getPhones());
+    assertEquals(emails, individualCustomer.getEmails());
     assertEquals(employer, individualCustomer.getEmployer());
   }
 }

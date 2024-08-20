@@ -58,14 +58,14 @@ public class AddressDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-    return 1; // Start with 1 if no address exists for this customer
+    return 1;
   }
 
   public void updateAddress(Address address) {
     String sql =
         "UPDATE customer_address SET addressType = ?, addressLineOne = ?, addressLineTwo = ?,"
-            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ? WHERE"
-            + " customerId = ? AND addressId = ?";
+            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ?,"
+            + " lastModified = CURRENT_TIMESTAMP WHERE customerId = ? AND addressId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -81,10 +81,55 @@ public class AddressDAO {
       pstmt.setString(10, address.getCustomerId());
       pstmt.setInt(11, address.getAddressId());
 
+      System.out.println("Updating address: " + address.getAddressId());
+
       pstmt.executeUpdate();
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+  }
+
+  public Address getAddress(String customerId, int addressId) {
+    String sql = "SELECT * FROM customer_address WHERE customerId = ? AND addressId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, customerId);
+      pstmt.setInt(2, addressId);
+      ResultSet rs = pstmt.executeQuery();
+
+      if (rs.next()) {
+        String addressType = rs.getString("addressType");
+        String addressLineOne = rs.getString("addressLineOne");
+        String addressLineTwo = rs.getString("addressLineTwo");
+        String suburb = rs.getString("suburb");
+        String postCode = rs.getString("postCode");
+        String city = rs.getString("city");
+        String country = rs.getString("country");
+        boolean isPrimary = rs.getBoolean("isPrimary");
+        boolean isMailing = rs.getBoolean("isMailing");
+
+        Address retrievedAddress =
+            new Address(
+                customerId,
+                addressType,
+                addressLineOne,
+                addressLineTwo,
+                suburb,
+                postCode,
+                city,
+                country,
+                isPrimary,
+                isMailing);
+        retrievedAddress.setAddressId(addressId);
+        retrievedAddress.setCustomerId(customerId);
+        return retrievedAddress;
+      }
+
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return null;
   }
 
   public ArrayList<Address> getAddresses(String customerId) {
@@ -134,18 +179,8 @@ public class AddressDAO {
 
   public static void main(String[] args) {
     AddressDAO addressDAO = new AddressDAO();
-    Address address =
-        new Address(
-            "000001",
-            "Residential",
-            "123 Main St",
-            "",
-            "Auckland",
-            "1010",
-            "Auckland",
-            "New Zealand",
-            true,
-            true);
-    addressDAO.addAddress(address);
+    Address address = addressDAO.getAddress("000001", 1);
+    address.setAddressType("Commerical");
+    addressDAO.updateAddress(address);
   }
 }

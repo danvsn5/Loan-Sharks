@@ -20,7 +20,9 @@ public interface ICustomer {
 
   public ArrayList<Address> getAddresses();
 
-  public CustomerContact getContact();
+  public ArrayList<Phone> getPhones();
+
+  public ArrayList<Email> getEmails();
 
   public CustomerEmployer getEmployer();
 
@@ -40,7 +42,9 @@ public interface ICustomer {
 
   public void setAddresses(ArrayList<Address> addresses);
 
-  public void setContact(CustomerContact contact);
+  public void setPhones(ArrayList<Phone> phones);
+
+  public void setEmails(ArrayList<Email> emails);
 
   public void setEmployer(CustomerEmployer employer);
 }

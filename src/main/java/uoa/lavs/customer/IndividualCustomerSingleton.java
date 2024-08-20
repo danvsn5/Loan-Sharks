@@ -20,14 +20,24 @@ public class IndividualCustomerSingleton {
         addresses.add(address);
       }
 
-      Phone phoneOne = new Phone("", "");
-      Phone phoneTwo = new Phone("", "");
-      CustomerContact contact = new CustomerContact("", phoneOne, phoneTwo, "", "");
+      ArrayList<Phone> phones = new ArrayList<>();
+      for (int i = 0; i < 10; i++) {
+        Phone phone = new Phone("", "", "", false, false);
+        phones.add(phone);
+      }
+
+      ArrayList<Email> emails = new ArrayList<>();
+      for (int i = 0; i < 10; i++) {
+        Email email = new Email("", "", false);
+        emails.add(email);
+      }
+
       CustomerEmployer employer =
           new CustomerEmployer("", "", "", "", "", "", "", "", "", "", false);
 
       instance =
-          new IndividualCustomer("", "", "", null, "", "", notes, addresses, contact, employer);
+          new IndividualCustomer(
+              "", "", "", null, "", "", notes, addresses, phones, emails, employer);
     }
     return instance;
   }
