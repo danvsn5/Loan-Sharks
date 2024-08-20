@@ -31,6 +31,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private TextField customerLastNameField;
   @FXML private DatePicker customerDOBPicker;
   @FXML private TextField customerOccupationField;
+  @FXML private ComboBox<String> customerVisaBox;
   @FXML private ComboBox<String> customerCitizenshipBox;
 
   @FXML private Button notesButton;
@@ -48,9 +49,10 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML
   private void initialize() {
     customerTitleComboBox.getItems().addAll("Mr", "Mrs", "Ms", "Master");
-    customerCitizenshipBox
+    customerVisaBox
         .getItems()
         .addAll("NZ Citizen", "NZ Permanent Resident", "AUS Citizen", "NZ Work Visa", "Other");
+    customerCitizenshipBox.getItems().addAll(AppState.getAllCountries());
     DateTimeFormatter storageFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -91,13 +93,19 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
           customerLastNameField,
           customerOccupationField
         },
-        new ComboBox<?>[] {customerTitleComboBox, customerCitizenshipBox},
+        new ComboBox<?>[] {customerTitleComboBox, customerVisaBox},
         new DatePicker[] {customerDOBPicker},
         new RadioButton[] {});
     setCustomerDetails();
   }
 
   private void setCustomerDetails() {
+    // Title is fine
+    // Name needs to be 60 characters
+    // DOB is fine
+    // Occupation needs to be 40 characters
+    // Citizenship is fine
+    //
     customer.setTitle(customerTitleComboBox.getValue());
 
     customer.setName(
@@ -108,7 +116,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
             + customerLastNameField.getText());
     customer.setDateOfBirth(customerDOBPicker.getValue());
     customer.setOccupation(customerOccupationField.getText());
-    customer.setResidency(customerCitizenshipBox.getValue());
+    customer.setResidency(customerVisaBox.getValue());
   }
 
   @FXML
