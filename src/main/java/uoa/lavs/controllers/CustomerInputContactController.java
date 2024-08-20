@@ -21,6 +21,17 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML private TextField customerPhoneNumberOne;
   @FXML private TextField customerPhoneNumberTwo;
 
+  @FXML private TextField prefix;
+  @FXML private TextField type;
+  @FXML private RadioButton sendText;
+  @FXML private RadioButton phonePrimary;
+  @FXML private RadioButton emailPrimary;
+
+  @FXML private ImageView incPhone;
+  @FXML private ImageView incEmail;
+  @FXML private ImageView decPhone;
+  @FXML private ImageView decEmail;
+
   @FXML private TextField customerPreferredContactBox;
   @FXML private TextField customerAltContactBox;
 

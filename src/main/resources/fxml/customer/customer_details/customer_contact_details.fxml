@@ -3,6 +3,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
@@ -18,6 +19,7 @@
             <Image url="@../../../images/customer_details.png" />
          </image>
       </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="70.0" layoutX="126.0" layoutY="357.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1002.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="194.0" layoutX="46.0" layoutY="454.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1198.0" />
       <Button fx:id="editButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
          <font>
@@ -28,27 +30,27 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="494.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <TextField fx:id="customerEmailTextField" alignment="CENTER" editable="false" layoutX="155.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerEmailTextField" alignment="CENTER" editable="false" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="customerPhoneNumberOne" alignment="CENTER" editable="false" layoutX="536.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerPhoneNumberOne" alignment="CENTER" editable="false" layoutX="50.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="customerPhoneNumberTwo" alignment="CENTER" editable="false" layoutX="914.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerPhoneNumberTwo" alignment="CENTER" disable="true" editable="false" layoutX="914.0" layoutY="428.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css" visible="false">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="customerPreferredContactBox" alignment="CENTER" editable="false" layoutX="379.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerPreferredContactBox" alignment="CENTER" disable="true" editable="false" layoutX="379.0" layoutY="512.0" opacity="0.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css" visible="false">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="customerAltContactBox" alignment="CENTER" editable="false" layoutX="691.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerAltContactBox" alignment="CENTER" disable="true" editable="false" layoutX="691.0" layoutY="512.0" opacity="0.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css" visible="false">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
@@ -91,15 +93,14 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="126.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="46.0" layoutX="114.0" layoutY="266.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Email Address">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Email Address">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="535.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Phone No. One" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="915.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Phone No. Two (opt.)" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Preferred Contact" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Alternate Contact" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Phone Number" />
+      <Label alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="379.0" layoutY="482.0" opacity="0.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Preferred Contact" />
+      <Label alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="691.0" layoutY="482.0" opacity="0.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Alternate Contact" />
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../../css/index.css" text="Summary of ID: &lt;123456-789&gt;" textFill="#333333" textOverrun="CLIP">
          <font>
             <Font size="41.0" />
@@ -115,6 +116,70 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+      </ImageView>
+      <TextField fx:id="prefix" alignment="CENTER" editable="false" layoutX="379.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </TextField>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Prefix" />
+      <TextField fx:id="type" alignment="CENTER" editable="false" layoutX="691.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </TextField>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Type" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1082.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Primary" />
+      <RadioButton fx:id="phonePrimary" layoutX="1170.0" layoutY="369.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="931.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Send Text" />
+      <RadioButton fx:id="sendText" layoutX="1019.0" layoutY="369.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Primary" />
+      <RadioButton fx:id="emailPrimary" layoutX="779.0" layoutY="510.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="519.0" layoutY="436.0" prefHeight="20.0" prefWidth="243.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Phone Number" />
+      <ImageView fx:id="incPhone" fitHeight="22.0" fitWidth="22.0" layoutX="728.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/traverse_button.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="decPhone" fitHeight="30.0" fitWidth="22.0" layoutX="528.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../../../images/traverse_button.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+      </ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="535.0" layoutY="564.0" prefHeight="17.0" prefWidth="210.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Email" />
+      <ImageView fx:id="incEmail" fitHeight="22.0" fitWidth="22.0" layoutX="700.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/traverse_button.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="decEmail" fitHeight="30.0" fitWidth="22.0" layoutX="556.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../../../images/traverse_button.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
       </ImageView>
    </children>
 </Pane>
