@@ -117,7 +117,6 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="13.0" layoutX="114.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1057.0" />
-      <ComboBox fx:id="employerAddressTypeComboBox" layoutX="914.0" layoutY="512.0" prefHeight="34.0" prefWidth="210.0" />
       <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/static-return.png" />
@@ -129,9 +128,5 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="780.0" layoutY="546.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
-       </effect>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
+   </children>
+</Pane>
