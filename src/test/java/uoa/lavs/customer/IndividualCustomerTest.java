@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 public class IndividualCustomerTest {
   private IndividualCustomer individualCustomer;
   private LocalDate dateOfBirth;
+  private ArrayList<Address> addresses;
   private Address physicalAddress;
   private Phone phoneOne;
   private Phone phoneTwo;
@@ -34,6 +35,9 @@ public class IndividualCustomerTest {
             "Japan",
             true,
             false);
+    addresses = new ArrayList<>();
+    addresses.add(physicalAddress);
+
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact =
@@ -66,8 +70,7 @@ public class IndividualCustomerTest {
             "Software Engineer",
             "NZ Citizen",
             notes,
-            physicalAddress,
-            physicalAddress,
+            addresses,
             contact,
             employer);
   }
@@ -82,8 +85,7 @@ public class IndividualCustomerTest {
     assertEquals("Software Engineer", individualCustomer.getOccupation());
     assertEquals("NZ Citizen", individualCustomer.getResidency());
     assertEquals(notes, individualCustomer.getNotes());
-    assertEquals(physicalAddress, individualCustomer.getPhysicalAddress());
-    assertEquals(physicalAddress, individualCustomer.getMailingAddress());
+    assertEquals(addresses, individualCustomer.getAddresses());
     assertEquals(contact, individualCustomer.getContact());
     assertEquals(employer, individualCustomer.getEmployer());
   }

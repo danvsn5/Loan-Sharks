@@ -35,6 +35,7 @@ public class CustomerDAOTest {
   Note note;
   CustomerContactDAO contactDAO;
   CustomerContact contact;
+  ArrayList<Address> addresses;
   Address primaryAddress;
   CustomerDAO customerDAO;
   IndividualCustomer customer;
@@ -58,7 +59,7 @@ public class CustomerDAOTest {
     notes = new ArrayList<>();
     note = new Note("000001", new String[] {"Allergic to peanuts"});
     notes.add(note);
-
+    addresses = new ArrayList<>();
     primaryAddress =
         new Address(
             "000001",
@@ -71,6 +72,8 @@ public class CustomerDAOTest {
             "Zimbabwe",
             true,
             false);
+    addresses.add(primaryAddress);
+
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
@@ -97,8 +100,7 @@ public class CustomerDAOTest {
             "Engineer",
             "NZ Citizen",
             notes,
-            primaryAddress,
-            primaryAddress,
+            addresses,
             contact,
             employer);
 
@@ -125,15 +127,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(LocalDate.of(2024, 8, 6), actualDateOfBirth);
         Assertions.assertEquals("Engineer", rs.getString("occupation"));
         Assertions.assertEquals("NZ Citizen", rs.getString("residency"));
-
-        // String notesString = rs.getString("notes");
-        // String[] retrievedNotes = notesString.split("::");
-        // for (int i = 0; i < retrievedNotes.length; i++) {
-        //   Assertions.assertEquals(customer.getNotes().get(i).getLines(), retrievedNotes[i]);
-        // }
-
-        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
-        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
         Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
       }
@@ -153,8 +146,6 @@ public class CustomerDAOTest {
     customer.setDateOfBirth(LocalDate.of(2024, 8, 7));
     customer.setOccupation("Doctor");
     customer.setResidency("NZ Permanent Resident");
-    customer.setPhysicalAddress(primaryAddress);
-    customer.setMailingAddress(primaryAddress);
     customer.setContact(contact);
     customer.setEmployer(employer);
 
@@ -174,8 +165,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
         Assertions.assertEquals("NZ Permanent Resident", rs.getString("residency"));
-        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
-        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
         Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
       }
@@ -208,10 +197,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(retrievedCustomer.getOccupation(), rs.getString("occupation"));
         Assertions.assertEquals(retrievedCustomer.getResidency(), rs.getString("residency"));
         Assertions.assertEquals(
-            retrievedCustomer.getPhysicalAddress().getAddressId(), rs.getInt("primaryAddressId"));
-        Assertions.assertEquals(
-            retrievedCustomer.getMailingAddress().getAddressId(), rs.getInt("mailingAddressId"));
-        Assertions.assertEquals(
             retrievedCustomer.getContact().getContactId(), rs.getInt("contactId"));
         Assertions.assertEquals(
             retrievedCustomer.getEmployer().getEmployerId(), rs.getInt("employerId"));
@@ -229,18 +214,6 @@ public class CustomerDAOTest {
     customerDAO.addCustomer(customer);
 
     LocalDate dateOfBirth2 = LocalDate.of(2000, 6, 6);
-    Address primaryAddress2 =
-        new Address(
-            "000001",
-            "Rural",
-            "100 Guy St",
-            "",
-            "Rosedale",
-            "999",
-            "Auckland",
-            "New Zealand",
-            true,
-            false);
     Phone phoneOne2 = new Phone("mobile", "1111111");
     Phone phoneTwo2 = new Phone("work", "0987654321");
     CustomerContact contact2 =
@@ -274,8 +247,7 @@ public class CustomerDAOTest {
             "Professional",
             "NZ Permanent Resident",
             notes,
-            primaryAddress2,
-            primaryAddress2,
+            addresses,
             contact2,
             employer2);
     customerDAO.addCustomer(customer2);
@@ -302,18 +274,6 @@ public class CustomerDAOTest {
   public void testGetCustomersByBirth() {
     customerDAO.addCustomer(customer);
 
-    Address primaryAddress2 =
-        new Address(
-            "000001",
-            "Rural",
-            "100 Guy St",
-            "",
-            "Rosedale",
-            "999",
-            "Auckland",
-            "New Zealand",
-            true,
-            false);
     Phone phoneOne2 = new Phone("mobile", "1111111");
     Phone phoneTwo2 = new Phone("work", "0987654321");
     CustomerContact contact2 =
@@ -345,8 +305,7 @@ public class CustomerDAOTest {
             "Professional",
             "NZ Permanent Resident",
             notes,
-            primaryAddress2,
-            primaryAddress2,
+            addresses,
             contact2,
             employer2);
     customerDAO.addCustomer(customer2);

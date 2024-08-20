@@ -12,8 +12,7 @@ public class IndividualCustomer extends Customer {
       String occupation,
       String residency,
       ArrayList<Note> notes,
-      Address physicalAddress,
-      Address mailingAddress,
+      ArrayList<Address> addresses,
       CustomerContact contact,
       CustomerEmployer employer) {
     super(
@@ -24,8 +23,7 @@ public class IndividualCustomer extends Customer {
         occupation,
         residency,
         notes,
-        physicalAddress,
-        mailingAddress,
+        addresses,
         contact,
         employer);
   }

@@ -18,9 +18,7 @@ public interface ICustomer {
 
   public ArrayList<Note> getNotes();
 
-  public Address getPhysicalAddress();
-
-  public Address getMailingAddress();
+  public ArrayList<Address> getAddresses();
 
   public CustomerContact getContact();
 
@@ -40,9 +38,7 @@ public interface ICustomer {
 
   public void setNotes(ArrayList<Note> notes);
 
-  public void setPhysicalAddress(Address physicalAddress);
-
-  public void setMailingAddress(Address mailingAddress);
+  public void setAddresses(ArrayList<Address> addresses);
 
   public void setContact(CustomerContact contact);
 

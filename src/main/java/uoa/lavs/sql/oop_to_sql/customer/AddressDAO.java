@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import uoa.lavs.customer.Address;
 import uoa.lavs.sql.DatabaseConnection;
 
@@ -15,8 +16,9 @@ public class AddressDAO {
     int nextAddressId = getNextAddressIdForCustomer(customerId);
 
     String sql =
-        "INSERT INTO customer_address (customerId, addressId, addressType, addressLineOne, "
-            + "addressLineTwo, suburb, postCode, city, country, isPrimary, isMailing) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO customer_address (customerId, addressId, addressType, addressLineOne,"
+            + " addressLineTwo, suburb, postCode, city, country, isPrimary, isMailing) VALUES (?,"
+            + " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -62,8 +64,8 @@ public class AddressDAO {
   public void updateAddress(Address address) {
     String sql =
         "UPDATE customer_address SET addressType = ?, addressLineOne = ?, addressLineTwo = ?,"
-            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ? WHERE customerId = ? AND addressId"
-            + " = ?";
+            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ? WHERE"
+            + " customerId = ? AND addressId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -85,16 +87,18 @@ public class AddressDAO {
     }
   }
 
-  public Address getAddress(String customerId, int addressId) {
-    String sql = "SELECT * FROM customer_address WHERE customerId = ? AND addressId = ?";
+  public ArrayList<Address> getAddresses(String customerId) {
+    ArrayList<Address> addresses = new ArrayList<>();
+
+    String sql = "SELECT * FROM customer_address WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
       pstmt.setString(1, customerId);
-      pstmt.setInt(2, addressId);
       ResultSet rs = pstmt.executeQuery();
 
-      if (rs.next()) {
+      while (rs.next()) {
+        int addressId = rs.getInt("addressId");
         String addressType = rs.getString("addressType");
         String addressLineOne = rs.getString("addressLineOne");
         String addressLineTwo = rs.getString("addressLineTwo");
@@ -118,10 +122,10 @@ public class AddressDAO {
                 isPrimary,
                 isMailing);
         retrievedAddress.setAddressId(addressId);
-        retrievedAddress.setCustomerId(customerId);
-        return retrievedAddress;
-      }
 
+        addresses.add(retrievedAddress);
+      }
+      return addresses;
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
@@ -130,7 +134,18 @@ public class AddressDAO {
 
   public static void main(String[] args) {
     AddressDAO addressDAO = new AddressDAO();
-    Address address = new Address("000001", "Residential", "123 Main St", "", "Auckland", "1010", "Auckland", "New Zealand", true, true);
+    Address address =
+        new Address(
+            "000001",
+            "Residential",
+            "123 Main St",
+            "",
+            "Auckland",
+            "1010",
+            "Auckland",
+            "New Zealand",
+            true,
+            true);
     addressDAO.addAddress(address);
   }
 }

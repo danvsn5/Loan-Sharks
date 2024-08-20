@@ -11,8 +11,7 @@ public abstract class Customer implements ICustomer {
   private String occupation;
   private String residency;
   private ArrayList<Note> notes;
-  private Address physicalAddress;
-  private Address mailingAddress;
+  private ArrayList<Address> addresses;
   private CustomerContact contact;
   private CustomerEmployer employer;
 
@@ -24,8 +23,7 @@ public abstract class Customer implements ICustomer {
       String occupation,
       String residency,
       ArrayList<Note> notes,
-      Address physicalAddress,
-      Address mailingAddress,
+      ArrayList<Address> addresses,
       CustomerContact contact,
       CustomerEmployer employer) {
     this.customerId = customerId;
@@ -35,8 +33,7 @@ public abstract class Customer implements ICustomer {
     this.occupation = occupation;
     this.residency = residency;
     this.notes = notes;
-    this.physicalAddress = physicalAddress;
-    this.mailingAddress = mailingAddress;
+    this.addresses = addresses;
     this.contact = contact;
     this.employer = employer;
   }
@@ -77,13 +74,8 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public Address getPhysicalAddress() {
-    return this.physicalAddress;
-  }
-
-  @Override
-  public Address getMailingAddress() {
-    return this.mailingAddress;
+  public ArrayList<Address> getAddresses() {
+    return this.addresses;
   }
 
   @Override
@@ -132,13 +124,8 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public void setPhysicalAddress(Address physicalAddress) {
-    this.physicalAddress = physicalAddress;
-  }
-
-  @Override
-  public void setMailingAddress(Address mailingAddress) {
-    this.mailingAddress = mailingAddress;
+  public void setAddresses(ArrayList<Address> addresses) {
+    this.addresses = addresses;
   }
 
   @Override

@@ -12,20 +12,22 @@ import org.junit.jupiter.api.Test;
 public class IndividualCustomerSingletonTest {
   private IndividualCustomer customer;
   private LocalDate dateOfBirth;
+  private ArrayList<Address> addresses;
   private Address physicalAddress;
   private CustomerContact contact;
   private CustomerEmployer employer;
   private IndividualCustomer newCustomer;
   private Phone phoneOne;
   private Phone phoneTwo;
-  ArrayList<Note> notes;
-  Note note;
+  private ArrayList<Note> notes;
+  private Note note;
 
   @BeforeEach
   public void setUp() {
     IndividualCustomerSingleton.resetInstance();
 
     dateOfBirth = LocalDate.of(2024, 8, 6);
+    addresses = new ArrayList<>();
     physicalAddress =
         new Address(
             "000001",
@@ -38,6 +40,8 @@ public class IndividualCustomerSingletonTest {
             "Zimbabwe",
             true,
             false);
+    addresses.add(physicalAddress);
+
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
@@ -56,8 +60,7 @@ public class IndividualCustomerSingletonTest {
             "Engineer",
             "NZ Citizen",
             notes,
-            physicalAddress,
-            physicalAddress,
+            addresses,
             contact,
             employer);
   }

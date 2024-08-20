@@ -1,6 +1,7 @@
 package uoa.lavs.utility;
 
-import okhttp3.Address;
+import java.util.ArrayList;
+import uoa.lavs.customer.Address;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.sql.oop_to_sql.customer.AddressDAO;
 import uoa.lavs.sql.oop_to_sql.customer.CustomerContactDAO;
@@ -16,8 +17,10 @@ public class CustomerCreationHelper {
     notesdao.addNotes(customer.getNotes());
 
     AddressDAO addressdao = new AddressDAO();
-    addressdao.addAddress(customer.getPhysicalAddress());
-    addressdao.addAddress(customer.getMailingAddress());
+    ArrayList<Address> addresses = customer.getAddresses();
+    for (Address address : addresses) {
+      addressdao.addAddress(address);
+    }
 
     CustomerContactDAO contactdao = new CustomerContactDAO();
     contactdao.addCustomerContact(customer.getContact());
