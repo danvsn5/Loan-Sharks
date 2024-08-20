@@ -20,7 +20,7 @@
             <Image url="@../../../images/customer_details.png" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdaca" height="70.0" layoutY="192.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1280.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffd6cb" height="91.0" layoutX="46.0" layoutY="165.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1180.0" />
       <Button fx:id="editButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
          <font>
             <Font size="27.0" />
@@ -55,7 +55,7 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <Button fx:id="contactButton" graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleContactButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Contact Info">
+      <Button fx:id="contactButton" graphicTextGap="0.0" layoutX="540.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#handleContactButtonAction" prefHeight="70.0" prefWidth="200.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Contact Info">
          <font>
             <Font size="27.0" />
          </font>
@@ -63,8 +63,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="621.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button fx:id="employerButton" graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleEmployerButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Employer Details">
+      <Button fx:id="employerButton" graphicTextGap="0.0" layoutX="785.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#handleEmployerButtonAction" prefHeight="70.0" prefWidth="200.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Employer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -72,8 +71,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="873.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button fx:id="addressButton" graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleAddressButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Addresses">
+      <Button fx:id="addressButton" graphicTextGap="0.0" layoutX="295.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#handleAddressButtonAction" prefHeight="70.0" prefWidth="200.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Addresses">
          <font>
             <Font size="27.0" />
          </font>
@@ -82,8 +80,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="372.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="379.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button-selected" stylesheets="@../../../css/index.css" text="Customer Details">
+      <Button graphicTextGap="0.0" layoutX="50.0" layoutY="172.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="200.0" styleClass="tab-button-selected" stylesheets="@../../../css/index.css" text="Customer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -91,13 +88,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="notesButton" layoutX="202.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#handleNotesButtonAction" prefHeight="36.0" prefWidth="118.0" styleClass="accessory-button" stylesheets="@../../../css/index.css" text="Notes">
+      <Button fx:id="notesButton" layoutX="1035.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#handleNotesButtonAction" prefHeight="70.0" prefWidth="200.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Notes">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="126.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="114.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="First Name">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />

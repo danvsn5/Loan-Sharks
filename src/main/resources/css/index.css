@@ -1,5 +1,5 @@
 .input-fields {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-width: 2px;
     -fx-border-color: #3289d5;
     -fx-border-radius: 30px;
@@ -10,7 +10,7 @@
 }
 
 .regular-button {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-width: 3px;
     -fx-border-color: #3289d5;
     -fx-text-fill: #333333;
@@ -22,7 +22,7 @@
 }
 
 .tab-button {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-width: 2px;
     -fx-border-color: #3289d5;
     -fx-text-fill: #333333;
@@ -35,7 +35,7 @@
 }
 
 .tab-button-selected {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-width: 3px;
     -fx-border-color: #3289d5;
     -fx-text-fill: #333333;
@@ -67,7 +67,7 @@
 }
 
 .data-fields {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-width: 2px;
     -fx-border-color: #3289d5;
     -fx-border-radius: 20px;
@@ -84,7 +84,7 @@
 }
 
 .accessory-button {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-width: 3px;
     -fx-border-color: #3289d5;
     -fx-text-fill: #333333;
@@ -100,7 +100,7 @@
 .radio-button .radio {
     -fx-border-width: 2px;
     -fx-border-color: #3289d5;
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-radius: 20px;
     -fx-background-radius: 100px;
     -fx-padding: 3px;
@@ -180,7 +180,7 @@
 .date-picker .text-field {
     -fx-border-radius: 100px 0px 0px 100px !important;
     -fx-background-radius: 100px 0px 0px 100px !important;
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-color: -fx-primary-color;
     -fx-border-width: 2px;
     -fx-cursor: default;
@@ -194,8 +194,8 @@
 }
 
 .calendar-grid {
-    -fx-background-color: #ffdaca;
-    -fx-border-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
+    -fx-border-color: #ffd6cb;
     -fx-border-radius: 5px;
     -fx-background-radius: 100px;
 }
@@ -210,11 +210,11 @@
 }
 
 .date-picker .arrow-button .arrow {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
 }
 
 .date-picker .cell {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-radius: 100px;
     -fx-border-width: 0px;
     -fx-background-radius: 100px;
@@ -231,7 +231,7 @@
 
 .date-picker .selected {
     -fx-background-color: -fx-primary-color;
-    -fx-text-fill: #ffdaca;
+    -fx-text-fill: #ffd6cb;
     -fx-border-radius: 100px;
     -fx-background-radius: 100px;
 }
@@ -248,7 +248,7 @@
     -fx-border-width: 2px;
     -fx-border-radius: 10px;
     -fx-background-radius: 15px;
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
 }
 
 .date-picker-popup .month-year-pane {
@@ -268,9 +268,9 @@
 
 .date-picker-popup .spinner .button .left-arrow,
 .date-picker-popup .spinner .button .right-arrow {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-width: 10px;
-    -fx-border-color: #ffdaca;
+    -fx-border-color: #ffd6cb;
 }
 
 .date-picker-popup .spinner .button,
@@ -302,7 +302,7 @@
 }
 
 .combo-box-base .text-field {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-radius: 100px 0px 0px 100px !important;
     -fx-background-radius: 100px 0px 0px 100px !important;
     -fx-border-width: 2px;
@@ -310,22 +310,22 @@
 
 /* .combo-box * {
     -fx-border-width: 0px;
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-background-radius: 20px 0px 0px 20px;
 } */
 
 .combo-box .list-cell {
     -fx-border-width: 10px;
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-background-radius: 20px 0px 0px 20px;
 }
 
 .combo-box .list-view {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
 }
 
 .combo-box .arrow-button .arrow {
-    -fx-background-color: #ffdaca;
+    -fx-background-color: #ffd6cb;
 }
