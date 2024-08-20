@@ -41,7 +41,7 @@ public class CustomerDAO {
   }
 
   private String getNextCustomerId() {
-    String sql = "SELECT MIN(customerId) AS smallestId FROM customer";
+    String sql = "SELECT MIN(CAST(customerId AS INTEGER)) AS smallestId FROM customer";
     String previousId = "-1";
 
     try (Connection conn = DatabaseConnection.connect();
@@ -53,7 +53,6 @@ public class CustomerDAO {
         if (smallestId != null) {
           try {
             int idNumber = Integer.parseInt(smallestId);
-            System.out.println("goon: " + idNumber);
             previousId = String.valueOf(idNumber - 1);
           } catch (NumberFormatException e) {
             System.out.println("Error parsing customerId: " + e.getMessage());
@@ -63,7 +62,6 @@ public class CustomerDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-    System.out.println(previousId);
     return previousId;
   }
 
