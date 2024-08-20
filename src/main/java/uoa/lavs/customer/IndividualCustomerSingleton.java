@@ -22,7 +22,7 @@ public class IndividualCustomerSingleton {
 
       ArrayList<Phone> phones = new ArrayList<>();
       for (int i = 0; i < 10; i++) {
-        Phone phone = new Phone("", "", "", false, false);
+        Phone phone = new Phone("", "", "", "", false, false);
         phones.add(phone);
       }
 

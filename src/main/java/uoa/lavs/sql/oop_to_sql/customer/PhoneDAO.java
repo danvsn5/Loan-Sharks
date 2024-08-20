@@ -16,17 +16,18 @@ public class PhoneDAO {
     int nextPhoneId = getNextPhoneIdForCustomer(customerId);
 
     String sql =
-        "INSERT INTO customer_phone (customerId, phoneId, type, phoneNumber, isPrimary,"
-            + " canSendText) VALUES (?, ?, ?, ?, ?, ?)";
+        "INSERT INTO customer_phone (customerId, phoneId, type, prefix, phoneNumber, isPrimary,"
+            + " canSendText) VALUES (?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
       pstmt.setString(1, customerId);
       pstmt.setInt(2, nextPhoneId);
       pstmt.setString(3, phone.getType());
-      pstmt.setString(4, phone.getPhoneNumber());
-      pstmt.setBoolean(5, phone.getIsPrimary());
-      pstmt.setBoolean(6, phone.getCanSendText());
+      pstmt.setString(4, phone.getPrefix());
+      pstmt.setString(5, phone.getPhoneNumber());
+      pstmt.setBoolean(6, phone.getIsPrimary());
+      pstmt.setBoolean(7, phone.getCanSendText());
 
       pstmt.executeUpdate();
 
@@ -41,8 +42,8 @@ public class PhoneDAO {
 
     for (int i = 0; i < phones.size(); i++) {
       String sql =
-          "INSERT INTO customer_phones (customerId, phoneId, type, phoneNumber, isPrimary,"
-              + " canSendText) VALUES (?, ?, ?, ?, ?, ?)";
+          "INSERT INTO customer_phones (customerId, phoneId, type, prefix, phoneNumber, isPrimary,"
+              + " canSendText) VALUES (?, ?, ?, ?, ?, ?, ?)";
       try (Connection conn = DatabaseConnection.connect();
           PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -51,9 +52,10 @@ public class PhoneDAO {
         pstmt.setString(1, customerId);
         pstmt.setInt(2, phoneId);
         pstmt.setString(3, phones.get(i).getType());
-        pstmt.setString(4, phones.get(i).getPhoneNumber());
-        pstmt.setBoolean(5, phones.get(i).getIsPrimary());
-        pstmt.setBoolean(6, phones.get(i).getCanSendText());
+        pstmt.setString(4, phones.get(i).getPrefix());
+        pstmt.setString(5, phones.get(i).getPhoneNumber());
+        pstmt.setBoolean(6, phones.get(i).getIsPrimary());
+        pstmt.setBoolean(7, phones.get(i).getCanSendText());
 
         pstmt.executeUpdate();
 
@@ -85,17 +87,19 @@ public class PhoneDAO {
 
   public void updatePhone(Phone phone) {
     String sql =
-        "UPDATE customer_phone SET type = ?, phoneNumber = ?, isPrimary = ?, canSendText = ?,"
-            + " lastModified = CURRENT_TIMESTAMP WHERE customerId = ? AND phoneId = ?";
+        "UPDATE customer_phone SET type = ?, prefix = ?, phoneNumber = ?, isPrimary = ?,"
+            + " canSendText = ?, lastModified = CURRENT_TIMESTAMP WHERE customerId = ? AND phoneId"
+            + " = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
       pstmt.setString(1, phone.getType());
-      pstmt.setString(2, phone.getPhoneNumber());
-      pstmt.setBoolean(3, phone.getIsPrimary());
-      pstmt.setBoolean(4, phone.getCanSendText());
-      pstmt.setString(5, phone.getCustomerId());
-      pstmt.setInt(6, phone.getPhoneId());
+      pstmt.setString(2, phone.getPrefix());
+      pstmt.setString(3, phone.getPhoneNumber());
+      pstmt.setBoolean(4, phone.getIsPrimary());
+      pstmt.setBoolean(5, phone.getCanSendText());
+      pstmt.setString(6, phone.getCustomerId());
+      pstmt.setInt(7, phone.getPhoneId());
 
       System.out.println("Updating phone: " + phone.getPhoneId());
 
@@ -116,11 +120,13 @@ public class PhoneDAO {
 
       if (rs.next()) {
         String type = rs.getString("type");
+        String prefix = rs.getString("prefix");
         String phoneNumber = rs.getString("phoneNumber");
         boolean isPrimary = rs.getBoolean("isPrimary");
         boolean canSendText = rs.getBoolean("canSendText");
 
-        Phone retrievedPhone = new Phone(customerId, type, phoneNumber, isPrimary, canSendText);
+        Phone retrievedPhone =
+            new Phone(customerId, type, prefix, phoneNumber, isPrimary, canSendText);
         retrievedPhone.setPhoneId(phoneId);
         return retrievedPhone;
       }
@@ -144,11 +150,13 @@ public class PhoneDAO {
       while (rs.next()) {
         int phoneId = rs.getInt("phoneId");
         String type = rs.getString("type");
+        String prefix = rs.getString("prefix");
         String phoneNumber = rs.getString("phoneNumber");
         boolean isPrimary = rs.getBoolean("isPrimary");
         boolean canSendText = rs.getBoolean("canSendText");
 
-        Phone retrievedPhone = new Phone(customerId, type, phoneNumber, isPrimary, canSendText);
+        Phone retrievedPhone =
+            new Phone(customerId, type, prefix, phoneNumber, isPrimary, canSendText);
         retrievedPhone.setPhoneId(phoneId);
 
         phones.add(retrievedPhone);

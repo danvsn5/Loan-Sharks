@@ -10,7 +10,7 @@ public class PhoneTest {
 
   @BeforeEach
   public void setUp() {
-    phone = new Phone("1", "mobile", "1234567890", true, true);
+    phone = new Phone("1", "mobile", "027", "1234567890", true, true);
   }
 
   @Test
@@ -33,6 +33,17 @@ public class PhoneTest {
   public void testSetType() {
     phone.setType("home");
     assertEquals("home", phone.getType());
+  }
+
+  @Test
+  public void testGetPrefix() {
+    assertEquals("027", phone.getPrefix());
+  }
+
+  @Test
+  public void testSetPrefix() {
+    phone.setPrefix("021");
+    assertEquals("021", phone.getPrefix());
   }
 
   @Test

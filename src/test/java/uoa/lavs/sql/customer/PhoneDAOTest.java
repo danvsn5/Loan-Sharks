@@ -31,7 +31,7 @@ public class PhoneDAOTest {
 
   @Test
   public void testAddPhone() {
-    Phone phone = new Phone("000001", "Mobile", "1234567890", true, true);
+    Phone phone = new Phone("000001", "Mobile", "027", "1234567890", true, true);
     phoneDAO.addPhone(phone);
 
     try (Connection conn = DatabaseConnection.connect();
@@ -42,6 +42,7 @@ public class PhoneDAOTest {
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Phone should be added to the database");
         Assertions.assertEquals("Mobile", rs.getString("type"));
+        Assertions.assertEquals("027", rs.getString("prefix"));
         Assertions.assertEquals("1234567890", rs.getString("phoneNumber"));
         Assertions.assertTrue(rs.getBoolean("isPrimary"));
         Assertions.assertTrue(rs.getBoolean("canSendText"));
@@ -56,7 +57,7 @@ public class PhoneDAOTest {
 
   @Test
   public void testUpdatePhone() {
-    Phone phone = new Phone("000001", "Mobile", "1234567890", true, true);
+    Phone phone = new Phone("000001", "Mobile", "027", "1234567890", true, true);
     phoneDAO.addPhone(phone);
 
     phone.setType("Home");
@@ -74,6 +75,7 @@ public class PhoneDAOTest {
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Phone should be updated in the database");
         Assertions.assertEquals("Home", rs.getString("type"));
+        Assertions.assertEquals("027", rs.getString("prefix"));
         Assertions.assertEquals("0987654321", rs.getString("phoneNumber"));
         Assertions.assertFalse(rs.getBoolean("isPrimary"));
         Assertions.assertFalse(rs.getBoolean("canSendText"));
@@ -88,7 +90,7 @@ public class PhoneDAOTest {
 
   @Test
   public void testGetPhones() {
-    Phone phone = new Phone("000001", "Mobile", "1234567890", true, true);
+    Phone phone = new Phone("000001", "Mobile", "027", "1234567890", true, true);
     phoneDAO.addPhone(phone);
     int phoneId = phone.getPhoneId();
 
@@ -102,6 +104,7 @@ public class PhoneDAOTest {
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Phone should be retrieved from the database");
         Assertions.assertEquals(retrievedPhones.get(0).getType(), rs.getString("type"));
+        Assertions.assertEquals(retrievedPhones.get(0).getPrefix(), rs.getString("prefix"));
         Assertions.assertEquals(
             retrievedPhones.get(0).getPhoneNumber(), rs.getString("phoneNumber"));
         Assertions.assertEquals(retrievedPhones.get(0).getIsPrimary(), rs.getBoolean("isPrimary"));

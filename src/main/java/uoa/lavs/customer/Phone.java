@@ -4,14 +4,21 @@ public class Phone {
   private String customerId;
   private int phoneId;
   private String type;
+  private String prefix;
   private String phoneNumber;
   private boolean isPrimary;
   private boolean canSendText;
 
   public Phone(
-      String customerId, String type, String phoneNumber, boolean isPrimary, boolean canSendText) {
+      String customerId,
+      String type,
+      String prefix,
+      String phoneNumber,
+      boolean isPrimary,
+      boolean canSendText) {
     this.customerId = customerId;
     this.type = type;
+    this.prefix = prefix;
     this.phoneNumber = phoneNumber;
     this.isPrimary = isPrimary;
     this.canSendText = canSendText;
@@ -27,6 +34,10 @@ public class Phone {
 
   public String getType() {
     return this.type;
+  }
+
+  public String getPrefix() {
+    return this.prefix;
   }
 
   public String getPhoneNumber() {
@@ -51,6 +62,10 @@ public class Phone {
 
   public void setType(String type) {
     this.type = type;
+  }
+
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
   }
 
   public void setPhoneNumber(String phoneNumber) {

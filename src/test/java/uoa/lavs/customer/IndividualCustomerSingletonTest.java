@@ -43,14 +43,16 @@ public class IndividualCustomerSingletonTest {
             false);
     addresses.add(physicalAddress);
 
-    phone = new Phone("000001", "mobile", "1234567890", true, true);
+    phone = new Phone("000001", "mobile", "027", "1234567890", true, true);
     phones = new ArrayList<>();
     phones.add(phone);
     email = new Email("000001", "abc@gmail.com", true);
     emails = new ArrayList<>();
     emails.add(email);
 
-    employer = new CustomerEmployer("Countdown", "", "", "", "", "", "", null, null, null, false);
+    employer =
+        new CustomerEmployer(
+            "000001", "Countdown", "", "", "", "", "", "", null, null, null, false);
 
     notes = new ArrayList<>();
     note = new Note("000002", new String[] {"Allergic to peanuts"});

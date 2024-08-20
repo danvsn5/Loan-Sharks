@@ -64,12 +64,12 @@ public class CustomerDAOTest {
     dateOfBirth = LocalDate.of(2024, 8, 6);
 
     notes = new ArrayList<>();
-    note = new Note("000001", new String[] {"Allergic to peanuts"});
+    note = new Note("-1", new String[] {"Allergic to peanuts"});
     notes.add(note);
     addresses = new ArrayList<>();
     primaryAddress =
         new Address(
-            "000001",
+            "-1",
             "Rural",
             "304 Rose St",
             "46",
@@ -82,14 +82,15 @@ public class CustomerDAOTest {
     addresses.add(primaryAddress);
 
     phones = new ArrayList<>();
-    phone = new Phone("000001", "mobile", "1234567890", true, true);
+    phone = new Phone("-1", "mobile", "027", "1234567890", true, true);
     phones.add(phone);
     emails = new ArrayList<>();
-    email = new Email("000001", "abc@gmail.com", true);
+    email = new Email("-1", "abc@gmail.com", true);
     emails.add(email);
 
     employer =
         new CustomerEmployer(
+            "-1",
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -104,7 +105,7 @@ public class CustomerDAOTest {
 
     customer =
         new IndividualCustomer(
-            "000001",
+            "-1",
             "Mr",
             "Ting Mun Guy",
             dateOfBirth,
@@ -130,11 +131,11 @@ public class CustomerDAOTest {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM customer WHERE customerId = ?")) {
-      stmt.setString(1, "000001");
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Customer should be added to the database");
-        Assertions.assertEquals("000001", rs.getString("customerId"));
+        Assertions.assertEquals("-1", rs.getString("customerId"));
         Assertions.assertEquals("Mr", rs.getString("title"));
         Assertions.assertEquals("Ting Mun Guy", rs.getString("name"));
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
@@ -166,11 +167,11 @@ public class CustomerDAOTest {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM customer WHERE customerId = ?")) {
-      stmt.setString(1, "000001");
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Customer should be updated in the database");
-        Assertions.assertEquals("000001", rs.getString("customerId"));
+        Assertions.assertEquals("-1", rs.getString("customerId"));
         Assertions.assertEquals("Mrs", rs.getString("title"));
         Assertions.assertEquals("Ting Ting Mun Mun Guy Guy", rs.getString("name"));
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
@@ -223,8 +224,8 @@ public class CustomerDAOTest {
     customerDAO.addCustomer(customer);
 
     LocalDate dateOfBirth2 = LocalDate.of(2000, 6, 6);
-    Phone phone2 = new Phone("000003", "mobile", "1111111", true, true);
-    Email email2 = new Email("000003", "aaa@gmail.com", true);
+    Phone phone2 = new Phone("-3", "mobile", "027", "1111111", true, true);
+    Email email2 = new Email("-3", "aaa@gmail.com", true);
     ArrayList<Phone> phones2 = new ArrayList<>();
     phones2.add(phone2);
     ArrayList<Email> emails2 = new ArrayList<>();
@@ -232,6 +233,7 @@ public class CustomerDAOTest {
 
     CustomerEmployer employer2 =
         new CustomerEmployer(
+            "-3",
             "Countdown",
             "",
             "",
@@ -247,12 +249,12 @@ public class CustomerDAOTest {
     String name = "Ting Mun Guy";
 
     ArrayList<Note> notes = new ArrayList<>();
-    Note note = new Note("000003", new String[] {"Allergic to peanuts"});
+    Note note = new Note("-3", new String[] {"Allergic to peanuts"});
     notes.add(note);
 
     IndividualCustomer customer2 =
         new IndividualCustomer(
-            "000003",
+            "-3",
             "Mrs",
             name,
             dateOfBirth2,
@@ -287,8 +289,8 @@ public class CustomerDAOTest {
   public void testGetCustomersByBirth() {
     customerDAO.addCustomer(customer);
 
-    Phone phone2 = new Phone("000003", "mobile", "1111111", true, true);
-    Email email2 = new Email("000003", "aaa@gmail.com", true);
+    Phone phone2 = new Phone("-2", "mobile", "027", "1111111", true, true);
+    Email email2 = new Email("-2", "aaa@gmail.com", true);
     ArrayList<Phone> phones2 = new ArrayList<>();
     phones2.add(phone2);
     ArrayList<Email> emails2 = new ArrayList<>();
@@ -296,6 +298,7 @@ public class CustomerDAOTest {
 
     CustomerEmployer employer2 =
         new CustomerEmployer(
+            "-2",
             "Countdown",
             "",
             "",
@@ -309,12 +312,12 @@ public class CustomerDAOTest {
             false);
 
     ArrayList<Note> notes = new ArrayList<>();
-    Note note = new Note("000002", new String[] {"Allergic to peanuts"});
+    Note note = new Note("-2", new String[] {"Allergic to peanuts"});
     notes.add(note);
 
     IndividualCustomer customer2 =
         new IndividualCustomer(
-            "000002",
+            "-2",
             "Mrs",
             "Zing Dingus",
             dateOfBirth,

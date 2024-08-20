@@ -285,7 +285,7 @@ public class CustomerDAO {
 
     phones = new ArrayList<>();
     emails = new ArrayList<>();
-    phone = new Phone(customerId, "mobile", "1234567890", true, true);
+    phone = new Phone(customerId, "mobile", "027", "1234567890", true, true);
     email = new Email(customerId, "abc@gmail.com", true);
     phones.add(phone);
     emails.add(email);
@@ -385,7 +385,7 @@ public class CustomerDAO {
 
     phones = new ArrayList<>();
     emails = new ArrayList<>();
-    phone = new Phone(customerId, "mobile", "1234567890", true, true);
+    phone = new Phone(customerId, "mobile", "027", "1234567890", true, true);
     email = new Email(customerId, "abc@gmail.com", true);
     phones.add(phone);
     emails.add(email);

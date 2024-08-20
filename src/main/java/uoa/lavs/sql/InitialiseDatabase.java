@@ -51,6 +51,7 @@ public class InitialiseDatabase {
             + "customerId VARCHAR(50), "
             + "phoneId INTEGER, "
             + "type VARCHAR(20), "
+            + "prefix VARCHAR(10), "
             + "phoneNumber VARCHAR(20), "
             + "isPrimary BOOLEAN, "
             + "canSendText BOOLEAN, "

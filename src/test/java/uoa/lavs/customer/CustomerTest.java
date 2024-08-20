@@ -39,7 +39,7 @@ public class CustomerTest {
     addresses = new ArrayList<>();
     addresses.add(physicalAddress);
 
-    phone = new Phone("000001", "mobile", "1234567890", true, true);
+    phone = new Phone("000001", "mobile", "027", "1234567890", true, true);
     phones = new ArrayList<>();
     phones.add(phone);
     email = new Email("000001", "abc@gmail.com", true);
@@ -48,6 +48,7 @@ public class CustomerTest {
 
     employer =
         new CustomerEmployer(
+            "000001",
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -199,6 +200,7 @@ public class CustomerTest {
   public void testSetEmployer() {
     CustomerEmployer newEmployer =
         new CustomerEmployer(
+            "000001",
             "BES",
             "123 Stonesuckle Ct",
             "",
