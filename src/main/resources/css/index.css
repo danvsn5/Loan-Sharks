@@ -47,6 +47,33 @@
     -fx-font-family: 'Quicksand Bold';
 }
 
+
+.tab-button-small {
+    -fx-background-color: #ffd6cb;
+    -fx-border-width: 2px;
+    -fx-border-color: #3289d5;
+    -fx-text-fill: #333333;
+    -fx-background-radius: 10px;
+    -fx-border-style: solid none solid none;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Quicksand Bold';
+}
+
+.tab-button-selected-small {
+    -fx-background-color: #ffd6cb;
+    -fx-border-width: 3px;
+    -fx-border-color: #3289d5;
+    -fx-text-fill: #333333;
+    -fx-background-radius: 10px;
+    -fx-border-style: none solid none solid;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Quicksand Bold';
+}
+
 .scene-titles {
     -fx-font-family: 'Quicksand Bold';
     -fx-font-size: 75px;
