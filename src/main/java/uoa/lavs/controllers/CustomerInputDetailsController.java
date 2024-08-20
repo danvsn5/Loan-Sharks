@@ -109,7 +109,6 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     // Need to check ALL that they need to be entered
     if (customerTitleComboBox.getValue() == null
         || customerFirstNameField.getText().isEmpty()
-        || customerMiddleNameField.getText().isEmpty()
         || customerLastNameField.getText().isEmpty()
         || customerDOBPicker.getValue() == null
         || customerOccupationField.getText().isEmpty()
