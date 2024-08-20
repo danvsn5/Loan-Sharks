@@ -10,13 +10,15 @@ import org.junit.jupiter.api.Test;
 public class CustomerTest {
   private Customer customer;
   private LocalDate dateOfBirth;
+  private ArrayList<Address> addresses;
   private Address physicalAddress;
-  private Phone phoneOne;
-  private Phone phoneTwo;
-  private CustomerContact contact;
+  private ArrayList<Phone> phones;
+  private Phone phone;
+  private ArrayList<Email> emails;
+  private Email email;
   private CustomerEmployer employer;
-  ArrayList<Note> notes;
-  Note note;
+  private ArrayList<Note> notes;
+  private Note note;
 
   @BeforeEach
   public void setUp() {
@@ -33,11 +35,20 @@ public class CustomerTest {
             "Zimbabwe",
             true,
             false);
-    phoneOne = new Phone("mobile", "1234567890");
-    phoneTwo = new Phone("home", "0987654321");
-    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
+
+    addresses = new ArrayList<>();
+    addresses.add(physicalAddress);
+
+    phone = new Phone("000001", "mobile", "027", "1234567890", true, true);
+    phones = new ArrayList<>();
+    phones.add(phone);
+    email = new Email("000001", "abc@gmail.com", true);
+    emails = new ArrayList<>();
+    emails.add(email);
+
     employer =
         new CustomerEmployer(
+            "000001",
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -63,9 +74,9 @@ public class CustomerTest {
             "Engineer",
             "NZ Citizen",
             notes,
-            physicalAddress,
-            physicalAddress,
-            contact,
+            addresses,
+            phones,
+            emails,
             employer);
   }
 
@@ -148,38 +159,36 @@ public class CustomerTest {
   }
 
   @Test
-  public void testGetPhysicalAddress() {
-    assertEquals(physicalAddress, customer.getPhysicalAddress());
+  public void testGetAddresses() {
+    assertEquals(addresses, customer.getAddresses());
   }
 
   @Test
-  public void testSetPhysicalAddress() {
-    customer.setPhysicalAddress(physicalAddress);
-    assertEquals(physicalAddress, customer.getPhysicalAddress());
+  public void testSetAddresses() {
+    customer.setAddresses(addresses);
+    assertEquals(addresses, customer.getAddresses());
   }
 
   @Test
-  public void testGetMailingAddress() {
-    assertEquals(physicalAddress, customer.getMailingAddress());
+  public void testGetPhones() {
+    assertEquals(phones, customer.getPhones());
   }
 
   @Test
-  public void testSetMailingAddress() {
-    customer.setMailingAddress(physicalAddress);
-    assertEquals(physicalAddress, customer.getMailingAddress());
+  public void testSetPhones() {
+    customer.setPhones(phones);
+    assertEquals(phones, customer.getPhones());
   }
 
   @Test
-  public void testGetContact() {
-    assertEquals(contact, customer.getContact());
+  public void testGetEmails() {
+    assertEquals(emails, customer.getEmails());
   }
 
   @Test
-  public void testSetContact() {
-    CustomerContact newContact =
-        new CustomerContact("123@gmail.com", phoneTwo, phoneOne, "mobile call", "home call");
-    customer.setContact(newContact);
-    assertEquals(newContact, customer.getContact());
+  public void testSetEmails() {
+    customer.setEmails(emails);
+    assertEquals(emails, customer.getEmails());
   }
 
   @Test
@@ -191,6 +200,7 @@ public class CustomerTest {
   public void testSetEmployer() {
     CustomerEmployer newEmployer =
         new CustomerEmployer(
+            "000001",
             "BES",
             "123 Stonesuckle Ct",
             "",

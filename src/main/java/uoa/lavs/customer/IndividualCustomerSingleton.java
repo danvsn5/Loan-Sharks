@@ -14,18 +14,30 @@ public class IndividualCustomerSingleton {
       Note note = new Note("", new String[19]);
       notes.add(note);
 
-      Address physicalAddress = new Address("", "", "", "", "", "", "", "", true, false);
-      Address mailingAddress = new Address("", "", "", "", "", "", "", "", false, true);
+      ArrayList<Address> addresses = new ArrayList<>();
+      for (int i = 0; i < 10; i++) {
+        Address address = new Address("", "", "", "", "", "", "", "", false, false);
+        addresses.add(address);
+      }
 
-      Phone phoneOne = new Phone("", "");
-      Phone phoneTwo = new Phone("", "");
-      CustomerContact contact = new CustomerContact("", phoneOne, phoneTwo, "", "");
+      ArrayList<Phone> phones = new ArrayList<>();
+      for (int i = 0; i < 10; i++) {
+        Phone phone = new Phone("", "", "", "", false, false);
+        phones.add(phone);
+      }
+
+      ArrayList<Email> emails = new ArrayList<>();
+      for (int i = 0; i < 10; i++) {
+        Email email = new Email("", "", false);
+        emails.add(email);
+      }
+
       CustomerEmployer employer =
-          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", false);
+          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false);
 
       instance =
           new IndividualCustomer(
-              "", "", "", null, "", "", notes, physicalAddress, mailingAddress, contact, employer);
+              "", "", "", null, "", "", notes, addresses, phones, emails, employer);
     }
     return instance;
   }

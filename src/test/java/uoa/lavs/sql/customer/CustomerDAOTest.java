@@ -13,8 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uoa.lavs.customer.Address;
 import uoa.lavs.customer.Customer;
-import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.CustomerEmployer;
+import uoa.lavs.customer.Email;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.Note;
 import uoa.lavs.customer.Phone;
@@ -22,9 +22,11 @@ import uoa.lavs.sql.DatabaseConnection;
 import uoa.lavs.sql.DatabaseState;
 import uoa.lavs.sql.InitialiseDatabase;
 import uoa.lavs.sql.oop_to_sql.customer.AddressDAO;
-import uoa.lavs.sql.oop_to_sql.customer.CustomerContactDAO;
 import uoa.lavs.sql.oop_to_sql.customer.CustomerDAO;
 import uoa.lavs.sql.oop_to_sql.customer.CustomerEmployerDAO;
+import uoa.lavs.sql.oop_to_sql.customer.EmailDAO;
+import uoa.lavs.sql.oop_to_sql.customer.NotesDAO;
+import uoa.lavs.sql.oop_to_sql.customer.PhoneDAO;
 
 public class CustomerDAOTest {
   DatabaseConnection conn;
@@ -33,14 +35,18 @@ public class CustomerDAOTest {
   AddressDAO addressDAO;
   ArrayList<Note> notes;
   Note note;
-  CustomerContactDAO contactDAO;
-  CustomerContact contact;
+  NotesDAO notesDAO;
+  ArrayList<Address> addresses;
   Address primaryAddress;
+  ArrayList<Phone> phones;
+  Phone phone;
+  PhoneDAO phoneDAO;
+  ArrayList<Email> emails;
+  Email email;
+  EmailDAO emailDAO;
   CustomerDAO customerDAO;
   IndividualCustomer customer;
   LocalDate dateOfBirth;
-  Phone phoneOne;
-  Phone phoneTwo;
 
   static File dbFile;
 
@@ -51,17 +57,19 @@ public class CustomerDAOTest {
     InitialiseDatabase.createDatabase();
     employerDAO = new CustomerEmployerDAO();
     addressDAO = new AddressDAO();
-    contactDAO = new CustomerContactDAO();
+    phoneDAO = new PhoneDAO();
+    emailDAO = new EmailDAO();
+    notesDAO = new NotesDAO();
     customerDAO = new CustomerDAO();
     dateOfBirth = LocalDate.of(2024, 8, 6);
 
     notes = new ArrayList<>();
-    note = new Note("000001", new String[] {"Allergic to peanuts"});
+    note = new Note("-1", new String[] {"Allergic to peanuts"});
     notes.add(note);
-
+    addresses = new ArrayList<>();
     primaryAddress =
         new Address(
-            "000001",
+            "-1",
             "Rural",
             "304 Rose St",
             "46",
@@ -71,11 +79,18 @@ public class CustomerDAOTest {
             "Zimbabwe",
             true,
             false);
-    phoneOne = new Phone("mobile", "1234567890");
-    phoneTwo = new Phone("home", "0987654321");
-    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
+    addresses.add(primaryAddress);
+
+    phones = new ArrayList<>();
+    phone = new Phone("-1", "mobile", "027", "1234567890", true, true);
+    phones.add(phone);
+    emails = new ArrayList<>();
+    email = new Email("-1", "abc@gmail.com", true);
+    emails.add(email);
+
     employer =
         new CustomerEmployer(
+            "-1",
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -90,20 +105,22 @@ public class CustomerDAOTest {
 
     customer =
         new IndividualCustomer(
-            "000001",
+            "-1",
             "Mr",
             "Ting Mun Guy",
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
             notes,
-            primaryAddress,
-            primaryAddress,
-            contact,
+            addresses,
+            phones,
+            emails,
             employer);
 
     addressDAO.addAddress(primaryAddress);
-    contactDAO.addCustomerContact(contact);
+    notesDAO.addNote(note);
+    phoneDAO.addPhone(phone);
+    emailDAO.addEmail(email);
     employerDAO.addCustomerEmployer(employer);
   }
 
@@ -114,27 +131,17 @@ public class CustomerDAOTest {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM customer WHERE customerId = ?")) {
-      stmt.setString(1, "000001");
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Customer should be added to the database");
-        Assertions.assertEquals("000001", rs.getString("customerId"));
+        Assertions.assertEquals("-1", rs.getString("customerId"));
         Assertions.assertEquals("Mr", rs.getString("title"));
         Assertions.assertEquals("Ting Mun Guy", rs.getString("name"));
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         Assertions.assertEquals(LocalDate.of(2024, 8, 6), actualDateOfBirth);
         Assertions.assertEquals("Engineer", rs.getString("occupation"));
         Assertions.assertEquals("NZ Citizen", rs.getString("residency"));
-
-        // String notesString = rs.getString("notes");
-        // String[] retrievedNotes = notesString.split("::");
-        // for (int i = 0; i < retrievedNotes.length; i++) {
-        //   Assertions.assertEquals(customer.getNotes().get(i).getLines(), retrievedNotes[i]);
-        // }
-
-        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
-        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
-        Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
         Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
       }
     } catch (SQLException e) {
@@ -153,9 +160,6 @@ public class CustomerDAOTest {
     customer.setDateOfBirth(LocalDate.of(2024, 8, 7));
     customer.setOccupation("Doctor");
     customer.setResidency("NZ Permanent Resident");
-    customer.setPhysicalAddress(primaryAddress);
-    customer.setMailingAddress(primaryAddress);
-    customer.setContact(contact);
     customer.setEmployer(employer);
 
     customerDAO.updateCustomer(customer);
@@ -163,20 +167,17 @@ public class CustomerDAOTest {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM customer WHERE customerId = ?")) {
-      stmt.setString(1, "000001");
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Customer should be updated in the database");
-        Assertions.assertEquals("000001", rs.getString("customerId"));
+        Assertions.assertEquals("-1", rs.getString("customerId"));
         Assertions.assertEquals("Mrs", rs.getString("title"));
         Assertions.assertEquals("Ting Ting Mun Mun Guy Guy", rs.getString("name"));
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
         Assertions.assertEquals("NZ Permanent Resident", rs.getString("residency"));
-        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
-        Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
-        Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
         Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
       }
     } catch (SQLException e) {
@@ -208,12 +209,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(retrievedCustomer.getOccupation(), rs.getString("occupation"));
         Assertions.assertEquals(retrievedCustomer.getResidency(), rs.getString("residency"));
         Assertions.assertEquals(
-            retrievedCustomer.getPhysicalAddress().getAddressId(), rs.getInt("primaryAddressId"));
-        Assertions.assertEquals(
-            retrievedCustomer.getMailingAddress().getAddressId(), rs.getInt("mailingAddressId"));
-        Assertions.assertEquals(
-            retrievedCustomer.getContact().getContactId(), rs.getInt("contactId"));
-        Assertions.assertEquals(
             retrievedCustomer.getEmployer().getEmployerId(), rs.getInt("employerId"));
       }
     } catch (SQLException e) {
@@ -229,24 +224,16 @@ public class CustomerDAOTest {
     customerDAO.addCustomer(customer);
 
     LocalDate dateOfBirth2 = LocalDate.of(2000, 6, 6);
-    Address primaryAddress2 =
-        new Address(
-            "000001",
-            "Rural",
-            "100 Guy St",
-            "",
-            "Rosedale",
-            "999",
-            "Auckland",
-            "New Zealand",
-            true,
-            false);
-    Phone phoneOne2 = new Phone("mobile", "1111111");
-    Phone phoneTwo2 = new Phone("work", "0987654321");
-    CustomerContact contact2 =
-        new CustomerContact("abc@gmail.com", phoneOne2, phoneTwo2, "mobile sms", "email");
+    Phone phone2 = new Phone("-3", "mobile", "027", "1111111", true, true);
+    Email email2 = new Email("-3", "aaa@gmail.com", true);
+    ArrayList<Phone> phones2 = new ArrayList<>();
+    phones2.add(phone2);
+    ArrayList<Email> emails2 = new ArrayList<>();
+    emails2.add(email2);
+
     CustomerEmployer employer2 =
         new CustomerEmployer(
+            "-3",
             "Countdown",
             "",
             "",
@@ -262,21 +249,21 @@ public class CustomerDAOTest {
     String name = "Ting Mun Guy";
 
     ArrayList<Note> notes = new ArrayList<>();
-    Note note = new Note("000003", new String[] {"Allergic to peanuts"});
+    Note note = new Note("-3", new String[] {"Allergic to peanuts"});
     notes.add(note);
 
     IndividualCustomer customer2 =
         new IndividualCustomer(
-            "000003",
+            "-3",
             "Mrs",
             name,
             dateOfBirth2,
             "Professional",
             "NZ Permanent Resident",
             notes,
-            primaryAddress2,
-            primaryAddress2,
-            contact2,
+            addresses,
+            phones2,
+            emails2,
             employer2);
     customerDAO.addCustomer(customer2);
 
@@ -302,24 +289,16 @@ public class CustomerDAOTest {
   public void testGetCustomersByBirth() {
     customerDAO.addCustomer(customer);
 
-    Address primaryAddress2 =
-        new Address(
-            "000001",
-            "Rural",
-            "100 Guy St",
-            "",
-            "Rosedale",
-            "999",
-            "Auckland",
-            "New Zealand",
-            true,
-            false);
-    Phone phoneOne2 = new Phone("mobile", "1111111");
-    Phone phoneTwo2 = new Phone("work", "0987654321");
-    CustomerContact contact2 =
-        new CustomerContact("abc@gmail.com", phoneOne2, phoneTwo2, "mobile sms", "email");
+    Phone phone2 = new Phone("-2", "mobile", "027", "1111111", true, true);
+    Email email2 = new Email("-2", "aaa@gmail.com", true);
+    ArrayList<Phone> phones2 = new ArrayList<>();
+    phones2.add(phone2);
+    ArrayList<Email> emails2 = new ArrayList<>();
+    emails2.add(email2);
+
     CustomerEmployer employer2 =
         new CustomerEmployer(
+            "-2",
             "Countdown",
             "",
             "",
@@ -333,21 +312,21 @@ public class CustomerDAOTest {
             false);
 
     ArrayList<Note> notes = new ArrayList<>();
-    Note note = new Note("000002", new String[] {"Allergic to peanuts"});
+    Note note = new Note("-2", new String[] {"Allergic to peanuts"});
     notes.add(note);
 
     IndividualCustomer customer2 =
         new IndividualCustomer(
-            "000002",
+            "-2",
             "Mrs",
             "Zing Dingus",
             dateOfBirth,
             "Professional",
             "NZ Permanent Resident",
             notes,
-            primaryAddress2,
-            primaryAddress2,
-            contact2,
+            addresses,
+            phones2,
+            emails2,
             employer2);
     customerDAO.addCustomer(customer2);
 

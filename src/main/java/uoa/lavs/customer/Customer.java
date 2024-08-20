@@ -11,9 +11,9 @@ public abstract class Customer implements ICustomer {
   private String occupation;
   private String residency;
   private ArrayList<Note> notes;
-  private Address physicalAddress;
-  private Address mailingAddress;
-  private CustomerContact contact;
+  private ArrayList<Address> addresses;
+  private ArrayList<Phone> phones;
+  private ArrayList<Email> emails;
   private CustomerEmployer employer;
 
   public Customer(
@@ -24,9 +24,9 @@ public abstract class Customer implements ICustomer {
       String occupation,
       String residency,
       ArrayList<Note> notes,
-      Address physicalAddress,
-      Address mailingAddress,
-      CustomerContact contact,
+      ArrayList<Address> addresses,
+      ArrayList<Phone> phones,
+      ArrayList<Email> emails,
       CustomerEmployer employer) {
     this.customerId = customerId;
     this.title = title;
@@ -35,9 +35,9 @@ public abstract class Customer implements ICustomer {
     this.occupation = occupation;
     this.residency = residency;
     this.notes = notes;
-    this.physicalAddress = physicalAddress;
-    this.mailingAddress = mailingAddress;
-    this.contact = contact;
+    this.addresses = addresses;
+    this.phones = phones;
+    this.emails = emails;
     this.employer = employer;
   }
 
@@ -77,18 +77,18 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public Address getPhysicalAddress() {
-    return this.physicalAddress;
+  public ArrayList<Address> getAddresses() {
+    return this.addresses;
   }
 
   @Override
-  public Address getMailingAddress() {
-    return this.mailingAddress;
+  public ArrayList<Phone> getPhones() {
+    return this.phones;
   }
 
   @Override
-  public CustomerContact getContact() {
-    return this.contact;
+  public ArrayList<Email> getEmails() {
+    return this.emails;
   }
 
   @Override
@@ -132,18 +132,18 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public void setPhysicalAddress(Address physicalAddress) {
-    this.physicalAddress = physicalAddress;
+  public void setAddresses(ArrayList<Address> addresses) {
+    this.addresses = addresses;
   }
 
   @Override
-  public void setMailingAddress(Address mailingAddress) {
-    this.mailingAddress = mailingAddress;
+  public void setPhones(ArrayList<Phone> phones) {
+    this.phones = phones;
   }
 
   @Override
-  public void setContact(CustomerContact contact) {
-    this.contact = contact;
+  public void setEmails(ArrayList<Email> emails) {
+    this.emails = emails;
   }
 
   @Override
