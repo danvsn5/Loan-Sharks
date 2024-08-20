@@ -87,7 +87,8 @@ public class SyncManager {
       lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
     }
 
-    SyncManager syncManager = new SyncManager(List.of(syncCustomer, syncAddress, syncEmployer, syncNotes));
+    SyncManager syncManager =
+        new SyncManager(List.of(syncCustomer, syncAddress, syncEmployer, syncNotes));
 
     syncManager.syncAll(lastSyncTime);
   }

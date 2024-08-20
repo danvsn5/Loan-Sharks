@@ -41,7 +41,7 @@ public class CustomerDAO {
   }
 
   private String getNextCustomerId() {
-    String sql = "SELECT MIN(customerId) AS smallestId FROM customer";
+    String sql = "SELECT MIN(CAST(customerId AS INTEGER)) AS smallestId FROM customer";
     String previousId = "-1";
 
     try (Connection conn = DatabaseConnection.connect();
@@ -62,14 +62,13 @@ public class CustomerDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-
     return previousId;
   }
 
   public void updateCustomer(ICustomer customer) {
     String sql =
         "UPDATE customer SET title = ?, name = ?, dateOfBirth = ?, occupation = ?, residency = ?,"
-        + " lastModified = CURRENT_TIMESTAMP WHERE customerId = ?";
+            + " lastModified = CURRENT_TIMESTAMP WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customer.getTitle());
@@ -77,8 +76,7 @@ public class CustomerDAO {
       pstmt.setDate(3, Date.valueOf(customer.getDateOfBirth()));
       pstmt.setString(4, customer.getOccupation());
       pstmt.setString(5, customer.getResidency());
-      pstmt.setString(
-          6, customer.getCustomerId());
+      pstmt.setString(6, customer.getCustomerId());
       pstmt.executeUpdate();
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -114,7 +112,6 @@ public class CustomerDAO {
         CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
 
         CustomerEmployer employer = employerdao.getCustomerEmployer(customerId);
-
 
         return new IndividualCustomer(
             customerId,
