@@ -41,6 +41,7 @@ public class IndividualCustomerTest {
             "thisplaceisunreal@gmail.com", phoneOne, phoneTwo, "mobile call", "email");
     employer =
         new CustomerEmployer(
+            "000001",
             "Company",
             "1 Real Pl",
             "",

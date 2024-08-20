@@ -76,6 +76,7 @@ public class CustomerDAOTest {
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
     employer =
         new CustomerEmployer(
+            "000001",
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -135,7 +136,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
         Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
-        Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -177,7 +177,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("primaryAddressId"));
         Assertions.assertEquals(primaryAddress.getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(contact.getContactId(), rs.getInt("contactId"));
-        Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -213,8 +212,6 @@ public class CustomerDAOTest {
             retrievedCustomer.getMailingAddress().getAddressId(), rs.getInt("mailingAddressId"));
         Assertions.assertEquals(
             retrievedCustomer.getContact().getContactId(), rs.getInt("contactId"));
-        Assertions.assertEquals(
-            retrievedCustomer.getEmployer().getEmployerId(), rs.getInt("employerId"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -247,6 +244,7 @@ public class CustomerDAOTest {
         new CustomerContact("abc@gmail.com", phoneOne2, phoneTwo2, "mobile sms", "email");
     CustomerEmployer employer2 =
         new CustomerEmployer(
+          "000001",
             "Countdown",
             "",
             "",
@@ -320,6 +318,7 @@ public class CustomerDAOTest {
         new CustomerContact("abc@gmail.com", phoneOne2, phoneTwo2, "mobile sms", "email");
     CustomerEmployer employer2 =
         new CustomerEmployer(
+          "000001",
             "Countdown",
             "",
             "",

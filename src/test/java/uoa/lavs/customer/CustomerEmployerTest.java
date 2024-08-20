@@ -12,6 +12,7 @@ public class CustomerEmployerTest {
   public void setUp() {
     employer =
         new CustomerEmployer(
+            "1",
             "Countdown",
             "123 Stonesuckle Ct",
             "",

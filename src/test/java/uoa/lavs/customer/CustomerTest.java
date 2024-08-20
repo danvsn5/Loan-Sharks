@@ -38,6 +38,7 @@ public class CustomerTest {
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
     employer =
         new CustomerEmployer(
+          "000001",
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -191,6 +192,7 @@ public class CustomerTest {
   public void testSetEmployer() {
     CustomerEmployer newEmployer =
         new CustomerEmployer(
+          "000001",
             "BES",
             "123 Stonesuckle Ct",
             "",

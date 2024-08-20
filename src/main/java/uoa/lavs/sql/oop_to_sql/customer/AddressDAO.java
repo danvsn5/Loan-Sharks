@@ -56,7 +56,7 @@ public class AddressDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-    return 1; // Start with 1 if no address exists for this customer
+    return 1; 
   }
 
   public void updateAddress(Address address) {

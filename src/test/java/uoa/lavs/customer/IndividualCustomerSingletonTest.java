@@ -41,7 +41,7 @@ public class IndividualCustomerSingletonTest {
     phoneOne = new Phone("mobile", "1234567890");
     phoneTwo = new Phone("home", "0987654321");
     contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employer = new CustomerEmployer("Countdown", "", "", "", "", "", "", null, null, null, false);
+    employer = new CustomerEmployer("000001", "Countdown", "", "", "", "", "", "", null, null, null, false);
 
     notes = new ArrayList<>();
     note = new Note("000002", new String[] {"Allergic to peanuts"});

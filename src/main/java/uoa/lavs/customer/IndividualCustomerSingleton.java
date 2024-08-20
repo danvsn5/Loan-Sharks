@@ -21,7 +21,7 @@ public class IndividualCustomerSingleton {
       Phone phoneTwo = new Phone("", "");
       CustomerContact contact = new CustomerContact("", phoneOne, phoneTwo, "", "");
       CustomerEmployer employer =
-          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", false);
+          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false);
 
       instance =
           new IndividualCustomer(
