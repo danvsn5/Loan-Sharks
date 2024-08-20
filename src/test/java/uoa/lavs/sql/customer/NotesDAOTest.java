@@ -30,12 +30,10 @@ public class NotesDAOTest {
   }
 
   @Test
-  public void testAddNotes() {
+  public void testAddNote() {
     Note note = new Note("000001", new String[] {"Allergic to peanuts"});
-    ArrayList<Note> notes = new ArrayList<>();
-    notes.add(note);
 
-    notesDAO.addNotes(notes);
+    notesDAO.addNote(note);
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
@@ -56,15 +54,13 @@ public class NotesDAOTest {
   }
 
   @Test
-  public void testUpdateNotes() {
+  public void testUpdateNote() {
     Note note = new Note("000001", new String[] {"Allergic to peanuts"});
-    ArrayList<Note> notes = new ArrayList<>();
-    notes.add(note);
 
-    notesDAO.addNotes(notes);
+    notesDAO.addNote(note);
 
-    notes.get(0).setLines(new String[] {"Allergic to peanuts", "Allergic to dairy"});
-    notesDAO.updateNotes(notes);
+    note.setLines(new String[] {"Allergic to peanuts", "Allergic to dairy"});
+    notesDAO.updateNote(note);
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
@@ -142,7 +138,7 @@ public class NotesDAOTest {
     ArrayList<Note> notes = new ArrayList<>();
     notes.add(note);
 
-    notesDAO.addNotes(notes);
+    notesDAO.addNote(note);
 
     ArrayList<Note> retrievedNotes = notesDAO.getNotes("000001");
 

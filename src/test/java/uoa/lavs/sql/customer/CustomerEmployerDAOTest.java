@@ -32,7 +32,7 @@ public class CustomerEmployerDAOTest {
     dbFile = DatabaseState.DB_TEST_FILE;
     employer =
         new CustomerEmployer(
-          "000001",
+            "-1",
             "Countdown",
             "123 Stonesuckle Ct",
             "",

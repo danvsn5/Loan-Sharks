@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,8 +29,10 @@ public class InitialiseDatabaseTest {
       DatabaseMetaData metaData = conn.getMetaData();
       Set<String> expectedTables = new HashSet<>();
       expectedTables.add("customer");
-      expectedTables.add("customer_contact");
+      expectedTables.add("customer_phone");
+      expectedTables.add("customer_email");
       expectedTables.add("customer_address");
+      expectedTables.add("customer_notes");
       expectedTables.add("customer_employer");
       expectedTables.add("loan");
       expectedTables.add("loan_duration");
@@ -47,7 +48,8 @@ public class InitialiseDatabaseTest {
       }
 
       Assertions.assertTrue(
-          actualTables.containsAll(expectedTables), "Not all expected tables were created in the database");
+          actualTables.containsAll(expectedTables),
+          "Not all expected tables were created in the database");
     } catch (SQLException e) {
       e.printStackTrace();
       Assertions.fail("Failed to check database tables");
@@ -60,7 +62,8 @@ public class InitialiseDatabaseTest {
   public void tearDown() {
     DatabaseState.setActiveDB(false);
     if (!dbFile.delete()) {
-      throw new RuntimeException("Failed to delete test database file: " + dbFile.getAbsolutePath());
+      throw new RuntimeException(
+          "Failed to delete test database file: " + dbFile.getAbsolutePath());
     }
   }
 }

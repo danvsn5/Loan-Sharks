@@ -18,11 +18,11 @@ public interface ICustomer {
 
   public ArrayList<Note> getNotes();
 
-  public Address getPhysicalAddress();
+  public ArrayList<Address> getAddresses();
 
-  public Address getMailingAddress();
+  public ArrayList<Phone> getPhones();
 
-  public CustomerContact getContact();
+  public ArrayList<Email> getEmails();
 
   public CustomerEmployer getEmployer();
 
@@ -40,11 +40,11 @@ public interface ICustomer {
 
   public void setNotes(ArrayList<Note> notes);
 
-  public void setPhysicalAddress(Address physicalAddress);
+  public void setAddresses(ArrayList<Address> addresses);
 
-  public void setMailingAddress(Address mailingAddress);
+  public void setPhones(ArrayList<Phone> phones);
 
-  public void setContact(CustomerContact contact);
+  public void setEmails(ArrayList<Email> emails);
 
   public void setEmployer(CustomerEmployer employer);
 }

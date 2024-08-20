@@ -13,7 +13,6 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
-import uoa.lavs.customer.Address;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
@@ -62,16 +61,16 @@ public class CustomerInputMailingAddressController implements AccessTypeObserver
   }
 
   private void setAddressDetails() {
-    Address address = customer.getMailingAddress();
-    address.setAddressLineOne(customerAddressLine1Field.getText());
-    address.setAddressLineTwo(customerAddressLine2Field.getText());
-    address.setSuburb(customerSuburbField.getText());
-    address.setCity(customerCityField.getText());
-    address.setPostCode(customerPostcodeField.getText());
-    address.setAddressType(customerAddressTypeComboBox.getValue());
+    // Address address = customer.getMailingAddress();
+    // address.setAddressLineOne(customerAddressLine1Field.getText());
+    // address.setAddressLineTwo(customerAddressLine2Field.getText());
+    // address.setSuburb(customerSuburbField.getText());
+    // address.setCity(customerCityField.getText());
+    // address.setPostCode(customerPostcodeField.getText());
+    // address.setAddressType(customerAddressTypeComboBox.getValue());
 
-    // Autosetting to New Zealand
-    address.setCountry("New Zealand");
+    // // Autosetting to New Zealand
+    // address.setCountry("New Zealand");
   }
 
   @FXML

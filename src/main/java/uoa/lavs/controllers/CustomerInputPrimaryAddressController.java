@@ -13,7 +13,6 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
-import uoa.lavs.customer.Address;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
@@ -63,21 +62,22 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   }
 
   private void setAddressDetails() {
-    Address address = customer.getPhysicalAddress();
-    address.setAddressLineOne(customerAddressLine1Field.getText());
-    address.setAddressLineTwo(customerAddressLine2Field.getText());
-    address.setSuburb(customerSuburbField.getText());
-    address.setCity(customerCityField.getText());
-    address.setPostCode(customerPostcodeField.getText());
-    address.setAddressType(customerAddressTypeComboBox.getValue());
+    // ArrayList<Address> addresses = customer.getAddresses();
 
-    // Autosetting to New Zealand
-    address.setCountry("New Zealand");
+    // address.setAddressLineOne(customerAddressLine1Field.getText());
+    // address.setAddressLineTwo(customerAddressLine2Field.getText());
+    // address.setSuburb(customerSuburbField.getText());
+    // address.setCity(customerCityField.getText());
+    // address.setPostCode(customerPostcodeField.getText());
+    // address.setAddressType(customerAddressTypeComboBox.getValue());
 
-    // handle mailing address
-    if (mailingAddressRadio.isSelected()) {
-      customer.setMailingAddress(address);
-    }
+    // // Autosetting to New Zealand
+    // address.setCountry("New Zealand");
+
+    // // handle mailing address
+    // if (mailingAddressRadio.isSelected()) {
+    //   customer.setMailingAddress(address);
+    // }
   }
 
   @FXML

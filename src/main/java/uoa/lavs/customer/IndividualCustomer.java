@@ -12,9 +12,9 @@ public class IndividualCustomer extends Customer {
       String occupation,
       String residency,
       ArrayList<Note> notes,
-      Address physicalAddress,
-      Address mailingAddress,
-      CustomerContact contact,
+      ArrayList<Address> addresses,
+      ArrayList<Phone> phones,
+      ArrayList<Email> emails,
       CustomerEmployer employer) {
     super(
         customerId,
@@ -24,9 +24,9 @@ public class IndividualCustomer extends Customer {
         occupation,
         residency,
         notes,
-        physicalAddress,
-        mailingAddress,
-        contact,
+        addresses,
+        phones,
+        emails,
         employer);
   }
 }

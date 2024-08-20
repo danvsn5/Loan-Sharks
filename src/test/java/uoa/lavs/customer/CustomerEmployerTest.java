@@ -12,7 +12,7 @@ public class CustomerEmployerTest {
   public void setUp() {
     employer =
         new CustomerEmployer(
-            "1",
+            "000001",
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -24,6 +24,17 @@ public class CustomerEmployerTest {
             null,
             null,
             false);
+  }
+
+  @Test
+  public void testGetCustomerId() {
+    assertEquals("000001", employer.getCustomerId());
+  }
+
+  @Test
+  public void testSetCustomerId() {
+    employer.setCustomerId("000002");
+    assertEquals("000002", employer.getCustomerId());
   }
 
   @Test

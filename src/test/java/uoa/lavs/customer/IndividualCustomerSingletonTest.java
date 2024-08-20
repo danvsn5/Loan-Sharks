@@ -12,20 +12,23 @@ import org.junit.jupiter.api.Test;
 public class IndividualCustomerSingletonTest {
   private IndividualCustomer customer;
   private LocalDate dateOfBirth;
+  private ArrayList<Address> addresses;
   private Address physicalAddress;
-  private CustomerContact contact;
+  private ArrayList<Phone> phones;
+  private Phone phone;
+  private ArrayList<Email> emails;
+  private Email email;
   private CustomerEmployer employer;
   private IndividualCustomer newCustomer;
-  private Phone phoneOne;
-  private Phone phoneTwo;
-  ArrayList<Note> notes;
-  Note note;
+  private ArrayList<Note> notes;
+  private Note note;
 
   @BeforeEach
   public void setUp() {
     IndividualCustomerSingleton.resetInstance();
 
     dateOfBirth = LocalDate.of(2024, 8, 6);
+    addresses = new ArrayList<>();
     physicalAddress =
         new Address(
             "000001",
@@ -38,10 +41,18 @@ public class IndividualCustomerSingletonTest {
             "Zimbabwe",
             true,
             false);
-    phoneOne = new Phone("mobile", "1234567890");
-    phoneTwo = new Phone("home", "0987654321");
-    contact = new CustomerContact("abc@gmail.com", phoneOne, phoneTwo, "mobile sms", "email");
-    employer = new CustomerEmployer("000001", "Countdown", "", "", "", "", "", "", null, null, null, false);
+    addresses.add(physicalAddress);
+
+    phone = new Phone("000001", "mobile", "027", "1234567890", true, true);
+    phones = new ArrayList<>();
+    phones.add(phone);
+    email = new Email("000001", "abc@gmail.com", true);
+    emails = new ArrayList<>();
+    emails.add(email);
+
+    employer =
+        new CustomerEmployer(
+            "000001", "Countdown", "", "", "", "", "", "", null, null, null, false);
 
     notes = new ArrayList<>();
     note = new Note("000002", new String[] {"Allergic to peanuts"});
@@ -56,9 +67,9 @@ public class IndividualCustomerSingletonTest {
             "Engineer",
             "NZ Citizen",
             notes,
-            physicalAddress,
-            physicalAddress,
-            contact,
+            addresses,
+            phones,
+            emails,
             employer);
   }
 

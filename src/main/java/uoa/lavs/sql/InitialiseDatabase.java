@@ -9,7 +9,8 @@ public class InitialiseDatabase {
   public static void createDatabase() {
     try (Connection conn = DatabaseConnection.connect()) {
       createCustomerEntity(conn);
-      createCustomerContactEntity(conn);
+      createPhoneEntity(conn);
+      createEmailEntity(conn);
       createCustomerAddressEntity(conn);
       createCustomerEmployerEntity(conn);
       createCustomerNotesEntity(conn);
@@ -32,16 +33,8 @@ public class InitialiseDatabase {
             + "dateOfBirth DATE, \n"
             + "occupation VARCHAR(100), \n"
             + "residency VARCHAR(50), \n"
-            + "primaryAddressId INTEGER, \n"
-            + "mailingAddressId INTEGER, \n"
-            + "contactId VARCHAR(50), \n"
             + "employerId VARCHAR(50), \n"
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \n"
-            + "FOREIGN KEY (primaryAddressId, customerId) REFERENCES customer_address(addressId,"
-            + " customerId), \n"
-            + "FOREIGN KEY (mailingAddressId, customerId) REFERENCES customer_address(addressId,"
-            + " customerId), \n"
-            + "FOREIGN KEY (contactId) REFERENCES CustomerContact(contactId), \n"
             + "FOREIGN KEY (employerId) REFERENCES CustomerEmployer(employerId)\n"
             + ");";
 
@@ -52,18 +45,38 @@ public class InitialiseDatabase {
     }
   }
 
-  private static void createCustomerContactEntity(Connection conn) {
+  private static void createPhoneEntity(Connection conn) {
     String sql =
-        "CREATE TABLE IF NOT EXISTS customer_contact (\n"
-            + "contactId INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + "customerEmail VARCHAR(100), "
-            + "phoneOneType VARCHAR(20), "
-            + "phoneOneNumber VARCHAR(20), "
-            + "phoneTwoType VARCHAR(20), "
-            + "phoneTwoNumber VARCHAR(20), "
-            + "preferredContact VARCHAR(50), "
-            + "alternateContact VARCHAR(50), "
-            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+        "CREATE TABLE IF NOT EXISTS customer_phone (\n"
+            + "customerId VARCHAR(50), "
+            + "phoneId INTEGER, "
+            + "type VARCHAR(20), "
+            + "prefix VARCHAR(10), "
+            + "phoneNumber VARCHAR(20), "
+            + "isPrimary BOOLEAN, "
+            + "canSendText BOOLEAN, "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + "PRIMARY KEY (customerId, phoneId),\n"
+            + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
+            + ");";
+
+    try (Statement stmt = conn.createStatement()) {
+      stmt.execute(sql);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  private static void createEmailEntity(Connection conn) {
+    String sql =
+        "CREATE TABLE IF NOT EXISTS customer_email (\n"
+            + "customerId VARCHAR(50), "
+            + "emailId INTEGER, "
+            + "emailAddress VARCHAR(100), "
+            + "isPrimary BOOLEAN, "
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + "PRIMARY KEY (customerId, emailId),\n"
+            + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {

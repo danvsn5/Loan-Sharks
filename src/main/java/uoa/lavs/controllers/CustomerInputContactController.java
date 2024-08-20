@@ -13,7 +13,6 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
-import uoa.lavs.customer.CustomerContact;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
@@ -73,15 +72,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
   }
 
   private void setContactDetails() {
-    CustomerContact contact = customer.getContact();
-    contact.setCustomerEmail(customerEmailTextField.getText());
-    // TODO Uncomment once types are implemented
-    // contact.getPhoneOne().setType();
-    contact.getPhoneOne().setPhoneNumber(customerPhoneNumberOne.getText());
-    // contact.getPhoneTwo().setType();
-    contact.getPhoneTwo().setPhoneNumber(customerPhoneNumberTwo.getText());
-    contact.setPreferredContact(customerPreferredContactBox.getText());
-    contact.setAlternateContact(customerAltContactBox.getText());
+
+    // TODO implement when guis are ready
   }
 
   // add handlers for all buttons

@@ -75,6 +75,7 @@ public class CustomerEmployerDAO {
       ResultSet rs = pstmt.executeQuery();
 
       if (rs.next()) {
+        customerId = rs.getString("customerId");
         String employerName = rs.getString("employerName");
         String addressLineOne = rs.getString("addressLineOne");
         String addressLineTwo = rs.getString("addressLineTwo");

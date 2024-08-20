@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import uoa.lavs.customer.Address;
 import uoa.lavs.sql.DatabaseConnection;
 
@@ -15,8 +16,9 @@ public class AddressDAO {
     int nextAddressId = getNextAddressIdForCustomer(customerId);
 
     String sql =
-        "INSERT INTO customer_address (customerId, addressId, addressType, addressLineOne, "
-            + "addressLineTwo, suburb, postCode, city, country, isPrimary, isMailing) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO customer_address (customerId, addressId, addressType, addressLineOne,"
+            + " addressLineTwo, suburb, postCode, city, country, isPrimary, isMailing) VALUES (?,"
+            + " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -35,7 +37,6 @@ public class AddressDAO {
       pstmt.executeUpdate();
 
       address.setAddressId(nextAddressId);
-      address.setCustomerId(customerId);
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
@@ -124,6 +125,51 @@ public class AddressDAO {
         return retrievedAddress;
       }
 
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return null;
+  }
+
+  public ArrayList<Address> getAddresses(String customerId) {
+    ArrayList<Address> addresses = new ArrayList<>();
+
+    String sql = "SELECT * FROM customer_address WHERE customerId = ?";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, customerId);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        int addressId = rs.getInt("addressId");
+        String addressType = rs.getString("addressType");
+        String addressLineOne = rs.getString("addressLineOne");
+        String addressLineTwo = rs.getString("addressLineTwo");
+        String suburb = rs.getString("suburb");
+        String postCode = rs.getString("postCode");
+        String city = rs.getString("city");
+        String country = rs.getString("country");
+        boolean isPrimary = rs.getBoolean("isPrimary");
+        boolean isMailing = rs.getBoolean("isMailing");
+
+        Address retrievedAddress =
+            new Address(
+                customerId,
+                addressType,
+                addressLineOne,
+                addressLineTwo,
+                suburb,
+                postCode,
+                city,
+                country,
+                isPrimary,
+                isMailing);
+        retrievedAddress.setAddressId(addressId);
+
+        addresses.add(retrievedAddress);
+      }
+      return addresses;
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
