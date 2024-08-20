@@ -89,8 +89,8 @@ public class CustomerEmployerDAOTest {
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
-            conn.prepareStatement("SELECT * FROM customer_employer WHERE employerId = ?")) {
-      stmt.setInt(1, employer.getEmployerId());
+            conn.prepareStatement("SELECT * FROM customer_employer WHERE customerId = ?")) {
+      stmt.setString(1, "000001");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Employer should be updated in the database");
@@ -117,14 +117,13 @@ public class CustomerEmployerDAOTest {
   @Test
   public void testGetCustomerEmployer() {
     employerDAO.addCustomerEmployer(employer);
-    int employerId = employer.getEmployerId();
 
-    CustomerEmployer retrievedEmployer = employerDAO.getCustomerEmployer(employerId);
+    CustomerEmployer retrievedEmployer = employerDAO.getCustomerEmployer("000001");
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
-            conn.prepareStatement("SELECT * FROM customer_employer WHERE employerId = ?")) {
-      stmt.setInt(1, employerId);
+            conn.prepareStatement("SELECT * FROM customer_employer WHERE customerId = ?")) {
+      stmt.setString(1, "000001");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Employer should be in the database");

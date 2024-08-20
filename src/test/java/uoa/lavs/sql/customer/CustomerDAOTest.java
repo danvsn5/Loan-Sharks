@@ -142,7 +142,13 @@ public class CustomerDAOTest {
         Assertions.assertEquals(LocalDate.of(2024, 8, 6), actualDateOfBirth);
         Assertions.assertEquals("Engineer", rs.getString("occupation"));
         Assertions.assertEquals("NZ Citizen", rs.getString("residency"));
-        Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
+
+        // String notesString = rs.getString("notes");
+        // String[] retrievedNotes = notesString.split("::");
+        // for (int i = 0; i < retrievedNotes.length; i++) {
+        //   Assertions.assertEquals(customer.getNotes().get(i).getLines(), retrievedNotes[i]);
+        // }
+
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -178,7 +184,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
         Assertions.assertEquals("NZ Permanent Resident", rs.getString("residency"));
-        Assertions.assertEquals(employer.getEmployerId(), rs.getInt("employerId"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -208,8 +213,6 @@ public class CustomerDAOTest {
         Assertions.assertEquals(retrievedCustomer.getDateOfBirth(), actualDateOfBirth);
         Assertions.assertEquals(retrievedCustomer.getOccupation(), rs.getString("occupation"));
         Assertions.assertEquals(retrievedCustomer.getResidency(), rs.getString("residency"));
-        Assertions.assertEquals(
-            retrievedCustomer.getEmployer().getEmployerId(), rs.getInt("employerId"));
       }
     } catch (SQLException e) {
       e.printStackTrace();

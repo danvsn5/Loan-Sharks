@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.sql.DatabaseConnection;
 
@@ -12,11 +11,11 @@ public class CustomerEmployerDAO {
 
   public void addCustomerEmployer(CustomerEmployer employer) {
     String sql =
-        "INSERT INTO customer_employer (customerId, employerName, addressLineOne, addressLineTwo,"
-            + " suburb, postCode, city, country, employerEmail, employerWebsite, employerPhone,"
-            + " ownerOfCompany) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO customer_employer (customerId, employerName, addressLineOne, addressLineTwo, suburb,"
+            + " postCode, city, country, employerEmail, employerWebsite, employerPhone, ownerOfCompany) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
       pstmt.setString(1, employer.getCustomerId());
       pstmt.setString(2, employer.getEmployerName());
@@ -32,13 +31,7 @@ public class CustomerEmployerDAO {
       pstmt.setBoolean(12, employer.getOwnerOfCompany());
 
       pstmt.executeUpdate();
-
-      try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-        if (generatedKeys.next()) {
-          int generatedId = generatedKeys.getInt(1);
-          employer.setEmployerId(generatedId);
-        }
-      }
+      System.out.println("New employer added for customer ID: " + employer.getCustomerId());
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
@@ -48,7 +41,8 @@ public class CustomerEmployerDAO {
     String sql =
         "UPDATE customer_employer SET employerName = ?, addressLineOne = ?, addressLineTwo = ?,"
             + " suburb = ?, postCode = ?, city = ?, country = ?, employerEmail = ?, employerWebsite"
-            + " = ?, employerPhone = ?, ownerOfCompany = ? WHERE employerId = ?";
+            + " = ?, employerPhone = ?, ownerOfCompany = ?, lastModified = CURRENT_TIMESTAMP"
+            + " WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -63,23 +57,25 @@ public class CustomerEmployerDAO {
       pstmt.setString(9, employer.getEmployerWebsite());
       pstmt.setString(10, employer.getEmployerPhone());
       pstmt.setBoolean(11, employer.getOwnerOfCompany());
-      pstmt.setInt(12, employer.getEmployerId());
+      pstmt.setString(12, employer.getCustomerId());
 
       pstmt.executeUpdate();
+      System.out.println("Employer updated for customer ID: " + employer.getCustomerId());
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
   }
 
-  public CustomerEmployer getCustomerEmployer(int employerId) {
-    String sql = "SELECT * FROM customer_employer WHERE employerId = ?";
+  public CustomerEmployer getCustomerEmployer(String customerId) {
+    String sql = "SELECT * FROM customer_employer WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, employerId);
+
+      pstmt.setString(1, customerId);
       ResultSet rs = pstmt.executeQuery();
 
       if (rs.next()) {
-        String customerId = rs.getString("customerId");
+        customerId = rs.getString("customerId");
         String employerName = rs.getString("employerName");
         String addressLineOne = rs.getString("addressLineOne");
         String addressLineTwo = rs.getString("addressLineTwo");
@@ -106,12 +102,25 @@ public class CustomerEmployerDAO {
                 employerWebsite,
                 employerPhone,
                 ownerOfCompany);
-        customerEmployer.setEmployerId(employerId);
         return customerEmployer;
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
     return null;
+  }
+
+  public static void main(String[] args) {
+    CustomerEmployerDAO employerDAO = new CustomerEmployerDAO();
+
+    // Test saving a new employer
+    CustomerEmployer newEmployer = new CustomerEmployer(
+        "000001", "Tech Corp", "123 Tech Street", "Suite 100", "Techville", "12345", "Metropolis",
+        "Countryland", "contact@techcorp.com", "www.techcorp.com", "123-456-7890", true);
+    employerDAO.addCustomerEmployer(newEmployer);
+
+    // Test updating the existing employer
+    newEmployer.setEmployerName("New Tech Corp");
+    employerDAO.updateCustomerEmployer(newEmployer);
   }
 }

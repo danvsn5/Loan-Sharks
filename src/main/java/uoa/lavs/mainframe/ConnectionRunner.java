@@ -6,6 +6,7 @@ import java.util.Scanner;
 import uoa.lavs.mainframe.messages.customer.FindCustomerAddress;
 import uoa.lavs.mainframe.messages.customer.FindCustomerAdvanced;
 import uoa.lavs.mainframe.messages.customer.LoadCustomer;
+import uoa.lavs.mainframe.messages.customer.LoadCustomerEmployer;
 import uoa.lavs.mainframe.messages.customer.UpdateCustomer;
 import uoa.lavs.mainframe.messages.customer.UpdateCustomerAddress;
 
@@ -133,10 +134,13 @@ public class ConnectionRunner {
   private static void searchById(Scanner scanner, Connection connection) {
     LoadCustomer loadCustomer = new LoadCustomer();
     FindCustomerAddress findCustomerAddress = new FindCustomerAddress();
+    LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
 
     System.out.print("Enter customer ID: ");
     String customerId = scanner.nextLine();
     loadCustomer.setCustomerId(customerId);
+    loadCustomerEmployer.setCustomerId(customerId);
+    loadCustomerEmployer.setNumber(1);
     findCustomerAddress.setCustomerId(customerId);
 
     // Send the request for customer
@@ -144,7 +148,10 @@ public class ConnectionRunner {
     // Send the request for address
     Status addressStatus = findCustomerAddress.send(connection);
 
-    if (status.getErrorCode() != 0 || addressStatus.getErrorCode() != 0) {
+    // Send the request for employer
+    Status employerStatus = loadCustomerEmployer.send(connection);
+
+    if (status.getErrorCode() != 0 || addressStatus.getErrorCode() != 0 || employerStatus.getErrorCode() != 0) {
       System.out.println("Error fetching customer details: " + status.getErrorMessage());
       return;
     }
@@ -152,6 +159,7 @@ public class ConnectionRunner {
     // Print customer details
     printCustomerDetails(loadCustomer);
     printCustomerAddressDetails(findCustomerAddress);
+    printCustomerEmployerDetails(loadCustomerEmployer);
   }
 
   private static void searchByName(Scanner scanner, Connection connection) {
@@ -223,6 +231,23 @@ public class ConnectionRunner {
       System.out.println();
     }
   }
+
+  private static void printCustomerEmployerDetails(LoadCustomerEmployer loadCustomerEmployer) {
+    System.out.println("Customer Employer Details:");
+    System.out.println("--------------------------");
+    System.out.println("Employer Name: " + loadCustomerEmployer.getNameFromServer());
+    System.out.println("Address Line One: " + loadCustomerEmployer.getLine1FromServer());
+    System.out.println("Address Line Two: " + loadCustomerEmployer.getLine2FromServer());
+    System.out.println("Suburb: " + loadCustomerEmployer.getSuburbFromServer());
+    System.out.println("City: " + loadCustomerEmployer.getCityFromServer());
+    System.out.println("Post Code: " + loadCustomerEmployer.getPostCodeFromServer());
+    System.out.println("Country: " + loadCustomerEmployer.getCountryFromServer());
+    System.out.println("Employer Email: " + loadCustomerEmployer.getEmailAddressFromServer());
+    System.out.println("Employer Website: " + loadCustomerEmployer.getWebsiteFromServer());
+    System.out.println("Employer Phone: " + loadCustomerEmployer.getPhoneNumberFromServer());
+    System.out.println("Owner of Company: " + (loadCustomerEmployer.getIsOwnerFromServer() ? "Yes" : "No"));
+    System.out.println("--------------------------");
+}
 
   private static void closeConnection(Connection connection) {
     try {

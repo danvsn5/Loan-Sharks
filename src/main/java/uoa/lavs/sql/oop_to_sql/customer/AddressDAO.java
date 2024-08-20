@@ -57,14 +57,14 @@ public class AddressDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-    return 1;
+    return 1; 
   }
 
   public void updateAddress(Address address) {
     String sql =
         "UPDATE customer_address SET addressType = ?, addressLineOne = ?, addressLineTwo = ?,"
-            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ?,"
-            + " lastModified = CURRENT_TIMESTAMP WHERE customerId = ? AND addressId = ?";
+            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ?, lastModified = CURRENT_TIMESTAMP WHERE customerId = ? AND addressId"
+            + " = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 

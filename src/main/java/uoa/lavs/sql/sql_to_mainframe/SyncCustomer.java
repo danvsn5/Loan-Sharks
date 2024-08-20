@@ -107,6 +107,33 @@ public class SyncCustomer extends Sync {
         System.out.println("No records updated in customer address table.");
       }
     }
+
+    // Update customerId in customer_employer table
+    String updateEmployerSql = "UPDATE customer_employer SET customerId = ? WHERE customerId = ?";
+    try (PreparedStatement updateEmployerPstmt = conn.prepareStatement(updateEmployerSql)) {
+      updateEmployerPstmt.setString(1, newCustomerId);
+      updateEmployerPstmt.setString(2, oldCustomerId);
+      int employerRowsAffected = updateEmployerPstmt.executeUpdate();
+      if (employerRowsAffected > 0) {
+        System.out.println("Customer employer table updated with new customer ID: " + newCustomerId);
+      } else {
+        System.out.println("No records updated in customer employer table.");
+      }
+    }
+
+    // Update customerId in customer_notes table
+    String updateNotesSql = "UPDATE customer_notes SET customerId = ? WHERE customerId = ?";
+    try (PreparedStatement updateNotesPstmt = conn.prepareStatement(updateNotesSql)) {
+      updateNotesPstmt.setString(1, newCustomerId);
+      updateNotesPstmt.setString(2, oldCustomerId);
+      int notesRowsAffected = updateNotesPstmt.executeUpdate();
+      if (notesRowsAffected > 0) {
+        System.out.println("Customer notes table updated with new customer ID: " + newCustomerId);
+      } else {
+        System.out.println("No records updated in customer notes table.");
+      }
+    }
   }
+
 
 }
