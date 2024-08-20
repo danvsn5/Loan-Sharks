@@ -2,6 +2,7 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AccessTypeNotifier;
@@ -17,6 +18,9 @@ public class CustomerInputNotesController implements AccessTypeObserver {
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
+  @FXML private Label notesPageNumber;
+  @FXML private ImageView incNotes;
+  @FXML private ImageView decNotes;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -73,5 +77,15 @@ public class CustomerInputNotesController implements AccessTypeObserver {
   private void handleBackButtonAction() {
     setNotes();
     Main.setUi(AppUI.CI_DETAILS);
+  }
+
+  @FXML
+  private void handleIncNotes(){
+    // Pagination TODO
+  }
+
+  @FXML
+  private void handleDecNotes(){
+    // Pagination TODO
   }
 }
