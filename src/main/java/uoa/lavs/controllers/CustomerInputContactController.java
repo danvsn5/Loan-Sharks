@@ -115,4 +115,24 @@ public class CustomerInputContactController implements AccessTypeObserver {
       Main.setUi(AppUI.CUSTOMER_MENU);
     }
   }
+
+  @FXML
+  private void handleIncPhone() {
+    // TODO when ting is time to be tung
+  }
+
+  @FXML
+  private void handleIncEmail() {
+    // TODO when ting is time to be tung
+  }
+
+  @FXML
+  private void handleDecPhone() {
+    // TODO when ting is time to be tung
+  }
+
+  @FXML
+  private void handleDecEmail() {
+    // TODO when ting is time to be tung
+  }
 }
