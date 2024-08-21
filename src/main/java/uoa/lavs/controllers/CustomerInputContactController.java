@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -45,6 +46,10 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private ImageView decPhone;
   @FXML
   private ImageView decEmail;
+  @FXML
+  private Label emailPageLabel;
+  @FXML
+  private Label phonePageLabel;
 
   @FXML
   private TextField customerPreferredContactBox;
@@ -78,6 +83,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
     customerPhoneTypeBox.getItems().addAll("Home", "Work", "Mobile");
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
+    phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
+    emailPageLabel.setText("Email: " + (currentEmailPage + 1));
   }
 
   @FXML
@@ -213,6 +220,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
     if (AppState.customerDetailsAccessType == "READ") {
       currentNumberPage++;
+      phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
       customerPhoneNumberOne.setText(existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
       customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
@@ -234,14 +242,22 @@ public class CustomerInputContactController implements AccessTypeObserver {
       // if the current number page is the same as the amount of valid numbers
       existingCustomerPhones.set(currentNumberPage, newPhone);
       currentNumberPage++;
+      phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
       amountOfValidNumbers++;
       // set all the fields to empty
+
       if (currentNumberPage == amountOfValidNumbers) {
         customerPhoneNumberOne.setText("");
         customerPhonePrefixField.setText("");
         customerPhoneTypeBox.setValue("");
         sendTextRadio.setSelected(false);
         phonePrimaryRadio.setSelected(false);
+      } else {
+        customerPhoneNumberOne.setText(existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
+        customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
+        customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
+        sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
+        phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
       }
     }
 
@@ -259,9 +275,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       existingCustomerPhones.set(currentNumberPage, newPhone);
 
-      if (currentNumberPage != amountOfValidNumbers) {
-        currentNumberPage++;
-      }
+      currentNumberPage++;
+      phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
       // set all the fields to the next phone number
       customerPhoneNumberOne.setText(existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
@@ -278,6 +293,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private void handleDecPhone() {
     if (AppState.customerDetailsAccessType == "READ" && currentNumberPage != 0) {
       currentNumberPage--;
+      phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
       customerPhoneNumberOne.setText(existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
       customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
@@ -301,6 +317,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       if (currentNumberPage != 0) {
         currentNumberPage--;
+        phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
       }
 
       // set all the fields to the previous phone number
@@ -326,6 +343,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       if (currentNumberPage != 0) {
         currentNumberPage--;
+        phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
       }
 
       // set all the fields to the previous phone number
@@ -343,6 +361,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType == "READ") {
 
       currentEmailPage++;
+      emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
       emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
 
@@ -358,6 +377,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       // if the current email page is the same as the amount of valid emails
       existingCustomerEmails.set(currentEmailPage, newEmail);
       currentEmailPage++;
+      emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       amountOfValidEmails++;
       // set all the fields to empty
       if (currentEmailPage == amountOfValidEmails) {
@@ -380,6 +400,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       existingCustomerEmails.set(currentEmailPage, newEmail);
 
       currentEmailPage++;
+      emailPageLabel.setText("Email: " + (currentEmailPage + 1));
 
       // if the current email page is the same as the amount of valid emails
       if (currentEmailPage == amountOfValidEmails) {
@@ -398,7 +419,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private void handleDecEmail() {
     if (AppState.customerDetailsAccessType == "READ" && currentEmailPage != 0) {
       currentEmailPage--;
-
+      emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
       emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
     }
@@ -415,6 +436,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       if (currentEmailPage != 0) {
         currentEmailPage--;
+        emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       }
 
       // set all the fields to the previous email
@@ -434,6 +456,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       if (currentEmailPage != 0) {
         currentEmailPage--;
+        emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       }
 
       // set all the fields to the previous email
