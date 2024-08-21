@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.loan.PersonalLoanSingleton;
 
 public class LoanMenuController {
   @FXML private Button createNewLoanButton;
@@ -21,6 +22,7 @@ public class LoanMenuController {
 
   @FXML
   private void handleCreateNewLoanButtonAction() {
+    PersonalLoanSingleton.resetInstance();
     AppState.isCreatingLoan = true;
     Main.setUi(AppUI.CUSTOMER_SEARCH);
   }

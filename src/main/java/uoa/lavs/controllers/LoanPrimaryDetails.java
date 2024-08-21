@@ -13,6 +13,8 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.loan.PersonalLoan;
+import uoa.lavs.loan.PersonalLoanSingleton;
 
 public class LoanPrimaryDetails implements AccessTypeObserver {
   @FXML private TextField borrowerIDField;
@@ -27,6 +29,8 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   @FXML private ImageView staticReturnImageView;
 
   @FXML private Button editButton;
+
+  private PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @FXML
   private void initialize() {
@@ -97,27 +101,37 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   }
 
   private void setPrimaryDetails() {
-    // TODO Auto-generated method stub
+    if (!validateData()) {
+      return;
+    }
+
+    personalLoan.setPrincipal(Double.parseDouble(principalField.getText()));
+    personalLoan.setRate(Double.parseDouble(interestRateField.getText()));
+    personalLoan.setRateType(rateTypeBox.getValue());
   }
 
   // Add methods for all buttons
   @FXML
   private void handleCoborrowerButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
   @FXML
   private void handleDurationButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML
   private void handleFinanceButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML
   private void handleSummaryButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_SUMMARY);
   }
 

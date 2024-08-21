@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -13,6 +14,8 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.loan.PersonalLoan;
+import uoa.lavs.loan.PersonalLoanSingleton;
 
 public class LoanCoborrower implements AccessTypeObserver {
   @FXML private TextField coborrowerIDField1;
@@ -26,6 +29,8 @@ public class LoanCoborrower implements AccessTypeObserver {
   @FXML private ImageView staticReturnImageView;
 
   @FXML private Button editButton;
+
+  PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @FXML
   private void initialize() {
@@ -78,26 +83,37 @@ public class LoanCoborrower implements AccessTypeObserver {
   }
 
   private void setCoborrowerDetails() {
-    // TODO Chulshin
+    if (!validateData()) {
+      return;
+    }
+
+    ArrayList<String> ids = personalLoan.getCoborrowerIds();
+    ids.set(0, coborrowerIDField1.getText());
+    ids.set(1, coborrowerIDField2.getText());
+    ids.set(2, coborrowerIDField3.getText());
   }
 
   @FXML
   private void handlePrimaryButtonAction() {
+    setCoborrowerDetails();
     Main.setUi(AppUI.LC_PRIMARY);
   }
 
   @FXML
   private void handleDurationButtonAction() {
+    setCoborrowerDetails();
     Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML
   private void handleFinanceButtonAction() {
+    setCoborrowerDetails();
     Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML
   private void handleSummaryButtonAction() {
+    setCoborrowerDetails();
     Main.setUi(AppUI.LC_SUMMARY);
   }
 
