@@ -103,25 +103,21 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   // Add methods for all buttons
   @FXML
   private void handleCoborrowerButtonAction() {
-    setPrimaryDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
   @FXML
   private void handleDurationButtonAction() {
-    setPrimaryDetails();
     Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML
   private void handleFinanceButtonAction() {
-    setPrimaryDetails();
     Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML
   private void handleSummaryButtonAction() {
-    setPrimaryDetails();
     Main.setUi(AppUI.LC_SUMMARY);
   }
 

@@ -117,7 +117,6 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
         },
         new DatePicker[] {},
         new RadioButton[] {});
-    setAddressDetails();
   }
 
   private boolean setAddressDetails() {
@@ -140,25 +139,21 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML
   private void handleDetailsButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
