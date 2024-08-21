@@ -161,16 +161,13 @@ public class InitialiseDatabase {
   private static void createLoanEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan (\n"
-            + "loanId INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + "loanId VARCHAR(50) PRIMARY KEY, "
             + "customerId VARCHAR(50), "
             + "principal DOUBLE, "
             + "rate DOUBLE, "
-            + "durationId INT, "
-            + "paymentId INT, "
+            + "rateType VARCHAR(50), "
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-            + "FOREIGN KEY (customerId) REFERENCES Customer(customerId), "
-            + "FOREIGN KEY (durationId) REFERENCES LoanDuration(durationId), "
-            + "FOREIGN KEY (paymentId) REFERENCES LoanPayment(paymentId)"
+            + "FOREIGN KEY (customerId) REFERENCES Customer(customerId)"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {
@@ -183,11 +180,14 @@ public class InitialiseDatabase {
   private static void createLoanDurationEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_duration (\n"
-            + "durationId INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + "loanId VARCHAR(50), "
+            + "durationId INTEGER, "
             + "startDate DATE, "
             + "period INT, "
             + "loanTerm INT, "
-            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + "PRIMARY KEY (loanId, durationId), "
+            + "FOREIGN KEY (loanId) REFERENCES Loan(loanId)"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {
@@ -200,12 +200,15 @@ public class InitialiseDatabase {
   private static void createLoanPaymentEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_payment (\n"
-            + "paymentId INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + "loanId VARCHAR(50), "
+            + "paymentId INTEGER, "
             + "compounding VARCHAR(50), "
             + "paymentFrequency VARCHAR(50), "
             + "paymentAmount VARCHAR(50), "
             + "interestOnly BOOLEAN, "
-            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + "PRIMARY KEY (loanId, paymentId), "
+            + "FOREIGN KEY (loanId) REFERENCES Loan(loanId)"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {
@@ -218,7 +221,7 @@ public class InitialiseDatabase {
   private static void createLoanCoborrowerEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_coborrower (\n"
-            + "loanId INT, "
+            + "loanId VARCHAR(50), "
             + "coborrowerId VARCHAR(50), "
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "PRIMARY KEY (loanId, coborrowerId), "

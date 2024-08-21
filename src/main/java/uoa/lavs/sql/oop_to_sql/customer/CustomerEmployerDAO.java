@@ -11,9 +11,9 @@ public class CustomerEmployerDAO {
 
   public void addCustomerEmployer(CustomerEmployer employer) {
     String sql =
-        "INSERT INTO customer_employer (customerId, employerName, addressLineOne, addressLineTwo, suburb,"
-            + " postCode, city, country, employerEmail, employerWebsite, employerPhone, ownerOfCompany) "
-            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO customer_employer (customerId, employerName, addressLineOne, addressLineTwo,"
+            + " suburb, postCode, city, country, employerEmail, employerWebsite, employerPhone,"
+            + " ownerOfCompany) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -31,7 +31,6 @@ public class CustomerEmployerDAO {
       pstmt.setBoolean(12, employer.getOwnerOfCompany());
 
       pstmt.executeUpdate();
-      System.out.println("New employer added for customer ID: " + employer.getCustomerId());
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
@@ -114,9 +113,20 @@ public class CustomerEmployerDAO {
     CustomerEmployerDAO employerDAO = new CustomerEmployerDAO();
 
     // Test saving a new employer
-    CustomerEmployer newEmployer = new CustomerEmployer(
-        "000001", "Tech Corp", "123 Tech Street", "Suite 100", "Techville", "12345", "Metropolis",
-        "Countryland", "contact@techcorp.com", "www.techcorp.com", "123-456-7890", true);
+    CustomerEmployer newEmployer =
+        new CustomerEmployer(
+            "000001",
+            "Tech Corp",
+            "123 Tech Street",
+            "Suite 100",
+            "Techville",
+            "12345",
+            "Metropolis",
+            "Countryland",
+            "contact@techcorp.com",
+            "www.techcorp.com",
+            "123-456-7890",
+            true);
     employerDAO.addCustomerEmployer(newEmployer);
 
     // Test updating the existing employer

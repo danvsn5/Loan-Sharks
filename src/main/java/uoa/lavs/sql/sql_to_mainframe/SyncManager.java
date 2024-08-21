@@ -80,6 +80,7 @@ public class SyncManager {
     SyncAddress syncAddress = new SyncAddress();
     SyncEmployer syncEmployer = new SyncEmployer();
     SyncNotes syncNotes = new SyncNotes();
+    SyncLoan syncLoan = new SyncLoan();
     SyncPhone syncPhone = new SyncPhone();
     SyncEmail syncEmail = new SyncEmail();
     LocalDateTime lastSyncTime = syncCustomer.getLastSyncTimeFromDB();
@@ -89,7 +90,16 @@ public class SyncManager {
       lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
     }
 
-    SyncManager syncManager = new SyncManager(List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
+    SyncManager syncManager =
+        new SyncManager(
+            List.of(
+                syncCustomer,
+                syncAddress,
+                syncEmployer,
+                syncLoan,
+                syncPhone,
+                syncEmail,
+                syncNotes));
 
     syncManager.syncAll(lastSyncTime);
   }
