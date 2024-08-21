@@ -15,6 +15,7 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.Email;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 import uoa.lavs.customer.Phone;
@@ -67,6 +68,10 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private ArrayList<Phone> existingCustomerPhones = customer.getPhones();
   private int currentNumberPage = 0;
   private int amountOfValidNumbers = 0;
+
+  private ArrayList<Email> existingCustomerEmails = customer.getEmails();
+  private int currentEmailPage = 0;
+  private int amountOfValidEmails = 0;
 
   @FXML
   private void initialize() {
@@ -335,11 +340,105 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void handleIncEmail() {
-    // TODO when ting is time to be tung
+    if(AppState.customerDetailsAccessType == "READ") {
+      
+      currentEmailPage++;
+      customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
+      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+
+    }
+
+    if (AppState.customerDetailsAccessType == "CREATE") {
+      // create a new email
+      Email newEmail = new Email(
+          customer.getCustomerId(),
+          customerEmailTextField.getText(),
+          emailPrimaryRadio.isSelected());
+
+      // if the current email page is the same as the amount of valid emails
+      existingCustomerEmails.set(currentEmailPage, newEmail);
+      currentEmailPage++;
+      amountOfValidEmails++;
+      // set all the fields to empty
+      if (currentEmailPage == amountOfValidEmails) {
+        customerEmailTextField.setText("");
+        emailPrimaryRadio.setSelected(false);
+      } else {
+        customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
+        emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+      }
+    }
+
+    if (AppState.customerDetailsAccessType == "EDIT") {
+      // get the current fields and replace the current email page with the email
+      // fields
+      Email newEmail = new Email(
+          customer.getCustomerId(),
+          customerEmailTextField.getText(),
+          emailPrimaryRadio.isSelected());
+
+      existingCustomerEmails.set(currentEmailPage, newEmail);
+
+      currentEmailPage++;
+
+      // if the current email page is the same as the amount of valid emails
+      if (currentEmailPage == amountOfValidEmails) {
+        currentEmailPage++;
+        amountOfValidEmails++;
+      }
+
+      // set all the fields to the next email
+      customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
+      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+    }
+
   }
 
   @FXML
   private void handleDecEmail() {
-    // TODO when ting is time to be tung
+    if (AppState.customerDetailsAccessType == "READ" && currentEmailPage != 0) {
+      currentEmailPage--;
+
+      customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
+      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+    }
+
+    if (AppState.customerDetailsAccessType == "CREATE") {
+      // get the current fields and replace the current email page with the email
+      // fields
+      Email newEmail = new Email(
+          customer.getCustomerId(),
+          customerEmailTextField.getText(),
+          emailPrimaryRadio.isSelected());
+
+      existingCustomerEmails.set(currentEmailPage, newEmail);
+
+      if (currentEmailPage != 0) {
+        currentEmailPage--;
+      }
+
+      // set all the fields to the previous email
+      customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
+      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+    }
+
+    if (AppState.customerDetailsAccessType == "EDIT") {
+      // get the current fields and replace the current email page with the email
+      // fields
+      Email newEmail = new Email(
+          customer.getCustomerId(),
+          customerEmailTextField.getText(),
+          emailPrimaryRadio.isSelected());
+
+      existingCustomerEmails.set(currentEmailPage, newEmail);
+
+      if (currentEmailPage != 0) {
+        currentEmailPage--;
+      }
+
+      // set all the fields to the previous email
+      customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
+      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+    }
   }
 }
