@@ -12,6 +12,7 @@ import uoa.lavs.mainframe.messages.customer.LoadCustomerAddress;
 import uoa.lavs.mainframe.messages.customer.LoadCustomerEmails;
 import uoa.lavs.mainframe.messages.customer.LoadCustomerEmployer;
 import uoa.lavs.mainframe.messages.customer.LoadCustomerPhoneNumbers;
+import uoa.lavs.sql.oop_to_sql.customer.CustomerDAO;
 
 public class SearchCustomer {
 
@@ -44,6 +45,25 @@ public class SearchCustomer {
     Status phoneStatus = loadCustomerPhones.send(connection);
     // Send the request for email
     Status emailStatus = loadCustomerEmails.send(connection);
+
+    if (status.getErrorCode() == 1000
+        || status.getErrorCode() == 1010
+        || status.getErrorCode() == 1020) {
+      System.out.println("Error loading customer: " + status.getErrorCode());
+      System.out.println(status.getErrorMessage());
+      System.out.println("Checking local database...");
+      CustomerDAO customerDAO = new CustomerDAO();
+      Customer customer = customerDAO.getCustomer(customerId);
+      if (customer != null) {
+        System.out.println(customer.getName());
+        return customer;
+      } else {
+        System.out.println("Customer not found in local database.");
+      }
+      return null;
+    }
+
+    System.out.println("Searching mainframe...");
 
     if (status.getErrorCode() != 0) {
       System.out.println("Error loading customer: " + status.getErrorCode());
@@ -90,6 +110,8 @@ public class SearchCustomer {
       updateCustomerEmails(loadCustomerEmails, customer);
     }
 
+    System.out.println("Customer found: " + customer.getName());
+
     return customer;
   }
 
@@ -104,6 +126,27 @@ public class SearchCustomer {
 
     findCustomerAdvanced.setSearchName(name);
     Status status = findCustomerAdvanced.send(connection);
+
+    if (status.getErrorCode() == 1000
+        || status.getErrorCode() == 1010
+        || status.getErrorCode() == 1020) {
+      System.out.println("Error loading customer: " + status.getErrorCode());
+      System.out.println(status.getErrorMessage());
+      System.out.println("Checking local database...");
+      CustomerDAO customerDAO = new CustomerDAO();
+      ArrayList<Customer> customers = customerDAO.getCustomersByName(name);
+      if (customers != null && customers.size() > 0) {
+        for (Customer customer : customers) {
+          System.out.println(customer.getName());
+        }
+        return customers;
+      } else {
+        System.out.println("Customer not found in local database.");
+      }
+      return null;
+    }
+
+    System.out.println("Searching mainframe...");
 
     Integer count = findCustomerAdvanced.getCustomerCountFromServer();
 

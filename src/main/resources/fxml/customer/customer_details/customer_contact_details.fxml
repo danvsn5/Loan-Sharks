@@ -131,7 +131,7 @@
       <RadioButton fx:id="sendTextRadio" layoutX="1019.0" layoutY="369.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Primary" />
       <RadioButton fx:id="emailPrimaryRadio" layoutX="779.0" layoutY="510.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="519.0" layoutY="436.0" prefHeight="20.0" prefWidth="243.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Phone Number" />
+      <Label fx:id="phonePageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="519.0" layoutY="436.0" prefHeight="20.0" prefWidth="243.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Phone Number" />
       <ImageView fx:id="incPhone" fitHeight="22.0" fitWidth="22.0" layoutX="728.0" layoutY="434.0" onMouseClicked="#handleIncPhone" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/traverse_button.png" />
@@ -154,7 +154,7 @@
             <ColorAdjust brightness="0.2" />
          </effect>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="535.0" layoutY="564.0" prefHeight="17.0" prefWidth="210.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Email" />
+      <Label fx:id="emailPageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="535.0" layoutY="564.0" prefHeight="17.0" prefWidth="210.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Email" />
       <ImageView fx:id="incEmail" fitHeight="22.0" fitWidth="22.0" layoutX="700.0" layoutY="562.0" onMouseClicked="#handleIncEmail" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/traverse_button.png" />

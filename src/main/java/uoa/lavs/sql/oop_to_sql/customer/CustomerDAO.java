@@ -141,15 +141,16 @@ public class CustomerDAO {
   public ArrayList<Customer> getCustomersByName(String name) {
     ArrayList<Customer> customers = new ArrayList<>();
 
-    String sql = "SELECT * FROM customer WHERE name = ?";
+    String sql = "SELECT * FROM customer WHERE name LIKE ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, name);
+          pstmt.setString(1, "%" + name + "%");
 
       ResultSet rs = pstmt.executeQuery();
 
       while (rs.next()) {
         String customerId = rs.getString("customerId");
+        String customerName = rs.getString("name");
         String title = rs.getString("title");
         LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         String occupation = rs.getString("occupation");
@@ -175,7 +176,7 @@ public class CustomerDAO {
             new IndividualCustomer(
                 customerId,
                 title,
-                name,
+                customerName,
                 dateOfBirth,
                 occupation,
                 visa,
@@ -328,11 +329,11 @@ public class CustomerDAO {
         new IndividualCustomer(
             customerId,
             "Mr",
-            "Guy Shin",
+            "Shin Goon",
             dateOfBirth,
-            "Engineer",
+            "Tinger",
             "B2",
-            "Mexico",
+            "Malaysia",
             notes,
             addresses,
             phones,

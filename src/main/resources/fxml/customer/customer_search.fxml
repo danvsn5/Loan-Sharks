@@ -32,18 +32,18 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="494.0" layoutY="683.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <TextField fx:id="idField" alignment="CENTER" layoutX="388.0" layoutY="295.0" onKeyPressed="#onEnterPressed" prefHeight="48.0" prefWidth="504.0" styleClass="input-fields" stylesheets="@../../css/index.css">
+      <TextField fx:id="idField" alignment="CENTER" layoutX="388.0" layoutY="295.0" onKeyPressed="#onEnterPressed" onMouseClicked="#enableIDSearch" prefHeight="48.0" prefWidth="504.0" styleClass="input-fields" stylesheets="@../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="usernameField" alignment="CENTER" layoutX="388.0" layoutY="492.0" onKeyPressed="#onEnterPressed" prefHeight="48.0" prefWidth="504.0" styleClass="input-fields" stylesheets="@../../css/index.css">
+      <TextField fx:id="usernameField" alignment="CENTER" layoutX="388.0" layoutY="492.0" onKeyPressed="#onEnterPressed" onMouseClicked="#enableNameSearch" prefHeight="48.0" prefWidth="504.0" styleClass="input-fields" stylesheets="@../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <Label fx:id="searchWithCustomerIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="222.0" onMouseClicked="#enableIDSearch" prefHeight="18.0" prefWidth="504.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with ID" />
-      <Label fx:id="searchWithNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="389.0" layoutY="419.0" onMouseClicked="#enableNameSearch" prefHeight="18.0" prefWidth="504.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with Name" />
+      <Label fx:id="searchWithCustomerIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="222.0" prefHeight="18.0" prefWidth="504.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with ID" />
+      <Label fx:id="searchWithNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="389.0" layoutY="419.0" prefHeight="18.0" prefWidth="504.0" styleClass="large-subtitle" stylesheets="@../../css/index.css" text="Search with Name" />
       <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/static-return.png" />

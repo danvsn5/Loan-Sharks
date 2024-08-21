@@ -65,6 +65,11 @@ public class AppState {
     Main.setUi(AppUI.LOAN_RESULTS);
   }
 
+  public static void loanLoanRepayments() throws IOException {
+    SceneManager.addScene(AppUI.PAYMENT_MENU, loadFxml("loan/loan_repayments"));
+    Main.setUi(AppUI.PAYMENT_MENU);
+  }
+
   public static AppUI getCurrentUiName() {
     return currentUiName;
   }

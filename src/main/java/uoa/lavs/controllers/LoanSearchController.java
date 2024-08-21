@@ -28,10 +28,7 @@ public class LoanSearchController {
   String state;
 
   @FXML
-  private void initialize() {
-    nameField.setVisible(false);
-    idField.setVisible(false);
-  }
+  private void initialize() {}
 
   // When enter key is pressed, perform search.
   @FXML
@@ -55,6 +52,8 @@ public class LoanSearchController {
     } else {
       handleSearchWithNameLabelAction();
     }
+    nameField.setText("");
+    idField.setText("");
   }
 
   @FXML
@@ -77,15 +76,13 @@ public class LoanSearchController {
 
   @FXML
   private void enableIDSearch() {
-    nameField.setVisible(false);
-    idField.setVisible(true);
+    nameField.setText("");
     state = "id";
   }
 
   @FXML
   private void enableNameSearch() {
-    idField.setVisible(false);
-    nameField.setVisible(true);
+    idField.setText("");
     state = "name";
   }
 }
