@@ -160,7 +160,7 @@ public class InitialiseDatabase {
   private static void createLoanEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan (\n"
-            + "loanId String PRIMARY KEY, "
+            + "loanId VARCHAR(50) PRIMARY KEY, "
             + "customerId VARCHAR(50), "
             + "principal DOUBLE, "
             + "rate DOUBLE, "
@@ -179,7 +179,7 @@ public class InitialiseDatabase {
   private static void createLoanDurationEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_duration (\n"
-            + "loanId String, "
+            + "loanId VARCHAR(50), "
             + "durationId INTEGER, "
             + "startDate DATE, "
             + "period INT, "
@@ -199,7 +199,7 @@ public class InitialiseDatabase {
   private static void createLoanPaymentEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_payment (\n"
-            + "loanId String, "
+            + "loanId VARCHAR(50), "
             + "paymentId INTEGER, "
             + "compounding VARCHAR(50), "
             + "paymentFrequency VARCHAR(50), "
@@ -220,7 +220,7 @@ public class InitialiseDatabase {
   private static void createLoanCoborrowerEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_coborrower (\n"
-            + "loanId String, "
+            + "loanId VARCHAR(50), "
             + "coborrowerId VARCHAR(50), "
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "PRIMARY KEY (loanId, coborrowerId), "
