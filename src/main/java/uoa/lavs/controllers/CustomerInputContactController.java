@@ -63,9 +63,9 @@ public class CustomerInputContactController implements AccessTypeObserver {
           customerAltContactBox,
           customerPhonePrefixField
         },
-        new ComboBox<?>[] {},
+        new ComboBox<?>[] {customerPhoneTypeBox},
         new DatePicker[] {},
-        new RadioButton[] {});
+        new RadioButton[] {sendTextRadio, phonePrimaryRadio, emailPrimaryRadio});
   }
 
   @FXML
@@ -98,8 +98,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     customerPhonePrefixField.setStyle("");
     customerPhoneNumberOne.setStyle("");
     customerEmailTextField.setStyle("");
-    customerPreferredContactBox.setStyle("");
-    customerAltContactBox.setStyle("");
+    customerPhoneTypeBox.setStyle("");
 
     if (customerPhoneTypeBox.getValue() == null) {
       customerPhoneTypeBox.setStyle("-fx-border-color: red;");
@@ -124,8 +123,10 @@ public class CustomerInputContactController implements AccessTypeObserver {
       isValid = false;
     }
 
+    // Regex taken from https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
     if (customerEmailTextField.getText().isEmpty()
-        || customerEmailTextField.getText().length() > 60) {
+        || customerEmailTextField.getText().length() > 60
+        || !customerEmailTextField.getText().matches("^[^@]+@[^@]+\\.[^@]+$")) {
       customerEmailTextField.setStyle("-fx-border-color: red;");
       isValid = false;
     }
