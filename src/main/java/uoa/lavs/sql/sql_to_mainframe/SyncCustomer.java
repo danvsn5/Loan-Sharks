@@ -34,6 +34,7 @@ public class SyncCustomer extends Sync {
     }
 
     if (customer_id != null) {
+      System.out.print("Updating customer ID in local database... ");
       updateCustomerIdInLocalDB(resultSet.getString("customerId"), customer_id, localConn);
     }
 
@@ -66,7 +67,8 @@ public class SyncCustomer extends Sync {
     updateCustomer.setName(resultSet.getString("name"));
     updateCustomer.setDateofBirth(resultSet.getDate("dateOfBirth").toLocalDate());
     updateCustomer.setOccupation(resultSet.getString("occupation"));
-    updateCustomer.setCitizenship(resultSet.getString("residency"));
+    updateCustomer.setVisa(resultSet.getString("visa"));
+    updateCustomer.setCitizenship(resultSet.getString("citizenship"));
     return updateCustomer;
   }
 
@@ -81,6 +83,8 @@ public class SyncCustomer extends Sync {
    */
   private void updateCustomerIdInLocalDB(
       String oldCustomerId, String newCustomerId, Connection conn) throws SQLException {
+        System.out.println(oldCustomerId);
+        System.out.println(newCustomerId);
 
     // Update customerId in customer table
     String updateCustomerSql = "UPDATE customer SET customerId = ? WHERE customerId = ?";
@@ -121,7 +125,7 @@ public class SyncCustomer extends Sync {
       }
     }
 
-    // Update customerId in customer_notes table
+    /* 
     String updateNotesSql = "UPDATE customer_notes SET customerId = ? WHERE customerId = ?";
     try (PreparedStatement updateNotesPstmt = conn.prepareStatement(updateNotesSql)) {
       updateNotesPstmt.setString(1, newCustomerId);
@@ -131,6 +135,32 @@ public class SyncCustomer extends Sync {
         System.out.println("Customer notes table updated with new customer ID: " + newCustomerId);
       } else {
         System.out.println("No records updated in customer notes table.");
+      }
+    } */
+
+    // Update customerId in customer_phone table
+    String updatePhoneSql = "UPDATE customer_phone SET customerId = ? WHERE customerId = ?";
+    try (PreparedStatement updatePhonePstmt = conn.prepareStatement(updatePhoneSql)) {
+      updatePhonePstmt.setString(1, newCustomerId);
+      updatePhonePstmt.setString(2, oldCustomerId);
+      int phoneRowsAffected = updatePhonePstmt.executeUpdate();
+      if (phoneRowsAffected > 0) {
+        System.out.println("Customer phone table updated with new customer ID: " + newCustomerId);
+      } else {
+        System.out.println("No records updated in customer phone table.");
+      }
+    }
+
+    // Update customerId in customer_email table
+    String updateEmailSql = "UPDATE customer_email SET customerId = ? WHERE customerId = ?";
+    try (PreparedStatement updateEmailPstmt = conn.prepareStatement(updateEmailSql)) {
+      updateEmailPstmt.setString(1, newCustomerId);
+      updateEmailPstmt.setString(2, oldCustomerId);
+      int emailRowsAffected = updateEmailPstmt.executeUpdate();
+      if (emailRowsAffected > 0) {
+        System.out.println("Customer email table updated with new customer ID: " + newCustomerId);
+      } else {
+        System.out.println("No records updated in customer email table.");
       }
     }
   }

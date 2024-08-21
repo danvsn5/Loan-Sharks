@@ -26,10 +26,9 @@ public class SyncAddress extends Sync {
       System.out.println("Address not found in mainframe. Creating new address.");
     } else {
       System.out.println("AddressID from mainframe: " + address_id);
-      updateCustomerAddress.setNumber(address_id);
     }
 
-    
+    updateCustomerAddress.setNumber(address_id);
     
     Status status = updateCustomerAddress.send(connection);
 

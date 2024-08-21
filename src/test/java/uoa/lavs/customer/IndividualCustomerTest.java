@@ -73,7 +73,8 @@ public class IndividualCustomerTest {
             "Rule Number Ten",
             dateOfBirth,
             "Software Engineer",
-            "NZ Citizen",
+            "B2",
+            "New Zealand",
             notes,
             addresses,
             phones,
@@ -89,7 +90,8 @@ public class IndividualCustomerTest {
     assertEquals("Rule Number Ten", individualCustomer.getName());
     assertEquals(dateOfBirth, individualCustomer.getDateOfBirth());
     assertEquals("Software Engineer", individualCustomer.getOccupation());
-    assertEquals("NZ Citizen", individualCustomer.getResidency());
+    assertEquals("B2", individualCustomer.getVisa());
+    assertEquals("New Zealand", individualCustomer.getCitizenship());
     assertEquals(notes, individualCustomer.getNotes());
     assertEquals(addresses, individualCustomer.getAddresses());
     assertEquals(phones, individualCustomer.getPhones());

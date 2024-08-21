@@ -31,6 +31,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private TextField customerLastNameField;
   @FXML private DatePicker customerDOBPicker;
   @FXML private TextField customerOccupationField;
+    @FXML private ComboBox<String> customerVisaBox;
   @FXML private ComboBox<String> customerCitizenshipBox;
 
   @FXML private Button notesButton;
@@ -108,7 +109,8 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
             + customerLastNameField.getText());
     customer.setDateOfBirth(customerDOBPicker.getValue());
     customer.setOccupation(customerOccupationField.getText());
-    customer.setResidency(customerCitizenshipBox.getValue());
+    customer.setVisa(customerVisaBox.getValue());
+    customer.setCitizenship(customerCitizenshipBox.getValue());
   }
 
   @FXML
