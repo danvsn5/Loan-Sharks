@@ -135,6 +135,18 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     // Primary and mailing address check, only one address can have primary and
     // mailing
 
+    if (!isPrimarySelected) {
+      primaryAddressRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
+    if (!isMailingSelected) {
+      mailingAddressRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
     if (!isValid) {
       return false;
     }
@@ -211,8 +223,11 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     if (mailingAddressRadio.isSelected() && addresses.size() > 0) {
       for (int i = 0; i < addresses.size(); i++) {
         addresses.get(i).setIsMailing(false);
+        isMailingSelected = true;
       }
       addresses.get(currentAddress).setIsMailing(true);
+    } else {
+      isMailingSelected = false;
     }
   }
 
@@ -223,8 +238,11 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     if (primaryAddressRadio.isSelected() && addresses.size() > 0) {
       for (int i = 0; i < addresses.size(); i++) {
         addresses.get(i).setIsPrimary(false);
+        isPrimarySelected = true;
       }
       addresses.get(currentAddress).setIsPrimary(true);
+    } else {
+      isPrimarySelected = false;
     }
   }
 
