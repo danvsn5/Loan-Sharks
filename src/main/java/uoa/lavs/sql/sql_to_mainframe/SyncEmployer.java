@@ -22,6 +22,7 @@ public class SyncEmployer extends Sync {
     UpdateCustomerEmployer updateCustomerEmployer = updateCustomerEmployer(resultSet, customer_id);
     if (count == null) {
       System.out.println("Employer not found in mainframe. Creating new employer.");
+      updateCustomerEmployer.setNumber(null);
     } else {
       updateCustomerEmployer.setNumber(1);
     }

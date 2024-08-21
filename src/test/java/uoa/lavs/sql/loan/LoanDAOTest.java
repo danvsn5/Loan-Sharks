@@ -130,6 +130,7 @@ public class LoanDAOTest {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
+            "Zimbabwe",
             notes,
             addresses,
             phones,

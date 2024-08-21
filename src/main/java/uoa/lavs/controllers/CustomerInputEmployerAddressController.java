@@ -24,6 +24,8 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
   @FXML private TextField employerCityField;
   @FXML private TextField employerPostcodeField;
 
+  @FXML private ComboBox<String> employerCountryBox;
+
   @FXML private Button detailsButton;
   @FXML private Button addressButton;
   @FXML private Button contactButton;
@@ -36,8 +38,65 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML
   private void initialize() {
+    employerCountryBox.getItems().addAll(AppState.getAllCountries());
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
+  }
+
+  @Override
+  public boolean validateData() {
+    // Address 1 is 60 characters long and is required.
+    // Address 2 is 60 chars, optional
+    // Suburb is 30 chars, required
+    // City is 30 chars, required
+    // Postcode is 10 ints
+    // Country should not be null
+
+    Boolean isValid = true;
+    employerAddressLine1Field.setStyle("");
+    employerAddressLine2Field.setStyle("");
+    employerSuburbField.setStyle("");
+    employerCityField.setStyle("");
+    employerPostcodeField.setStyle("");
+    employerCountryBox.setStyle("");
+
+    if (employerAddressLine1Field.getText().isEmpty()
+        || employerAddressLine1Field.getText().length() > 60) {
+      employerAddressLine1Field.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (employerAddressLine2Field.getText().length() > 60) {
+      employerAddressLine2Field.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (employerSuburbField.getText().isEmpty() || employerSuburbField.getText().length() > 30) {
+      employerSuburbField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (employerCityField.getText().isEmpty() || employerCityField.getText().length() > 30) {
+      employerCityField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (employerPostcodeField.getText().isEmpty()
+        || !employerPostcodeField.getText().matches("[0-9]{1,10}")) {
+      employerPostcodeField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (employerCountryBox.getValue() == null) {
+      employerCountryBox.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return false;
+    }
+
+    return true;
   }
 
   @FXML
@@ -53,13 +112,19 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
           employerCityField,
           employerPostcodeField
         },
-        new ComboBox<?>[] {},
+        new ComboBox<?>[] {
+          employerCountryBox,
+        },
         new DatePicker[] {},
         new RadioButton[] {});
-    setAddressDetails();
   }
 
-  private void setAddressDetails() {
+  private boolean setAddressDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
     CustomerEmployer employer = customer.getEmployer();
     employer.setLineOne(employerAddressLine1Field.getText());
     employer.setLineTwo(employerAddressLine2Field.getText());
@@ -67,44 +132,48 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     employer.setCity(employerCityField.getText());
     employer.setPostCode(employerPostcodeField.getText());
 
-    employer.setCountry("New Zealand");
+    employer.setCountry(employerCountryBox.getValue());
+
+    return true;
   }
 
   @FXML
   private void handleDetailsButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
     }
-    AccessTypeNotifier.notifyCustomerObservers();
-    updateUIBasedOnAccessType();
   }
 
   @FXML

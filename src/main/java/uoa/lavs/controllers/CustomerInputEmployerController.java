@@ -40,6 +40,59 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     updateUIBasedOnAccessType();
   }
 
+  @Override
+  public boolean validateData() {
+    // employer name is 60 characters
+    // email is 60 characters and must be email format
+    // website is 60 characters and must be a valid URL
+    // phone is 30 characters, numbers and dash only, and potentially could start with +
+    // Country has to be not null
+
+    boolean isValid = true;
+    employerNameField.setStyle("");
+    employerEmailField.setStyle("");
+    employerWebsiteField.setStyle("");
+    employerPhoneField.setStyle("");
+
+    if (employerNameField.getText().isEmpty() || employerNameField.getText().length() > 60) {
+      employerNameField.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    // Regex taken from https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
+    if (employerEmailField.getText().isEmpty()
+        || employerEmailField.getText().length() > 60
+        || !employerEmailField.getText().matches("^[^@]+@[^@]+\\.[^@]+$")) {
+      employerEmailField.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    // Regex taken from
+    // https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
+    if (employerWebsiteField.getText().isEmpty()
+        || employerWebsiteField.getText().length() > 60
+        || !employerWebsiteField
+            .getText()
+            .matches(
+                "[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")) {
+      employerWebsiteField.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    if (employerPhoneField.getText().isEmpty()
+        || employerPhoneField.getText().length() > 30
+        || !employerPhoneField.getText().matches("^\\+?[0-9\\-]{1,30}$")) {
+      employerPhoneField.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return false;
+    }
+
+    return true;
+  }
+
   @FXML
   @Override
   public void updateUIBasedOnAccessType() {
@@ -52,53 +105,61 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
         new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {customerIsEmployerCheckbox});
-    setEmployerDetails();
   }
 
-  private void setEmployerDetails() {
+  private boolean setEmployerDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
     CustomerEmployer employer = customer.getEmployer();
     employer.setEmployerName(employerNameField.getText());
     employer.setEmployerEmail(employerEmailField.getText());
     employer.setEmployerWebsite(employerWebsiteField.getText());
     employer.setEmployerPhone(employerPhoneField.getText());
     employer.setOwnerOfCompany(customerIsEmployerCheckbox.isSelected());
+
+    return true;
   }
 
   @FXML
   private void handleDetailsButtonAction() {
-    setEmployerDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setEmployerDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setEmployerDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerAddressButtonAction() {
-    setEmployerDetails();
     Main.setUi(AppUI.CI_EMPLOYER_ADDRESS);
   }
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
     }
-    AccessTypeNotifier.notifyCustomerObservers();
-    updateUIBasedOnAccessType();
   }
 
   @FXML

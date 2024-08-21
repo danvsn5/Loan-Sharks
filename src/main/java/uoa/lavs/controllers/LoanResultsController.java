@@ -47,6 +47,7 @@ public class LoanResultsController {
 
   @FXML
   private void handleBackButtonAction() {
+    AppState.isAccessingFromLoanSearch = false;
     Main.setUi(AppUI.LOAN_SEARCH);
   }
 
@@ -83,6 +84,7 @@ public class LoanResultsController {
   private void loadLoan(int index) throws IOException {
     // String searchId = searchResultsLoanIDList.get(index - 1);
     // searchId method here
+    AppState.isAccessingFromLoanSearch = true;
     AppState.loadLoans("VIEW");
     Main.setUi(AppUI.LC_SUMMARY);
   }

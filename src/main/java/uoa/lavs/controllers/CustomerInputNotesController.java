@@ -75,12 +75,14 @@ public class CustomerInputNotesController implements AccessTypeObserver {
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       setNotes();
       AppState.customerDetailsAccessType = "VIEW";
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       setNotes();
       AppState.customerDetailsAccessType = "VIEW";
     }
@@ -90,17 +92,23 @@ public class CustomerInputNotesController implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
-    setNotes();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
-  private void handleIncNotes(){
+  private void handleIncNotes() {
     // Pagination TODO
   }
 
   @FXML
-  private void handleDecNotes(){
+  private void handleDecNotes() {
     // Pagination TODO
+  }
+
+  // Daniil Moment
+  @Override
+  public boolean validateData() {
+    // TODO Auto-generated method stub
+    return true;
   }
 }

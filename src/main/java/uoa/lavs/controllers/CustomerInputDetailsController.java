@@ -31,6 +31,8 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private TextField customerLastNameField;
   @FXML private DatePicker customerDOBPicker;
   @FXML private TextField customerOccupationField;
+  @FXML private ComboBox<String> customerVisaBox;
+
   @FXML private ComboBox<String> customerCitizenshipBox;
 
   @FXML private Button notesButton;
@@ -48,9 +50,10 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML
   private void initialize() {
     customerTitleComboBox.getItems().addAll("Mr", "Mrs", "Ms", "Master");
-    customerCitizenshipBox
+    customerVisaBox
         .getItems()
         .addAll("NZ Citizen", "NZ Permanent Resident", "AUS Citizen", "NZ Work Visa", "Other");
+    customerCitizenshipBox.getItems().addAll(AppState.getAllCountries());
     DateTimeFormatter storageFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -91,15 +94,85 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
           customerLastNameField,
           customerOccupationField
         },
-        new ComboBox<?>[] {customerTitleComboBox, customerCitizenshipBox},
+        new ComboBox<?>[] {customerTitleComboBox, customerVisaBox, customerCitizenshipBox},
         new DatePicker[] {customerDOBPicker},
         new RadioButton[] {});
-    setCustomerDetails();
   }
 
-  private void setCustomerDetails() {
-    customer.setTitle(customerTitleComboBox.getValue());
+  @Override
+  public boolean validateData() {
+    boolean isValid = true;
 
+    // Clear previous error styles
+    customerTitleComboBox.setStyle("");
+    customerFirstNameField.setStyle("");
+    customerMiddleNameField.setStyle("");
+    customerLastNameField.setStyle("");
+    customerDOBPicker.setStyle("");
+    customerOccupationField.setStyle("");
+    customerVisaBox.setStyle("");
+    customerCitizenshipBox.setStyle("");
+
+    // Validate fields and apply error styles if necessary
+    if (customerTitleComboBox.getValue() == null) {
+      customerTitleComboBox.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerFirstNameField.getText().isEmpty()) {
+      customerFirstNameField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerLastNameField.getText().isEmpty()) {
+      customerLastNameField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerDOBPicker.getValue() == null) {
+      customerDOBPicker.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerOccupationField.getText().isEmpty()
+        || customerOccupationField.getText().length() > 40) {
+      customerOccupationField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerVisaBox.getValue() == null) {
+      customerVisaBox.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+    if (customerCitizenshipBox.getValue() == null) {
+      customerCitizenshipBox.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    String customerName =
+        customerFirstNameField.getText()
+            + " "
+            + customerMiddleNameField.getText()
+            + " "
+            + customerLastNameField.getText();
+
+    if (customerName.length() > 60) {
+      customerFirstNameField.setStyle("-fx-border-color: red;");
+      customerMiddleNameField.setStyle("-fx-border-color: red;");
+      customerLastNameField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private boolean setCustomerDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
+    // Set customer details
+    customer.setTitle(customerTitleComboBox.getValue());
     customer.setName(
         customerFirstNameField.getText()
             + " "
@@ -108,50 +181,51 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
             + customerLastNameField.getText());
     customer.setDateOfBirth(customerDOBPicker.getValue());
     customer.setOccupation(customerOccupationField.getText());
-    customer.setResidency(customerCitizenshipBox.getValue());
+    customer.setVisa(customerVisaBox.getValue());
+    customer.setCitizenship(customerCitizenshipBox.getValue());
+    return true;
   }
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle create customer logic
       // Save customer to database or perform necessary actions
-      setCustomerDetails();
-      CustomerCreationHelper.createCustomer(customer);
       AppState.customerDetailsAccessType = "VIEW";
+      CustomerCreationHelper.createCustomer(customer);
+      AccessTypeNotifier.notifyCustomerObservers();
+
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       // Switch to edit mode
       AppState.customerDetailsAccessType = "EDIT";
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      AccessTypeNotifier.notifyCustomerObservers();
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle confirm changes logic
       // Save changes to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
     }
-    AccessTypeNotifier.notifyCustomerObservers();
-    updateUIBasedOnAccessType();
   }
 
   @FXML
   private void handleNotesButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_NOTES);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 

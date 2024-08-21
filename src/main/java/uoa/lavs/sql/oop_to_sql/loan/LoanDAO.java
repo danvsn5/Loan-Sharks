@@ -255,6 +255,7 @@ public class LoanDAO {
             dateOfBirth,
             "Engineer",
             "NZ Citizen",
+            "Zimbabwe",
             notes,
             addresses,
             phones,

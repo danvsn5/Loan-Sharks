@@ -122,6 +122,7 @@ public class AddressDAO {
                 isMailing);
         retrievedAddress.setAddressId(addressId);
         retrievedAddress.setCustomerId(customerId);
+        System.out.println("Address ID: " + retrievedAddress.getAddressId());
         return retrievedAddress;
       }
 

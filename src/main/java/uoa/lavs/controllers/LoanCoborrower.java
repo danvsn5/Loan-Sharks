@@ -47,23 +47,38 @@ public class LoanCoborrower implements AccessTypeObserver {
 
   // Add methods for all buttons
 
+  @Override
+  public boolean validateData() {
+    // Add validation code here
+    boolean isValid = true;
+
+    coborrowerIDField1.setStyle("");
+    coborrowerIDField2.setStyle("");
+    coborrowerIDField3.setStyle("");
+
+    // TODO: Add validation code here (Jamie or Chul). Need to also show Name
+
+    return true;
+  }
+
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.loanDetailsAccessType.equals("CREATE")) {
-      setCoborrowerDetails();
+    if (AppState.loanDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateLoanObservers()) {
       AppState.loanDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyLoanObservers();
     } else if (AppState.loanDetailsAccessType.equals("VIEW")) {
       AppState.loanDetailsAccessType = "EDIT";
-    } else if (AppState.loanDetailsAccessType.equals("EDIT")) {
-      setCoborrowerDetails();
+      AccessTypeNotifier.notifyLoanObservers();
+    } else if (AppState.loanDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateLoanObservers()) {
       AppState.loanDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyLoanObservers();
     }
-    AccessTypeNotifier.notifyLoanObservers();
-    updateUIBasedOnAccessType();
   }
 
   private void setCoborrowerDetails() {
-    // TODO Auto-generated method stub
+    // TODO Chulshin
   }
 
   @FXML
@@ -88,6 +103,11 @@ public class LoanCoborrower implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
-    Main.setUi(AppUI.CUSTOMER_SEARCH);
+    if (AppState.isAccessingFromLoanSearch) {
+      AppState.isAccessingFromLoanSearch = false;
+      Main.setUi(AppUI.LOAN_RESULTS);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_RESULTS);
+    }
   }
 }

@@ -11,6 +11,9 @@ import javafx.scene.input.KeyEvent;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.customer.SearchCustomer;
 
 public class CustomerSearchController {
   @FXML private Label searchWithCustomerIDLabel; // When click label, reveal text box.
@@ -73,8 +76,14 @@ public class CustomerSearchController {
 
   @FXML
   private void handleSearchWithCustomerIDLabelAction() throws IOException {
-    // implement that jamie
     String searchString = idField.getText();
+    SearchCustomer searchCustomer = new SearchCustomer();
+    IndividualCustomer customer = (IndividualCustomer) searchCustomer.searchCustomerById(searchString);
+    if (customer == null) {
+      System.out.println("Customer not found.");
+      return;
+    }
+    IndividualCustomerSingleton.setInstance(customer);
     AppState.loadCustomerSearchResults(searchString);
   }
 

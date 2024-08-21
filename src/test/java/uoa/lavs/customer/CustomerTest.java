@@ -72,7 +72,8 @@ public class CustomerTest {
             "Ting Mun Guy",
             dateOfBirth,
             "Engineer",
-            "NZ Citizen",
+            "B2",
+            "New Zealand",
             notes,
             addresses,
             phones,
@@ -137,14 +138,25 @@ public class CustomerTest {
   }
 
   @Test
-  public void testGetResidency() {
-    assertEquals("NZ Citizen", customer.getResidency());
+  public void testGetVisa() {
+    assertEquals("B2", customer.getVisa());
   }
 
   @Test
-  public void testSetResidency() {
-    customer.setResidency("AUS Citizen");
-    assertEquals("AUS Citizen", customer.getResidency());
+  public void testSetVisa() {
+    customer.setVisa("B1");
+    assertEquals("B1", customer.getVisa());
+  }
+
+  @Test
+  public void testGetCitizenship() {
+    assertEquals("New Zealand", customer.getCitizenship());
+  }
+
+  @Test
+  public void testSetCitizenship() {
+    customer.setCitizenship("Australia");
+    assertEquals("Australia", customer.getCitizenship());
   }
 
   @Test

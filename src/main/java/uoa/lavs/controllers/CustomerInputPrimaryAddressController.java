@@ -61,64 +61,136 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         },
         new ComboBox<?>[] {customerAddressTypeComboBox},
         new DatePicker[] {},
-        new RadioButton[] {mailingAddressRadio});
-    setAddressDetails();
+        new RadioButton[] {mailingAddressRadio, primaryAddressRadio});
   }
 
-  private void setAddressDetails() {
-    // ArrayList<Address> addresses = customer.getAddresses();
+  @Override
+  public boolean validateData() {
+    // Address type only check not null
+    // Address 1 60 chars
+    // Address 2 60 chars (optional)
+    // Suburb 30 chars
+    // City 30 chars
+    // Postcode 10 ints (no string)
+    // Primary check null
+    // Mail check null
 
-    // address.setAddressLineOne(customerAddressLine1Field.getText());
-    // address.setAddressLineTwo(customerAddressLine2Field.getText());
-    // address.setSuburb(customerSuburbField.getText());
-    // address.setCity(customerCityField.getText());
-    // address.setPostCode(customerPostcodeField.getText());
-    // address.setAddressType(customerAddressTypeComboBox.getValue());
+    boolean isValid = true;
 
-    // // Autosetting to New Zealand
-    // address.setCountry("New Zealand");
+    customerAddressTypeComboBox.setStyle("");
+    customerAddressLine1Field.setStyle("");
+    customerAddressLine2Field.setStyle("");
+    customerSuburbField.setStyle("");
+    customerCityField.setStyle("");
+    customerPostcodeField.setStyle("");
+    mailingAddressRadio.setStyle("");
+    primaryAddressRadio.setStyle("");
 
-    // // handle mailing address
-    // if (mailingAddressRadio.isSelected()) {
-    //   customer.setMailingAddress(address);
-    // }
+    if (customerAddressTypeComboBox.getValue() == null) {
+      customerAddressTypeComboBox.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (customerAddressLine1Field.getText().isEmpty()
+        || customerAddressLine1Field.getText().length() > 60) {
+      customerAddressLine1Field.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (customerAddressLine2Field.getText().length() > 60) {
+      customerAddressLine2Field.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (customerSuburbField.getText().isEmpty() || customerSuburbField.getText().length() > 30) {
+      customerSuburbField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (customerCityField.getText().isEmpty() || customerCityField.getText().length() > 30) {
+      customerCityField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (customerPostcodeField.getText().isEmpty()
+        || customerPostcodeField.getText().length() > 10
+        || !customerPostcodeField.getText().matches("[0-9]+")) {
+      customerPostcodeField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    // Primary and mailing address check, only one address can have primary and mailing
+
+    if (!isValid) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private boolean setAddressDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
+    // TODO: Set customer details (Chulshin or Jamie)
+
+    /**
+     * ArrayList<Address> addresses = customer.getAddresses();
+     *
+     * <p>address.setAddressLineOne(customerAddressLine1Field.getText());
+     * address.setAddressLineTwo(customerAddressLine2Field.getText());
+     * address.setSuburb(customerSuburbField.getText());
+     * address.setCity(customerCityField.getText());
+     * address.setPostCode(customerPostcodeField.getText());
+     * address.setAddressType(customerAddressTypeComboBox.getValue());
+     *
+     * <p>// Autosetting to New Zealand address.setCountry("New Zealand");
+     *
+     * <p>// handle mailing address if (mailingAddressRadio.isSelected()) {
+     * customer.setMailingAddress(address); }
+     */
+    return true;
   }
 
   @FXML
   private void handleDetailsButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleMailingAddressButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_MAILING_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
+      updateUIBasedOnAccessType();
     }
-    AccessTypeNotifier.notifyCustomerObservers();
-    updateUIBasedOnAccessType();
   }
 
   @FXML
