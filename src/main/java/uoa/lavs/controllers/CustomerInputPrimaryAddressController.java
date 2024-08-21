@@ -303,17 +303,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         mailingAddressRadio.setSelected(addresses.get(currentAddress).getIsMailing());
         primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
       }
-
-      // print out all fields from first address
-      System.out.println(addresses.get(currentAddress - 1).getAddressType());
-      System.out.println(addresses.get(currentAddress - 1).getAddressLineOne());
-      System.out.println(addresses.get(currentAddress - 1).getAddressLineTwo());
-      System.out.println(addresses.get(currentAddress - 1).getSuburb());
-      System.out.println(addresses.get(currentAddress - 1).getPostCode());
-      System.out.println(addresses.get(currentAddress - 1).getCity());
-      System.out.println(addresses.get(currentAddress - 1).getCountry());
-      System.out.println(addresses.get(currentAddress - 1).getIsPrimary());
-      System.out.println(addresses.get(currentAddress - 1).getIsMailing());
     }
 
   }
@@ -337,17 +326,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       customerPostcodeField.setText(addresses.get(currentAddress).getPostCode());
       mailingAddressRadio.setSelected(addresses.get(currentAddress).getIsMailing());
       primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
-
-      // print out all fields from first address
-      System.out.println(addresses.get(currentAddress).getAddressType());
-      System.out.println(addresses.get(currentAddress).getAddressLineOne());
-      System.out.println(addresses.get(currentAddress).getAddressLineTwo());
-      System.out.println(addresses.get(currentAddress).getSuburb());
-      System.out.println(addresses.get(currentAddress).getPostCode());
-      System.out.println(addresses.get(currentAddress).getCity());
-      System.out.println(addresses.get(currentAddress).getCountry());
-      System.out.println(addresses.get(currentAddress).getIsPrimary());
-      System.out.println(addresses.get(currentAddress).getIsMailing());
     }
 
   }
