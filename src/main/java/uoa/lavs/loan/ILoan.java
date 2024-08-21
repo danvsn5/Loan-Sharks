@@ -13,6 +13,8 @@ public interface ILoan {
 
   public double getRate();
 
+  public String getRateType();
+
   public LoanDuration getDuration();
 
   public LoanPayment getPayment();
@@ -26,6 +28,8 @@ public interface ILoan {
   public void setPrincipal(double principal);
 
   public void setRate(double rate);
+
+  public void setRateType(String rateType);
 
   public void setDuration(LoanDuration duration);
 

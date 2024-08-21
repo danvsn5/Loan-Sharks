@@ -155,7 +155,7 @@ public class LoanDAOTest {
     coborrowersDAO = new LoanCoborrowersDAO();
     coborrowersDAO.addCoborrowers(-1, coborrowers);
 
-    loan = new PersonalLoan(-1, "-1", coborrowers, 0, 0, loanDuration, loanPayment);
+    loan = new PersonalLoan(-1, "-1", coborrowers, 0, 0, "fixed", loanDuration, loanPayment);
     loanDAO = new LoanDAO();
   }
 
@@ -219,6 +219,27 @@ public class LoanDAOTest {
 
     Loan retrievedLoan = loanDAO.getLoan(-1);
 
+    Assertions.assertEquals(-1, retrievedLoan.getLoanId());
+    Assertions.assertEquals("-1", retrievedLoan.getCustomerId());
+    Assertions.assertEquals(0, retrievedLoan.getPrincipal());
+    Assertions.assertEquals(0, retrievedLoan.getRate());
+    Assertions.assertEquals(startDate, retrievedLoan.getDuration().getStartDate());
+    Assertions.assertEquals(0, retrievedLoan.getDuration().getPeriod());
+    Assertions.assertEquals(0, retrievedLoan.getDuration().getLoanTerm());
+    Assertions.assertEquals("daily", retrievedLoan.getPayment().getCompounding());
+    Assertions.assertEquals("weekly", retrievedLoan.getPayment().getPaymentFrequency());
+    Assertions.assertEquals("1000", retrievedLoan.getPayment().getPaymentAmount());
+    Assertions.assertEquals(false, retrievedLoan.getPayment().getInterestOnly());
+  }
+
+  @Test
+  public void testGetLoansFromCustomer() {
+    loanDAO.addLoan(loan);
+
+    ArrayList<Loan> loans = loanDAO.getLoansFromCustomer("-1");
+
+    Assertions.assertEquals(1, loans.size());
+    Loan retrievedLoan = loans.get(0);
     Assertions.assertEquals(-1, retrievedLoan.getLoanId());
     Assertions.assertEquals("-1", retrievedLoan.getCustomerId());
     Assertions.assertEquals(0, retrievedLoan.getPrincipal());

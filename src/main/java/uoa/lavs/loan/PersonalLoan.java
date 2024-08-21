@@ -9,8 +9,9 @@ public class PersonalLoan extends Loan {
       ArrayList<String> coborrowerIds,
       double principal,
       double rate,
+      String rateType,
       LoanDuration duration,
       LoanPayment payment) {
-    super(loanId, customerId, coborrowerIds, principal, rate, duration, payment);
+    super(loanId, customerId, coborrowerIds, principal, rate, rateType, duration, payment);
   }
 }

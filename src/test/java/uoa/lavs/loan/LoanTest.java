@@ -12,6 +12,7 @@ public class LoanTest {
   ArrayList<String> coborrowers;
   Double principal;
   Double rate;
+  String rateType;
   LoanDuration duration;
   LoanPayment payment;
 
@@ -22,10 +23,11 @@ public class LoanTest {
     coborrowers.add("-3");
     principal = 1000.00;
     rate = 0.1;
+    rateType = "fixed";
     duration = new LoanDuration(-1, LocalDate.of(2024, 6, 8), 1, 12);
     payment = new LoanPayment(-1, "monthly", "100.0", "100.0", false);
 
-    loan = new PersonalLoan(-1, "-1", coborrowers, principal, rate, duration, payment);
+    loan = new PersonalLoan(-1, "-1", coborrowers, principal, rate, rateType, duration, payment);
   }
 
   @Test

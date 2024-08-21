@@ -164,6 +164,7 @@ public class InitialiseDatabase {
             + "customerId VARCHAR(50), "
             + "principal DOUBLE, "
             + "rate DOUBLE, "
+            + "rateType VARCHAR(50), "
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "FOREIGN KEY (customerId) REFERENCES Customer(customerId)"
             + ");";

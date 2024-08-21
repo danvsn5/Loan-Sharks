@@ -8,6 +8,7 @@ public abstract class Loan implements ILoan {
   private ArrayList<String> coborrowerIds;
   private double principal;
   private double rate;
+  private String rateType;
   private LoanDuration duration;
   private LoanPayment payment;
 
@@ -17,6 +18,7 @@ public abstract class Loan implements ILoan {
       ArrayList<String> coborrowerIds,
       double principal,
       double rate,
+      String rateType,
       LoanDuration duration,
       LoanPayment payment) {
     this.loanId = loanId;
@@ -24,6 +26,7 @@ public abstract class Loan implements ILoan {
     this.coborrowerIds = coborrowerIds;
     this.principal = principal;
     this.rate = rate;
+    this.rateType = rateType;
     this.duration = duration;
     this.payment = payment;
   }
@@ -51,6 +54,11 @@ public abstract class Loan implements ILoan {
   @Override
   public double getRate() {
     return rate;
+  }
+
+  @Override
+  public String getRateType() {
+    return this.rateType;
   }
 
   @Override
@@ -86,6 +94,11 @@ public abstract class Loan implements ILoan {
   @Override
   public void setRate(double rate) {
     this.rate = rate;
+  }
+
+  @Override
+  public void setRateType(String rateType) {
+    this.rateType = rateType;
   }
 
   @Override
