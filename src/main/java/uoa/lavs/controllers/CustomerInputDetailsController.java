@@ -98,7 +98,8 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
         new RadioButton[] {});
   }
 
-  private boolean setCustomerDetails() {
+  @Override
+  public boolean validateData() {
     boolean isValid = true;
 
     // Clear previous error styles
@@ -160,9 +161,23 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       return false;
     }
 
+    return true;
+  }
+
+  private boolean setCustomerDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
     // Set customer details
     customer.setTitle(customerTitleComboBox.getValue());
-    customer.setName(customerName);
+    customer.setName(
+        customerFirstNameField.getText()
+            + " "
+            + customerMiddleNameField.getText()
+            + " "
+            + customerLastNameField.getText());
     customer.setDateOfBirth(customerDOBPicker.getValue());
     customer.setOccupation(customerOccupationField.getText());
     customer.setResidency(customerVisaBox.getValue());
@@ -172,25 +187,24 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE") && setCustomerDetails()) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle create customer logic
       // Save customer to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
       CustomerCreationHelper.createCustomer(customer);
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
 
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       // Switch to edit mode
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-    } else if (AppState.customerDetailsAccessType.equals("EDIT") && setCustomerDetails()) {
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle confirm changes logic
       // Save changes to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
     }
   }
 

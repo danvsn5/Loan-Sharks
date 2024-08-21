@@ -70,22 +70,22 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE") && setContactDetails()) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-    } else if (AppState.customerDetailsAccessType.equals("EDIT") && setContactDetails()) {
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
     }
   }
 
-  private boolean setContactDetails() {
+  @Override
+  public boolean validateData() {
     // Type is fine
     // Prefix 10 chars, numbers and + char only
     // Number 20 chars, number and dash only
@@ -135,7 +135,16 @@ public class CustomerInputContactController implements AccessTypeObserver {
       return false;
     }
 
-    // Set customer details
+    return true;
+  }
+
+  private boolean setContactDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
+    // Set customer details (Chulshin or Jamie)
 
     return true;
   }
@@ -143,19 +152,16 @@ public class CustomerInputContactController implements AccessTypeObserver {
   // add handlers for all buttons
   @FXML
   private void handleCustomerDetailsButtonAction() {
-    setContactDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleCustomerAddressButtonAction() {
-    setContactDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleCustomerEmployerButtonAction() {
-    setContactDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 

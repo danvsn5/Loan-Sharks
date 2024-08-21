@@ -43,28 +43,8 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     updateUIBasedOnAccessType();
   }
 
-  @FXML
   @Override
-  public void updateUIBasedOnAccessType() {
-    ControllerHelper.updateUIBasedOnAccessType(
-        AppState.customerDetailsAccessType,
-        editButton,
-        new TextField[] {
-          employerAddressLine1Field,
-          employerAddressLine2Field,
-          employerSuburbField,
-          employerCityField,
-          employerPostcodeField
-        },
-        new ComboBox<?>[] {
-          employerCountryBox,
-        },
-        new DatePicker[] {},
-        new RadioButton[] {});
-    setAddressDetails();
-  }
-
-  private boolean setAddressDetails() {
+  public boolean validateData() {
     // Address 1 is 60 characters long and is required.
     // Address 2 is 60 chars, optional
     // Suburb is 30 chars, required
@@ -116,6 +96,36 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
       return false;
     }
 
+    return true;
+  }
+
+  @FXML
+  @Override
+  public void updateUIBasedOnAccessType() {
+    ControllerHelper.updateUIBasedOnAccessType(
+        AppState.customerDetailsAccessType,
+        editButton,
+        new TextField[] {
+          employerAddressLine1Field,
+          employerAddressLine2Field,
+          employerSuburbField,
+          employerCityField,
+          employerPostcodeField
+        },
+        new ComboBox<?>[] {
+          employerCountryBox,
+        },
+        new DatePicker[] {},
+        new RadioButton[] {});
+    setAddressDetails();
+  }
+
+  private boolean setAddressDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
     CustomerEmployer employer = customer.getEmployer();
     employer.setLineOne(employerAddressLine1Field.getText());
     employer.setLineTwo(employerAddressLine2Field.getText());
@@ -154,7 +164,8 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE") && setAddressDetails()) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
@@ -162,7 +173,8 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-    } else if (AppState.customerDetailsAccessType.equals("EDIT") && setAddressDetails()) {
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();

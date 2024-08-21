@@ -40,22 +40,8 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     updateUIBasedOnAccessType();
   }
 
-  @FXML
   @Override
-  public void updateUIBasedOnAccessType() {
-    ControllerHelper.updateUIBasedOnAccessType(
-        AppState.customerDetailsAccessType,
-        editButton,
-        new TextField[] {
-          employerNameField, employerEmailField, employerWebsiteField, employerPhoneField
-        },
-        new ComboBox<?>[] {},
-        new DatePicker[] {},
-        new RadioButton[] {customerIsEmployerCheckbox});
-    setEmployerDetails();
-  }
-
-  private boolean setEmployerDetails() {
+  public boolean validateData() {
     // employer name is 60 characters
     // email is 60 characters and must be email format
     // website is 60 characters and must be a valid URL
@@ -104,6 +90,30 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
       return false;
     }
 
+    return true;
+  }
+
+  @FXML
+  @Override
+  public void updateUIBasedOnAccessType() {
+    ControllerHelper.updateUIBasedOnAccessType(
+        AppState.customerDetailsAccessType,
+        editButton,
+        new TextField[] {
+          employerNameField, employerEmailField, employerWebsiteField, employerPhoneField
+        },
+        new ComboBox<?>[] {},
+        new DatePicker[] {},
+        new RadioButton[] {customerIsEmployerCheckbox});
+    setEmployerDetails();
+  }
+
+  private boolean setEmployerDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
     CustomerEmployer employer = customer.getEmployer();
     employer.setEmployerName(employerNameField.getText());
     employer.setEmployerEmail(employerEmailField.getText());
@@ -140,7 +150,8 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE") && setEmployerDetails()) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
@@ -148,7 +159,8 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-    } else if (AppState.customerDetailsAccessType.equals("EDIT") && setEmployerDetails()) {
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();

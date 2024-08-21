@@ -64,7 +64,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         new RadioButton[] {mailingAddressRadio, primaryAddressRadio});
   }
 
-  private boolean setAddressDetails() {
+  @Override
+  public boolean validateData() {
     // Address type only check not null
     // Address 1 60 chars
     // Address 2 60 chars (optional)
@@ -124,6 +125,15 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       return false;
     }
 
+    return true;
+  }
+
+  private boolean setAddressDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
     // Set address details.
 
     /**
@@ -170,7 +180,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE") && setAddressDetails()) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
@@ -178,7 +189,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-    } else if (AppState.customerDetailsAccessType.equals("EDIT") && setAddressDetails()) {
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
