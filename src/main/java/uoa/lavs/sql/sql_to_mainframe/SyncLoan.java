@@ -25,26 +25,28 @@ public class SyncLoan extends Sync {
 
     if (loadStatus.getErrorCode() == 0) {
       System.out.println("Loan loaded successfully.");
+      UpdateLoan updateLoan = updateLoan(resultSet, loanId);
+      Status status = updateLoan.send(connection);
+
+      if (status.getErrorCode() == 0) {
+        System.out.println("Loan updated successfully.");
+      } else {
+        System.out.println("Error updating loan: " + status.getErrorMessage());
+      }
     } else {
       System.out.println("Loan not found in mainframe, creating new loan");
-    }
+      UpdateLoan updateLoan = updateLoan(resultSet, null);
+      Status status = updateLoan.send(connection);
 
-    UpdateLoan updateLoan = updateLoan(resultSet);
-    Status status = updateLoan.send(connection);
+      String newLoanId = updateLoan.getLoanIdFromServer();
 
-    // this is false.
-    System.out.println(status.getWasSuccessful());
-    // this is just null.
-    System.out.println(updateLoan.getLoanIdFromServer());
+      updateLoanIdInLocalDB(resultSet.getString("loanId"), newLoanId, localConn);
 
-    String newLoanId = updateLoan.getLoanIdFromServer();
-
-    updateLoanIdInLocalDB(resultSet.getString("loanId"), newLoanId, localConn);
-
-    if (status.getErrorCode() == 0) {
-      System.out.println("Loan updated successfully.");
-    } else {
-      System.out.println("Error updating loan: " + status.getErrorMessage());
+      if (status.getErrorCode() == 0) {
+        System.out.println("Loan updated successfully.");
+      } else {
+        System.out.println("Error updating loan: " + status.getErrorMessage());
+      }
     }
   }
 
@@ -77,9 +79,9 @@ public class SyncLoan extends Sync {
         + "WHERE l.lastModified > ?";
   }
 
-  private UpdateLoan updateLoan(ResultSet resultSet) throws SQLException {
+  private UpdateLoan updateLoan(ResultSet resultSet, String loanId) throws SQLException {
     UpdateLoan updateLoan = new UpdateLoan();
-    updateLoan.setLoanId(null);
+    updateLoan.setLoanId(loanId);
     updateLoan.setCustomerId(resultSet.getString("customerId"));
 
     String compoundingStr = (resultSet.getString("compounding")).substring(0, 1).toUpperCase();
