@@ -15,8 +15,9 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
 public class LoanFinanceDetails implements AccessTypeObserver {
-  @FXML private TextField compoundingField;
-  @FXML private TextField paymentFrequencyField;
+  @FXML private ComboBox<String> compoundingBox;
+  @FXML private ComboBox<String> paymentFrequencyBox;
+  @FXML private ComboBox<String> rateTypeBox;
   @FXML private TextField paymentValueField;
   @FXML private RadioButton interestOnlyButton;
 
@@ -32,6 +33,8 @@ public class LoanFinanceDetails implements AccessTypeObserver {
   private void initialize() {
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
+    compoundingBox.getItems().addAll("Weekly", "Monthly", "Annually");
+    paymentFrequencyBox.getItems().addAll("Weekly", "Fortnightly", "Monthly");
   }
 
   @FXML
@@ -40,11 +43,41 @@ public class LoanFinanceDetails implements AccessTypeObserver {
     ControllerHelper.updateUIBasedOnAccessTypeLoan(
         AppState.loanDetailsAccessType,
         editButton,
-        new TextField[] {compoundingField, paymentFrequencyField, paymentValueField},
-        new ComboBox<?>[] {},
+        new TextField[] {paymentValueField},
+        new ComboBox<?>[] {
+          compoundingBox, paymentFrequencyBox,
+        },
         new DatePicker[] {},
         new RadioButton[] {interestOnlyButton});
     setFinanceDetails();
+  }
+
+  @Override
+  public boolean validateData() {
+    // Add validation code here
+    boolean isValid = true;
+
+    paymentValueField.setStyle("");
+    compoundingBox.setStyle("");
+    paymentFrequencyBox.setStyle("");
+    rateTypeBox.setStyle("");
+
+    if (paymentValueField.getText().isEmpty() || !paymentValueField.getText().matches("\\d+")) {
+      paymentValueField.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    if (compoundingBox.getValue() == null) {
+      compoundingBox.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    if (paymentFrequencyBox.getValue() == null) {
+      paymentFrequencyBox.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    return isValid;
   }
 
   @FXML

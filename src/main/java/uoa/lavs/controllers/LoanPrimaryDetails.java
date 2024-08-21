@@ -18,6 +18,7 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   @FXML private TextField borrowerIDField;
   @FXML private TextField principalField;
   @FXML private TextField interestRateField;
+  @FXML private ComboBox<String> rateTypeBox;
 
   @FXML private Button coborrowerButton;
   @FXML private Button durationButton;
@@ -29,8 +30,10 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
 
   @FXML
   private void initialize() {
+    // TODO intialise the borrowerIDField
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
+    rateTypeBox.getItems().addAll("Floating", "Fixed");
   }
 
   @FXML
@@ -44,6 +47,37 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
         new DatePicker[] {},
         new RadioButton[] {});
     setPrimaryDetails();
+  }
+
+  @Override
+  public boolean validateData() {
+    // Add validation code here
+    boolean isValid = true;
+
+    principalField.setStyle("");
+    interestRateField.setStyle("");
+    rateTypeBox.setStyle("");
+
+    if (principalField.getText().isEmpty()
+        || !principalField.getText().matches("[0-9]+")
+        || principalField.getText().length() > 15) {
+      principalField.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    if (interestRateField.getText().isEmpty()
+        || !interestRateField.getText().matches("[0-9]+")
+        || interestRateField.getText().length() > 5) {
+      interestRateField.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    if (rateTypeBox.getValue() == null) {
+      rateTypeBox.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    return isValid;
   }
 
   @FXML

@@ -144,7 +144,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       return false;
     }
 
-    // Set customer details (Chulshin or Jamie)
+    // TODO: Set customer details (Chulshin or Jamie)
 
     return true;
   }

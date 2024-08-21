@@ -25,6 +25,16 @@ public class AccessTypeNotifier {
     return isValid;
   }
 
+  public static boolean validateLoanObservers() {
+    boolean isValid = true;
+    for (AccessTypeObserver observer : loanObservers) {
+      if (!observer.validateData()) {
+        isValid = false;
+      }
+    }
+    return isValid;
+  }
+
   public static void notifyCustomerObservers() {
     for (AccessTypeObserver observer : customerObservers) {
       observer.updateUIBasedOnAccessType();

@@ -35,9 +35,14 @@ public class LoanSummaryController {
 
   @FXML
   private void handleConfirmLoanButtonAction() {
-    AppState.isCreatingLoan = false;
-    AppState.loanDetailsAccessType = "VIEW";
-    AccessTypeNotifier.notifyLoanObservers();
+    confirmLoanButton.setStyle("");
+    if (AccessTypeNotifier.validateLoanObservers()) {
+      AppState.isCreatingLoan = false;
+      AppState.loanDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyLoanObservers();
+    } else {
+      confirmLoanButton.setStyle("-fx-background-color: red");
+    }
   }
 
   @FXML

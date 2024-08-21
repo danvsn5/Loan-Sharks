@@ -134,7 +134,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       return false;
     }
 
-    // Set address details.
+    // TODO: Set customer details (Chulshin or Jamie)
 
     /**
      * ArrayList<Address> addresses = customer.getAddresses();
