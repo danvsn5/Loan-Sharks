@@ -24,6 +24,10 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   @FXML private TextField customerCityField;
   @FXML private TextField customerPostcodeField;
   @FXML private RadioButton mailingAddressRadio;
+  @FXML private RadioButton primaryAddressRadio;
+
+  @FXML private ImageView incAddress;
+  @FXML private ImageView decAddress;
 
   @FXML private Button detailsButton;
   @FXML private Button mailingAddressButton;
@@ -130,6 +134,24 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   @FXML
   private void handleMailingAddressRadioAction() {
     // Add mailing address radio button action code here
+
+  }
+
+  @FXML
+  private void handlePrimaryAddressRadioAction() {
+    // Add mailing address radio button action code here
+
+  }
+
+  @FXML
+  private void handleIncAddress() {
+    // Add increment address button action code here
+
+  }
+
+  @FXML
+  private void handleDecAddress() {
+    // Add decrement address button action code here
 
   }
 }

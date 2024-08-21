@@ -42,7 +42,7 @@ public class CustomerDAO {
   }
 
   private String getNextCustomerId() {
-    String sql = "SELECT MIN(customerId) AS smallestId FROM customer";
+    String sql = "SELECT MIN(CAST(customerId AS INTEGER)) AS smallestId FROM customer";
     String previousId = "-1";
 
     try (Connection conn = DatabaseConnection.connect();
@@ -63,7 +63,6 @@ public class CustomerDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-
     return previousId;
   }
 
@@ -117,7 +116,6 @@ public class CustomerDAO {
         CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
 
         CustomerEmployer employer = employerdao.getCustomerEmployer(customerId);
-
 
         return new IndividualCustomer(
             customerId,
