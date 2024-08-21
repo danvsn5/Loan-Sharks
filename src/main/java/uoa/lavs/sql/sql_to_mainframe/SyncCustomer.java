@@ -67,7 +67,8 @@ public class SyncCustomer extends Sync {
     updateCustomer.setName(resultSet.getString("name"));
     updateCustomer.setDateofBirth(resultSet.getDate("dateOfBirth").toLocalDate());
     updateCustomer.setOccupation(resultSet.getString("occupation"));
-    updateCustomer.setCitizenship(resultSet.getString("residency"));
+    updateCustomer.setVisa(resultSet.getString("visa"));
+    updateCustomer.setCitizenship(resultSet.getString("citizenship"));
     return updateCustomer;
   }
 

@@ -37,7 +37,7 @@ public class IndividualCustomerSingleton {
 
       instance =
           new IndividualCustomer(
-              "", "", "", null, "", "", notes, addresses, phones, emails, employer);
+              "", "", "", null, "", "", "", notes, addresses, phones, emails, employer);
     }
     return instance;
   }

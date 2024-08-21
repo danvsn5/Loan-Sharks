@@ -20,8 +20,8 @@ import uoa.lavs.sql.DatabaseConnection;
 public class CustomerDAO {
   public void addCustomer(ICustomer customer) {
     String sql =
-        "INSERT INTO customer (customerId, title, name, dateOfBirth, occupation, residency"
-            + " ) VALUES (?, ?, ?, ?, ?, ?)";
+        "INSERT INTO customer (customerId, title, name, dateOfBirth, occupation, visa, citizenship"
+            + " ) VALUES (?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -31,7 +31,8 @@ public class CustomerDAO {
       pstmt.setString(3, customer.getName());
       pstmt.setDate(4, Date.valueOf(customer.getDateOfBirth()));
       pstmt.setString(5, customer.getOccupation());
-      pstmt.setString(6, customer.getResidency());
+      pstmt.setString(6, customer.getVisa());
+      pstmt.setString(7, customer.getCitizenship());
       pstmt.executeUpdate();
 
       customer.setCustomerId(customerId);
@@ -68,7 +69,7 @@ public class CustomerDAO {
 
   public void updateCustomer(ICustomer customer) {
     String sql =
-        "UPDATE customer SET title = ?, name = ?, dateOfBirth = ?, occupation = ?, residency = ?,"
+        "UPDATE customer SET title = ?, name = ?, dateOfBirth = ?, occupation = ?, visa = ?, citizenship = ?,"
         + " lastModified = CURRENT_TIMESTAMP WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -76,9 +77,10 @@ public class CustomerDAO {
       pstmt.setString(2, customer.getName());
       pstmt.setDate(3, Date.valueOf(customer.getDateOfBirth()));
       pstmt.setString(4, customer.getOccupation());
-      pstmt.setString(5, customer.getResidency());
+      pstmt.setString(5, customer.getVisa());
+      pstmt.setString(6, customer.getCitizenship());
       pstmt.setString(
-          6, customer.getCustomerId());
+          7, customer.getCustomerId());
       pstmt.executeUpdate();
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -97,7 +99,8 @@ public class CustomerDAO {
         String name = rs.getString("name");
         LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         String occupation = rs.getString("occupation");
-        String residency = rs.getString("residency");
+        String visa = rs.getString("visa");
+        String citizenship = rs.getString("citizenship");
 
         NotesDAO notesdao = new NotesDAO();
         ArrayList<Note> notes = notesdao.getNotes(customerId);
@@ -122,7 +125,8 @@ public class CustomerDAO {
             name,
             dateOfBirth,
             occupation,
-            residency,
+            visa,
+            citizenship,
             notes,
             addresses,
             phones,
@@ -150,7 +154,8 @@ public class CustomerDAO {
         String title = rs.getString("title");
         LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         String occupation = rs.getString("occupation");
-        String residency = rs.getString("residency");
+        String visa = rs.getString("visa");
+        String citizenship = rs.getString("citizenship");
 
         CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
 
@@ -174,7 +179,8 @@ public class CustomerDAO {
                 name,
                 dateOfBirth,
                 occupation,
-                residency,
+                visa,
+                citizenship,
                 notes,
                 addresses,
                 phones,
@@ -204,7 +210,8 @@ public class CustomerDAO {
         String title = rs.getString("title");
         String name = rs.getString("name");
         String occupation = rs.getString("occupation");
-        String residency = rs.getString("residency");
+        String visa = rs.getString("visa");
+        String citizenship = rs.getString("citizenship");
 
         NotesDAO notesdao = new NotesDAO();
         ArrayList<Note> notes = notesdao.getNotes(customerId);
@@ -229,7 +236,8 @@ public class CustomerDAO {
                 name,
                 date,
                 occupation,
-                residency,
+                visa,
+                citizenship,
                 notes,
                 addresses,
                 phones,
@@ -311,7 +319,8 @@ public class CustomerDAO {
             "Ting Mun Guy",
             dateOfBirth,
             "Engineer",
-            "NZ Citizen",
+            "B2",
+            "New Zealand",
             notes,
             addresses,
             phones,
@@ -403,6 +412,6 @@ public class CustomerDAO {
   }
 
   public static void main(String[] args) {
-    updateCustomerTest("2");
+    addCustomerTest();
   }
 }

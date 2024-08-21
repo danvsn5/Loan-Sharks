@@ -3,6 +3,8 @@ package uoa.lavs.customer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import org.apache.commons.math3.random.StableRandomGenerator;
+
 public interface ICustomer {
   public String getCustomerId();
 
@@ -14,7 +16,9 @@ public interface ICustomer {
 
   public String getOccupation();
 
-  public String getResidency();
+  public String getVisa();
+
+  public String getCitizenship();
 
   public ArrayList<Note> getNotes();
 
@@ -36,7 +40,9 @@ public interface ICustomer {
 
   public void setOccupation(String occupation);
 
-  public void setResidency(String residency);
+  public void setVisa(String visa);
+
+  public void setCitizenship(String citizenship);
 
   public void setNotes(ArrayList<Note> notes);
 
