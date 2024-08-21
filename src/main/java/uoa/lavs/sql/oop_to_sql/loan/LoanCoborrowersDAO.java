@@ -46,7 +46,7 @@ public class LoanCoborrowersDAO {
     addCoborrowers(loanId, coborrowerIds);
   }
 
-  public ArrayList<String> findCoborrowers(int loanId) {
+  public ArrayList<String> getCoborrowers(int loanId) {
     String sql = "SELECT coborrowerId FROM loan_coborrower WHERE loanId = ?";
     ArrayList<String> coborrowerIds = new ArrayList<>();
 

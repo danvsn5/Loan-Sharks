@@ -160,16 +160,12 @@ public class InitialiseDatabase {
   private static void createLoanEntity(Connection conn) {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan (\n"
-            + "loanId INTEGER, "
+            + "loanId INTEGER PRIMARY KEY, "
             + "customerId VARCHAR(50), "
             + "principal DOUBLE, "
             + "rate DOUBLE, "
-            + "durationId INT, "
-            + "paymentId INT, "
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-            + "FOREIGN KEY (customerId) REFERENCES Customer(customerId), "
-            + "FOREIGN KEY (durationId) REFERENCES LoanDuration(durationId), "
-            + "FOREIGN KEY (paymentId) REFERENCES LoanPayment(paymentId)"
+            + "FOREIGN KEY (customerId) REFERENCES Customer(customerId)"
             + ");";
 
     try (Statement stmt = conn.createStatement()) {
@@ -208,7 +204,7 @@ public class InitialiseDatabase {
             + "paymentFrequency VARCHAR(50), "
             + "paymentAmount VARCHAR(50), "
             + "interestOnly BOOLEAN, "
-            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+            + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "PRIMARY KEY (loanId, paymentId), "
             + "FOREIGN KEY (loanId) REFERENCES Loan(loanId)"
             + ");";
