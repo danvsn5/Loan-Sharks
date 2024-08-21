@@ -349,7 +349,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleDecAddress() {
-    if (currentAddress == 0) {
+    if (currentAddress != 0) {
       if (currentAddress == 0) {
         return;
       }
