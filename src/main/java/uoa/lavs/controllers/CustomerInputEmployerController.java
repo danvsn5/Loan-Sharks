@@ -16,6 +16,7 @@ import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.utility.CustomerCreationHelper;
 
 public class CustomerInputEmployerController implements AccessTypeObserver {
   @FXML private TextField employerNameField;
@@ -125,21 +126,25 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
 
   @FXML
   private void handleDetailsButtonAction() {
+    setEmployerDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleAddressButtonAction() {
+    setEmployerDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
+    setEmployerDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerAddressButtonAction() {
+    setEmployerDetails();
     Main.setUi(AppUI.CI_EMPLOYER_ADDRESS);
   }
 
@@ -148,6 +153,8 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType.equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
+      setEmployerDetails();
+      CustomerCreationHelper.createCustomer(customer);
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {

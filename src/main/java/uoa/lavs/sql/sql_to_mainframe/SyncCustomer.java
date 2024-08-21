@@ -83,8 +83,8 @@ public class SyncCustomer extends Sync {
    */
   private void updateCustomerIdInLocalDB(
       String oldCustomerId, String newCustomerId, Connection conn) throws SQLException {
-        System.out.println(oldCustomerId);
-        System.out.println(newCustomerId);
+    System.out.println(oldCustomerId);
+    System.out.println(newCustomerId);
 
     // Update customerId in customer table
     String updateCustomerSql = "UPDATE customer SET customerId = ? WHERE customerId = ?";
@@ -126,7 +126,6 @@ public class SyncCustomer extends Sync {
       }
     }
 
-    /* 
     String updateNotesSql = "UPDATE customer_notes SET customerId = ? WHERE customerId = ?";
     try (PreparedStatement updateNotesPstmt = conn.prepareStatement(updateNotesSql)) {
       updateNotesPstmt.setString(1, newCustomerId);
@@ -137,7 +136,7 @@ public class SyncCustomer extends Sync {
       } else {
         System.out.println("No records updated in customer notes table.");
       }
-    } */
+    }
 
     // Update customerId in customer_phone table
     String updatePhoneSql = "UPDATE customer_phone SET customerId = ? WHERE customerId = ?";
