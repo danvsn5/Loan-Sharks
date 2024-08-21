@@ -2,6 +2,7 @@ package uoa.lavs.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,7 +11,7 @@ import javafx.scene.shape.Rectangle;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
-import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.customer.Customer;
 
 public class CustomerResultsController {
   // make labels for name and ID, 6 each
@@ -39,21 +40,71 @@ public class CustomerResultsController {
   @FXML private Button nextButton;
   @FXML private ImageView staticReturnImageView;
 
+  int currentPage = 1;
   ArrayList<String> searchResultsNameList;
   ArrayList<String> searchResultsIDList;
+  List<Customer> searchResultList;
 
   // write for all fxml elements
   @FXML
   private void initialize() {
     searchResultsNameList = new ArrayList<>();
     searchResultsIDList = new ArrayList<>();
-    if (IndividualCustomerSingleton.getInstance() != null) {
-      System.out.println("Customer Name: " + IndividualCustomerSingleton.getInstance().getName());
-      searchResultsNameList.add(IndividualCustomerSingleton.getInstance().getName());
-      searchResultsIDList.add(IndividualCustomerSingleton.getInstance().getCustomerId());
-    } else {
-      // allan to implement 
+    searchResultList = (List<Customer>) AppState.getSearchResultList();
+
+    populateLabels();
+  }
+
+  private void populateLabels() {
+    int startIndex = (currentPage - 1) * 6;
+
+    for (int i = 0; i < 6; i++) {
+      int resultIndex = startIndex + i;
+      if (resultIndex < searchResultList.size()) {
+        Customer customer = searchResultList.get(resultIndex);
+        getLabelByIndex(i + 1, "name").setText(customer.getName());
+        getLabelByIndex(i + 1, "id").setText(customer.getCustomerId());
+      } else {
+        getLabelByIndex(i + 1, "name").setText("");
+        getLabelByIndex(i + 1, "id").setText("");
+      }
     }
+  }
+
+  private Label getLabelByIndex(int index, String type) {
+    switch (type) {
+      case "name":
+        switch (index) {
+          case 1:
+            return searchResultsNameLabel1;
+          case 2:
+            return searchResultsNameLabel2;
+          case 3:
+            return searchResultsNameLabel3;
+          case 4:
+            return searchResultsNameLabel4;
+          case 5:
+            return searchResultsNameLabel5;
+          case 6:
+            return searchResultsNameLabel6;
+        }
+      case "id":
+        switch (index) {
+          case 1:
+            return searchResultsIDLabel1;
+          case 2:
+            return searchResultsIDLabel2;
+          case 3:
+            return searchResultsIDLabel3;
+          case 4:
+            return searchResultsIDLabel4;
+          case 5:
+            return searchResultsIDLabel5;
+          case 6:
+            return searchResultsIDLabel6;
+        }
+    }
+    return null;
   }
 
   @FXML
@@ -98,8 +149,7 @@ public class CustomerResultsController {
   }
 
   private void loadCustomer(int index) throws IOException {
-    // String searchId = searchResultsIDList.get(index - 1);
-    // searchId method here
+    AppState.setSelectedCustomer(searchResultList.get((currentPage - 1) * 6 + index - 1));
     if (AppState.isCreatingLoan) {
       AppState.loadLoans("CREATE");
       Main.setUi(AppUI.LC_PRIMARY);
