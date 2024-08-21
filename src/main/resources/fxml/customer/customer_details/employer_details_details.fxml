@@ -77,7 +77,7 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="372.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="379.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleDetailsButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Customer Details">
+      <Button graphicTextGap="0.0" layoutX="139.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleDetailsButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Customer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -93,8 +93,8 @@
          </font>
       </Label>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="535.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Email Address" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="915.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Website (opt.)" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Phone Number (opt.)" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="915.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Website" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Phone Number" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Owner of Company?" />
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../../css/index.css" text="Summary of ID: &lt;123456-789&gt;" textFill="#333333" textOverrun="CLIP">
          <font>
