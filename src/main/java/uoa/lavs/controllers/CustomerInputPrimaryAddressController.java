@@ -249,39 +249,62 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   @FXML
   private void handleIncAddress() {
     if (AppState.customerDetailsAccessType == "CREATE") {
-      // gets all the input fields and adds them to an address instance
-      uoa.lavs.customer.Address address = new uoa.lavs.customer.Address(customer.getCustomerId(),
-          customerAddressTypeComboBox.getValue(), customerAddressLine1Field.getText(),
-          customerAddressLine2Field.getText(), customerSuburbField.getText(), customerPostcodeField.getText(),
-          customerCityField.getText(), "New Zealand", primaryAddressRadio.isSelected(),
-          mailingAddressRadio.isSelected());
-      addresses.add(address);
+
+      // if the current address is in the final 'page' of the section, then create a
+      // new address and add to list
+      if (currentAddress == addresses.size()) {
+        // gets all the input fields and adds them to an address instance
+        uoa.lavs.customer.Address address = new uoa.lavs.customer.Address(customer.getCustomerId(),
+            customerAddressTypeComboBox.getValue(), customerAddressLine1Field.getText(),
+            customerAddressLine2Field.getText(), customerSuburbField.getText(), customerPostcodeField.getText(),
+            customerCityField.getText(), "New Zealand", primaryAddressRadio.isSelected(),
+            mailingAddressRadio.isSelected());
+        addresses.add(address);
+      }
 
       // conditional statements to check if the primary or mailing address is selected
       if (primaryAddressRadio.isSelected()) {
         isPrimarySelected = true;
+        // TODO disable the primary address radio button if it has been selected once,
+        // but have it deselectable ONLY WHEN THAT address is being displayed
+        // ALTERNATIVELY!!!!!!!! if they select primary address in a different address,
+        // then the OLD ADDRESS gets its primary address radio button deselected.
+        // FOLLOW ALONG FOR MAILING ADDRESS
       }
       if (mailingAddressRadio.isSelected()) {
         isMailingSelected = true;
       }
 
-
       // current address counter increment for displaying the cached results in the
       // temp array
       currentAddress++;
 
-      // clear all fields
-      customerAddressTypeComboBox.setValue("");
-      customerAddressLine1Field.setText(null);
-      customerAddressLine2Field.setText(null);
-      customerSuburbField.setText(null);
-      customerCityField.setText(null);
-      customerPostcodeField.setText(null);
-      mailingAddressRadio.setSelected(false);
-      primaryAddressRadio.setSelected(false);
+      // if a new address was created, then set the fields to empty values, otherwise
+      // set them to the
+      // next address in the arraylist
+      if (currentAddress == addresses.size()) {
+        // clear all fields
+        customerAddressTypeComboBox.setValue("");
+        customerAddressLine1Field.setText(null);
+        customerAddressLine2Field.setText(null);
+        customerSuburbField.setText(null);
+        customerCityField.setText(null);
+        customerPostcodeField.setText(null);
+        mailingAddressRadio.setSelected(false);
+        primaryAddressRadio.setSelected(false);
+      } else {
+        // set all the fields to the new currentAddress
+        customerAddressTypeComboBox.setValue(addresses.get(currentAddress).getAddressType());
+        customerAddressLine1Field.setText(addresses.get(currentAddress).getAddressLineOne());
+        customerAddressLine2Field.setText(addresses.get(currentAddress).getAddressLineTwo());
+        customerSuburbField.setText(addresses.get(currentAddress).getSuburb());
+        customerCityField.setText(addresses.get(currentAddress).getCity());
+        customerPostcodeField.setText(addresses.get(currentAddress).getPostCode());
+        mailingAddressRadio.setSelected(addresses.get(currentAddress).getIsMailing());
+        primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
+      }
 
       // print out all fields from first address
-      System.out.println(customerAddressLine1Field.getText());
       System.out.println(addresses.get(currentAddress - 1).getAddressType());
       System.out.println(addresses.get(currentAddress - 1).getAddressLineOne());
       System.out.println(addresses.get(currentAddress - 1).getAddressLineTwo());
@@ -291,14 +314,38 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       System.out.println(addresses.get(currentAddress - 1).getCountry());
       System.out.println(addresses.get(currentAddress - 1).getIsPrimary());
       System.out.println(addresses.get(currentAddress - 1).getIsMailing());
-      System.out.println(addresses.get(currentAddress - 1).getCustomerId());
     }
 
   }
 
   @FXML
   private void handleDecAddress() {
-    // Add decrement address button action code here
+    if (AppState.customerDetailsAccessType == "CREATE") {
+
+      // decrement the current address counter
+      currentAddress--;
+
+      // set all the fields to the new currentAddress
+      customerAddressTypeComboBox.setValue(addresses.get(currentAddress).getAddressType());
+      customerAddressLine1Field.setText(addresses.get(currentAddress).getAddressLineOne());
+      customerAddressLine2Field.setText(addresses.get(currentAddress).getAddressLineTwo());
+      customerSuburbField.setText(addresses.get(currentAddress).getSuburb());
+      customerCityField.setText(addresses.get(currentAddress).getCity());
+      customerPostcodeField.setText(addresses.get(currentAddress).getPostCode());
+      mailingAddressRadio.setSelected(addresses.get(currentAddress).getIsMailing());
+      primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
+
+      // print out all fields from first address
+      System.out.println(addresses.get(currentAddress).getAddressType());
+      System.out.println(addresses.get(currentAddress).getAddressLineOne());
+      System.out.println(addresses.get(currentAddress).getAddressLineTwo());
+      System.out.println(addresses.get(currentAddress).getSuburb());
+      System.out.println(addresses.get(currentAddress).getPostCode());
+      System.out.println(addresses.get(currentAddress).getCity());
+      System.out.println(addresses.get(currentAddress).getCountry());
+      System.out.println(addresses.get(currentAddress).getIsPrimary());
+      System.out.println(addresses.get(currentAddress).getIsMailing());
+    }
 
   }
 }
