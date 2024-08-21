@@ -21,31 +21,50 @@ import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
 public class CustomerInputPrimaryAddressController implements AccessTypeObserver {
-  @FXML private ComboBox<String> customerAddressTypeComboBox;
-  @FXML private TextField customerAddressLine1Field;
-  @FXML private TextField customerAddressLine2Field;
-  @FXML private TextField customerSuburbField;
-  @FXML private TextField customerCityField;
-  @FXML private TextField customerPostcodeField;
-  @FXML private RadioButton mailingAddressRadio;
-  @FXML private RadioButton primaryAddressRadio;
+  @FXML
+  private ComboBox<String> customerAddressTypeComboBox;
+  @FXML
+  private TextField customerAddressLine1Field;
+  @FXML
+  private TextField customerAddressLine2Field;
+  @FXML
+  private TextField customerSuburbField;
+  @FXML
+  private TextField customerCityField;
+  @FXML
+  private TextField customerPostcodeField;
+  @FXML
+  private RadioButton mailingAddressRadio;
+  @FXML
+  private RadioButton primaryAddressRadio;
 
-  @FXML private ImageView incAddress;
-  @FXML private ImageView decAddress;
+  @FXML
+  private ImageView incAddress;
+  @FXML
+  private ImageView decAddress;
 
-  @FXML private Button detailsButton;
-  @FXML private Button mailingAddressButton;
-  @FXML private Button contactButton;
-  @FXML private Button employerButton;
+  @FXML
+  private Button detailsButton;
+  @FXML
+  private Button mailingAddressButton;
+  @FXML
+  private Button contactButton;
+  @FXML
+  private Button employerButton;
 
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
+  @FXML
+  private Button editButton;
+  @FXML
+  private ImageView staticReturnImageView;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
-  // private ArrayList<uoa.lavs.customer.Address> addresses = customer.getAddresses();
+  // private ArrayList<uoa.lavs.customer.Address> addresses =
+  // customer.getAddresses();
   private List<uoa.lavs.customer.Address> addresses = new ArrayList<>();
   private int currentAddress = 0;
+  private boolean isMailingSelected = false;
+  private boolean isPrimarySelected = false;
 
   @FXML
   private void initialize() {
@@ -61,15 +80,15 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         AppState.customerDetailsAccessType,
         editButton,
         new TextField[] {
-          customerAddressLine1Field,
-          customerAddressLine2Field,
-          customerSuburbField,
-          customerCityField,
-          customerPostcodeField
+            customerAddressLine1Field,
+            customerAddressLine2Field,
+            customerSuburbField,
+            customerCityField,
+            customerPostcodeField
         },
-        new ComboBox<?>[] {customerAddressTypeComboBox},
+        new ComboBox<?>[] { customerAddressTypeComboBox },
         new DatePicker[] {},
-        new RadioButton[] {mailingAddressRadio, primaryAddressRadio});
+        new RadioButton[] { mailingAddressRadio, primaryAddressRadio });
   }
 
   @Override
@@ -127,7 +146,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       isValid = false;
     }
 
-    // Primary and mailing address check, only one address can have primary and mailing
+    // Primary and mailing address check, only one address can have primary and
+    // mailing
 
     if (!isValid) {
       return false;
@@ -147,16 +167,19 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     /**
      * ArrayList<Address> addresses = customer.getAddresses();
      *
-     * <p>address.setAddressLineOne(customerAddressLine1Field.getText());
+     * <p>
+     * address.setAddressLineOne(customerAddressLine1Field.getText());
      * address.setAddressLineTwo(customerAddressLine2Field.getText());
      * address.setSuburb(customerSuburbField.getText());
      * address.setCity(customerCityField.getText());
      * address.setPostCode(customerPostcodeField.getText());
      * address.setAddressType(customerAddressTypeComboBox.getValue());
      *
-     * <p>// Autosetting to New Zealand address.setCountry("New Zealand");
+     * <p>
+     * // Autosetting to New Zealand address.setCountry("New Zealand");
      *
-     * <p>// handle mailing address if (mailingAddressRadio.isSelected()) {
+     * <p>
+     * // handle mailing address if (mailingAddressRadio.isSelected()) {
      * customer.setMailingAddress(address); }
      */
     return true;
@@ -225,15 +248,30 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleIncAddress() {
-    if(AppState.customerDetailsAccessType == "CREATE"){
+    if (AppState.customerDetailsAccessType == "CREATE") {
       // gets all the input fields and adds them to an address instance
-      uoa.lavs.customer.Address address = new uoa.lavs.customer.Address(customer.getCustomerId(), customerAddressTypeComboBox.getValue(), customerAddressLine1Field.getText(), customerAddressLine2Field.getText(), customerSuburbField.getText(), customerPostcodeField.getText(), customerCityField.getText(), "New Zealand", primaryAddressRadio.isSelected(), mailingAddressRadio.isSelected());
+      uoa.lavs.customer.Address address = new uoa.lavs.customer.Address(customer.getCustomerId(),
+          customerAddressTypeComboBox.getValue(), customerAddressLine1Field.getText(),
+          customerAddressLine2Field.getText(), customerSuburbField.getText(), customerPostcodeField.getText(),
+          customerCityField.getText(), "New Zealand", primaryAddressRadio.isSelected(),
+          mailingAddressRadio.isSelected());
       addresses.add(address);
-      // current address counter increment for displaying the cached results in the temp array
+
+      // conditional statements to check if the primary or mailing address is selected
+      if (primaryAddressRadio.isSelected()) {
+        isPrimarySelected = true;
+      }
+      if (mailingAddressRadio.isSelected()) {
+        isMailingSelected = true;
+      }
+
+
+      // current address counter increment for displaying the cached results in the
+      // temp array
       currentAddress++;
 
       // clear all fields
-      customerAddressTypeComboBox.setValue("");;
+      customerAddressTypeComboBox.setValue("");
       customerAddressLine1Field.setText(null);
       customerAddressLine2Field.setText(null);
       customerSuburbField.setText(null);
@@ -254,9 +292,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       System.out.println(addresses.get(currentAddress - 1).getIsPrimary());
       System.out.println(addresses.get(currentAddress - 1).getIsMailing());
       System.out.println(addresses.get(currentAddress - 1).getCustomerId());
-      
-      
-
     }
 
   }
