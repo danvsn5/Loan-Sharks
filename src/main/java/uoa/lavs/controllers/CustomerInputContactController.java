@@ -340,8 +340,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void handleIncEmail() {
-    if(AppState.customerDetailsAccessType == "READ") {
-      
+    if (AppState.customerDetailsAccessType == "READ") {
+
       currentEmailPage++;
       customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
       emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());

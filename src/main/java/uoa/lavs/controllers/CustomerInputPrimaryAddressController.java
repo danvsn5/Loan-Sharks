@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -41,6 +42,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   private ImageView incAddress;
   @FXML
   private ImageView decAddress;
+  @FXML 
+  private Label addressPageLabel;
 
   @FXML
   private Button detailsButton;
@@ -72,6 +75,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     customerAddressTypeComboBox.getItems().addAll("Home", "Work", "PO Box", "Other");
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
+    addressPageLabel.setText("Address: " + (currentAddress + 1));
   }
 
   @FXML
@@ -279,6 +283,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       // current address counter increment for displaying the cached results in the
       // temp array
       currentAddress++;
+      addressPageLabel.setText("Address: " + (currentAddress + 1));
 
       // if a new address was created, then set the fields to empty values, otherwise
       // set them to the
@@ -310,6 +315,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
       // increment the current address counter
       currentAddress++;
+      addressPageLabel.setText("Address: " + (currentAddress + 1));
 
       // set all the fields to the new currentAddress
       customerAddressTypeComboBox.setValue(addresses.get(currentAddress).getAddressType());
@@ -325,6 +331,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     if (AppState.customerDetailsAccessType == "EDIT") {
 
       currentAddress++;
+      addressPageLabel.setText("Address: " + (currentAddress + 1));
 
       // set all the fields to the new currentAddress
       customerAddressTypeComboBox.setValue(addresses.get(currentAddress).getAddressType());
@@ -349,6 +356,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
       // decrement the current address counter
       currentAddress--;
+      addressPageLabel.setText("Address: " + (currentAddress + 1));
 
       // set all the fields to the new currentAddress
       customerAddressTypeComboBox.setValue(addresses.get(currentAddress).getAddressType());
@@ -365,6 +373,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
       // decrement the current address counter
       currentAddress--;
+      addressPageLabel.setText("Address: " + (currentAddress + 1));
 
       // set all the fields to the new currentAddress
       customerAddressTypeComboBox.setValue(addresses.get(currentAddress).getAddressType());
@@ -383,6 +392,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       if(currentAddress != 0){
         // decrement the current address counter
         currentAddress--;
+        addressPageLabel.setText("Address: " + (currentAddress + 1));
 
         // set all the fields to the new currentAddress
         customerAddressTypeComboBox.setValue(addresses.get(currentAddress).getAddressType());

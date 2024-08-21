@@ -139,7 +139,7 @@
          </cursor>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="600.0" layoutY="546.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="400.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="535.0" layoutY="567.0" prefHeight="17.0" prefWidth="210.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Address" />
+      <Label fx:id="addressPageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="535.0" layoutY="567.0" prefHeight="17.0" prefWidth="210.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Address" />
       <ImageView fx:id="incAddress" fitHeight="22.0" fitWidth="22.0" layoutX="700.0" layoutY="565.0" onMouseClicked="#handleIncAddress" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/traverse_button.png" />
