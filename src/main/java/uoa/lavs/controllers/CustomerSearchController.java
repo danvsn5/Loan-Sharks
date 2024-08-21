@@ -79,7 +79,7 @@ public class CustomerSearchController {
     Customer customer = searchCustomer.searchCustomerById(searchString);
     List<Customer> listOfCustomers = new ArrayList<>();
     listOfCustomers.add(customer);
-    AppState.loadCustomerSearchResults(searchString);
+    AppState.loadCustomerSearchResults(listOfCustomers);
   }
 
   @FXML
@@ -87,7 +87,7 @@ public class CustomerSearchController {
     String searchString = usernameField.getText();
     SearchCustomer searchCustomer = new SearchCustomer();
     List<Customer> listOfCustomers = searchCustomer.searchCustomerByName(searchString);
-    AppState.loadCustomerSearchResults(searchString);
+    AppState.loadCustomerSearchResults(listOfCustomers);
   }
 
   @FXML

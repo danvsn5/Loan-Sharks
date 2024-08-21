@@ -1,6 +1,7 @@
 package uoa.lavs;
 
 import java.io.IOException;
+import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import uoa.lavs.SceneManager.AppUI;
@@ -15,6 +16,7 @@ public class AppState {
   public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
   public static Boolean isAccessingFromSearch = false;
   public static Boolean isAccessingFromLoanSearch = false;
+  public static List<?> searchResultList;
 
   // Previous and current UI screens for return functionality
   public static AppUI previousUi;
@@ -54,7 +56,8 @@ public class AppState {
     SceneManager.addScene(AppUI.LC_SUMMARY, loadFxml("loan/loan_details/loan_summary"));
   }
 
-  public static void loadCustomerSearchResults(String searchString) throws IOException {
+  public static void loadCustomerSearchResults(List<?> searchResultList) throws IOException {
+
     SceneManager.addScene(AppUI.CUSTOMER_RESULTS, loadFxml("customer/customer_search_results"));
     Main.setUi(AppUI.CUSTOMER_RESULTS);
   }
