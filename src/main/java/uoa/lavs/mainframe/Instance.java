@@ -2,7 +2,9 @@ package uoa.lavs.mainframe;
 
 import java.io.File;
 
+import uoa.lavs.mainframe.simulator.IntermittentConnection;
 import uoa.lavs.mainframe.simulator.NitriteConnection;
+import uoa.lavs.mainframe.simulator.failures.NFailsPerMRequestsPolicy;
 
 // implements the singleton pattern for a mainframe connection
 public class Instance {
@@ -15,7 +17,9 @@ public class Instance {
     // internal class to initialize the singleton, this enables lazy-loading
     // for the singleton
     private static class SingletonHelper {
-        private static final Connection INSTANCE = new NitriteConnection(dataPath);
+        private static final Connection INSTANCE = new IntermittentConnection(
+    new NitriteConnection(dataPath),
+    new NFailsPerMRequestsPolicy(1, 10));       // first parameter is the number of failures, second parameter is the number of requests
 
     }
 
