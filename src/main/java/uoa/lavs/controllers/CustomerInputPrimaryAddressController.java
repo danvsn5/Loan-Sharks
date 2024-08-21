@@ -62,7 +62,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         new ComboBox<?>[] {customerAddressTypeComboBox},
         new DatePicker[] {},
         new RadioButton[] {mailingAddressRadio});
-    setAddressDetails();
   }
 
   private boolean setAddressDetails() {
