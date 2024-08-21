@@ -2,6 +2,7 @@ package uoa.lavs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
@@ -35,9 +36,24 @@ public class LoanRepaymentsController {
   @FXML private Label remLabel4;
   @FXML private Label remLabel5;
 
+  @FXML private Label repaymentsPageLabel;
+  @FXML private ImageView staticReturnImageView;
+  @FXML private ImageView incPage;
+  @FXML private ImageView decPage;
+
   @FXML
   private void initialize() {
     // Add initialization code here
+  }
+
+  @FXML
+  private void handleIncPage() {
+    // Add code here
+  }
+
+  @FXML
+  private void handleDecPage() {
+    // Add code here
   }
 
   @FXML

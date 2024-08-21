@@ -57,5 +57,28 @@
       <Label fx:id="principalLabel5" layoutX="460.0" layoutY="586.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
       <Label fx:id="interestLabel5" layoutX="707.0" layoutY="586.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
       <Label fx:id="remLabel5" layoutX="946.0" layoutY="586.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="repaymentsPageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="521.0" layoutY="660.0" prefHeight="17.0" prefWidth="210.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../css/index.css" text="Page 1" />
+      <ImageView fx:id="incPage" fitHeight="22.0" fitWidth="22.0" layoutX="675.0" layoutY="659.0" onMouseClicked="#handleIncPage" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/traverse_button.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="decPage" fitHeight="30.0" fitWidth="22.0" layoutX="551.0" layoutY="659.0" onMouseClicked="#handleDecPage" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../../images/traverse_button.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+      </ImageView>
    </children>
 </Pane>
