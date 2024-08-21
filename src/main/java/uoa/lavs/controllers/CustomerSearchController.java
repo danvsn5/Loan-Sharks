@@ -1,6 +1,9 @@
 package uoa.lavs.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.Customer;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 import uoa.lavs.customer.SearchCustomer;
@@ -34,6 +38,7 @@ public class CustomerSearchController {
   private void initialize() {
     usernameField.setVisible(false);
     idField.setVisible(false);
+    
   }
 
   // When enter key is pressed, perform search.
@@ -78,18 +83,17 @@ public class CustomerSearchController {
   private void handleSearchWithCustomerIDLabelAction() throws IOException {
     String searchString = idField.getText();
     SearchCustomer searchCustomer = new SearchCustomer();
-    IndividualCustomer customer = (IndividualCustomer) searchCustomer.searchCustomerById(searchString);
-    if (customer == null) {
-      System.out.println("Customer not found.");
-      return;
-    }
-    IndividualCustomerSingleton.setInstance(customer);
+    Customer customer = searchCustomer.searchCustomerById(searchString);
+    List<Customer> listOfCustomers = new ArrayList<>();
+    listOfCustomers.add(customer);
     AppState.loadCustomerSearchResults(searchString);
   }
 
   @FXML
   private void handleSearchWithNameLabelAction() throws IOException {
     String searchString = usernameField.getText();
+    SearchCustomer searchCustomer = new SearchCustomer();
+    List<Customer> listOfCustomers = searchCustomer.searchCustomerByName(searchString);
     AppState.loadCustomerSearchResults(searchString);
   }
 
