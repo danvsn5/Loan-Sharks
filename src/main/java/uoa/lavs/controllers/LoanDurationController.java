@@ -123,25 +123,21 @@ public class LoanDurationController implements AccessTypeObserver {
 
   @FXML
   private void handlePrimaryButtonAction() {
-    setDurationDetails();
     Main.setUi(AppUI.LC_PRIMARY);
   }
 
   @FXML
   private void handleCoborrowerButtonAction() {
-    setDurationDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
   @FXML
   private void handleFinanceButtonAction() {
-    setDurationDetails();
     Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML
   private void handleSummaryButtonAction() {
-    setDurationDetails();
     Main.setUi(AppUI.LC_SUMMARY);
   }
 

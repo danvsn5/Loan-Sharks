@@ -211,25 +211,21 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
 
   @FXML
   private void handleNotesButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_NOTES);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 

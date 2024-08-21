@@ -98,25 +98,21 @@ public class LoanFinanceDetails implements AccessTypeObserver {
 
   @FXML
   private void handlePrimaryButtonAction() {
-    setFinanceDetails();
     Main.setUi(AppUI.LC_PRIMARY);
   }
 
   @FXML
   private void handleCoborrowerButtonAction() {
-    setFinanceDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
   @FXML
   private void handleDurationButtonAction() {
-    setFinanceDetails();
     Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML
   private void handleSummaryButtonAction() {
-    setFinanceDetails();
     Main.setUi(AppUI.LC_SUMMARY);
   }
 

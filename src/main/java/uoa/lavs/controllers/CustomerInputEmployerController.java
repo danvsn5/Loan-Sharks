@@ -105,7 +105,6 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
         new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {customerIsEmployerCheckbox});
-    setEmployerDetails();
   }
 
   private boolean setEmployerDetails() {
@@ -126,25 +125,21 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
 
   @FXML
   private void handleDetailsButtonAction() {
-    setEmployerDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setEmployerDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setEmployerDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerAddressButtonAction() {
-    setEmployerDetails();
     Main.setUi(AppUI.CI_EMPLOYER_ADDRESS);
   }
 
