@@ -23,14 +23,14 @@ public class PersonalLoanSingletonTest {
     PersonalLoanSingleton.resetInstance();
 
     coborrowers = new ArrayList<>();
-    coborrowers.add("000002");
-    coborrowers.add("000003");
+    coborrowers.add("-2");
+    coborrowers.add("-3");
     principal = 1000.00;
     rate = 0.1;
-    duration = new LoanDuration(LocalDate.of(2024, 6, 8), 1, 12);
-    payment = new LoanPayment("monthly", "100.0", "100.0", false);
+    duration = new LoanDuration(-1, LocalDate.of(2024, 6, 8), 1, 12);
+    payment = new LoanPayment(-1, "monthly", "100.0", "100.0", false);
 
-    newLoan = new PersonalLoan(1, "000001", coborrowers, principal, rate, duration, payment);
+    newLoan = new PersonalLoan(1, "-1", coborrowers, principal, rate, duration, payment);
   }
 
   @Test

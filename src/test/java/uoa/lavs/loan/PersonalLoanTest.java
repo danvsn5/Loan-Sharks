@@ -21,16 +21,16 @@ public class PersonalLoanTest {
     coborrowers = new ArrayList<>();
     principal = 1.00;
     rate = 1.0;
-    duration = new LoanDuration(LocalDate.of(2000, 1, 30), 12, 36);
-    payment = new LoanPayment("annually", "100.0", "100.0", false);
+    duration = new LoanDuration(-1, LocalDate.of(2000, 1, 30), 12, 36);
+    payment = new LoanPayment(-1, "annually", "100.0", "100.0", false);
 
-    loan = new PersonalLoan(10, "000001", coborrowers, principal, rate, duration, payment);
+    loan = new PersonalLoan(-1, "000001", coborrowers, principal, rate, duration, payment);
   }
 
   @Test
   public void testPersonalLoanCreation() {
     assertNotNull(loan);
-    assertEquals(10, loan.getLoanId());
+    assertEquals(-1, loan.getLoanId());
     assertEquals("000001", loan.getCustomerId());
     assertEquals(coborrowers, loan.getCoborrowerIds());
     assertEquals(principal, loan.getPrincipal());
