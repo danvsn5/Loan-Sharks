@@ -21,6 +21,10 @@
     -fx-font-family: 'Quicksand Bold';
 }
 
+.regular-button:hover {
+    -fx-border-width: 4px;
+}
+
 .tab-button {
     -fx-background-color: #ffd6cb;
     -fx-border-width: 2px;
@@ -32,6 +36,11 @@
     -fx-cursor: hand;
     -fx-font-size: 20px;
     -fx-font-family: 'Quicksand Bold';
+}
+
+.tab-button:hover {
+    -fx-border-style: solid solid solid solid;
+    -fx-border-width: 3px;
 }
 
 .tab-button-selected {
@@ -59,6 +68,11 @@
     -fx-cursor: hand;
     -fx-font-size: 14px;
     -fx-font-family: 'Quicksand Bold';
+}
+
+.tab-button-small:hover {
+    -fx-border-style: solid solid solid solid;
+    -fx-border-width: 3px;
 }
 
 .tab-button-selected-small {
@@ -104,6 +118,21 @@
     -fx-font-family: 'Quicksand Medium';
 }
 
+.data-fields:focused {
+    -fx-border-width: 3px;
+}
+
+.data-fields-cover {
+    -fx-background-color: #fff;
+    -fx-border-width: 2px;
+    -fx-border-color: #fff;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 25px;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Quicksand Medium';
+    -fx-cursor: hand;
+}
+
 .data-field-labels {
     -fx-font-family: 'Quicksand Bold';
     -fx-font-size: 20px;
@@ -123,6 +152,10 @@
 }
 
 /* ———————————————————————————————————————— Radio Button ———————————————————————————————————————— */
+
+.radio-button{
+    -fx-cursor: hand;
+}
 
 .radio-button .radio {
     -fx-border-width: 2px;
@@ -194,6 +227,10 @@
     -fx-background-radius: 100px !important;
     -fx-font-family: 'Quicksand Medium';
     -fx-font-size: 14px;
+}
+
+.date-picker:focused {
+    -fx-border-width: 3px;
 }
 
 .date-picker .arrow-button {
