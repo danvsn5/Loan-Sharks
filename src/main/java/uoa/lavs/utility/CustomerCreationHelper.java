@@ -30,6 +30,17 @@ public class CustomerCreationHelper {
     AddressDAO addressdao = new AddressDAO();
     ArrayList<Address> addresses = customer.getAddresses();
     for (Address address : addresses) {
+      // TODO need to implement this checking for other stuff as well
+      // check if any of the address fields are null
+      if (address.getAddressType() == null
+          || address.getAddressLineOne() == ""
+          || address.getSuburb() == ""
+          || address.getPostCode() == ""
+          || address.getCity() == ""
+          || address.getCountry() == "") {
+        continue;
+      }
+
       address.setCustomerId(customer.getCustomerId());
       addressdao.addAddress(address);
     }

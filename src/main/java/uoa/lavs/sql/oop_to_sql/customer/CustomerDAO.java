@@ -314,11 +314,11 @@ public class CustomerDAO {
         new IndividualCustomer(
             customerId,
             "Mr",
-            "Ting Mun Guy",
+            "Guy Shin",
             dateOfBirth,
             "Engineer",
             "B2",
-            "New Zealand",
+            "Mexico",
             notes,
             addresses,
             phones,

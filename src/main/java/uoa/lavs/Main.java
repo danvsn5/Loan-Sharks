@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Instance;
 import uoa.lavs.mainframe.Status;
 import uoa.lavs.mainframe.messages.customer.LoadCustomer;
 
@@ -23,8 +22,6 @@ public class Main extends Application {
     // approach #1: use the singleton instance - this way is recommended as it provides a single
     // configuration
     // location (and is easy for the testers to change when needed).
-    Connection connection = Instance.getConnection();
-    executeTestMessage(connection);
 
     // approach #2: dynamically initialize the interface based on some parameters - this way allows
     // the connection
