@@ -59,6 +59,8 @@ public class LoanDurationController implements AccessTypeObserver {
             }
           }
         });
+
+    termField.setDisable(true);
   }
 
   // Add methods for all buttons

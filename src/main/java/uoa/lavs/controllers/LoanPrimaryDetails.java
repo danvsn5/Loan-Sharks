@@ -34,6 +34,7 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
     rateTypeBox.getItems().addAll("Floating", "Fixed");
+    borrowerIDField.setDisable(true);
   }
 
   @FXML
@@ -43,7 +44,9 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
         AppState.loanDetailsAccessType,
         editButton,
         new TextField[] {borrowerIDField, principalField, interestRateField},
-        new ComboBox<?>[] {},
+        new ComboBox<?>[] {
+          rateTypeBox,
+        },
         new DatePicker[] {},
         new RadioButton[] {});
     setPrimaryDetails();
@@ -59,14 +62,14 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
     rateTypeBox.setStyle("");
 
     if (principalField.getText().isEmpty()
-        || !principalField.getText().matches("[0-9]+")
+        || !principalField.getText().matches("^\\d+(\\.\\d+)?$")
         || principalField.getText().length() > 15) {
       principalField.setStyle("-fx-border-color: red");
       isValid = false;
     }
 
     if (interestRateField.getText().isEmpty()
-        || !interestRateField.getText().matches("[0-9]+")
+        || !interestRateField.getText().matches("^\\d+(\\.\\d+)?$")
         || interestRateField.getText().length() > 5) {
       interestRateField.setStyle("-fx-border-color: red");
       isValid = false;

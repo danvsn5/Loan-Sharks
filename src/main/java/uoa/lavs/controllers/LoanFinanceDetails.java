@@ -17,7 +17,6 @@ import uoa.lavs.SceneManager.AppUI;
 public class LoanFinanceDetails implements AccessTypeObserver {
   @FXML private ComboBox<String> compoundingBox;
   @FXML private ComboBox<String> paymentFrequencyBox;
-  @FXML private ComboBox<String> rateTypeBox;
   @FXML private TextField paymentValueField;
   @FXML private RadioButton interestOnlyButton;
 
@@ -60,9 +59,9 @@ public class LoanFinanceDetails implements AccessTypeObserver {
     paymentValueField.setStyle("");
     compoundingBox.setStyle("");
     paymentFrequencyBox.setStyle("");
-    rateTypeBox.setStyle("");
 
-    if (paymentValueField.getText().isEmpty() || !paymentValueField.getText().matches("\\d+")) {
+    if (paymentValueField.getText().isEmpty()
+        || !paymentValueField.getText().matches("^\\d+(\\.\\d+)?$")) {
       paymentValueField.setStyle("-fx-border-color: red");
       isValid = false;
     }
