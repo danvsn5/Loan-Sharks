@@ -6,7 +6,9 @@ import java.util.Scanner;
 import uoa.lavs.mainframe.messages.customer.FindCustomerAddress;
 import uoa.lavs.mainframe.messages.customer.FindCustomerAdvanced;
 import uoa.lavs.mainframe.messages.customer.LoadCustomer;
+import uoa.lavs.mainframe.messages.customer.LoadCustomerEmails;
 import uoa.lavs.mainframe.messages.customer.LoadCustomerEmployer;
+import uoa.lavs.mainframe.messages.customer.LoadCustomerPhoneNumbers;
 import uoa.lavs.mainframe.messages.customer.UpdateCustomer;
 import uoa.lavs.mainframe.messages.customer.UpdateCustomerAddress;
 
@@ -135,11 +137,16 @@ public class ConnectionRunner {
     LoadCustomer loadCustomer = new LoadCustomer();
     FindCustomerAddress findCustomerAddress = new FindCustomerAddress();
     LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
+    LoadCustomerPhoneNumbers loadCustomerPhones = new LoadCustomerPhoneNumbers();
+    LoadCustomerEmails loadCustomerEmails = new LoadCustomerEmails();
+
 
     System.out.print("Enter customer ID: ");
     String customerId = scanner.nextLine();
     loadCustomer.setCustomerId(customerId);
     loadCustomerEmployer.setCustomerId(customerId);
+    loadCustomerPhones.setCustomerId(customerId);
+    loadCustomerEmails.setCustomerId(customerId);
     loadCustomerEmployer.setNumber(1);
     findCustomerAddress.setCustomerId(customerId);
 
@@ -151,8 +158,34 @@ public class ConnectionRunner {
     // Send the request for employer
     Status employerStatus = loadCustomerEmployer.send(connection);
 
-    if (status.getErrorCode() != 0 || addressStatus.getErrorCode() != 0 || employerStatus.getErrorCode() != 0) {
-      System.out.println("Error fetching customer details: " + status.getErrorMessage());
+    // Send the request for phone
+    Status phoneStatus = loadCustomerPhones.send(connection);
+
+    // Send the request for email
+    Status emailStatus = loadCustomerEmails.send(connection);
+
+    if (status.getErrorCode() != 0) {
+      System.out.println("Customer not found.");
+      return;
+    }
+
+    if (addressStatus.getErrorCode() != 0) {
+      System.out.println("Address not found for this customer.");
+      return;
+    }
+
+    if (employerStatus.getErrorCode() != 0) {
+      System.out.println("Employer not found for this customer.");
+      return;
+    }
+
+    if (phoneStatus.getErrorCode() != 0) {
+      System.out.println("Phone numbers not found for this customer.");
+      return;
+    }
+
+    if (emailStatus.getErrorCode() != 0) {
+      System.out.println("Email addresses not found for this customer.");
       return;
     }
 
@@ -160,6 +193,8 @@ public class ConnectionRunner {
     printCustomerDetails(loadCustomer);
     printCustomerAddressDetails(findCustomerAddress);
     printCustomerEmployerDetails(loadCustomerEmployer);
+    printCustomerPhoneDetails(loadCustomerPhones);
+    printCustomerEmailDetails(loadCustomerEmails);
   }
 
   private static void searchByName(Scanner scanner, Connection connection) {
@@ -245,9 +280,42 @@ public class ConnectionRunner {
     System.out.println("Employer Email: " + loadCustomerEmployer.getEmailAddressFromServer());
     System.out.println("Employer Website: " + loadCustomerEmployer.getWebsiteFromServer());
     System.out.println("Employer Phone: " + loadCustomerEmployer.getPhoneNumberFromServer());
-    System.out.println("Owner of Company: " + (loadCustomerEmployer.getIsOwnerFromServer() ? "Yes" : "No"));
+    System.out.println(
+        "Owner of Company: " + (loadCustomerEmployer.getIsOwnerFromServer() ? "Yes" : "No"));
     System.out.println("--------------------------");
-}
+  }
+
+  private static void printCustomerPhoneDetails(LoadCustomerPhoneNumbers loadCustomerPhones) {
+    int count = loadCustomerPhones.getCountFromServer();
+    if (count == 0) {
+      System.out.println("No phone numbers found for this customer.");
+      return;
+    }
+    for (int i = 1; i <= count; i++) {
+      System.out.println("Phone Number " + (i) + ":");
+      System.out.println("Type: " + loadCustomerPhones.getTypeFromServer(i));
+      System.out.println("Prefix: " + loadCustomerPhones.getPrefixFromServer(i));
+      System.out.println("Number: " + loadCustomerPhones.getPhoneNumberFromServer(i));
+      System.out.println("Is Primary: " + loadCustomerPhones.getIsPrimaryFromServer(i));
+      System.out.println("Can Send Text: " + loadCustomerPhones.getCanSendTxtFromServer(i));
+      System.out.println();
+    }
+  }
+
+  // emails
+  private static void printCustomerEmailDetails(LoadCustomerEmails loadCustomerEmails) {
+    int count = loadCustomerEmails.getCountFromServer();
+    if (count == 0) {
+      System.out.println("No email addresses found for this customer.");
+      return;
+    }
+    for (int i = 1; i <= count; i++) {
+      System.out.println("Email Address " + (i) + ":");
+      System.out.println("Email: " + loadCustomerEmails.getAddressFromServer(i));
+      System.out.println("Is Primary: " + loadCustomerEmails.getIsPrimaryFromServer(i));
+      System.out.println();
+    }
+  }
 
   private static void closeConnection(Connection connection) {
     try {

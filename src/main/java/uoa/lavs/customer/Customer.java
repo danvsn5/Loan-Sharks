@@ -3,13 +3,16 @@ package uoa.lavs.customer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import kotlin.OverloadResolutionByLambdaReturnType;
+
 public abstract class Customer implements ICustomer {
   private String customerId;
   private String title;
   private String name;
   private LocalDate dateOfBirth;
   private String occupation;
-  private String residency;
+  private String visa;
+  private String citizenship;
   private ArrayList<Note> notes;
   private ArrayList<Address> addresses;
   private ArrayList<Phone> phones;
@@ -22,7 +25,8 @@ public abstract class Customer implements ICustomer {
       String name,
       LocalDate dateOfBirth,
       String occupation,
-      String residency,
+      String visa,
+      String citizenship,
       ArrayList<Note> notes,
       ArrayList<Address> addresses,
       ArrayList<Phone> phones,
@@ -33,7 +37,8 @@ public abstract class Customer implements ICustomer {
     this.name = name;
     this.dateOfBirth = dateOfBirth;
     this.occupation = occupation;
-    this.residency = residency;
+    this.visa = visa;
+    this.citizenship = citizenship;
     this.notes = notes;
     this.addresses = addresses;
     this.phones = phones;
@@ -67,8 +72,13 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public String getResidency() {
-    return this.residency;
+  public String getVisa() {
+    return this.visa;
+  }
+
+  @Override 
+  public String getCitizenship() {
+    return this.citizenship;
   }
 
   @Override
@@ -122,8 +132,13 @@ public abstract class Customer implements ICustomer {
   }
 
   @Override
-  public void setResidency(String residency) {
-    this.residency = residency;
+  public void setVisa(String visa) {
+    this.visa = visa;
+  }
+
+  @Override 
+  public void setCitizenship(String citizenship) {
+    this.citizenship = citizenship;
   }
 
   @Override

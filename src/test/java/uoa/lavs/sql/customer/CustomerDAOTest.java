@@ -110,7 +110,8 @@ public class CustomerDAOTest {
             "Ting Mun Guy",
             dateOfBirth,
             "Engineer",
-            "NZ Citizen",
+            "B2",
+            "New Zealand",
             notes,
             addresses,
             phones,
@@ -141,7 +142,8 @@ public class CustomerDAOTest {
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         Assertions.assertEquals(LocalDate.of(2024, 8, 6), actualDateOfBirth);
         Assertions.assertEquals("Engineer", rs.getString("occupation"));
-        Assertions.assertEquals("NZ Citizen", rs.getString("residency"));
+        Assertions.assertEquals("B2", rs.getString("visa"));
+        Assertions.assertEquals("New Zealand", rs.getString("citizenship"));
 
         // String notesString = rs.getString("notes");
         // String[] retrievedNotes = notesString.split("::");
@@ -165,7 +167,8 @@ public class CustomerDAOTest {
     customer.setName("Ting Ting Mun Mun Guy Guy");
     customer.setDateOfBirth(LocalDate.of(2024, 8, 7));
     customer.setOccupation("Doctor");
-    customer.setResidency("NZ Permanent Resident");
+    customer.setVisa("B1");
+    customer.setCitizenship("Zimbabwe");
     customer.setEmployer(employer);
 
     customerDAO.updateCustomer(customer);
@@ -183,7 +186,8 @@ public class CustomerDAOTest {
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         Assertions.assertEquals(LocalDate.of(2024, 8, 7), actualDateOfBirth);
         Assertions.assertEquals("Doctor", rs.getString("occupation"));
-        Assertions.assertEquals("NZ Permanent Resident", rs.getString("residency"));
+        Assertions.assertEquals("B1", rs.getString("visa"));
+        Assertions.assertEquals("Zimbabwe", rs.getString("citizenship"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -212,7 +216,8 @@ public class CustomerDAOTest {
         LocalDate actualDateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         Assertions.assertEquals(retrievedCustomer.getDateOfBirth(), actualDateOfBirth);
         Assertions.assertEquals(retrievedCustomer.getOccupation(), rs.getString("occupation"));
-        Assertions.assertEquals(retrievedCustomer.getResidency(), rs.getString("residency"));
+        Assertions.assertEquals(retrievedCustomer.getVisa(), rs.getString("visa"));
+        Assertions.assertEquals(retrievedCustomer.getCitizenship(), rs.getString("citizenship"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -262,7 +267,8 @@ public class CustomerDAOTest {
             name,
             dateOfBirth2,
             "Professional",
-            "NZ Permanent Resident",
+            "B2",
+            "Zimbabwe",
             notes,
             addresses,
             phones2,
@@ -325,7 +331,8 @@ public class CustomerDAOTest {
             "Zing Dingus",
             dateOfBirth,
             "Professional",
-            "NZ Permanent Resident",
+            "B2",
+            "Zimbabwe",
             notes,
             addresses,
             phones2,
