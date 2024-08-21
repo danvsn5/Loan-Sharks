@@ -10,6 +10,7 @@ import javafx.scene.shape.Rectangle;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.IndividualCustomerSingleton;
 
 public class CustomerResultsController {
   // make labels for name and ID, 6 each
@@ -38,13 +39,21 @@ public class CustomerResultsController {
   @FXML private Button nextButton;
   @FXML private ImageView staticReturnImageView;
 
-  ArrayList<String> searchResultsNameList = new ArrayList<>();
-  ArrayList<String> searchResultsIDList = new ArrayList<>();
+  ArrayList<String> searchResultsNameList;
+  ArrayList<String> searchResultsIDList;
 
   // write for all fxml elements
   @FXML
   private void initialize() {
-    // Add initialization code here
+    searchResultsNameList = new ArrayList<>();
+    searchResultsIDList = new ArrayList<>();
+    if (IndividualCustomerSingleton.getInstance() != null) {
+      System.out.println("Customer Name: " + IndividualCustomerSingleton.getInstance().getName());
+      searchResultsNameList.add(IndividualCustomerSingleton.getInstance().getName());
+      searchResultsIDList.add(IndividualCustomerSingleton.getInstance().getCustomerId());
+    } else {
+      // allan to implement 
+    }
   }
 
   @FXML
