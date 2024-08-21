@@ -19,13 +19,12 @@ import uoa.lavs.customer.IndividualCustomerSingleton;
 public class CustomerInputContactController implements AccessTypeObserver {
   @FXML private TextField customerEmailTextField;
   @FXML private TextField customerPhoneNumberOne;
-  @FXML private TextField customerPhoneNumberTwo;
 
-  @FXML private TextField prefix;
-  @FXML private TextField type;
-  @FXML private RadioButton sendText;
-  @FXML private RadioButton phonePrimary;
-  @FXML private RadioButton emailPrimary;
+  @FXML private TextField customerPhonePrefixField;
+  @FXML private ComboBox<String> customerPhoneTypeBox;
+  @FXML private RadioButton sendTextRadio;
+  @FXML private RadioButton phonePrimaryRadio;
+  @FXML private RadioButton emailPrimaryRadio;
 
   @FXML private ImageView incPhone;
   @FXML private ImageView incEmail;
@@ -46,6 +45,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void initialize() {
+    customerPhoneTypeBox.getItems().addAll("Home", "Work", "Mobile");
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
   }
@@ -59,50 +59,109 @@ public class CustomerInputContactController implements AccessTypeObserver {
         new TextField[] {
           customerEmailTextField,
           customerPhoneNumberOne,
-          customerPhoneNumberTwo,
           customerPreferredContactBox,
-          customerAltContactBox
+          customerAltContactBox,
+          customerPhonePrefixField
         },
-        new ComboBox<?>[] {},
+        new ComboBox<?>[] {customerPhoneTypeBox},
         new DatePicker[] {},
-        new RadioButton[] {});
-    setContactDetails();
+        new RadioButton[] {sendTextRadio, phonePrimaryRadio, emailPrimaryRadio});
   }
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.customerDetailsAccessType.equals("CREATE")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")) {
+      AccessTypeNotifier.notifyCustomerObservers();
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
+      AccessTypeNotifier.notifyCustomerObservers();
     }
-    AccessTypeNotifier.notifyCustomerObservers();
-    updateUIBasedOnAccessType();
   }
 
-  private void setContactDetails() {
+  @Override
+  public boolean validateData() {
+    // Type is fine
+    // Prefix 10 chars, numbers and + char only
+    // Number 20 chars, number and dash only
+    // Primary and send text need to be checked that there is a selection and that no 2 numbers have
+    // it
+    // Email 60 chars, email format
+    // primary email needs to be checked that there in one set somewhere and no 2 are set
 
-    // TODO implement when guis are ready
+    boolean isValid = true;
+    customerPhonePrefixField.setStyle("");
+    customerPhoneNumberOne.setStyle("");
+    customerEmailTextField.setStyle("");
+    customerPhoneTypeBox.setStyle("");
+
+    if (customerPhoneTypeBox.getValue() == null) {
+      customerPhoneTypeBox.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (customerPhonePrefixField.getText().isEmpty()) {
+      customerPhonePrefixField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (customerPhonePrefixField.getText().length() > 10
+        || !customerPhonePrefixField.getText().matches("[0-9\\+]+")) {
+      customerPhonePrefixField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (customerPhoneNumberOne.getText().isEmpty()
+        || customerPhoneNumberOne.getText().length() > 20
+        || !customerPhoneNumberOne.getText().matches("[0-9\\-]+")) {
+      customerPhoneNumberOne.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    // Regex taken from https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
+    if (customerEmailTextField.getText().isEmpty()
+        || customerEmailTextField.getText().length() > 60
+        || !customerEmailTextField.getText().matches("^[^@]+@[^@]+\\.[^@]+$")) {
+      customerEmailTextField.setStyle("-fx-border-color: red;");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private boolean setContactDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
+    // TODO: Set customer details (Chulshin or Jamie)
+
+    return true;
   }
 
   // add handlers for all buttons
   @FXML
   private void handleCustomerDetailsButtonAction() {
-    setContactDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleCustomerAddressButtonAction() {
-    setContactDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleCustomerEmployerButtonAction() {
-    setContactDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 

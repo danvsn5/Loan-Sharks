@@ -18,6 +18,7 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   @FXML private TextField borrowerIDField;
   @FXML private TextField principalField;
   @FXML private TextField interestRateField;
+  @FXML private ComboBox<String> rateTypeBox;
 
   @FXML private Button coborrowerButton;
   @FXML private Button durationButton;
@@ -29,8 +30,11 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
 
   @FXML
   private void initialize() {
+    // TODO intialise the borrowerIDField
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
+    rateTypeBox.getItems().addAll("Floating", "Fixed");
+    borrowerIDField.setDisable(true);
   }
 
   @FXML
@@ -40,10 +44,43 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
         AppState.loanDetailsAccessType,
         editButton,
         new TextField[] {borrowerIDField, principalField, interestRateField},
-        new ComboBox<?>[] {},
+        new ComboBox<?>[] {
+          rateTypeBox,
+        },
         new DatePicker[] {},
         new RadioButton[] {});
     setPrimaryDetails();
+  }
+
+  @Override
+  public boolean validateData() {
+    // Add validation code here
+    boolean isValid = true;
+
+    principalField.setStyle("");
+    interestRateField.setStyle("");
+    rateTypeBox.setStyle("");
+
+    if (principalField.getText().isEmpty()
+        || !principalField.getText().matches("^\\d+(\\.\\d+)?$")
+        || principalField.getText().length() > 15) {
+      principalField.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    if (interestRateField.getText().isEmpty()
+        || !interestRateField.getText().matches("^\\d+(\\.\\d+)?$")
+        || interestRateField.getText().length() > 5) {
+      interestRateField.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    if (rateTypeBox.getValue() == null) {
+      rateTypeBox.setStyle("-fx-border-color: red");
+      isValid = false;
+    }
+
+    return isValid;
   }
 
   @FXML
@@ -90,6 +127,12 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
-    Main.setUi(AppUI.CUSTOMER_SEARCH);
+    // Need to add logic if they got here from loan search
+    if (AppState.isAccessingFromLoanSearch) {
+      AppState.isAccessingFromLoanSearch = false;
+      Main.setUi(AppUI.LOAN_RESULTS);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_RESULTS);
+    }
   }
 }

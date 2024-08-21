@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
@@ -20,7 +21,7 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="70.0" layoutX="126.0" layoutY="357.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1002.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="194.0" layoutX="46.0" layoutY="454.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1198.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="194.0" layoutX="50.0" layoutY="449.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1198.0" />
       <Button fx:id="editButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
          <font>
             <Font size="27.0" />
@@ -117,24 +118,19 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <TextField fx:id="prefix" alignment="CENTER" editable="false" layoutX="379.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
+      <TextField fx:id="customerPhonePrefixField" alignment="CENTER" editable="false" layoutX="379.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Prefix" />
-      <TextField fx:id="type" alignment="CENTER" editable="false" layoutX="691.0" layoutY="369.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="12.0" />
-         </font>
-      </TextField>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Type" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1082.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Primary" />
-      <RadioButton fx:id="phonePrimary" layoutX="1170.0" layoutY="369.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <RadioButton fx:id="phonePrimaryRadio" layoutX="1170.0" layoutY="369.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="931.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Send Text" />
-      <RadioButton fx:id="sendText" layoutX="1019.0" layoutY="369.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <RadioButton fx:id="sendTextRadio" layoutX="1019.0" layoutY="369.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Primary" />
-      <RadioButton fx:id="emailPrimary" layoutX="779.0" layoutY="510.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <RadioButton fx:id="emailPrimaryRadio" layoutX="779.0" layoutY="510.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="519.0" layoutY="436.0" prefHeight="20.0" prefWidth="243.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Phone Number" />
       <ImageView fx:id="incPhone" fitHeight="22.0" fitWidth="22.0" layoutX="728.0" layoutY="434.0" onMouseClicked="#handleIncPhone" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -181,5 +177,6 @@
             <ColorAdjust brightness="0.2" />
          </effect>
       </ImageView>
+      <ComboBox fx:id="customerPhoneTypeBox" layoutX="712.0" layoutY="374.0" prefHeight="30.0" prefWidth="168.0" />
    </children>
 </Pane>
