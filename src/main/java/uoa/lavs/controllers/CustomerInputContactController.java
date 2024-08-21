@@ -1,5 +1,7 @@
 package uoa.lavs.controllers;
 
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -15,33 +17,56 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.customer.Phone;
 
 public class CustomerInputContactController implements AccessTypeObserver {
-  @FXML private TextField customerEmailTextField;
-  @FXML private TextField customerPhoneNumberOne;
+  @FXML
+  private TextField customerEmailTextField;
+  @FXML
+  private TextField customerPhoneNumberOne;
 
-  @FXML private TextField customerPhonePrefixField;
-  @FXML private ComboBox<String> customerPhoneTypeBox;
-  @FXML private RadioButton sendTextRadio;
-  @FXML private RadioButton phonePrimaryRadio;
-  @FXML private RadioButton emailPrimaryRadio;
+  @FXML
+  private TextField customerPhonePrefixField;
+  @FXML
+  private ComboBox<String> customerPhoneTypeBox;
+  @FXML
+  private RadioButton sendTextRadio;
+  @FXML
+  private RadioButton phonePrimaryRadio;
+  @FXML
+  private RadioButton emailPrimaryRadio;
 
-  @FXML private ImageView incPhone;
-  @FXML private ImageView incEmail;
-  @FXML private ImageView decPhone;
-  @FXML private ImageView decEmail;
+  @FXML
+  private ImageView incPhone;
+  @FXML
+  private ImageView incEmail;
+  @FXML
+  private ImageView decPhone;
+  @FXML
+  private ImageView decEmail;
 
-  @FXML private TextField customerPreferredContactBox;
-  @FXML private TextField customerAltContactBox;
+  @FXML
+  private TextField customerPreferredContactBox;
+  @FXML
+  private TextField customerAltContactBox;
 
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerEmployerButton;
+  @FXML
+  private Button customerDetailsButton;
+  @FXML
+  private Button customerAddressButton;
+  @FXML
+  private Button customerEmployerButton;
 
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
+  @FXML
+  private Button editButton;
+  @FXML
+  private ImageView staticReturnImageView;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
+
+  private ArrayList<Phone> existingCustomerPhones = customer.getPhones();
+  private int currentNumberPage = 0;
+  private int amountOfValidNumbers = 0;
 
   @FXML
   private void initialize() {
@@ -57,15 +82,15 @@ public class CustomerInputContactController implements AccessTypeObserver {
         AppState.customerDetailsAccessType,
         editButton,
         new TextField[] {
-          customerEmailTextField,
-          customerPhoneNumberOne,
-          customerPreferredContactBox,
-          customerAltContactBox,
-          customerPhonePrefixField
+            customerEmailTextField,
+            customerPhoneNumberOne,
+            customerPreferredContactBox,
+            customerAltContactBox,
+            customerPhonePrefixField
         },
-        new ComboBox<?>[] {customerPhoneTypeBox},
+        new ComboBox<?>[] { customerPhoneTypeBox },
         new DatePicker[] {},
-        new RadioButton[] {sendTextRadio, phonePrimaryRadio, emailPrimaryRadio});
+        new RadioButton[] { sendTextRadio, phonePrimaryRadio, emailPrimaryRadio });
   }
 
   @FXML
@@ -89,10 +114,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
     // Type is fine
     // Prefix 10 chars, numbers and + char only
     // Number 20 chars, number and dash only
-    // Primary and send text need to be checked that there is a selection and that no 2 numbers have
+    // Primary and send text need to be checked that there is a selection and that
+    // no 2 numbers have
     // it
     // Email 60 chars, email format
-    // primary email needs to be checked that there in one set somewhere and no 2 are set
+    // primary email needs to be checked that there in one set somewhere and no 2
+    // are set
 
     boolean isValid = true;
     customerPhonePrefixField.setStyle("");
@@ -123,7 +150,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
       isValid = false;
     }
 
-    // Regex taken from https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
+    // Regex taken from
+    // https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
     if (customerEmailTextField.getText().isEmpty()
         || customerEmailTextField.getText().length() > 60
         || !customerEmailTextField.getText().matches("^[^@]+@[^@]+\\.[^@]+$")) {
@@ -177,16 +205,136 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void handleIncPhone() {
-    // TODO when ting is time to be tung
-  }
 
-  @FXML
-  private void handleIncEmail() {
-    // TODO when ting is time to be tung
+    if (AppState.customerDetailsAccessType == "READ") {
+      currentNumberPage++;
+
+      customerPhoneNumberOne.setText(existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
+      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
+      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
+      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
+      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+    }
+    if (AppState.customerDetailsAccessType == "CREATE") {
+
+      // create a new phone number
+      Phone newPhone = new Phone(
+          customer.getCustomerId(),
+          customerPhoneTypeBox.getValue(),
+          customerPhonePrefixField.getText(),
+          customerPhoneNumberOne.getText(),
+          phonePrimaryRadio.isSelected(),
+          sendTextRadio.isSelected());
+
+      // if the current number page is the same as the amount of valid numbers
+      existingCustomerPhones.set(currentNumberPage, newPhone);
+      currentNumberPage++;
+      amountOfValidNumbers++;
+      // set all the fields to empty
+      if (currentNumberPage == amountOfValidNumbers) {
+        customerPhoneNumberOne.setText("");
+        customerPhonePrefixField.setText("");
+        customerPhoneTypeBox.setValue("");
+        sendTextRadio.setSelected(false);
+        phonePrimaryRadio.setSelected(false);
+      }
+    }
+
+    if (AppState.customerDetailsAccessType == "EDIT") {
+
+      // get the current fields and replace the current number page with the phone
+      // fields
+      Phone newPhone = new Phone(
+          customer.getCustomerId(),
+          customerPhoneTypeBox.getValue(),
+          customerPhonePrefixField.getText(),
+          customerPhoneNumberOne.getText(),
+          phonePrimaryRadio.isSelected(),
+          sendTextRadio.isSelected());
+
+      existingCustomerPhones.set(currentNumberPage, newPhone);
+
+      if (currentNumberPage != amountOfValidNumbers) {
+        currentNumberPage++;
+      }
+
+      // set all the fields to the next phone number
+      customerPhoneNumberOne.setText(existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
+      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
+      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
+      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
+      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+
+    }
+
   }
 
   @FXML
   private void handleDecPhone() {
+    if (AppState.customerDetailsAccessType == "READ" && currentNumberPage != 0) {
+      currentNumberPage--;
+
+      customerPhoneNumberOne.setText(existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
+      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
+      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
+      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
+      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+    }
+
+    if (AppState.customerDetailsAccessType == "CREATE") {
+      // get the current fields and replace the current number page with the phone
+      // fields
+      Phone newPhone = new Phone(
+          customer.getCustomerId(),
+          customerPhoneTypeBox.getValue(),
+          customerPhonePrefixField.getText(),
+          customerPhoneNumberOne.getText(),
+          phonePrimaryRadio.isSelected(),
+          sendTextRadio.isSelected());
+
+      existingCustomerPhones.set(currentNumberPage, newPhone);
+
+      if (currentNumberPage != 0) {
+        currentNumberPage--;
+      }
+
+      // set all the fields to the previous phone number
+      customerPhoneNumberOne.setText(existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
+      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
+      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
+      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
+      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+    }
+
+    if (AppState.customerDetailsAccessType == "EDIT") {
+      // get the current fields and replace the current number page with the phone
+      // fields
+      Phone newPhone = new Phone(
+          customer.getCustomerId(),
+          customerPhoneTypeBox.getValue(),
+          customerPhonePrefixField.getText(),
+          customerPhoneNumberOne.getText(),
+          phonePrimaryRadio.isSelected(),
+          sendTextRadio.isSelected());
+
+      existingCustomerPhones.set(currentNumberPage, newPhone);
+
+      if (currentNumberPage != 0) {
+        currentNumberPage--;
+      }
+
+      // set all the fields to the previous phone number
+      customerPhoneNumberOne.setText(existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
+      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
+      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
+      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
+      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+    }
+
+  }
+
+  @FXML
+  private void handleIncEmail() {
     // TODO when ting is time to be tung
   }
 
