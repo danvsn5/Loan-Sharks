@@ -4,6 +4,11 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.Customer;
+import uoa.lavs.customer.IndividualCustomer;
+import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.customer.SearchCustomer;
+import uoa.lavs.mainframe.Connection;
 
 public class AppState {
   // This Class will be used for the reinitilasiation of scenes on demand by persisting the current
@@ -57,7 +62,6 @@ public class AppState {
   }
 
   public static void loadCustomerSearchResults(String searchString) throws IOException {
-    // Actual search logic needed here
     SceneManager.addScene(AppUI.CUSTOMER_RESULTS, loadFxml("customer/customer_search_results"));
     Main.setUi(AppUI.CUSTOMER_RESULTS);
   }

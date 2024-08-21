@@ -3,8 +3,6 @@ package uoa.lavs.customer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import kotlin.OverloadResolutionByLambdaReturnType;
-
 public abstract class Customer implements ICustomer {
   private String customerId;
   private String title;
