@@ -62,5 +62,4 @@ public class SyncEmployer extends Sync {
   protected String getSqlQuery() {
     return "SELECT * FROM customer_employer WHERE lastModified > ?";
   }
-
 }

@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -16,7 +17,7 @@ import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
-import uoa.lavs.utility.CustomerCreationHelper;
+import uoa.lavs.sql.sql_to_mainframe.CustomerCreationHelper;
 
 public class CustomerInputEmployerAddressController implements AccessTypeObserver {
   @FXML private TextField employerAddressLine1Field;
@@ -163,7 +164,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
   }
 
   @FXML
-  private void handleEditButtonAction() {
+  private void handleEditButtonAction() throws IOException {
     if (AppState.customerDetailsAccessType.equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";

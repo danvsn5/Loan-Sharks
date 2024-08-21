@@ -29,8 +29,6 @@ public class SyncPhone extends Sync {
       updateCustomerPhone.setNumber(phone_id);
     }
 
-    
-    
     Status status = updateCustomerPhone.send(connection);
 
     if (status.getErrorCode() == 0) {
@@ -49,12 +47,14 @@ public class SyncPhone extends Sync {
   private UpdateCustomerPhoneNumber updateCustomerPhone(ResultSet resultSet, String customerId) {
     UpdateCustomerPhoneNumber updateCustomerPhone = new UpdateCustomerPhoneNumber();
     try {
+      // while (resultSet.next()) {
       updateCustomerPhone.setCustomerId(customerId);
       updateCustomerPhone.setType(resultSet.getString("type"));
       updateCustomerPhone.setPrefix(resultSet.getString("prefix"));
       updateCustomerPhone.setPhoneNumber(resultSet.getString("phoneNumber"));
       updateCustomerPhone.setIsPrimary(resultSet.getBoolean("isPrimary"));
       updateCustomerPhone.setCanSendTxt(resultSet.getBoolean("canSendText"));
+      // }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
