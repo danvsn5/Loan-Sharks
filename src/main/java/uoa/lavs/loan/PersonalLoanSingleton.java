@@ -9,7 +9,7 @@ public class PersonalLoanSingleton {
 
   public static PersonalLoan getInstance() {
     if (instance == null) {
-      instance = new PersonalLoan(-1, "", new ArrayList<String>(), 0, 0, "", null, null);
+      instance = new PersonalLoan("-1", "", new ArrayList<String>(), 0, 0, "", null, null);
     }
     return instance;
   }

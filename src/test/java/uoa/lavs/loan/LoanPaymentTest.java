@@ -10,7 +10,7 @@ public class LoanPaymentTest {
 
   @BeforeEach
   public void setUp() {
-    loanPayment = new LoanPayment(-1, "monthly", "monthly", "1000", false);
+    loanPayment = new LoanPayment("-1", "monthly", "monthly", "1000", false);
   }
 
   @Test

@@ -11,7 +11,7 @@ public class LoanDurationTest {
 
   @BeforeEach
   public void setUp() {
-    loanDuration = new LoanDuration(-1, LocalDate.of(2024, 6, 1), 4, 12);
+    loanDuration = new LoanDuration("-1", LocalDate.of(2024, 6, 1), 4, 12);
   }
 
   @Test

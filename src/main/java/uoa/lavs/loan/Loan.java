@@ -3,7 +3,7 @@ package uoa.lavs.loan;
 import java.util.ArrayList;
 
 public abstract class Loan implements ILoan {
-  private int loanId;
+  private String loanId;
   private String customerId;
   private ArrayList<String> coborrowerIds;
   private double principal;
@@ -13,7 +13,7 @@ public abstract class Loan implements ILoan {
   private LoanPayment payment;
 
   public Loan(
-      int loanId,
+      String loanId,
       String customerId,
       ArrayList<String> coborrowerIds,
       double principal,
@@ -32,7 +32,7 @@ public abstract class Loan implements ILoan {
   }
 
   @Override
-  public int getLoanId() {
+  public String getLoanId() {
     return loanId;
   }
 
@@ -72,7 +72,7 @@ public abstract class Loan implements ILoan {
   }
 
   @Override
-  public void setLoanId(int loanId) {
+  public void setLoanId(String loanId) {
     this.loanId = loanId;
   }
 

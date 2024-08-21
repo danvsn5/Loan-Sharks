@@ -115,7 +115,8 @@ public class SyncCustomer extends Sync {
       updateEmployerPstmt.setString(2, oldCustomerId);
       int employerRowsAffected = updateEmployerPstmt.executeUpdate();
       if (employerRowsAffected > 0) {
-        System.out.println("Customer employer table updated with new customer ID: " + newCustomerId);
+        System.out.println(
+            "Customer employer table updated with new customer ID: " + newCustomerId);
       } else {
         System.out.println("No records updated in customer employer table.");
       }
@@ -134,6 +135,4 @@ public class SyncCustomer extends Sync {
       }
     }
   }
-
-
 }

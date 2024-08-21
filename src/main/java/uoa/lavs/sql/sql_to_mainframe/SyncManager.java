@@ -80,6 +80,7 @@ public class SyncManager {
     SyncAddress syncAddress = new SyncAddress();
     SyncEmployer syncEmployer = new SyncEmployer();
     SyncNotes syncNotes = new SyncNotes();
+    SyncLoan syncLoan = new SyncLoan();
     LocalDateTime lastSyncTime = syncCustomer.getLastSyncTimeFromDB();
 
     if (lastSyncTime == null) {
@@ -88,7 +89,7 @@ public class SyncManager {
     }
 
     SyncManager syncManager =
-        new SyncManager(List.of(syncCustomer, syncAddress, syncEmployer, syncNotes));
+        new SyncManager(List.of(syncCustomer, syncAddress, syncEmployer, syncNotes, syncLoan));
 
     syncManager.syncAll(lastSyncTime);
   }

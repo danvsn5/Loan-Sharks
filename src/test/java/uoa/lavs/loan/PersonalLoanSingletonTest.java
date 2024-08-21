@@ -29,10 +29,11 @@ public class PersonalLoanSingletonTest {
     principal = 1000.00;
     rate = 0.1;
     rateType = "fixed";
-    duration = new LoanDuration(-1, LocalDate.of(2024, 6, 8), 1, 12);
-    payment = new LoanPayment(-1, "monthly", "100.0", "100.0", false);
+    duration = new LoanDuration("-1", LocalDate.of(2024, 6, 8), 1, 12);
+    payment = new LoanPayment("-1", "monthly", "100.0", "100.0", false);
 
-    newLoan = new PersonalLoan(-1, "-1", coborrowers, principal, rate, rateType, duration, payment);
+    newLoan =
+        new PersonalLoan("-1", "-1", coborrowers, principal, rate, rateType, duration, payment);
   }
 
   @Test

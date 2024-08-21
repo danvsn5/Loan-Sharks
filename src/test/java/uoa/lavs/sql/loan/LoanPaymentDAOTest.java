@@ -29,7 +29,7 @@ public class LoanPaymentDAOTest {
     dbFile = DatabaseState.DB_TEST_FILE;
     InitialiseDatabase.createDatabase();
 
-    loanPayment = new LoanPayment(-1, "daily", "weekly", "1000", false);
+    loanPayment = new LoanPayment("-1", "daily", "weekly", "1000", false);
     loanPaymentDAO = new LoanPaymentDAO();
   }
 
@@ -40,7 +40,7 @@ public class LoanPaymentDAOTest {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM loan_payment WHERE loanId = ?")) {
-      stmt.setInt(1, -1);
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Loan payment should be added to the database");
@@ -61,13 +61,13 @@ public class LoanPaymentDAOTest {
   public void testUpdateLoanPayment() {
     loanPaymentDAO.addLoanPayment(loanPayment);
 
-    LoanPayment updatedLoanPayment = new LoanPayment(-1, "monthly", "fortnightly", "2000", true);
+    LoanPayment updatedLoanPayment = new LoanPayment("-1", "monthly", "fortnightly", "2000", true);
     loanPaymentDAO.updateLoanPayment(updatedLoanPayment);
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM loan_payment WHERE loanId = ?")) {
-      stmt.setInt(1, -1);
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Loan payment should be updated in the database");
@@ -88,7 +88,7 @@ public class LoanPaymentDAOTest {
   public void testGetLoanPayment() {
     loanPaymentDAO.addLoanPayment(loanPayment);
 
-    LoanPayment retrievedLoanPayment = loanPaymentDAO.getLoanPayment(-1);
+    LoanPayment retrievedLoanPayment = loanPaymentDAO.getLoanPayment("-1");
 
     Assertions.assertEquals("daily", retrievedLoanPayment.getCompounding());
     Assertions.assertEquals("weekly", retrievedLoanPayment.getPaymentFrequency());

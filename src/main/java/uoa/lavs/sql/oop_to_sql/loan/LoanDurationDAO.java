@@ -20,7 +20,7 @@ public class LoanDurationDAO {
 
       int nextDurationId = getNextDurationIdForLoan(duration.getLoanId());
 
-      pstmt.setInt(1, duration.getLoanId());
+      pstmt.setString(1, duration.getLoanId());
       pstmt.setInt(2, nextDurationId);
 
       pstmt.setDate(3, Date.valueOf(duration.getStartDate()));
@@ -35,12 +35,12 @@ public class LoanDurationDAO {
     }
   }
 
-  private int getNextDurationIdForLoan(int loanId) {
+  private int getNextDurationIdForLoan(String loanId) {
     String sql = "SELECT MAX(durationId) FROM loan_duration WHERE loanId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-      pstmt.setInt(1, loanId);
+      pstmt.setString(1, loanId);
       ResultSet rs = pstmt.executeQuery();
 
       if (rs.next()) {
@@ -68,13 +68,13 @@ public class LoanDurationDAO {
     }
   }
 
-  public LoanDuration getLoanDuration(int loanId) {
+  public LoanDuration getLoanDuration(String loanId) {
     String sql = "SELECT * FROM loan_duration WHERE loanId = ?";
     LoanDuration duration = null;
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, loanId);
+      pstmt.setString(1, loanId);
       var rs = pstmt.executeQuery();
 
       if (rs.next()) {

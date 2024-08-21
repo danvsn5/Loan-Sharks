@@ -32,7 +32,7 @@ public class LoanCoborrowersDAOTest {
     coborrowers = new ArrayList<>();
     coborrowers.add("-1");
     loanCoborrowersDAO = new LoanCoborrowersDAO();
-    loanCoborrowersDAO.addCoborrowers(-1, coborrowers);
+    loanCoborrowersDAO.addCoborrowers("-1", coborrowers);
   }
 
   @Test
@@ -40,7 +40,7 @@ public class LoanCoborrowersDAOTest {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM loan_coborrower WHERE loanId = ?")) {
-      stmt.setInt(1, -1);
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Coborrowers should be added to the database");
@@ -57,12 +57,12 @@ public class LoanCoborrowersDAOTest {
   @Test
   public void testUpdateCoborrowers() {
     coborrowers.add("-2");
-    loanCoborrowersDAO.updateCoborrowers(-1, coborrowers);
+    loanCoborrowersDAO.updateCoborrowers("-1", coborrowers);
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM loan_coborrower WHERE loanId = ?")) {
-      stmt.setInt(1, -1);
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Coborrowers should be updated in the database");
@@ -80,7 +80,7 @@ public class LoanCoborrowersDAOTest {
 
   @Test
   public void testGetCoborrowers() {
-    ArrayList<String> coborrowers = loanCoborrowersDAO.getCoborrowers(-1);
+    ArrayList<String> coborrowers = loanCoborrowersDAO.getCoborrowers("-1");
 
     Assertions.assertEquals(1, coborrowers.size());
     Assertions.assertEquals("-1", coborrowers.get(0));

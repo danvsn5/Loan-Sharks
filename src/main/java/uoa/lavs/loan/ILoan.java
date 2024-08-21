@@ -3,7 +3,7 @@ package uoa.lavs.loan;
 import java.util.ArrayList;
 
 public interface ILoan {
-  public int getLoanId();
+  public String getLoanId();
 
   public String getCustomerId();
 
@@ -19,7 +19,7 @@ public interface ILoan {
 
   public LoanPayment getPayment();
 
-  public void setLoanId(int loanId);
+  public void setLoanId(String loanId);
 
   public void setCustomerId(String customerId);
 

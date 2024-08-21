@@ -24,21 +24,21 @@ public class LoanTest {
     principal = 1000.00;
     rate = 0.1;
     rateType = "fixed";
-    duration = new LoanDuration(-1, LocalDate.of(2024, 6, 8), 1, 12);
-    payment = new LoanPayment(-1, "monthly", "100.0", "100.0", false);
+    duration = new LoanDuration("-1", LocalDate.of(2024, 6, 8), 1, 12);
+    payment = new LoanPayment("-1", "monthly", "100.0", "100.0", false);
 
-    loan = new PersonalLoan(-1, "-1", coborrowers, principal, rate, rateType, duration, payment);
+    loan = new PersonalLoan("-1", "-1", coborrowers, principal, rate, rateType, duration, payment);
   }
 
   @Test
   public void testGetLoanId() {
-    assertEquals(-1, loan.getLoanId());
+    assertEquals("-1", loan.getLoanId());
   }
 
   @Test
   public void testSetLoanId() {
-    loan.setLoanId(-2);
-    assertEquals(-2, loan.getLoanId());
+    loan.setLoanId("-2");
+    assertEquals("-2", loan.getLoanId());
   }
 
   @Test
@@ -95,7 +95,7 @@ public class LoanTest {
 
   @Test
   public void testSetDuration() {
-    LoanDuration newDuration = new LoanDuration(-1, LocalDate.of(2024, 6, 8), 2, 12);
+    LoanDuration newDuration = new LoanDuration("-1", LocalDate.of(2024, 6, 8), 2, 12);
     loan.setDuration(newDuration);
     assertEquals(newDuration, loan.getDuration());
   }
@@ -107,7 +107,7 @@ public class LoanTest {
 
   @Test
   public void testSetPayment() {
-    LoanPayment newPayment = new LoanPayment(-1, "monthly", "200.0", "200.0", false);
+    LoanPayment newPayment = new LoanPayment("-1", "monthly", "200.0", "200.0", false);
     loan.setPayment(newPayment);
     assertEquals(newPayment, loan.getPayment());
   }

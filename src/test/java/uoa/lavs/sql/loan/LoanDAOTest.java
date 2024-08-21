@@ -143,21 +143,21 @@ public class LoanDAOTest {
     employerDAO.addCustomerEmployer(employer);
 
     startDate = LocalDate.now();
-    loanDuration = new LoanDuration(-1, startDate, 0, 0);
+    loanDuration = new LoanDuration("-1", startDate, 0, 0);
     loanDurationDAO = new LoanDurationDAO();
     loanDurationDAO.addLoanDuration(loanDuration);
 
-    loanPayment = new LoanPayment(-1, "daily", "weekly", "1000", false);
+    loanPayment = new LoanPayment("-1", "daily", "weekly", "1000", false);
     loanPaymentDAO = new LoanPaymentDAO();
     loanPaymentDAO.addLoanPayment(loanPayment);
 
     coborrowers = new ArrayList<>();
     coborrowersDAO = new LoanCoborrowersDAO();
-    coborrowersDAO.addCoborrowers(-1, coborrowers);
+    coborrowersDAO.addCoborrowers("-1", coborrowers);
 
     customerDAO.addCustomer(customer);
 
-    loan = new PersonalLoan(-1, "-1", coborrowers, 0, 0, "fixed", loanDuration, loanPayment);
+    loan = new PersonalLoan("-1", "-1", coborrowers, 0, 0, "fixed", loanDuration, loanPayment);
     loanDAO = new LoanDAO();
   }
 
@@ -165,15 +165,15 @@ public class LoanDAOTest {
   public void testAddLoan() {
     loanDAO.addLoan(loan);
 
-    int loanId = loan.getLoanId();
+    String loanId = loan.getLoanId();
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM loan WHERE loanId = ?")) {
-      stmt.setInt(1, loanId);
+      stmt.setString(1, loanId);
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Loan should be added to the database");
-        Assertions.assertEquals(loanId, rs.getInt("loanId"));
+        Assertions.assertEquals(loanId, rs.getString("loanId"));
         Assertions.assertEquals("-1", rs.getString("customerId"));
         Assertions.assertEquals(0, rs.getDouble("principal"));
         Assertions.assertEquals(0, rs.getDouble("rate"));
@@ -194,15 +194,15 @@ public class LoanDAOTest {
 
     loanDAO.updateLoan(loan);
 
-    int loanId = loan.getLoanId();
+    String loanId = loan.getLoanId();
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM loan WHERE loanId = ?")) {
-      stmt.setInt(1, loanId);
+      stmt.setString(1, loanId);
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Loan should be updated in the database");
-        Assertions.assertEquals(loanId, rs.getInt("loanId"));
+        Assertions.assertEquals(loanId, rs.getString("loanId"));
         Assertions.assertEquals("-1", rs.getString("customerId"));
         Assertions.assertEquals(1000, rs.getDouble("principal"));
         Assertions.assertEquals(5, rs.getDouble("rate"));
@@ -219,9 +219,9 @@ public class LoanDAOTest {
   public void testGetLoan() {
     loanDAO.addLoan(loan);
 
-    Loan retrievedLoan = loanDAO.getLoan(-1);
+    Loan retrievedLoan = loanDAO.getLoan("-1");
 
-    Assertions.assertEquals(-1, retrievedLoan.getLoanId());
+    Assertions.assertEquals("-1", retrievedLoan.getLoanId());
     Assertions.assertEquals("-1", retrievedLoan.getCustomerId());
     Assertions.assertEquals(0, retrievedLoan.getPrincipal());
     Assertions.assertEquals(0, retrievedLoan.getRate());
@@ -242,7 +242,7 @@ public class LoanDAOTest {
 
     Assertions.assertEquals(1, loans.size());
     Loan retrievedLoan = loans.get(0);
-    Assertions.assertEquals(-1, retrievedLoan.getLoanId());
+    Assertions.assertEquals("-1", retrievedLoan.getLoanId());
     Assertions.assertEquals("-1", retrievedLoan.getCustomerId());
     Assertions.assertEquals(0, retrievedLoan.getPrincipal());
     Assertions.assertEquals(0, retrievedLoan.getRate());
@@ -263,7 +263,7 @@ public class LoanDAOTest {
 
     Assertions.assertEquals(1, loans.size());
     Loan retrievedLoan = loans.get(0);
-    Assertions.assertEquals(-1, retrievedLoan.getLoanId());
+    Assertions.assertEquals("-1", retrievedLoan.getLoanId());
     Assertions.assertEquals("-1", retrievedLoan.getCustomerId());
     Assertions.assertEquals(0, retrievedLoan.getPrincipal());
     Assertions.assertEquals(0, retrievedLoan.getRate());

@@ -17,7 +17,7 @@ public class LoanPaymentDAO {
 
       int nextPaymentId = getNextPaymentIdForLoan(payment.getLoanId());
 
-      pstmt.setInt(1, payment.getLoanId());
+      pstmt.setString(1, payment.getLoanId());
       pstmt.setInt(2, nextPaymentId);
 
       pstmt.setString(3, payment.getCompounding());
@@ -33,12 +33,12 @@ public class LoanPaymentDAO {
     }
   }
 
-  private int getNextPaymentIdForLoan(int loanId) {
+  private int getNextPaymentIdForLoan(String loanId) {
     String sql = "SELECT MAX(paymentId) FROM loan_payment WHERE loanId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-      pstmt.setInt(1, loanId);
+      pstmt.setString(1, loanId);
       ResultSet rs = pstmt.executeQuery();
 
       if (rs.next()) {
@@ -61,7 +61,7 @@ public class LoanPaymentDAO {
       pstmt.setString(2, payment.getPaymentFrequency());
       pstmt.setString(3, payment.getPaymentAmount());
       pstmt.setBoolean(4, payment.getInterestOnly());
-      pstmt.setInt(5, payment.getLoanId());
+      pstmt.setString(5, payment.getLoanId());
 
       pstmt.executeUpdate();
     } catch (SQLException e) {
@@ -69,13 +69,13 @@ public class LoanPaymentDAO {
     }
   }
 
-  public LoanPayment getLoanPayment(int loanId) {
+  public LoanPayment getLoanPayment(String loanId) {
     String sql = "SELECT * FROM loan_payment WHERE loanId = ?";
     LoanPayment payment = null;
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, loanId);
+      pstmt.setString(1, loanId);
       var rs = pstmt.executeQuery();
 
       if (rs.next()) {

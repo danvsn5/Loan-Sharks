@@ -31,7 +31,7 @@ public class LoanDurationDAOTest {
     dbFile = DatabaseState.DB_TEST_FILE;
     InitialiseDatabase.createDatabase();
     startDate = LocalDate.now();
-    loanDuration = new LoanDuration(-1, startDate, 5, 12);
+    loanDuration = new LoanDuration("-1", startDate, 5, 12);
     loanDurationDAO = new LoanDurationDAO();
   }
 
@@ -42,7 +42,7 @@ public class LoanDurationDAOTest {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM loan_duration WHERE loanId = ?")) {
-      stmt.setInt(1, -1);
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Loan duration should be added to the database");
@@ -72,7 +72,7 @@ public class LoanDurationDAOTest {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
             conn.prepareStatement("SELECT * FROM loan_duration WHERE loanId = ?")) {
-      stmt.setInt(1, -1);
+      stmt.setString(1, "-1");
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Loan duration should be updated in the database");
@@ -92,9 +92,9 @@ public class LoanDurationDAOTest {
   public void testGetLoanDuration() {
     loanDurationDAO.addLoanDuration(loanDuration);
 
-    LoanDuration retrievedLoanDuration = loanDurationDAO.getLoanDuration(-1);
+    LoanDuration retrievedLoanDuration = loanDurationDAO.getLoanDuration("-1");
 
-    Assertions.assertEquals(-1, retrievedLoanDuration.getLoanId());
+    Assertions.assertEquals("-1", retrievedLoanDuration.getLoanId());
     Assertions.assertEquals(startDate, retrievedLoanDuration.getStartDate());
     Assertions.assertEquals(5, retrievedLoanDuration.getPeriod());
     Assertions.assertEquals(12, retrievedLoanDuration.getLoanTerm());

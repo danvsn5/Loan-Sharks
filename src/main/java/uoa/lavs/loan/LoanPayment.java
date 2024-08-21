@@ -1,7 +1,7 @@
 package uoa.lavs.loan;
 
 public class LoanPayment {
-  private int loanId;
+  private String loanId;
   private int paymentId;
   private String compounding;
   private String paymentFrequency;
@@ -9,7 +9,7 @@ public class LoanPayment {
   private boolean interestOnly;
 
   public LoanPayment(
-      int loanId,
+      String loanId,
       String compounding,
       String paymentFrequency,
       String paymentAmount,
@@ -21,7 +21,7 @@ public class LoanPayment {
     this.interestOnly = interestOnly;
   }
 
-  public int getLoanId() {
+  public String getLoanId() {
     return loanId;
   }
 
@@ -45,7 +45,7 @@ public class LoanPayment {
     return interestOnly;
   }
 
-  public void setLoanId(int loanId) {
+  public void setLoanId(String loanId) {
     this.loanId = loanId;
   }
 
