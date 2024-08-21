@@ -21,6 +21,8 @@ public class MainMenuController {
 
   @FXML private ImageView staticReturnImageView;
 
+  @FXML private Button syncButton;
+
   @FXML
   private void initialize() {
     welcomeLabel.setText("Welcome!");
@@ -33,6 +35,11 @@ public class MainMenuController {
     Main.setUi(AppUI.CUSTOMER_MENU);
     AppState.setCurrentUiName(AppUI.CUSTOMER_MENU);
     AppState.setPreviousUi(AppUI.MAIN_MENU);
+  }
+
+  @FXML
+  private void onClickSyncButton() {
+    System.out.println("Sync button clicked");
   }
 
   @FXML
