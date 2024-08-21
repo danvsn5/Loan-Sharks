@@ -14,6 +14,7 @@ public class AppState {
   public static Boolean isCreatingLoan = false;
   public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
   public static Boolean isAccessingFromSearch = false;
+  public static Boolean isAccessingFromLoanSearch = false;
 
   // Previous and current UI screens for return functionality
   public static AppUI previousUi;

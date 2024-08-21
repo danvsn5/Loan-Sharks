@@ -122,6 +122,11 @@ public class LoanFinanceDetails implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
-    Main.setUi(AppUI.CUSTOMER_SEARCH);
+    if (AppState.isAccessingFromLoanSearch) {
+      AppState.isAccessingFromLoanSearch = false;
+      Main.setUi(AppUI.LOAN_RESULTS);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_RESULTS);
+    }
   }
 }

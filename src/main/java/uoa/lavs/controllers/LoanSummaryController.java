@@ -5,11 +5,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AccessTypeNotifier;
+import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 
-public class LoanSummaryController {
+public class LoanSummaryController implements AccessTypeObserver {
   @FXML private TextField principalfField;
   @FXML private TextField annualRateField;
   @FXML private TextField termField;
@@ -31,6 +32,8 @@ public class LoanSummaryController {
   @FXML
   private void initialize() {
     // Add initialization code here
+    AccessTypeNotifier.registerLoanObserver(this);
+    updateUIBasedOnAccessType();
   }
 
   @FXML
@@ -41,7 +44,7 @@ public class LoanSummaryController {
       AppState.loanDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyLoanObservers();
     } else {
-      confirmLoanButton.setStyle("-fx-background-color: red");
+      confirmLoanButton.setStyle("-fx-border-color: red");
     }
   }
 
@@ -73,6 +76,29 @@ public class LoanSummaryController {
   @FXML
   private void handleBackButtonAction() {
     // Need to add logic if they got here from loan search
-    Main.setUi(AppUI.CUSTOMER_SEARCH);
+    if (AppState.isAccessingFromLoanSearch) {
+      AppState.isAccessingFromLoanSearch = false;
+      Main.setUi(AppUI.LOAN_RESULTS);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_RESULTS);
+    }
+  }
+
+  @Override
+  public void updateUIBasedOnAccessType() {
+    // Add logic to update UI based on access type
+    if (AppState.loanDetailsAccessType.equals("VIEW")) {
+      confirmLoanButton.setText("Edit Details");
+      viewPaymentsButton.setVisible(true);
+    } else {
+      confirmLoanButton.setText("Confirm Loan");
+      viewPaymentsButton.setVisible(false);
+    }
+  }
+
+  @Override
+  public boolean validateData() {
+    // No Data to validate
+    return true;
   }
 }
