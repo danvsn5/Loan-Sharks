@@ -1,5 +1,8 @@
 package uoa.lavs.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -7,6 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import okhttp3.Address;
 import uoa.lavs.AccessTypeNotifier;
 import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
@@ -38,6 +42,10 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   @FXML private ImageView staticReturnImageView;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
+
+  // private ArrayList<uoa.lavs.customer.Address> addresses = customer.getAddresses();
+  private List<uoa.lavs.customer.Address> addresses = new ArrayList<>();
+  private int currentAddress = 0;
 
   @FXML
   private void initialize() {
@@ -217,7 +225,39 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleIncAddress() {
-    // Add increment address button action code here
+    if(AppState.customerDetailsAccessType == "CREATE"){
+      // gets all the input fields and adds them to an address instance
+      uoa.lavs.customer.Address address = new uoa.lavs.customer.Address(customer.getCustomerId(), customerAddressTypeComboBox.getValue(), customerAddressLine1Field.getText(), customerAddressLine2Field.getText(), customerSuburbField.getText(), customerPostcodeField.getText(), customerCityField.getText(), "New Zealand", primaryAddressRadio.isSelected(), mailingAddressRadio.isSelected());
+      addresses.add(address);
+      // current address counter increment for displaying the cached results in the temp array
+      currentAddress++;
+
+      // clear all fields
+      customerAddressTypeComboBox.setValue("");;
+      customerAddressLine1Field.setText(null);
+      customerAddressLine2Field.setText(null);
+      customerSuburbField.setText(null);
+      customerCityField.setText(null);
+      customerPostcodeField.setText(null);
+      mailingAddressRadio.setSelected(false);
+      primaryAddressRadio.setSelected(false);
+
+      // print out all fields from first address
+      System.out.println(customerAddressLine1Field.getText());
+      System.out.println(addresses.get(currentAddress - 1).getAddressType());
+      System.out.println(addresses.get(currentAddress - 1).getAddressLineOne());
+      System.out.println(addresses.get(currentAddress - 1).getAddressLineTwo());
+      System.out.println(addresses.get(currentAddress - 1).getSuburb());
+      System.out.println(addresses.get(currentAddress - 1).getPostCode());
+      System.out.println(addresses.get(currentAddress - 1).getCity());
+      System.out.println(addresses.get(currentAddress - 1).getCountry());
+      System.out.println(addresses.get(currentAddress - 1).getIsPrimary());
+      System.out.println(addresses.get(currentAddress - 1).getIsMailing());
+      System.out.println(addresses.get(currentAddress - 1).getCustomerId());
+      
+      
+
+    }
 
   }
 
