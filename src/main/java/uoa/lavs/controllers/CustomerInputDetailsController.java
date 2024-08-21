@@ -93,7 +93,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
           customerLastNameField,
           customerOccupationField
         },
-        new ComboBox<?>[] {customerTitleComboBox, customerVisaBox},
+        new ComboBox<?>[] {customerTitleComboBox, customerVisaBox, customerCitizenshipBox},
         new DatePicker[] {customerDOBPicker},
         new RadioButton[] {});
   }
