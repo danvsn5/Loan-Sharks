@@ -111,6 +111,8 @@ public class SearchCustomer {
       updateCustomerEmails(loadCustomerEmails, customer);
     }
 
+    System.out.println("Customer found: " + customer.getName());
+
     return customer;
   }
 
