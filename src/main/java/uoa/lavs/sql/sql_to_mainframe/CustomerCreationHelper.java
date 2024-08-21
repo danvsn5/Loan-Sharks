@@ -1,6 +1,10 @@
-package uoa.lavs.utility;
+package uoa.lavs.sql.sql_to_mainframe;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.List;
 import uoa.lavs.customer.Address;
 import uoa.lavs.customer.Email;
 import uoa.lavs.customer.IndividualCustomer;
@@ -14,9 +18,7 @@ import uoa.lavs.sql.oop_to_sql.customer.NotesDAO;
 import uoa.lavs.sql.oop_to_sql.customer.PhoneDAO;
 
 public class CustomerCreationHelper {
-  public static void setAddressDetails(Address address) {}
-
-  public static void createCustomer(IndividualCustomer customer) {
+  public static void createCustomer(IndividualCustomer customer) throws IOException {
     CustomerDAO customerdao = new CustomerDAO();
     customerdao.addCustomer(customer);
 
@@ -62,5 +64,24 @@ public class CustomerCreationHelper {
     CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
     customer.getEmployer().setCustomerId(customer.getCustomerId());
     employerdao.addCustomerEmployer(customer.getEmployer());
+
+    SyncCustomer syncCustomer = new SyncCustomer();
+    SyncAddress syncAddress = new SyncAddress();
+    SyncEmployer syncEmployer = new SyncEmployer();
+    SyncNotes syncNotes = new SyncNotes();
+    SyncPhone syncPhone = new SyncPhone();
+    SyncEmail syncEmail = new SyncEmail();
+    LocalDateTime lastSyncTime = syncCustomer.getLastSyncTimeFromDB();
+
+    if (lastSyncTime == null) {
+      System.out.println("No last sync time found. Syncing all records.");
+      lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
+    }
+
+    SyncManager syncManager =
+        new SyncManager(
+            List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
+
+    syncManager.syncAll(lastSyncTime);
   }
 }

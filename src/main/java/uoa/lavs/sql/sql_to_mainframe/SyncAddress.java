@@ -29,7 +29,7 @@ public class SyncAddress extends Sync {
     }
 
     updateCustomerAddress.setNumber(address_id);
-    
+
     Status status = updateCustomerAddress.send(connection);
 
     if (status.getErrorCode() == 0) {

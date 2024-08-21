@@ -2,7 +2,6 @@ package uoa.lavs.customer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import uoa.lavs.mainframe.Connection;
 import uoa.lavs.mainframe.Instance;
 import uoa.lavs.mainframe.Status;
@@ -36,7 +35,6 @@ public class SearchCustomer {
     Connection connection = Instance.getConnection();
 
     // Send the request for customer
-    
 
     Status status = loadCustomer.send(connection);
     // Send the request for address
@@ -48,7 +46,9 @@ public class SearchCustomer {
     // Send the request for email
     Status emailStatus = loadCustomerEmails.send(connection);
 
-    if (status.getErrorCode() == 1000 || status.getErrorCode() == 1010 || status.getErrorCode() == 1020) {
+    if (status.getErrorCode() == 1000
+        || status.getErrorCode() == 1010
+        || status.getErrorCode() == 1020) {
       System.out.println("Error loading customer: " + status.getErrorCode());
       System.out.println(status.getErrorMessage());
       System.out.println("Checking local database...");
@@ -64,7 +64,6 @@ public class SearchCustomer {
     }
 
     System.out.println("Searching mainframe...");
-
 
     if (status.getErrorCode() != 0) {
       System.out.println("Error loading customer: " + status.getErrorCode());
@@ -128,7 +127,9 @@ public class SearchCustomer {
     findCustomerAdvanced.setSearchName(name);
     Status status = findCustomerAdvanced.send(connection);
 
-    if (status.getErrorCode() == 1000 || status.getErrorCode() == 1010 || status.getErrorCode() == 1020) {
+    if (status.getErrorCode() == 1000
+        || status.getErrorCode() == 1010
+        || status.getErrorCode() == 1020) {
       System.out.println("Error loading customer: " + status.getErrorCode());
       System.out.println(status.getErrorMessage());
       System.out.println("Checking local database...");
@@ -147,9 +148,9 @@ public class SearchCustomer {
 
     System.out.println("Searching mainframe...");
 
-    int count = findCustomerAdvanced.getCustomerCountFromServer();
+    Integer count = findCustomerAdvanced.getCustomerCountFromServer();
 
-    if (count == 0) {
+    if (count == null || count == 0) {
       System.out.println("No customers found.");
       return null;
     }
@@ -163,12 +164,12 @@ public class SearchCustomer {
         System.out.println("Error loading customer: " + status.getErrorCode());
         return null;
       }
-  
+
       loadCustomerAddress.setCustomerId(customerId);
       loadCustomerEmployer.setCustomerId(customerId);
       loadCustomerPhones.setCustomerId(customerId);
       loadCustomerEmails.setCustomerId(customerId);
-  
+
       // Send the request for address
       Status addressStatus = loadCustomerAddress.send(connection);
       // Send the request for employer
@@ -177,12 +178,12 @@ public class SearchCustomer {
       Status phoneStatus = loadCustomerPhones.send(connection);
       // Send the request for email
       Status emailStatus = loadCustomerEmails.send(connection);
-  
+
       if (status.getErrorCode() != 0) {
         System.out.println("Error loading customer: " + status.getErrorCode());
         return null;
       }
-  
+
       Customer customer =
           new IndividualCustomer(
               "",
@@ -198,41 +199,40 @@ public class SearchCustomer {
               new ArrayList<>(),
               new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false));
       customer.setCustomerId(customerId);
-  
+
       LoadCustomer loadCustomer = new LoadCustomer();
-  
+
       loadCustomer.setCustomerId(customerId);
       status = loadCustomer.send(connection);
-  
+
       if (status.getErrorCode() != 0) {
         System.out.println("Error loading customer: " + status.getErrorCode());
         return null;
       }
-  
+
       updateCustomerFields(loadCustomer, customer);
       if (addressStatus.getErrorCode() == 0) {
-  
+
         FindCustomerAddress findCustomerAddress = new FindCustomerAddress();
         findCustomerAddress.setCustomerId(customerId);
         findCustomerAddress.send(connection);
         int num = findCustomerAddress.getCountFromServer();
         updateCustomerAddress(loadCustomerAddress, customer, num);
       }
-  
+
       if (employerStatus.getErrorCode() == 0) {
         updateCustomerEmployer(loadCustomerEmployer, customer);
       }
-  
+
       if (phoneStatus.getErrorCode() == 0) {
         updateCustomerPhones(loadCustomerPhones, customer);
       }
-  
+
       if (emailStatus.getErrorCode() == 0) {
         updateCustomerEmails(loadCustomerEmails, customer);
       }
 
       customers.add(customer);
-  
     }
 
     for (Customer customer : customers) {

@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -20,7 +21,7 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
-import uoa.lavs.utility.CustomerCreationHelper;
+import uoa.lavs.sql.sql_to_mainframe.CustomerCreationHelper;
 
 public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private Label customerIDLabel;
@@ -187,7 +188,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   }
 
   @FXML
-  private void handleEditButtonAction() {
+  private void handleEditButtonAction() throws IOException {
     if (AppState.customerDetailsAccessType.equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle create customer logic

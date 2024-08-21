@@ -3,7 +3,6 @@ package uoa.lavs.sql.sql_to_mainframe;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.mainframe.Status;
 import uoa.lavs.mainframe.messages.customer.FindCustomerEmail;
 import uoa.lavs.mainframe.messages.customer.UpdateCustomerEmail;
@@ -30,8 +29,6 @@ public class SyncEmail extends Sync {
       updateCustomerEmail.setNumber(email_id);
     }
 
-    
-    
     Status status = updateCustomerEmail.send(connection);
 
     if (status.getErrorCode() == 0) {
