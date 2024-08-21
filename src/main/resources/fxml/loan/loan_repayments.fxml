@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerResultsController">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/Employer%20Details.png" />
+         </image>
+      </ImageView>
+      <Rectangle fx:id="searchResultsRectangle11" arcHeight="5.0" arcWidth="5.0" fill="#3289d5" height="106.0" layoutX="127.0" layoutY="21.0" onMouseClicked="#handleSearchResultsRectangle1Action" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="991.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../css/index.css" text="Loan Repayments" textFill="#333333" textOverrun="CLIP">
+         <font>
+            <Font size="41.0" />
+         </font>
+      </Label>
+      <Label fx:id="monthLabel" layoutX="208.0" layoutY="266.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/static-return.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label fx:id="principalLabel" layoutX="460.0" layoutY="266.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="interestLabel" layoutX="707.0" layoutY="266.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="remLabel" layoutX="946.0" layoutY="266.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="monthLabel1" layoutX="208.0" layoutY="328.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="principalLabel1" layoutX="460.0" layoutY="328.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="interestLabel1" layoutX="707.0" layoutY="328.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="remLabel1" layoutX="946.0" layoutY="328.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="monthLabel2" layoutX="208.0" layoutY="394.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="principalLabel2" layoutX="460.0" layoutY="394.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="interestLabel2" layoutX="707.0" layoutY="394.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="remLabel2" layoutX="946.0" layoutY="394.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="monthLabel3" layoutX="208.0" layoutY="456.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="principalLabel3" layoutX="460.0" layoutY="456.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="interestLabel3" layoutX="707.0" layoutY="456.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="remLabel3" layoutX="946.0" layoutY="456.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="monthLabel4" layoutX="208.0" layoutY="524.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="principalLabel4" layoutX="460.0" layoutY="524.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="interestLabel4" layoutX="707.0" layoutY="524.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="remLabel4" layoutX="946.0" layoutY="524.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="monthLabel5" layoutX="208.0" layoutY="586.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="principalLabel5" layoutX="460.0" layoutY="586.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="interestLabel5" layoutX="707.0" layoutY="586.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+      <Label fx:id="remLabel5" layoutX="946.0" layoutY="586.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Test Label" />
+   </children>
+</Pane>
