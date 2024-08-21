@@ -320,6 +320,9 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleDecAddress() {
+    if(currentAddress == 0) {
+      return;
+    }
     if (AppState.customerDetailsAccessType == "CREATE") {
 
       // decrement the current address counter
