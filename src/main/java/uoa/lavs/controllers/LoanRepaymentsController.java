@@ -56,6 +56,7 @@ public class LoanRepaymentsController {
   private ArrayList<LoanRepayment> loanRepayments = new ArrayList<LoanRepayment>();
 
   private int listIndex = 0;
+  private int currentPage = 1;
 
   // create new array list to store loan repayments
 
@@ -82,7 +83,7 @@ public class LoanRepaymentsController {
             existingCustomerLoan.getDuration().getStartDate());
 
     // set repayment schedule to the first page
-    repaymentsPageLabel.setText("Page: " + "1");
+    repaymentsPageLabel.setText("Page: " + currentPage);
     setPaymentPage();
   }
 
@@ -151,12 +152,19 @@ public class LoanRepaymentsController {
 
   @FXML
   private void handleIncPage() {
-    // Add code here
+    currentPage++;
+    setPaymentPage();
+    repaymentsPageLabel.setText("Page: " + currentPage);
   }
 
   @FXML
   private void handleDecPage() {
-    // Add code here
+    if (currentPage > 1) {
+      currentPage--;
+      listIndex -= 6;
+      setPaymentPage();
+      repaymentsPageLabel.setText("Page: " + currentPage);
+    }
   }
 
   @FXML
