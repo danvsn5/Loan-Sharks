@@ -3,7 +3,6 @@ package uoa.lavs.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,8 +14,6 @@ import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.Customer;
-import uoa.lavs.customer.IndividualCustomer;
-import uoa.lavs.customer.IndividualCustomerSingleton;
 import uoa.lavs.customer.SearchCustomer;
 
 public class CustomerSearchController {
@@ -35,11 +32,7 @@ public class CustomerSearchController {
   String state;
 
   @FXML
-  private void initialize() {
-    usernameField.setVisible(false);
-    idField.setVisible(false);
-    
-  }
+  private void initialize() {}
 
   // When enter key is pressed, perform search.
   @FXML
@@ -63,19 +56,19 @@ public class CustomerSearchController {
     } else {
       handleSearchWithNameLabelAction();
     }
+    usernameField.setText("");
+    idField.setText("");
   }
 
   @FXML
   private void enableIDSearch() {
-    usernameField.setVisible(false);
-    idField.setVisible(true);
+    usernameField.setText("");
     state = "id";
   }
 
   @FXML
   private void enableNameSearch() {
-    idField.setVisible(false);
-    usernameField.setVisible(true);
+    idField.setText("");
     state = "name";
   }
 
