@@ -128,6 +128,8 @@ public class LoanSummaryController implements AccessTypeObserver {
     if (AppState.isAccessingFromLoanSearch) {
       AppState.isAccessingFromLoanSearch = false;
       Main.setUi(AppUI.LOAN_RESULTS);
+    } else if (!AppState.isCreatingLoan) {
+      Main.setUi(AppUI.LOAN_MENU);
     } else {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
     }
