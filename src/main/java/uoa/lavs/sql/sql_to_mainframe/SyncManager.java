@@ -22,7 +22,7 @@ public class SyncManager {
     this.syncs = syncs;
   }
 
-  public void syncAll(LocalDateTime lastSyncTime) throws IOException {
+  public Status syncAll(LocalDateTime lastSyncTime) throws IOException {
     uoa.lavs.mainframe.Connection mainframeConnection = null;
     Connection localConnection = null;
 
@@ -35,9 +35,10 @@ public class SyncManager {
       for (Sync sync : syncs) {
         Status status = sync.syncToMainframe(lastSyncTime, mainframeConnection, localConnection);
         if (status.getErrorCode() != 0) {
-          System.out.println("Error syncing " + sync.getClass().getSimpleName() + ": " + status.getErrorMessage());
+          System.out.println(
+              "Error syncing " + sync.getClass().getSimpleName() + ": " + status.getErrorMessage());
           System.out.println("Please try again.");
-          return;
+          return status;
         }
       }
 
@@ -56,6 +57,8 @@ public class SyncManager {
         e.printStackTrace();
       }
     }
+
+    return new Status(0, "Successfully synced all data to mainframe", 0);
   }
 
   /**
@@ -96,7 +99,7 @@ public class SyncManager {
     }
   }
 
-  public static void main(String[] args) throws IOException {
+  public static Status masterSync() throws IOException {
     SyncCustomer syncCustomer = new SyncCustomer();
     SyncAddress syncAddress = new SyncAddress();
     SyncEmployer syncEmployer = new SyncEmployer();
@@ -122,6 +125,13 @@ public class SyncManager {
                 syncEmail,
                 syncNotes));
 
-    syncManager.syncAll(lastSyncTime);
+    Status status = syncManager.syncAll(lastSyncTime);
+
+    return status;
+  }
+
+  public static void main(String[] args) throws IOException {
+    Status status = masterSync();
+    System.out.println(status.getErrorMessage());
   }
 }

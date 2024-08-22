@@ -16,6 +16,7 @@ import uoa.lavs.mainframe.Connection;
 import uoa.lavs.mainframe.Instance;
 import uoa.lavs.mainframe.Request;
 import uoa.lavs.mainframe.Response;
+import uoa.lavs.mainframe.Status;
 import uoa.lavs.sql.sql_to_mainframe.SyncManager;
 import uoa.lavs.AppState;
 
@@ -60,7 +61,13 @@ public class MainMenuController {
     System.out.println("Sync button clicked");
     // check if needs syncing 
     if (SyncManager.checkIfNeedsSyncing()) {
-      SyncManager.main(null);
+      System.out.println("Needs to sync");
+      Status status = SyncManager.masterSync();
+      if (status.getErrorCode() == 0) {
+        System.out.println("Sync successful");
+      } else {
+        System.out.println("Sync failed: " + status.getErrorMessage());
+      }
     } else {
       System.out.println("No need to sync");
     }
