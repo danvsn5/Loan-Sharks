@@ -28,9 +28,11 @@ public class LoanDurationController implements AccessTypeObserverLoan {
   @FXML private TextField periodField;
   @FXML private TextField termField;
 
-  @FXML private Button primaryButton;
   @FXML private Button coborrowerButton;
+  @FXML private Button durationButton;
   @FXML private Button financeButton;
+  @FXML private Button primaryButton;
+
   @FXML private Button summaryButton;
   @FXML private ImageView staticReturnImageView;
 

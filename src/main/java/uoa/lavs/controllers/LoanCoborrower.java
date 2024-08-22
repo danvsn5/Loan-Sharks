@@ -26,9 +26,11 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
   @FXML private TextField coborrowerIDField2;
   @FXML private TextField coborrowerIDField3;
 
-  @FXML private Button primaryButton;
+  @FXML private Button coborrowerButton;
   @FXML private Button durationButton;
   @FXML private Button financeButton;
+  @FXML private Button primaryButton;
+
   @FXML private Button summaryButton;
   @FXML private ImageView staticReturnImageView;
 

@@ -73,7 +73,7 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="372.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="379.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button-selected" stylesheets="@../../../css/index.css" text="Primary Details">
+      <Button fx:id="primaryButton" graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button-selected" stylesheets="@../../../css/index.css" text="Primary Details">
          <font>
             <Font size="27.0" />
          </font>

@@ -40,7 +40,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="621.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button-selected" stylesheets="@../../../css/index.css" text="Finance Info">
+      <Button fx:id="financeButton" graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button-selected" stylesheets="@../../../css/index.css" text="Finance Info">
          <font>
             <Font size="27.0" />
          </font>

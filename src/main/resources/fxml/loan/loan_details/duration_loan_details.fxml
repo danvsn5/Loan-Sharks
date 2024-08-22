@@ -45,7 +45,7 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </TextField>
-      <Button graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button-selected" stylesheets="@../../../css/index.css" text="Duration Info">
+      <Button fx:id="durationButton" graphicTextGap="0.0" layoutX="645.0" layoutY="192.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button-selected" stylesheets="@../../../css/index.css" text="Duration Info">
          <font>
             <Font size="27.0" />
          </font>

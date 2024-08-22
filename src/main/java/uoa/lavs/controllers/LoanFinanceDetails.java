@@ -26,9 +26,11 @@ public class LoanFinanceDetails implements AccessTypeObserverLoan {
   @FXML private TextField paymentValueField;
   @FXML private RadioButton interestOnlyButton;
 
-  @FXML private Button primaryButton;
   @FXML private Button coborrowerButton;
   @FXML private Button durationButton;
+  @FXML private Button financeButton;
+  @FXML private Button primaryButton;
+
   @FXML private Button summaryButton;
   @FXML private ImageView staticReturnImageView;
 

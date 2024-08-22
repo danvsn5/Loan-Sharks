@@ -28,6 +28,8 @@ public class LoanPrimaryDetails implements AccessTypeObserverLoan {
   @FXML private Button coborrowerButton;
   @FXML private Button durationButton;
   @FXML private Button financeButton;
+  @FXML private Button primaryButton;
+
   @FXML private Button summaryButton;
   @FXML private ImageView staticReturnImageView;
 
