@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerInputContactController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.CustomerInputContactController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -126,11 +126,11 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Prefix" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Type" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1082.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Primary" />
-      <RadioButton fx:id="phonePrimaryRadio" layoutX="1170.0" layoutY="369.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <RadioButton fx:id="phonePrimaryRadio" layoutX="1170.0" layoutY="369.0" mnemonicParsing="false" onMouseClicked="#phonePrimaryRadioClick" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="931.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Send Text" />
-      <RadioButton fx:id="sendTextRadio" layoutX="1019.0" layoutY="369.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <RadioButton fx:id="sendTextRadio" layoutX="1019.0" layoutY="369.0" mnemonicParsing="false" onMouseClicked="#sendTextRadioClick" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="482.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Primary" />
-      <RadioButton fx:id="emailPrimaryRadio" layoutX="779.0" layoutY="510.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
+      <RadioButton fx:id="emailPrimaryRadio" layoutX="779.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#emailPrimaryRadioClick" prefHeight="36.0" prefWidth="25.0" styleClass="radio-input" stylesheets="@../../../css/index.css" />
       <Label fx:id="phonePageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="519.0" layoutY="436.0" prefHeight="20.0" prefWidth="243.0" style="-fx-font-size: 14px;" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Navigate Phone Number" />
       <ImageView fx:id="incPhone" fitHeight="22.0" fitWidth="22.0" layoutX="728.0" layoutY="434.0" onMouseClicked="#handleIncPhone" pickOnBounds="true" preserveRatio="true">
          <image>

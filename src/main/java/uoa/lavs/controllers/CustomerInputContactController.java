@@ -57,6 +57,9 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private int currentEmailPage = 0;
   private int amountOfValidEmails = 0;
 
+  private boolean isPrimaryEmailSet = false;
+  private boolean isPrimaryPhoneSet = false;
+
   @FXML
   private void initialize() {
     customerPhoneTypeBox.getItems().addAll("Home", "Work", "Mobile");
@@ -64,6 +67,22 @@ public class CustomerInputContactController implements AccessTypeObserver {
     updateUIBasedOnAccessType();
     phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
     emailPageLabel.setText("Email: " + (currentEmailPage + 1));
+
+    if (AppState.isAccessingFromSearch) {
+      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+      customer = IndividualCustomerSingleton.getInstance();
+
+      existingCustomerPhones = customer.getPhones();
+      existingCustomerEmails = customer.getEmails();
+      customerPhoneTypeBox.setValue(customer.getPhones().get(0).getType());
+      customerPhonePrefixField.setText(customer.getPhones().get(0).getPrefix());
+      customerPhoneNumberOne.setText(customer.getPhones().get(0).getPhoneNumber());
+      sendTextRadio.setSelected(customer.getPhones().get(0).getCanSendText());
+      phonePrimaryRadio.setSelected(customer.getPhones().get(0).getIsPrimary());
+
+      customerEmailTextField.setText(customer.getEmails().get(0).getEmailAddress());
+      emailPrimaryRadio.setSelected(customer.getEmails().get(0).getIsPrimary());
+    }
   }
 
   @FXML
@@ -150,6 +169,18 @@ public class CustomerInputContactController implements AccessTypeObserver {
       isValid = false;
     }
 
+    if (!isPrimaryPhoneSet) {
+      phonePrimaryRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
+    if (!isPrimaryEmailSet) {
+      emailPrimaryRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
     if (!isValid) {
       return false;
     }
@@ -185,6 +216,47 @@ public class CustomerInputContactController implements AccessTypeObserver {
   }
 
   @FXML
+  private void phonePrimaryRadioClick() {
+    if (phonePrimaryRadio.isSelected()) {
+      for (Phone phone : existingCustomerPhones) {
+        phone.setIsPrimary(false);
+      }
+      existingCustomerPhones.get(currentNumberPage).setIsPrimary(true);
+      isPrimaryPhoneSet = true;
+    } else {
+      isPrimaryPhoneSet = false;
+    }
+  }
+
+  @FXML
+  private void emailPrimaryRadioClick() {
+    if (emailPrimaryRadio.isSelected()) {
+      for (Email email : existingCustomerEmails) {
+        email.setIsPrimary(false);
+      }
+      existingCustomerEmails.get(currentEmailPage).setIsPrimary(true);
+      isPrimaryEmailSet = true;
+    } else {
+      isPrimaryEmailSet = false;
+    }
+  }
+
+  @FXML
+  private void sendTextRadioClick() {
+    if (customerPhoneTypeBox.getValue() == "Mobile") {
+
+      if (!sendTextRadio.isSelected()) {
+        sendTextRadio.setSelected(false);
+      } else {
+        sendTextRadio.setSelected(true);
+      }
+
+    } else {
+      sendTextRadio.setSelected(false);
+    }
+  }
+
+  @FXML
   private void handleBackButtonAction() {
     if (AppState.isAccessingFromSearch) {
       AppState.isAccessingFromSearch = false;
@@ -197,7 +269,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML
   private void handleIncPhone() {
 
-    if (AppState.customerDetailsAccessType == "READ") {
+    if (AppState.customerDetailsAccessType == "VIEW") {
       currentNumberPage++;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
@@ -273,7 +345,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void handleDecPhone() {
-    if (AppState.customerDetailsAccessType == "READ" && currentNumberPage != 0) {
+    if (AppState.customerDetailsAccessType == "VIEW" && currentNumberPage != 0) {
       currentNumberPage--;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
@@ -344,7 +416,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void handleIncEmail() {
-    if (AppState.customerDetailsAccessType == "READ") {
+    if (AppState.customerDetailsAccessType == "VIEW") {
 
       currentEmailPage++;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
@@ -406,7 +478,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void handleDecEmail() {
-    if (AppState.customerDetailsAccessType == "READ" && currentEmailPage != 0) {
+    if (AppState.customerDetailsAccessType == "VIEW" && currentEmailPage != 0) {
       currentEmailPage--;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       customerEmailTextField.setText(
