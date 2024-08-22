@@ -62,7 +62,7 @@ public class CustomerMenuController {
       // if the 'unknown' message got a response, it's online
     } else if (status.getErrorCode() == 100) {
       setGreenSymbol();
-      connectionLabel.setText("Connection is successful");
+      connectionLabel.setText("");
       IndividualCustomerSingleton.resetInstance();
       AppState.loadAllCustomerDetails("CREATE");
       Main.setUi(AppUI.CI_DETAILS);
@@ -75,33 +75,6 @@ public class CustomerMenuController {
 
   @FXML
   private void handleFindCustomerButtonAction() {
-
-    Connection connection = Instance.getConnection();
-
-    Request request = new Request(1);
-
-    Response response = (connection.send(request));
-    uoa.lavs.mainframe.Status status = response.getStatus();
-
-    // there was an issue connecting to the database
-    if (status.getErrorCode() == 1000
-        || status.getErrorCode() == 1010
-        || status.getErrorCode() == 1020) {
-      setRedSymbol();
-      ((Labeled) SceneManager.getScene(AppUI.CUSTOMER_SEARCH).lookup("#connectionLabel"))
-          .setText(status.getErrorMessage());
-      // if the 'unknown' message got a response, it's online
-    } else if (status.getErrorCode() == 100) {
-      setGreenSymbol();
-      ((Labeled) SceneManager.getScene(AppUI.CUSTOMER_SEARCH).lookup("#connectionLabel"))
-          .setText("Connection is successful");
-      // catch all for other messages
-    } else {
-      setOrangeSymbol();
-      ((Labeled) SceneManager.getScene(AppUI.CUSTOMER_SEARCH).lookup("#connectionLabel"))
-          .setText("Unidentified error. Please try again.");
-    }
-
     Main.setUi(AppUI.CUSTOMER_SEARCH);
     AppState.setCurrentUiName(AppUI.CUSTOMER_SEARCH);
     AppState.setPreviousUi(AppUI.CUSTOMER_MENU);

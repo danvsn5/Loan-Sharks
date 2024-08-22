@@ -56,12 +56,12 @@
             <Image url="@../../images/connection.png" />
          </image>
          <effect>
-            <ColorAdjust contrast="0.04" hue="0.16" saturation="1.0" />
+            <ColorAdjust brightness="-0.3" contrast="0.04" hue="0.82" saturation="1.0" />
          </effect>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label fx:id="connectionLabel" alignment="CENTER" layoutX="79.0" layoutY="655.0" prefHeight="51.0" prefWidth="268.0" style="-fx-font-size: 16px;" styleClass="data-field-labels" stylesheets="@../../css/index.css" text="The remote host has responded that it is currently unavailable" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="connectionLabel" alignment="CENTER" layoutX="79.0" layoutY="655.0" prefHeight="51.0" prefWidth="268.0" style="-fx-font-size: 16px;" styleClass="data-field-labels" stylesheets="@../../css/index.css" textAlignment="CENTER" wrapText="true" />
    </children>
 </Pane>
