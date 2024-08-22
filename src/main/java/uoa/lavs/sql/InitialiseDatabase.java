@@ -240,9 +240,10 @@ public class InitialiseDatabase {
     String sql =
         "CREATE TABLE IF NOT EXISTS sync_info (\n"
             + "id INTEGER PRIMARY KEY, "
-            + "lastSyncTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
+            + "lastSyncTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + "needsSyncing BOOLEAN DEFAULT 1);"; 
 
-    String insert = "INSERT INTO sync_info (id) VALUES (1);";
+    String insert = "INSERT INTO sync_info (id, needsSyncing) VALUES (1, 1);"; 
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
@@ -250,7 +251,7 @@ public class InitialiseDatabase {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-  }
+}
 
   public static void main(String[] args) {
     createDatabase();

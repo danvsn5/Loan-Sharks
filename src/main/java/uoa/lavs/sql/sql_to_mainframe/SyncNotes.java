@@ -9,7 +9,7 @@ import uoa.lavs.mainframe.messages.customer.UpdateCustomerNote;
 
 public class SyncNotes extends Sync {
   @Override
-  protected void syncMainframeData(
+  protected Status syncMainframeData(
       ResultSet resultSet, uoa.lavs.mainframe.Connection connection, java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
@@ -38,6 +38,8 @@ public class SyncNotes extends Sync {
     } else {
       System.out.println("Error updating notes: " + status.getErrorMessage());
     }
+
+    return status;
   }
 
   private UpdateCustomerNote updateCustomerNote(ResultSet resultSet, String customerId) {

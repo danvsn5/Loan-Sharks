@@ -1,5 +1,8 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +16,7 @@ import uoa.lavs.mainframe.Connection;
 import uoa.lavs.mainframe.Instance;
 import uoa.lavs.mainframe.Request;
 import uoa.lavs.mainframe.Response;
+import uoa.lavs.sql.sql_to_mainframe.SyncManager;
 import uoa.lavs.AppState;
 
 public class MainMenuController {
@@ -52,8 +56,15 @@ public class MainMenuController {
   }
 
   @FXML
-  private void onClickSyncButton() {
+  private void onClickSyncButton() throws SQLException, IOException {
     System.out.println("Sync button clicked");
+    // check if needs syncing 
+    if (SyncManager.checkIfNeedsSyncing()) {
+      SyncManager.main(null);
+    } else {
+      System.out.println("No need to sync");
+    }
+    
   }
 
   @FXML

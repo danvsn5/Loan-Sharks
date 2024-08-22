@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+
+import uoa.lavs.mainframe.Status;
 import uoa.lavs.sql.DatabaseConnection;
 
 public abstract class Sync {
@@ -62,15 +64,16 @@ public abstract class Sync {
 
     /**
      * Sync data to the mainframe
+     * @return 
      *
      * @throws SQLException
      * @throws IOException
      */
-    protected abstract void syncMainframeData(
+    protected abstract Status syncMainframeData(
         ResultSet resultSet, uoa.lavs.mainframe.Connection connection, Connection localConn)
         throws SQLException, IOException;
 
-    public void syncToMainframe(LocalDateTime lastSyncTime, 
+    public Status syncToMainframe(LocalDateTime lastSyncTime, 
                                 uoa.lavs.mainframe.Connection mainframeConnection, 
                                 Connection localConnection) throws IOException {
         String formattedLastSyncTime = lastSyncTime.format(FORMATTER);
@@ -82,21 +85,29 @@ public abstract class Sync {
             pstmt.setString(1, formattedLastSyncTime);
             ResultSet resultSet = pstmt.executeQuery();
 
+            Status status = null;
+
             if (!resultSet.isBeforeFirst()) {
                 System.out.println("No new records since last sync. Exiting...");
-                return;
+                return new Status(0, "No new records since last sync", 0);
             }
 
             while (resultSet.next()) {
-                syncMainframeData(resultSet, mainframeConnection, localConnection);
+                status = syncMainframeData(resultSet, mainframeConnection, localConnection);
+                if (status.getErrorCode() != 0) {
+                    System.out.println("Error syncing data to mainframe: " + status.getErrorMessage());
+                    return status;
+                }
             }
 
             LocalDateTime newSyncTime = LocalDateTime.now(ZoneOffset.UTC);
             updateLastSyncTimeInDB(newSyncTime);
 
+            
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return new Status(0, "Successfully synced data to mainframe", 0);
     }
 
     protected abstract String getSqlQuery();

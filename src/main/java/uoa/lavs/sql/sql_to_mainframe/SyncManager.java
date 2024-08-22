@@ -9,6 +9,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import uoa.lavs.mainframe.Instance;
+import uoa.lavs.mainframe.Status;
 import uoa.lavs.sql.DatabaseConnection;
 
 public class SyncManager {
@@ -32,7 +33,12 @@ public class SyncManager {
 
       // Iterate through each sync and perform the sync operation
       for (Sync sync : syncs) {
-        sync.syncToMainframe(lastSyncTime, mainframeConnection, localConnection);
+        Status status = sync.syncToMainframe(lastSyncTime, mainframeConnection, localConnection);
+        if (status.getErrorCode() != 0) {
+          System.out.println("Error syncing " + sync.getClass().getSimpleName() + ": " + status.getErrorMessage());
+          System.out.println("Please try again.");
+          return;
+        }
       }
 
       // Update the last sync time after all syncs are successful
@@ -62,12 +68,30 @@ public class SyncManager {
       throws SQLException {
     // SQL query to insert (if there is no current sync time) or update the last sync time
     String sql =
-        "INSERT INTO sync_info (id, lastSyncTime) VALUES (1, ?) "
-            + "ON CONFLICT(id) DO UPDATE SET lastSyncTime = excluded.lastSyncTime";
+        "INSERT INTO sync_info (id, lastSyncTime, needsSyncing) VALUES (1, ?, 0) "
+            + "ON CONFLICT(id) DO UPDATE SET lastSyncTime = excluded.lastSyncTime, "
+            + "needsSyncing = 0";
 
     // Try with resources to automatically close the prepared statement
     try (PreparedStatement pstmt = localConnection.prepareStatement(sql)) {
       pstmt.setString(1, syncTime.format(FORMATTER));
+      pstmt.executeUpdate();
+    }
+  }
+
+  public static boolean checkIfNeedsSyncing() throws SQLException {
+    Connection localConnection = DatabaseConnection.connect();
+    String sql = "SELECT needsSyncing FROM sync_info WHERE id = 1";
+    try (PreparedStatement pstmt = localConnection.prepareStatement(sql)) {
+      return pstmt.executeQuery().getBoolean("needsSyncing");
+    }
+  }
+
+  public static void setNeedsSyncing(boolean needsSyncing) throws SQLException {
+    Connection localConnection = DatabaseConnection.connect();
+    String sql = "UPDATE sync_info SET needsSyncing = ? WHERE id = 1";
+    try (PreparedStatement pstmt = localConnection.prepareStatement(sql)) {
+      pstmt.setBoolean(1, needsSyncing);
       pstmt.executeUpdate();
     }
   }

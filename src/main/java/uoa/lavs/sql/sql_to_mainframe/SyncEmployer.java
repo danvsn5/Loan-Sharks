@@ -9,7 +9,7 @@ import uoa.lavs.mainframe.messages.customer.UpdateCustomerEmployer;
 
 public class SyncEmployer extends Sync {
   @Override
-  protected void syncMainframeData(
+  protected Status syncMainframeData(
       ResultSet resultSet, uoa.lavs.mainframe.Connection connection, java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
@@ -34,6 +34,8 @@ public class SyncEmployer extends Sync {
     } else {
       System.out.println("Error updating employer: " + status.getErrorMessage());
     }
+
+    return status;
   }
 
   private UpdateCustomerEmployer updateCustomerEmployer(ResultSet resultSet, String customer_id) {
