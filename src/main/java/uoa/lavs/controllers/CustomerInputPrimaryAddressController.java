@@ -40,6 +40,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
 
+  @FXML private Label idBanner;
+
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   // private ArrayList<uoa.lavs.customer.Address> addresses =
@@ -81,6 +83,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     ControllerHelper.updateUIBasedOnAccessType(
         AppState.customerDetailsAccessType,
         editButton,
+        idBanner,
         new TextField[] {
           customerAddressLine1Field,
           customerAddressLine2Field,
@@ -182,7 +185,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleDetailsButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
@@ -193,13 +195,11 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleContactButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
@@ -210,6 +210,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
+      setAddressDetails();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
@@ -219,6 +220,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
+      setAddressDetails();
     }
   }
 

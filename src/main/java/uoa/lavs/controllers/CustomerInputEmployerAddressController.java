@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -35,6 +36,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
+  @FXML private Label idBanner;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -119,6 +121,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     ControllerHelper.updateUIBasedOnAccessType(
         AppState.customerDetailsAccessType,
         editButton,
+        idBanner,
         new TextField[] {
           employerAddressLine1Field,
           employerAddressLine2Field,
@@ -153,25 +156,21 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML
   private void handleDetailsButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setAddressDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
@@ -193,6 +192,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
+      setAddressDetails();
     }
   }
 

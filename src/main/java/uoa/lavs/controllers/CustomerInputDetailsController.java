@@ -24,7 +24,7 @@ import uoa.lavs.customer.IndividualCustomerSingleton;
 import uoa.lavs.sql.sql_to_mainframe.CustomerCreationHelper;
 
 public class CustomerInputDetailsController implements AccessTypeObserver {
-  @FXML private Label customerIDLabel;
+  @FXML private Label idBanner;
 
   @FXML private ComboBox<String> customerTitleComboBox;
   @FXML private TextField customerFirstNameField;
@@ -104,6 +104,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     ControllerHelper.updateUIBasedOnAccessType(
         AppState.customerDetailsAccessType,
         editButton,
+        idBanner,
         new TextField[] {
           customerFirstNameField,
           customerMiddleNameField,
@@ -223,30 +224,27 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       // Save changes to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
+      setCustomerDetails();
     }
   }
 
   @FXML
   private void handleNotesButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_NOTES);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setCustomerDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 

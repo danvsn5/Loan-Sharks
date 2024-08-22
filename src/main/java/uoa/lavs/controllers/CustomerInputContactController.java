@@ -47,6 +47,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
 
+  @FXML private Label idBanner;
+
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   private ArrayList<Phone> existingCustomerPhones = customer.getPhones();
@@ -91,6 +93,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     ControllerHelper.updateUIBasedOnAccessType(
         AppState.customerDetailsAccessType,
         editButton,
+        idBanner,
         new TextField[] {
           customerEmailTextField,
           customerPhoneNumberOne,
@@ -109,6 +112,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
+      setContactDetails();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
@@ -116,6 +120,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
+      setContactDetails();
     }
   }
 
@@ -136,6 +141,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
     customerPhoneNumberOne.setStyle("");
     customerEmailTextField.setStyle("");
     customerPhoneTypeBox.setStyle("");
+    phonePrimaryRadio.setStyle("");
+    emailPrimaryRadio.setStyle("");
 
     if (customerPhoneTypeBox.getValue() == null) {
       customerPhoneTypeBox.setStyle("-fx-border-color: red;");
@@ -242,17 +249,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
   }
 
   @FXML
-  private void sendTextRadioClick() {
-    if (customerPhoneTypeBox.getValue() == "Mobile") {
-
-      if (!sendTextRadio.isSelected()) {
-        sendTextRadio.setSelected(false);
-      } else {
-        sendTextRadio.setSelected(true);
-      }
-
-    } else {
+  private void sendTypeBox() {
+    if (!customerPhoneTypeBox.getValue().equals("Mobile")) {
       sendTextRadio.setSelected(false);
+      sendTextRadio.setDisable(true);
+    } else {
+      sendTextRadio.setDisable(false);
     }
   }
 
