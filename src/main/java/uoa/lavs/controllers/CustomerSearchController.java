@@ -96,6 +96,19 @@ public class CustomerSearchController {
     SearchCustomer searchCustomer = new SearchCustomer();
     try {
       Customer customer = searchCustomer.searchCustomerById(searchString);
+      searchCustomer.getStatusInstance().getErrorCode();
+
+      if (searchCustomer.getStatusInstance().getErrorCode() == 1000
+          || searchCustomer.getStatusInstance().getErrorCode() == 1010
+          || searchCustomer.getStatusInstance().getErrorCode() == 1020) {
+        setRedSymbol();
+      } else if (searchCustomer.getStatusInstance().getErrorCode() == 0) {
+        setGreenSymbol();
+      } else {
+        setOrangeSymbol();
+      }
+      connectionLabel.setText(searchCustomer.getStatusInstance().getErrorMessage());
+
       List<Customer> listOfCustomers = new ArrayList<>();
       listOfCustomers.add(customer);
       AppState.loadCustomerSearchResults(listOfCustomers);
@@ -113,6 +126,22 @@ public class CustomerSearchController {
     SearchCustomer searchCustomer = new SearchCustomer();
     try {
       List<Customer> listOfCustomers = searchCustomer.searchCustomerByName(searchString);
+      searchCustomer.getStatusInstance().getErrorCode();
+
+      if (searchCustomer.getStatusInstance().getErrorCode() == 1000
+          || searchCustomer.getStatusInstance().getErrorCode() == 1010
+          || searchCustomer.getStatusInstance().getErrorCode() == 1020) {
+        setRedSymbol();
+      } else if (searchCustomer.getStatusInstance().getErrorCode() == 0) {
+        setGreenSymbol();
+      } else {
+        setOrangeSymbol();
+      }
+      connectionLabel.setText(searchCustomer.getStatusInstance().getErrorMessage());
+      if (listOfCustomers == null) {
+        connectionLabel.setText("No customers found");
+        setOrangeSymbol();
+      }
       AppState.loadCustomerSearchResults(listOfCustomers);
       usernameField.setStyle("");
       usernameField.setText("");

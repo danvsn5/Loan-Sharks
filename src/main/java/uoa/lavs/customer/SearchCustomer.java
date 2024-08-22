@@ -57,13 +57,15 @@ public class SearchCustomer {
     // Send the request for email
     Status emailStatus = loadCustomerEmails.send(connection);
 
+    setStatusInstance(status);
+
     if (status.getErrorCode() == 1000
         || status.getErrorCode() == 1010
         || status.getErrorCode() == 1020) {
       System.out.println("Error loading customer: " + status.getErrorCode());
       System.out.println(status.getErrorMessage());
       System.out.println("Checking local database...");
-      setStatusInstance(status);
+
       CustomerDAO customerDAO = new CustomerDAO();
       Customer customer = customerDAO.getCustomer(customerId);
       if (customer != null) {
@@ -82,20 +84,19 @@ public class SearchCustomer {
       return null;
     }
 
-    Customer customer =
-        new IndividualCustomer(
-            "",
-            "",
-            "",
-            null,
-            "",
-            "",
-            "",
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false));
+    Customer customer = new IndividualCustomer(
+        "",
+        "",
+        "",
+        null,
+        "",
+        "",
+        "",
+        new ArrayList<>(),
+        new ArrayList<>(),
+        new ArrayList<>(),
+        new ArrayList<>(),
+        new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false));
     customer.setCustomerId(customerId);
 
     // Update customer fields
@@ -138,6 +139,8 @@ public class SearchCustomer {
 
     findCustomerAdvanced.setSearchName(name);
     Status status = findCustomerAdvanced.send(connection);
+
+    setStatusInstance(status);
 
     if (status.getErrorCode() == 1000
         || status.getErrorCode() == 1010
@@ -196,20 +199,19 @@ public class SearchCustomer {
         return null;
       }
 
-      Customer customer =
-          new IndividualCustomer(
-              "",
-              "",
-              "",
-              null,
-              "",
-              "",
-              "",
-              new ArrayList<>(),
-              new ArrayList<>(),
-              new ArrayList<>(),
-              new ArrayList<>(),
-              new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false));
+      Customer customer = new IndividualCustomer(
+          "",
+          "",
+          "",
+          null,
+          "",
+          "",
+          "",
+          new ArrayList<>(),
+          new ArrayList<>(),
+          new ArrayList<>(),
+          new ArrayList<>(),
+          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false));
       customer.setCustomerId(customerId);
 
       LoadCustomer loadCustomer = new LoadCustomer();
@@ -269,18 +271,17 @@ public class SearchCustomer {
 
     for (int i = 1; i <= count; i++) {
       loadCustomerAddress.setNumber(i);
-      Address address =
-          new Address(
-              customer.getCustomerId(),
-              loadCustomerAddress.getTypeFromServer(),
-              loadCustomerAddress.getLine1FromServer(),
-              loadCustomerAddress.getLine2FromServer(),
-              loadCustomerAddress.getSuburbFromServer(),
-              loadCustomerAddress.getPostCodeFromServer(),
-              loadCustomerAddress.getCityFromServer(),
-              loadCustomerAddress.getCountryFromServer(),
-              loadCustomerAddress.getIsPrimaryFromServer(),
-              loadCustomerAddress.getIsMailingFromServer());
+      Address address = new Address(
+          customer.getCustomerId(),
+          loadCustomerAddress.getTypeFromServer(),
+          loadCustomerAddress.getLine1FromServer(),
+          loadCustomerAddress.getLine2FromServer(),
+          loadCustomerAddress.getSuburbFromServer(),
+          loadCustomerAddress.getPostCodeFromServer(),
+          loadCustomerAddress.getCityFromServer(),
+          loadCustomerAddress.getCountryFromServer(),
+          loadCustomerAddress.getIsPrimaryFromServer(),
+          loadCustomerAddress.getIsMailingFromServer());
       address.setAddressId(i);
       addresses.add(address);
     }
@@ -310,14 +311,13 @@ public class SearchCustomer {
     ArrayList<Phone> phoneNumbers = new ArrayList<>();
     int count = loadCustomerPhones.getCountFromServer();
     for (int i = 1; i <= count; i++) {
-      Phone phoneNumber =
-          new Phone(
-              customer.getCustomerId(),
-              loadCustomerPhones.getTypeFromServer(i),
-              loadCustomerPhones.getPrefixFromServer(i),
-              loadCustomerPhones.getPhoneNumberFromServer(i),
-              loadCustomerPhones.getIsPrimaryFromServer(i),
-              loadCustomerPhones.getCanSendTxtFromServer(i));
+      Phone phoneNumber = new Phone(
+          customer.getCustomerId(),
+          loadCustomerPhones.getTypeFromServer(i),
+          loadCustomerPhones.getPrefixFromServer(i),
+          loadCustomerPhones.getPhoneNumberFromServer(i),
+          loadCustomerPhones.getIsPrimaryFromServer(i),
+          loadCustomerPhones.getCanSendTxtFromServer(i));
       phoneNumbers.add(phoneNumber);
     }
     customer.setPhones(phoneNumbers);
@@ -328,11 +328,10 @@ public class SearchCustomer {
 
     int count = loadCustomerEmails.getCountFromServer();
     for (int i = 1; i <= count; i++) {
-      Email email =
-          new Email(
-              customer.getCustomerId(),
-              loadCustomerEmails.getAddressFromServer(i),
-              loadCustomerEmails.getIsPrimaryFromServer(i));
+      Email email = new Email(
+          customer.getCustomerId(),
+          loadCustomerEmails.getAddressFromServer(i),
+          loadCustomerEmails.getIsPrimaryFromServer(i));
       emails.add(email);
     }
     customer.setEmails(emails);
