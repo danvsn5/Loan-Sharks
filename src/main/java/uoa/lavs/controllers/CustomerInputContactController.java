@@ -249,17 +249,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
   }
 
   @FXML
-  private void sendTextRadioClick() {
-    if (customerPhoneTypeBox.getValue() == "Mobile") {
-
-      if (!sendTextRadio.isSelected()) {
-        sendTextRadio.setSelected(false);
-      } else {
-        sendTextRadio.setSelected(true);
-      }
-
-    } else {
+  private void sendTypeBox() {
+    if (!customerPhoneTypeBox.getValue().equals("Mobile")) {
       sendTextRadio.setSelected(false);
+      sendTextRadio.setDisable(true);
+    } else {
+      sendTextRadio.setDisable(false);
     }
   }
 
