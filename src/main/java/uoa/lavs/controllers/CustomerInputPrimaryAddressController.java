@@ -19,43 +19,26 @@ import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 
 public class CustomerInputPrimaryAddressController implements AccessTypeObserver {
-  @FXML
-  private ComboBox<String> customerAddressTypeComboBox;
-  @FXML
-  private TextField customerAddressLine1Field;
-  @FXML
-  private TextField customerAddressLine2Field;
-  @FXML
-  private TextField customerSuburbField;
-  @FXML
-  private TextField customerCityField;
-  @FXML
-  private TextField customerPostcodeField;
-  @FXML
-  private RadioButton mailingAddressRadio;
-  @FXML
-  private RadioButton primaryAddressRadio;
+  @FXML private ComboBox<String> customerAddressTypeComboBox;
+  @FXML private TextField customerAddressLine1Field;
+  @FXML private TextField customerAddressLine2Field;
+  @FXML private TextField customerSuburbField;
+  @FXML private TextField customerCityField;
+  @FXML private TextField customerPostcodeField;
+  @FXML private RadioButton mailingAddressRadio;
+  @FXML private RadioButton primaryAddressRadio;
 
-  @FXML
-  private ImageView incAddress;
-  @FXML
-  private ImageView decAddress;
-  @FXML
-  private Label addressPageLabel;
+  @FXML private ImageView incAddress;
+  @FXML private ImageView decAddress;
+  @FXML private Label addressPageLabel;
 
-  @FXML
-  private Button detailsButton;
-  @FXML
-  private Button mailingAddressButton;
-  @FXML
-  private Button contactButton;
-  @FXML
-  private Button employerButton;
+  @FXML private Button detailsButton;
+  @FXML private Button mailingAddressButton;
+  @FXML private Button contactButton;
+  @FXML private Button employerButton;
 
-  @FXML
-  private Button editButton;
-  @FXML
-  private ImageView staticReturnImageView;
+  @FXML private Button editButton;
+  @FXML private ImageView staticReturnImageView;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -83,15 +66,15 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         AppState.customerDetailsAccessType,
         editButton,
         new TextField[] {
-            customerAddressLine1Field,
-            customerAddressLine2Field,
-            customerSuburbField,
-            customerCityField,
-            customerPostcodeField
+          customerAddressLine1Field,
+          customerAddressLine2Field,
+          customerSuburbField,
+          customerCityField,
+          customerPostcodeField
         },
-        new ComboBox<?>[] { customerAddressTypeComboBox },
+        new ComboBox<?>[] {customerAddressTypeComboBox},
         new DatePicker[] {},
-        new RadioButton[] { mailingAddressRadio, primaryAddressRadio });
+        new RadioButton[] {mailingAddressRadio, primaryAddressRadio});
   }
 
   @Override
@@ -244,17 +227,18 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       // new address and add to list
       if (currentAddress == addresses.size()) {
         // gets all the input fields and adds them to an address instance
-        uoa.lavs.customer.Address address = new uoa.lavs.customer.Address(
-            customer.getCustomerId(),
-            customerAddressTypeComboBox.getValue(),
-            customerAddressLine1Field.getText(),
-            customerAddressLine2Field.getText(),
-            customerSuburbField.getText(),
-            customerPostcodeField.getText(),
-            customerCityField.getText(),
-            "New Zealand",
-            primaryAddressRadio.isSelected(),
-            mailingAddressRadio.isSelected());
+        uoa.lavs.customer.Address address =
+            new uoa.lavs.customer.Address(
+                customer.getCustomerId(),
+                customerAddressTypeComboBox.getValue(),
+                customerAddressLine1Field.getText(),
+                customerAddressLine2Field.getText(),
+                customerSuburbField.getText(),
+                customerPostcodeField.getText(),
+                customerCityField.getText(),
+                "New Zealand",
+                primaryAddressRadio.isSelected(),
+                mailingAddressRadio.isSelected());
         addresses.add(address);
       } else {
         addresses.get(currentAddress).setAddressType(customerAddressTypeComboBox.getValue());
@@ -312,7 +296,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       }
     }
 
-    if (AppState.customerDetailsAccessType == "READ") {
+    if (AppState.customerDetailsAccessType == "VIEW") {
 
       // increment the current address counter
       currentAddress++;
@@ -343,7 +327,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       customerPostcodeField.setText(addresses.get(currentAddress).getPostCode());
       mailingAddressRadio.setSelected(addresses.get(currentAddress).getIsMailing());
       primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
-
     }
   }
 
@@ -356,17 +339,18 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       if (AppState.customerDetailsAccessType == "CREATE") {
         if (currentAddress == addresses.size()) {
           // gets all the input fields and adds them to an address instance
-          uoa.lavs.customer.Address address = new uoa.lavs.customer.Address(
-              customer.getCustomerId(),
-              customerAddressTypeComboBox.getValue(),
-              customerAddressLine1Field.getText(),
-              customerAddressLine2Field.getText(),
-              customerSuburbField.getText(),
-              customerPostcodeField.getText(),
-              customerCityField.getText(),
-              "New Zealand",
-              primaryAddressRadio.isSelected(),
-              mailingAddressRadio.isSelected());
+          uoa.lavs.customer.Address address =
+              new uoa.lavs.customer.Address(
+                  customer.getCustomerId(),
+                  customerAddressTypeComboBox.getValue(),
+                  customerAddressLine1Field.getText(),
+                  customerAddressLine2Field.getText(),
+                  customerSuburbField.getText(),
+                  customerPostcodeField.getText(),
+                  customerCityField.getText(),
+                  "New Zealand",
+                  primaryAddressRadio.isSelected(),
+                  mailingAddressRadio.isSelected());
           addresses.add(address);
 
         } else {
@@ -396,7 +380,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
       }
 
-      if (AppState.customerDetailsAccessType == "READ") {
+      if (AppState.customerDetailsAccessType == "VIEW") {
 
         // decrement the current address counter
         currentAddress--;
@@ -411,7 +395,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         customerPostcodeField.setText(addresses.get(currentAddress).getPostCode());
         mailingAddressRadio.setSelected(addresses.get(currentAddress).getIsMailing());
         primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
-
       }
 
       if (AppState.customerDetailsAccessType == "EDIT") {
@@ -431,9 +414,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
           mailingAddressRadio.setSelected(addresses.get(currentAddress).getIsMailing());
           primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
         }
-
       }
-
     }
   }
 }
