@@ -9,6 +9,11 @@
     -fx-font-family: 'Quicksand Medium';
 }
 
+.instructions {
+    -fx-font-family: 'Quicksand Medium';
+    -fx-font-size: 24px;
+}
+
 .regular-button {
     -fx-background-color: #ffd6cb;
     -fx-border-width: 3px;
@@ -153,7 +158,7 @@
 
 /* ———————————————————————————————————————— Radio Button ———————————————————————————————————————— */
 
-.radio-button{
+.radio-button {
     -fx-cursor: hand;
 }
 
