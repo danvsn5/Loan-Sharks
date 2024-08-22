@@ -15,8 +15,19 @@ import uoa.lavs.mainframe.messages.customer.LoadCustomerPhoneNumbers;
 import uoa.lavs.sql.oop_to_sql.customer.CustomerDAO;
 
 public class SearchCustomer {
+  public Status statusInstance;
 
-  public SearchCustomer() {}
+  public SearchCustomer() {
+    this.statusInstance = null;
+  }
+
+  public Status getStatusInstance() {
+    return statusInstance;
+  }
+
+  public void setStatusInstance(Status statusInstance) {
+    this.statusInstance = statusInstance;
+  }
 
   public Customer searchCustomerById(String customerId) {
     LoadCustomer loadCustomer = new LoadCustomer();
@@ -52,6 +63,7 @@ public class SearchCustomer {
       System.out.println("Error loading customer: " + status.getErrorCode());
       System.out.println(status.getErrorMessage());
       System.out.println("Checking local database...");
+      setStatusInstance(status);
       CustomerDAO customerDAO = new CustomerDAO();
       Customer customer = customerDAO.getCustomer(customerId);
       if (customer != null) {
