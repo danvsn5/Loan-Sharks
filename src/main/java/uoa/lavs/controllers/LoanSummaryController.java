@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AccessTypeNotifier;
-import uoa.lavs.AccessTypeObserver;
+import uoa.lavs.AccessTypeObserverLoan;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
@@ -19,7 +19,7 @@ import uoa.lavs.mainframe.Status;
 import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
 import uoa.lavs.mainframe.messages.loan.UpdateLoanStatus;
 
-public class LoanSummaryController implements AccessTypeObserver {
+public class LoanSummaryController implements AccessTypeObserverLoan {
   @FXML private TextField principalfField;
   @FXML private TextField annualRateField;
   @FXML private TextField termField;

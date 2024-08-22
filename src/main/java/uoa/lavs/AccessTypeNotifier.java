@@ -5,13 +5,13 @@ import java.util.List;
 
 public class AccessTypeNotifier {
   private static List<AccessTypeObserver> customerObservers = new ArrayList<>();
-  private static List<AccessTypeObserver> loanObservers = new ArrayList<>();
+  private static List<AccessTypeObserverLoan> loanObservers = new ArrayList<>();
 
   public static void registerCustomerObserver(AccessTypeObserver observer) {
     customerObservers.add(observer);
   }
 
-  public static void registerLoanObserver(AccessTypeObserver observer) {
+  public static void registerLoanObserver(AccessTypeObserverLoan observer) {
     loanObservers.add(observer);
   }
 
@@ -19,7 +19,16 @@ public class AccessTypeNotifier {
     boolean isValid = true;
     for (AccessTypeObserver observer : customerObservers) {
       if (!observer.validateData()) {
+        AppState.setCurrentButton(observer.getButton());
+        for (AccessTypeObserver disableObserer : customerObservers) {
+          disableObserer.setInvalidButton("-fx-border-color: red;");
+        }
         isValid = false;
+      } else {
+        AppState.setCurrentButton(observer.getButton());
+        for (AccessTypeObserver disableObserer : customerObservers) {
+          disableObserer.setInvalidButton("");
+        }
       }
     }
     return isValid;
@@ -27,7 +36,7 @@ public class AccessTypeNotifier {
 
   public static boolean validateLoanObservers() {
     boolean isValid = true;
-    for (AccessTypeObserver observer : loanObservers) {
+    for (AccessTypeObserverLoan observer : loanObservers) {
       if (!observer.validateData()) {
         isValid = false;
       }
@@ -42,7 +51,7 @@ public class AccessTypeNotifier {
   }
 
   public static void notifyLoanObservers() {
-    for (AccessTypeObserver observer : loanObservers) {
+    for (AccessTypeObserverLoan observer : loanObservers) {
       observer.updateUIBasedOnAccessType();
     }
   }

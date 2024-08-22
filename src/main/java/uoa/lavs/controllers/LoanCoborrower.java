@@ -10,7 +10,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AccessTypeNotifier;
-import uoa.lavs.AccessTypeObserver;
+import uoa.lavs.AccessTypeObserverLoan;
 import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
@@ -21,7 +21,7 @@ import uoa.lavs.loan.PersonalLoanSingleton;
 import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
 import uoa.lavs.sql.sql_to_mainframe.LoanCreationHelper;
 
-public class LoanCoborrower implements AccessTypeObserver {
+public class LoanCoborrower implements AccessTypeObserverLoan {
   @FXML private TextField coborrowerIDField1;
   @FXML private TextField coborrowerIDField2;
   @FXML private TextField coborrowerIDField3;
