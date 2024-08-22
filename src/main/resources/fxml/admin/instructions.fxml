@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.controllers.InstructionsController">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/customer_details.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="526.0" layoutX="31.0" layoutY="180.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1206.0" />
+      <Label fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="144.0" prefWidth="1280.0" styleClass="scene-titles" stylesheets="@../../css/index.css" text="Instructions and Information" textFill="#333333" textOverrun="CLIP">
+         <font>
+            <Font size="41.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#handleBackButtonAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/static-return.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="0.2" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <TextArea fx:id="info" editable="false" layoutX="71.0" layoutY="179.0" prefHeight="504.0" prefWidth="1141.0" style="-fx-background-color: #ffd6cb; -fx-border-color: #3289d5; -fx-border-width: 3px; -fx-background-radius: 15px; -fx-border-radius: 10px;" styleClass="instructions" stylesheets="@../../css/index.css" wrapText="true" />
+   </children>
+</Pane>

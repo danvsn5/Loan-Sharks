@@ -87,6 +87,7 @@ public class Main extends Application {
     // Add all Admin screens
     SceneManager.addScene(AppUI.MAIN_MENU, loadFxml("admin/welcome"));
     SceneManager.addScene(AppUI.LOGIN, loadFxml("admin/login"));
+    SceneManager.addScene(AppUI.INFORMATION, loadFxml("admin/instructions"));
 
     // Add all static customer scenes
     SceneManager.addScene(AppUI.CUSTOMER_MENU, loadFxml("customer/customer_management"));

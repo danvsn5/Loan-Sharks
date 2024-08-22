@@ -126,7 +126,7 @@ public class MainMenuController {
   @FXML
   private void handleinstructionsButtonAction() {
     // There is no instruction page, so we will just print a message
-    System.out.println("Instructions button clicked");
+    Main.setUi(AppUI.INFORMATION);
   }
 
   @FXML

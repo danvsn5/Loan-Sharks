@@ -29,6 +29,7 @@ public class SceneManager {
     LOGIN,
     MAIN_MENU,
     PAYMENT_MENU,
+    INFORMATION
   }
 
   private static HashMap<AppUI, Parent> sceneMap = new HashMap<AppUI, Parent>();
