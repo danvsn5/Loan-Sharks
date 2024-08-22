@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
 import uoa.lavs.AccessTypeNotifier;
-import uoa.lavs.AccessTypeObserver;
+import uoa.lavs.AccessTypeObserverLoan;
 import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
@@ -23,14 +23,16 @@ import uoa.lavs.loan.PersonalLoanSingleton;
 import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
 import uoa.lavs.sql.sql_to_mainframe.LoanCreationHelper;
 
-public class LoanDurationController implements AccessTypeObserver {
+public class LoanDurationController implements AccessTypeObserverLoan {
   @FXML private DatePicker startDatePicker;
   @FXML private TextField periodField;
   @FXML private TextField termField;
 
-  @FXML private Button primaryButton;
   @FXML private Button coborrowerButton;
+  @FXML private Button durationButton;
   @FXML private Button financeButton;
+  @FXML private Button primaryButton;
+
   @FXML private Button summaryButton;
   @FXML private ImageView staticReturnImageView;
 
@@ -160,6 +162,9 @@ public class LoanDurationController implements AccessTypeObserver {
 
   @FXML
   private void handleSummaryButtonAction() throws IOException {
+    if (!validateData()) {
+      return;
+    }
     setDurationDetails();
     LoanCreationHelper.createLoan(personalLoan);
     LoanCreationHelper.getLoanSummary(personalLoan);

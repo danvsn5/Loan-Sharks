@@ -24,6 +24,8 @@ public class CustomerInputNotesController implements AccessTypeObserver {
   @FXML private ImageView incNotes;
   @FXML private ImageView decNotes;
 
+  @FXML private Button fakeButton;
+
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   @FXML
@@ -122,5 +124,15 @@ public class CustomerInputNotesController implements AccessTypeObserver {
   public boolean validateData() {
     // TODO Auto-generated method stub
     return true;
+  }
+
+  @Override
+  public Button getButton() {
+    return fakeButton = new Button();
+  }
+
+  @Override
+  public void setInvalidButton(String style) {
+    // Do nothing
   }
 }

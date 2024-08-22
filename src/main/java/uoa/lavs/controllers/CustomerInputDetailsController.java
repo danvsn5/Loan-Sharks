@@ -37,9 +37,10 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private ComboBox<String> customerCitizenshipBox;
 
   @FXML private Button notesButton;
-  @FXML private Button addressButton;
-  @FXML private Button contactButton;
-  @FXML private Button employerButton;
+  @FXML private Button customerDetailsButton;
+  @FXML private Button customerAddressButton;
+  @FXML private Button customerContactButton;
+  @FXML private Button customerEmployerButton;
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
@@ -259,6 +260,30 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
+    }
+  }
+
+  @Override
+  public Button getButton() {
+    return customerDetailsButton;
+  }
+
+  @FXML
+  public void setInvalidButton(String style) {
+    Button currentButton = AppState.getCurrentButton();
+
+    String buttonId = currentButton.getId();
+
+    if (buttonId != null) {
+      if (buttonId.equals("customerDetailsButton")) {
+        customerDetailsButton.setStyle(style);
+      } else if (buttonId.equals("customerAddressButton")) {
+        customerAddressButton.setStyle(style);
+      } else if (buttonId.equals("customerContactButton")) {
+        customerContactButton.setStyle(style);
+      } else if (buttonId.equals("customerEmployerButton")) {
+        customerEmployerButton.setStyle(style);
+      }
     }
   }
 }

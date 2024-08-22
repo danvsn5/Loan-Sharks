@@ -3,10 +3,11 @@ package uoa.lavs.controllers;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AccessTypeNotifier;
-import uoa.lavs.AccessTypeObserver;
+import uoa.lavs.AccessTypeObserverLoan;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
@@ -18,7 +19,7 @@ import uoa.lavs.mainframe.Status;
 import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
 import uoa.lavs.mainframe.messages.loan.UpdateLoanStatus;
 
-public class LoanSummaryController implements AccessTypeObserver {
+public class LoanSummaryController implements AccessTypeObserverLoan {
   @FXML private TextField principalfField;
   @FXML private TextField annualRateField;
   @FXML private TextField termField;
@@ -36,6 +37,9 @@ public class LoanSummaryController implements AccessTypeObserver {
   @FXML private Button durationButton;
   @FXML private Button financeButton;
   @FXML private ImageView staticReturnImageView;
+
+  @FXML private Label loanStatusLabel;
+  @FXML private TextField loanStatusField;
 
   PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
@@ -56,13 +60,20 @@ public class LoanSummaryController implements AccessTypeObserver {
   @FXML
   private void handleConfirmLoanButtonAction() {
     confirmLoanButton.setStyle("");
-    if (AccessTypeNotifier.validateLoanObservers()) {
+    if (AccessTypeNotifier.validateLoanObservers()
+        && !AppState.loanDetailsAccessType.equals("VIEW")) {
       AppState.isCreatingLoan = false;
       AppState.loanDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyLoanObservers();
+      confirmLoanButton.setText("Edit Details");
 
-    } else {
+    } else if (!AppState.loanDetailsAccessType.equals("VIEW")) {
       confirmLoanButton.setStyle("-fx-border-color: red");
+    } else if (AppState.loanDetailsAccessType.equals("VIEW")) {
+      AppState.isCreatingLoan = false;
+      AppState.loanDetailsAccessType = "EDIT";
+      confirmLoanButton.setText("Confirm Loan");
+      AccessTypeNotifier.notifyLoanObservers();
     }
   }
 
@@ -128,6 +139,8 @@ public class LoanSummaryController implements AccessTypeObserver {
     if (AppState.isAccessingFromLoanSearch) {
       AppState.isAccessingFromLoanSearch = false;
       Main.setUi(AppUI.LOAN_RESULTS);
+    } else if (!AppState.isCreatingLoan) {
+      Main.setUi(AppUI.LOAN_MENU);
     } else {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
     }
@@ -139,9 +152,13 @@ public class LoanSummaryController implements AccessTypeObserver {
     if (AppState.loanDetailsAccessType.equals("VIEW")) {
       confirmLoanButton.setText("Edit Details");
       viewPaymentsButton.setVisible(true);
+      loanStatusField.setVisible(true);
+      loanStatusLabel.setVisible(true);
     } else {
       confirmLoanButton.setText("Confirm Loan");
       viewPaymentsButton.setVisible(false);
+      loanStatusField.setVisible(false);
+      loanStatusLabel.setVisible(false);
     }
   }
 

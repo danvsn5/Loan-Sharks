@@ -34,10 +34,10 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   @FXML private ImageView decAddress;
   @FXML private Label addressPageLabel;
 
-  @FXML private Button detailsButton;
-  @FXML private Button mailingAddressButton;
-  @FXML private Button contactButton;
-  @FXML private Button employerButton;
+  @FXML private Button customerDetailsButton;
+  @FXML private Button customerAddressButton;
+  @FXML private Button customerContactButton;
+  @FXML private Button customerEmployerButton;
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
@@ -475,6 +475,30 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
           mailingAddressRadio.setSelected(addresses.get(currentAddress).getIsMailing());
           primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
         }
+      }
+    }
+  }
+
+  @Override
+  public Button getButton() {
+    return customerAddressButton;
+  }
+
+  @FXML
+  public void setInvalidButton(String style) {
+    Button currentButton = AppState.getCurrentButton();
+
+    String buttonId = currentButton.getId();
+
+    if (buttonId != null) {
+      if (buttonId.equals("customerDetailsButton")) {
+        customerDetailsButton.setStyle(style);
+      } else if (buttonId.equals("customerAddressButton")) {
+        customerAddressButton.setStyle(style);
+      } else if (buttonId.equals("customerContactButton")) {
+        customerContactButton.setStyle(style);
+      } else if (buttonId.equals("customerEmployerButton")) {
+        customerEmployerButton.setStyle(style);
       }
     }
   }

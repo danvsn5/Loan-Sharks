@@ -9,7 +9,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AccessTypeNotifier;
-import uoa.lavs.AccessTypeObserver;
+import uoa.lavs.AccessTypeObserverLoan;
 import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
@@ -19,7 +19,7 @@ import uoa.lavs.loan.PersonalLoanSingleton;
 import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
 import uoa.lavs.sql.sql_to_mainframe.LoanCreationHelper;
 
-public class LoanPrimaryDetails implements AccessTypeObserver {
+public class LoanPrimaryDetails implements AccessTypeObserverLoan {
   @FXML private TextField borrowerIDField;
   @FXML private TextField principalField;
   @FXML private TextField interestRateField;
@@ -28,6 +28,8 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   @FXML private Button coborrowerButton;
   @FXML private Button durationButton;
   @FXML private Button financeButton;
+  @FXML private Button primaryButton;
+
   @FXML private Button summaryButton;
   @FXML private ImageView staticReturnImageView;
 
@@ -140,6 +142,9 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
 
   @FXML
   private void handleSummaryButtonAction() throws IOException {
+    if (!validateData()) {
+      return;
+    }
     setPrimaryDetails();
     LoanCreationHelper.createLoan(personalLoan);
     LoanCreationHelper.getLoanSummary(personalLoan);

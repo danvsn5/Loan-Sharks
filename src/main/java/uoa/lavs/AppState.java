@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.Customer;
 import uoa.lavs.loan.Loan;
@@ -24,6 +25,7 @@ public class AppState {
   public static Customer selectedCustomer;
   public static boolean isOnLoanSummary = false;
   public static LoadLoanSummary currentLoanSummary;
+  public static Button currentButton;
 
   // Previous and current UI screens for return functionality
   public static AppUI previousUi;
@@ -88,6 +90,14 @@ public class AppState {
 
   public static AppUI getCurrentUiName() {
     return currentUiName;
+  }
+
+  public static void setCurrentButton(Button button) {
+    currentButton = button;
+  }
+
+  public static Button getCurrentButton() {
+    return currentButton;
   }
 
   public static List<Customer> getSearchResultList() {

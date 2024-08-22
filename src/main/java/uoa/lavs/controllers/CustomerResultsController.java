@@ -172,17 +172,18 @@ public class CustomerResultsController {
   }
 
   private boolean nullFields(Customer customer) {
-    return (customer.getAddresses() == null
-        || customer.getCitizenship() == null
-        || customer.getCustomerId() == null
-        || customer.getDateOfBirth() == null
-        || customer.getEmails() == null
-        || customer.getEmployer() == null
-        || customer.getName() == null
-        || customer.getNotes() == null
-        || customer.getOccupation() == null
-        || customer.getPhones() == null
-        || customer.getTitle() == null
-        || customer.getVisa() == null);
+    System.out.println("Null Field check");
+    return (customer.getAddresses().equals(null)
+        || customer.getCitizenship().equals(null)
+        || customer.getCustomerId().equals(null)
+        || customer.getDateOfBirth().equals(null)
+        || customer.getEmails().equals(null)
+        || customer.getEmployer().equals(null)
+        || customer.getName().equals(null)
+        || customer.getNotes().equals(null)
+        || customer.getOccupation().equals(null)
+        || customer.getPhones().equals(null)
+        || customer.getTitle().equals(null)
+        || customer.getVisa().equals(null));
   }
 }

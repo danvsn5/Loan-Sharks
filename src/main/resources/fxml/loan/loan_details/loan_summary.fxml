@@ -118,7 +118,7 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Annual Rate" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="691.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Loan Term" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1019.0" layoutY="339.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Payment Frequency" />
-      <Button fx:id="viewPaymentsButton" layoutX="897.0" layoutY="613.0" onMouseClicked="#handleViewPaymentsButtonAction" mnemonicParsing="false" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="View Payments">
+      <Button fx:id="viewPaymentsButton" layoutX="897.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleViewPaymentsButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="View Payments">
          <font>
             <Font size="27.0" />
          </font>
@@ -138,5 +138,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <TextField fx:id="loanStatusField" alignment="CENTER" layoutX="535.0" layoutY="648.0" prefHeight="34.0" prefWidth="210.0" styleClass="data-fields" stylesheets="@../../../css/index.css" text="Pending">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </TextField>
+      <Label fx:id="loanStatusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="540.0" layoutY="613.0" prefHeight="17.0" prefWidth="210.0" styleClass="data-field-labels" stylesheets="@../../../css/index.css" text="Loan Status" />
    </children>
 </Pane>
