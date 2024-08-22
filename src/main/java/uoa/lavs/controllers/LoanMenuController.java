@@ -55,7 +55,7 @@ public class LoanMenuController {
       // if the 'unknown' message got a response, it's online
     } else if (status.getErrorCode() == 100) {
       setGreenSymbol();
-      connectionLabel.setText("Connection is successful");
+      connectionLabel.setText("");
       PersonalLoanSingleton.resetInstance();
       AppState.isCreatingLoan = true;
       Main.setUi(AppUI.CUSTOMER_SEARCH);
