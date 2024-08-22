@@ -130,82 +130,79 @@ public class LoanRepaymentsController {
 
   @FXML
   private void setPaymentPage() {
-    setPaymentLabel(0);
-    setPaymentLabel(1);
-    setPaymentLabel(2);
-    setPaymentLabel(3);
-    setPaymentLabel(4);
-    setPaymentLabel(5);
+    int startIndex = (currentPage - 1) * 6;
+    for (int i = 0; i < 6; i++) {
+      int index = startIndex + i;
+      if (index < loanRepayments.size() && loanRepayments.get(index) != null) {
+        LoanRepayment repayment = loanRepayments.get(index);
+        setLabelValues(
+            i,
+            repayment.getRepaymentDate().toString(),
+            repayment.getPrincipalAmount().toString(),
+            repayment.getInterestAmount().toString(),
+            repayment.getRemainingAmount().toString());
+      } else {
+        setLabelValues(i, "", "", "", "");
+      }
+    }
   }
 
   @FXML
-  private void setPaymentLabel(int rowNumber) {
-    // rows span from _th index to 5; 6 rows total
-    if (listIndex >= loanRepayments.size()) {
-      return;
-    }
-
-    // swtich case depending on row number, between 0 and 5 inclusive
-    switch (rowNumber) {
+  private void setLabelValues(
+      int index, String month, String principal, String interest, String remaining) {
+    switch (index) {
       case 0:
-        monthLabel.setText(loanRepayments.get(listIndex).getRepaymentDate().toString());
-        principalLabel.setText(Double.toString(loanRepayments.get(listIndex).getPrincipalAmount()));
-        interestLabel.setText(Double.toString(loanRepayments.get(listIndex).getInterestAmount()));
-        remLabel.setText(Double.toString(loanRepayments.get(listIndex).getRemainingAmount()));
+        monthLabel.setText(month);
+        principalLabel.setText(principal);
+        interestLabel.setText(interest);
+        remLabel.setText(remaining);
         break;
       case 1:
-        monthLabel1.setText(loanRepayments.get(listIndex).getRepaymentDate().toString());
-        principalLabel1.setText(
-            Double.toString(loanRepayments.get(listIndex).getPrincipalAmount()));
-        interestLabel1.setText(Double.toString(loanRepayments.get(listIndex).getInterestAmount()));
-        remLabel1.setText(Double.toString(loanRepayments.get(listIndex).getRemainingAmount()));
+        monthLabel1.setText(month);
+        principalLabel1.setText(principal);
+        interestLabel1.setText(interest);
+        remLabel1.setText(remaining);
         break;
       case 2:
-        monthLabel2.setText(loanRepayments.get(listIndex).getRepaymentDate().toString());
-        principalLabel2.setText(
-            Double.toString(loanRepayments.get(listIndex).getPrincipalAmount()));
-        interestLabel2.setText(Double.toString(loanRepayments.get(listIndex).getInterestAmount()));
-        remLabel2.setText(Double.toString(loanRepayments.get(listIndex).getRemainingAmount()));
+        monthLabel2.setText(month);
+        principalLabel2.setText(principal);
+        interestLabel2.setText(interest);
+        remLabel2.setText(remaining);
         break;
       case 3:
-        monthLabel3.setText(loanRepayments.get(listIndex).getRepaymentDate().toString());
-        principalLabel3.setText(
-            Double.toString(loanRepayments.get(listIndex).getPrincipalAmount()));
-        interestLabel3.setText(Double.toString(loanRepayments.get(listIndex).getInterestAmount()));
-        remLabel3.setText(Double.toString(loanRepayments.get(listIndex).getRemainingAmount()));
+        monthLabel3.setText(month);
+        principalLabel3.setText(principal);
+        interestLabel3.setText(interest);
+        remLabel3.setText(remaining);
         break;
       case 4:
-        monthLabel4.setText(loanRepayments.get(listIndex).getRepaymentDate().toString());
-        principalLabel4.setText(
-            Double.toString(loanRepayments.get(listIndex).getPrincipalAmount()));
-        interestLabel4.setText(Double.toString(loanRepayments.get(listIndex).getInterestAmount()));
-        remLabel4.setText(Double.toString(loanRepayments.get(listIndex).getRemainingAmount()));
+        monthLabel4.setText(month);
+        principalLabel4.setText(principal);
+        interestLabel4.setText(interest);
+        remLabel4.setText(remaining);
         break;
       case 5:
-        monthLabel5.setText(loanRepayments.get(listIndex).getRepaymentDate().toString());
-        principalLabel5.setText(
-            Double.toString(loanRepayments.get(listIndex).getPrincipalAmount()));
-        interestLabel5.setText(Double.toString(loanRepayments.get(listIndex).getInterestAmount()));
-        remLabel5.setText(Double.toString(loanRepayments.get(listIndex).getRemainingAmount()));
+        monthLabel5.setText(month);
+        principalLabel5.setText(principal);
+        interestLabel5.setText(interest);
+        remLabel5.setText(remaining);
         break;
     }
-
-    // when a row is set, index increases.
-    listIndex++;
   }
 
   @FXML
   private void handleIncPage() {
-    currentPage++;
-    setPaymentPage();
-    repaymentsPageLabel.setText("Page: " + currentPage);
+    if (currentPage < Math.ceil((double) loanRepayments.size() / 6)) {
+      currentPage++;
+      setPaymentPage();
+      repaymentsPageLabel.setText("Page: " + currentPage);
+    }
   }
 
   @FXML
   private void handleDecPage() {
     if (currentPage > 1) {
       currentPage--;
-      listIndex -= 6;
       setPaymentPage();
       repaymentsPageLabel.setText("Page: " + currentPage);
     }
