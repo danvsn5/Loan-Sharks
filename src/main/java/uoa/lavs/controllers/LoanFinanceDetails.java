@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -13,6 +14,11 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.loan.LoanPayment;
+import uoa.lavs.loan.PersonalLoan;
+import uoa.lavs.loan.PersonalLoanSingleton;
+import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
+import uoa.lavs.sql.sql_to_mainframe.LoanCreationHelper;
 
 public class LoanFinanceDetails implements AccessTypeObserver {
   @FXML private ComboBox<String> compoundingBox;
@@ -27,6 +33,8 @@ public class LoanFinanceDetails implements AccessTypeObserver {
   @FXML private ImageView staticReturnImageView;
 
   @FXML private Button editButton;
+
+  PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @FXML
   private void initialize() {
@@ -48,7 +56,8 @@ public class LoanFinanceDetails implements AccessTypeObserver {
         },
         new DatePicker[] {},
         new RadioButton[] {interestOnlyButton});
-    setFinanceDetails();
+    // TODO set finance details onto the screen if not create type.
+    // setFinanceDetails();
   }
 
   @Override
@@ -93,26 +102,44 @@ public class LoanFinanceDetails implements AccessTypeObserver {
   }
 
   private void setFinanceDetails() {
-    // TODO Auto-generated method stub
+    if (!validateData()) {
+      return;
+    }
+
+    LoanPayment loanPayment =
+        new LoanPayment(
+            personalLoan.getLoanId(),
+            compoundingBox.getValue(),
+            paymentFrequencyBox.getValue(),
+            paymentValueField.getText(),
+            interestOnlyButton.isSelected());
+    personalLoan.setPayment(loanPayment);
   }
 
   @FXML
   private void handlePrimaryButtonAction() {
+    setFinanceDetails();
     Main.setUi(AppUI.LC_PRIMARY);
   }
 
   @FXML
   private void handleCoborrowerButtonAction() {
+    setFinanceDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
   @FXML
   private void handleDurationButtonAction() {
+    setFinanceDetails();
     Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML
-  private void handleSummaryButtonAction() {
+  private void handleSummaryButtonAction() throws IOException {
+    setFinanceDetails();
+    LoanCreationHelper.createLoan(personalLoan);
+    LoanCreationHelper.getLoanSummary(personalLoan);
+    LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
     Main.setUi(AppUI.LC_SUMMARY);
   }
 

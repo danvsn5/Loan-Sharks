@@ -9,7 +9,16 @@ public class PersonalLoanSingleton {
 
   public static PersonalLoan getInstance() {
     if (instance == null) {
-      instance = new PersonalLoan("-1", "", new ArrayList<String>(), 0, 0, "", null, null);
+
+      ArrayList<String> coborrowerIds = new ArrayList<String>();
+
+      for (int i = 0; i < 3; i++) {
+        coborrowerIds.add("");
+      }
+
+      LoanDuration loanDuration = new LoanDuration("-1", null, 0, 0);
+      LoanPayment loanPayment = new LoanPayment("-1", "", "", "", false);
+      instance = new PersonalLoan("-1", "", coborrowerIds, 0, 0, "", loanDuration, loanPayment);
     }
     return instance;
   }

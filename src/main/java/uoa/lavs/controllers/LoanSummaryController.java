@@ -9,6 +9,10 @@ import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.loan.LoanDuration;
+import uoa.lavs.loan.LoanPayment;
+import uoa.lavs.loan.PersonalLoan;
+import uoa.lavs.loan.PersonalLoanSingleton;
 
 public class LoanSummaryController implements AccessTypeObserver {
   @FXML private TextField principalfField;
@@ -29,6 +33,8 @@ public class LoanSummaryController implements AccessTypeObserver {
   @FXML private Button financeButton;
   @FXML private ImageView staticReturnImageView;
 
+  PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
+
   @FXML
   private void initialize() {
     // Add initialization code here
@@ -43,9 +49,24 @@ public class LoanSummaryController implements AccessTypeObserver {
       AppState.isCreatingLoan = false;
       AppState.loanDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyLoanObservers();
+
     } else {
       confirmLoanButton.setStyle("-fx-border-color: red");
     }
+  }
+
+  private void setSummaryDetails() {
+    LoanDuration duration = personalLoan.getDuration();
+    LoanPayment payment = personalLoan.getPayment();
+
+    principalfField.setText(Double.toString(personalLoan.getPrincipal()));
+    annualRateField.setText(Double.toString(personalLoan.getRate()));
+    termField.setText(Integer.toString(duration.getLoanTerm()));
+    paymentFrequencyField.setText(payment.getPaymentFrequency());
+    paymentValueField.setText(payment.getPaymentAmount());
+    // culmuativeInterestField.setText(payment.)
+    // culumutiveLoanCostField;
+    // payOffDateField;
   }
 
   @FXML

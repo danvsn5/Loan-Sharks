@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -13,6 +14,10 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.loan.PersonalLoan;
+import uoa.lavs.loan.PersonalLoanSingleton;
+import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
+import uoa.lavs.sql.sql_to_mainframe.LoanCreationHelper;
 
 public class LoanPrimaryDetails implements AccessTypeObserver {
   @FXML private TextField borrowerIDField;
@@ -27,6 +32,8 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   @FXML private ImageView staticReturnImageView;
 
   @FXML private Button editButton;
+
+  private PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @FXML
   private void initialize() {
@@ -49,7 +56,9 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
         },
         new DatePicker[] {},
         new RadioButton[] {});
-    setPrimaryDetails();
+    // TODO set primary details onto the screen if not create type.
+    // setPrimaryDetails();
+
   }
 
   @Override
@@ -97,27 +106,40 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   }
 
   private void setPrimaryDetails() {
-    // TODO Auto-generated method stub
+    if (!validateData()) {
+      return;
+    }
+    // need to set the text field of primary borrower id in the gui
+
+    personalLoan.setPrincipal(Double.parseDouble(principalField.getText()));
+    personalLoan.setRate(Double.parseDouble(interestRateField.getText()));
+    personalLoan.setRateType(rateTypeBox.getValue());
   }
 
   // Add methods for all buttons
   @FXML
   private void handleCoborrowerButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
   @FXML
   private void handleDurationButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML
   private void handleFinanceButtonAction() {
+    setPrimaryDetails();
     Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML
-  private void handleSummaryButtonAction() {
+  private void handleSummaryButtonAction() throws IOException {
+    setPrimaryDetails();
+    LoanCreationHelper.createLoan(personalLoan);
+    LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
     Main.setUi(AppUI.LC_SUMMARY);
   }
 
