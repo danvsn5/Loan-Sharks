@@ -1,13 +1,17 @@
 package uoa.lavs.controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
-import uoa.lavs.loan.Loan;
+import uoa.lavs.loan.PersonalLoan;
 import uoa.lavs.loan.PersonalLoanSingleton;
+import uoa.lavs.mainframe.Instance;
+import uoa.lavs.mainframe.Status;
+import uoa.lavs.mainframe.messages.loan.LoadLoanPayments;
 import uoa.lavs.utility.AmortizingLoanCalculator;
 import uoa.lavs.utility.LoanRepayment;
 import uoa.lavs.utility.PaymentFrequency;
@@ -48,7 +52,7 @@ public class LoanRepaymentsController {
   @FXML private ImageView decPage;
 
   // create new loan singleton object to access loan data
-  private Loan existingCustomerLoan = PersonalLoanSingleton.getInstance();
+  private PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   // create new amortising loan calculator object
   private AmortizingLoanCalculator amortizingLoanCalculator = new AmortizingLoanCalculator();
@@ -62,25 +66,62 @@ public class LoanRepaymentsController {
 
   @FXML
   private void initialize() {
+    uoa.lavs.mainframe.Connection connection = Instance.getConnection();
+    LoadLoanPayments loadLoanPayments = new LoadLoanPayments();
+    loadLoanPayments.setLoanId(personalLoan.getLoanId());
+    loadLoanPayments.setNumber(1);
+    Status status = loadLoanPayments.send(connection);
 
-    String frequency = existingCustomerLoan.getPayment().getPaymentFrequency();
-
-    if (frequency == "Weekly") {
-      PaymentFrequency paymentFrequency = PaymentFrequency.Weekly;
-    } else if (frequency == "Fortnightly") {
-      PaymentFrequency paymentFrequency = PaymentFrequency.Fortnightly;
-    } else if (frequency == "Monthly") {
-      PaymentFrequency paymentFrequency = PaymentFrequency.Monthly;
+    if (status.getErrorCode() == 0) {
+      System.out.println("Successfully received loan payments");
+    } else {
+      System.out.println("Failed to receive loan payments");
+      System.out.println("Error code: " + status.getErrorCode());
+      System.out.println("Error message: " + status.getErrorMessage());
+      while (status.getErrorCode() == 1020) {
+        System.out.println("retrying connection for loan repayments");
+        status = loadLoanPayments.send(connection);
+        if (status.getErrorCode() == 0) {
+          System.out.println("Successfully received loan payments");
+          break;
+        }
+      }
+    }
+    // set payment number as parameter in each method call.
+    for (int i = 1; i < loadLoanPayments.getPaymentCountFromServer() + 1; i++) {
+      LocalDate paymentDate = loadLoanPayments.getPaymentDateFromServer(i);
+      Double principalAmount = loadLoanPayments.getPaymentPrincipalFromServer(i);
+      Double interestAmount = loadLoanPayments.getPaymentInterestFromServer(i);
+      Double remainingAmount = loadLoanPayments.getPaymentRemainingFromServer(i);
+      // print these fields
+      System.out.println("Payment Number: " + i);
+      System.out.println("Payment Date: " + paymentDate);
+      System.out.println("Principal Amount: " + principalAmount);
+      System.out.println("Interest Amount: " + interestAmount);
+      System.out.println("Remaining Amount: " + remainingAmount);
+      LoanRepayment loanRepayment =
+          new LoanRepayment(i, paymentDate, principalAmount, interestAmount, remainingAmount);
+      loanRepayments.add(loanRepayment);
     }
 
-    loanRepayments =
-        amortizingLoanCalculator.generateRepaymentSchedule(
-            existingCustomerLoan.getPrincipal(),
-            existingCustomerLoan.getRate(),
-            // cast payment amount into Double
-            Double.parseDouble(existingCustomerLoan.getPayment().getPaymentAmount()),
-            paymentFrequency,
-            existingCustomerLoan.getDuration().getStartDate());
+    // String frequency = loan.getPayment().getPaymentFrequency();
+
+    // if (frequency == "Weekly") {
+    //   PaymentFrequency paymentFrequency = PaymentFrequency.Weekly;
+    // } else if (frequency == "Fortnightly") {
+    //   PaymentFrequency paymentFrequency = PaymentFrequency.Fortnightly;
+    // } else if (frequency == "Monthly") {
+    //   PaymentFrequency paymentFrequency = PaymentFrequency.Monthly;
+    // }
+
+    // loanRepayments =
+    //     amortizingLoanCalculator.generateRepaymentSchedule(
+    //         existingCustomerLoan.getPrincipal(),
+    //         existingCustomerLoan.getRate(),
+    //         // cast payment amount into Double
+    //         Double.parseDouble(existingCustomerLoan.getPayment().getPaymentAmount()),
+    //         paymentFrequency,
+    //         existingCustomerLoan.getDuration().getStartDate());
 
     // set repayment schedule to the first page
     repaymentsPageLabel.setText("Page: " + currentPage);
@@ -100,6 +141,9 @@ public class LoanRepaymentsController {
   @FXML
   private void setPaymentLabel(int rowNumber) {
     // rows span from _th index to 5; 6 rows total
+    if (listIndex >= loanRepayments.size()) {
+      return;
+    }
 
     // swtich case depending on row number, between 0 and 5 inclusive
     switch (rowNumber) {

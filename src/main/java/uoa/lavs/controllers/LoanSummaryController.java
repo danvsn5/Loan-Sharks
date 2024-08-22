@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -77,8 +78,8 @@ public class LoanSummaryController implements AccessTypeObserver {
   }
 
   @FXML
-  private void handleViewPaymentsButtonAction() {
-    // Add action code here
+  private void handleViewPaymentsButtonAction() throws IOException {
+    AppState.loanLoanRepayments();
   }
 
   @FXML
