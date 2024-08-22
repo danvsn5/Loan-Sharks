@@ -3,6 +3,7 @@ package uoa.lavs.controllers;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AccessTypeNotifier;
@@ -36,6 +37,9 @@ public class LoanSummaryController implements AccessTypeObserver {
   @FXML private Button durationButton;
   @FXML private Button financeButton;
   @FXML private ImageView staticReturnImageView;
+
+  @FXML private Label loanStatusLabel;
+  @FXML private TextField loanStatusField;
 
   PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
@@ -141,9 +145,13 @@ public class LoanSummaryController implements AccessTypeObserver {
     if (AppState.loanDetailsAccessType.equals("VIEW")) {
       confirmLoanButton.setText("Edit Details");
       viewPaymentsButton.setVisible(true);
+      loanStatusField.setVisible(true);
+      loanStatusLabel.setVisible(true);
     } else {
       confirmLoanButton.setText("Confirm Loan");
       viewPaymentsButton.setVisible(false);
+      loanStatusField.setVisible(false);
+      loanStatusLabel.setVisible(false);
     }
   }
 
