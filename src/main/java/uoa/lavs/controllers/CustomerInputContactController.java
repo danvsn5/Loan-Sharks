@@ -209,16 +209,19 @@ public class CustomerInputContactController implements AccessTypeObserver {
   // add handlers for all buttons
   @FXML
   private void handleCustomerDetailsButtonAction() {
+    setContactDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleCustomerAddressButtonAction() {
+    setContactDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleCustomerEmployerButtonAction() {
+    setContactDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
