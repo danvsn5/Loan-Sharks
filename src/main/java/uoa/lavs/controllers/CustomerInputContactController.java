@@ -230,18 +230,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
     existingCustomerEmails.set(currentEmailPage, newEmail);
     customer.setEmails(existingCustomerEmails);
 
-    // doesn't print the one on current page if you then click to adifferent tab
-    System.out.println("printing phones");
-    for (Phone phone : customer.getPhones()) {
-      System.out.println(phone.getPrefix());
-      System.out.println(phone.getPhoneNumber());
-    }
-
-    System.out.println("printing emails");
-    for (Email email : customer.getEmails()) {
-      System.out.println(email.getEmailAddress());
-    }
-
     return true;
   }
 
