@@ -256,6 +256,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     } else {
       isMailingSelected = false;
     }
+
+    setAddressDetails();
   }
 
   @FXML
@@ -271,6 +273,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     } else {
       isPrimarySelected = false;
     }
+
+    setAddressDetails();
   }
 
   @FXML

@@ -205,9 +205,42 @@ public class CustomerInputContactController implements AccessTypeObserver {
     if (!validateData()) {
       return false;
     }
+    // create a new phone number
+    Phone newPhone =
+        new Phone(
+            customer.getCustomerId(),
+            customerPhoneTypeBox.getValue(),
+            customerPhonePrefixField.getText(),
+            customerPhoneNumberOne.getText(),
+            phonePrimaryRadio.isSelected(),
+            sendTextRadio.isSelected());
 
+    // if the current number page is the same as the amount of valid numbers
+    existingCustomerPhones.set(currentNumberPage, newPhone);
     customer.setPhones(existingCustomerPhones);
+
+    // create a new email
+    Email newEmail =
+        new Email(
+            customer.getCustomerId(),
+            customerEmailTextField.getText(),
+            emailPrimaryRadio.isSelected());
+
+    // if the current email page is the same as the amount of valid emails
+    existingCustomerEmails.set(currentEmailPage, newEmail);
     customer.setEmails(existingCustomerEmails);
+
+    // doesn't print the one on current page if you then click to adifferent tab
+    System.out.println("printing phones");
+    for (Phone phone : customer.getPhones()) {
+      System.out.println(phone.getPrefix());
+      System.out.println(phone.getPhoneNumber());
+    }
+
+    System.out.println("printing emails");
+    for (Email email : customer.getEmails()) {
+      System.out.println(email.getEmailAddress());
+    }
 
     return true;
   }
@@ -293,18 +326,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
     if (AppState.customerDetailsAccessType == "CREATE") {
 
-      // create a new phone number
-      Phone newPhone =
-          new Phone(
-              customer.getCustomerId(),
-              customerPhoneTypeBox.getValue(),
-              customerPhonePrefixField.getText(),
-              customerPhoneNumberOne.getText(),
-              phonePrimaryRadio.isSelected(),
-              sendTextRadio.isSelected());
-
-      // if the current number page is the same as the amount of valid numbers
-      existingCustomerPhones.set(currentNumberPage, newPhone);
+      setContactDetails();
       currentNumberPage++;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
       amountOfValidNumbers++;
@@ -369,18 +391,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
-      // get the current fields and replace the current number page with the phone
-      // fields
-      Phone newPhone =
-          new Phone(
-              customer.getCustomerId(),
-              customerPhoneTypeBox.getValue(),
-              customerPhonePrefixField.getText(),
-              customerPhoneNumberOne.getText(),
-              phonePrimaryRadio.isSelected(),
-              sendTextRadio.isSelected());
-
-      existingCustomerPhones.set(currentNumberPage, newPhone);
+      setContactDetails();
 
       if (currentNumberPage != 0) {
         currentNumberPage--;
@@ -437,15 +448,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
-      // create a new email
-      Email newEmail =
-          new Email(
-              customer.getCustomerId(),
-              customerEmailTextField.getText(),
-              emailPrimaryRadio.isSelected());
-
-      // if the current email page is the same as the amount of valid emails
-      existingCustomerEmails.set(currentEmailPage, newEmail);
+      setContactDetails();
       currentEmailPage++;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       amountOfValidEmails++;
@@ -461,15 +464,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
-      // get the current fields and replace the current email page with the email
-      // fields
-      Email newEmail =
-          new Email(
-              customer.getCustomerId(),
-              customerEmailTextField.getText(),
-              emailPrimaryRadio.isSelected());
-
-      existingCustomerEmails.set(currentEmailPage, newEmail);
+      setContactDetails();
 
       currentEmailPage++;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
@@ -507,6 +502,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
               emailPrimaryRadio.isSelected());
 
       existingCustomerEmails.set(currentEmailPage, newEmail);
+      setContactDetails();
 
       if (currentEmailPage != 0) {
         currentEmailPage--;

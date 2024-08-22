@@ -32,8 +32,6 @@ public class CustomerCreationHelper {
     AddressDAO addressdao = new AddressDAO();
     ArrayList<Address> addresses = customer.getAddresses();
     for (Address address : addresses) {
-      // TODO need to implement this checking for other stuff as well
-      // check if any of the address fields are null
       if (address.getAddressType() == null
           || address.getAddressLineOne() == ""
           || address.getSuburb() == ""
@@ -50,6 +48,10 @@ public class CustomerCreationHelper {
     PhoneDAO phonedao = new PhoneDAO();
     ArrayList<Phone> phones = customer.getPhones();
     for (Phone phone : phones) {
+      if (phone.getType() == null || phone.getPrefix() == "" || phone.getPhoneNumber() == "") {
+        continue;
+      }
+      // System.out.println("not skipping phone");
       phone.setCustomerId(customer.getCustomerId());
       phonedao.addPhone(phone);
     }
@@ -57,6 +59,10 @@ public class CustomerCreationHelper {
     EmailDAO emaildao = new EmailDAO();
     ArrayList<Email> emails = customer.getEmails();
     for (Email email : emails) {
+      if (email.getEmailAddress() == "") {
+        continue;
+      }
+
       email.setCustomerId(customer.getCustomerId());
       emaildao.addEmail(email);
     }
