@@ -99,6 +99,7 @@ public class SearchCustomer {
     }
 
     if (employerStatus.getErrorCode() == 0) {
+      System.out.println("Updating employer...");
       updateCustomerEmployer(loadCustomerEmployer, customer);
     }
 
@@ -167,12 +168,14 @@ public class SearchCustomer {
 
       loadCustomerAddress.setCustomerId(customerId);
       loadCustomerEmployer.setCustomerId(customerId);
+      loadCustomerEmployer.setNumber(1);
       loadCustomerPhones.setCustomerId(customerId);
       loadCustomerEmails.setCustomerId(customerId);
 
       // Send the request for address
       Status addressStatus = loadCustomerAddress.send(connection);
       // Send the request for employer
+      System.out.println("Sending employer request...");
       Status employerStatus = loadCustomerEmployer.send(connection);
       // Send the request for phone
       Status phoneStatus = loadCustomerPhones.send(connection);
@@ -221,7 +224,10 @@ public class SearchCustomer {
       }
 
       if (employerStatus.getErrorCode() == 0) {
+        System.out.println("Updating employer...");
         updateCustomerEmployer(loadCustomerEmployer, customer);
+      } else {
+        System.out.println("Employer error: " + employerStatus.getErrorCode());
       }
 
       if (phoneStatus.getErrorCode() == 0) {
