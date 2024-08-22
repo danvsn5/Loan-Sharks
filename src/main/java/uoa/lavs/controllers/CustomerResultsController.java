@@ -40,6 +40,8 @@ public class CustomerResultsController {
   @FXML private Button nextButton;
   @FXML private ImageView staticReturnImageView;
 
+  @FXML private Label nullLabel;
+
   int currentPage = 1;
   ArrayList<String> searchResultsNameList;
   ArrayList<String> searchResultsIDList;
@@ -51,6 +53,7 @@ public class CustomerResultsController {
     searchResultsNameList = new ArrayList<>();
     searchResultsIDList = new ArrayList<>();
     searchResultList = (List<Customer>) AppState.getSearchResultList();
+    nullLabel.setVisible(false);
 
     populateLabels();
   }
@@ -150,14 +153,36 @@ public class CustomerResultsController {
   }
 
   private void loadCustomer(int index) throws IOException {
-    AppState.setSelectedCustomer(searchResultList.get((currentPage - 1) * 6 + index - 1));
+    Customer customer = searchResultList.get((currentPage - 1) * 6 + index - 1);
+    boolean nullFields = nullFields(customer);
     if (AppState.isCreatingLoan) {
+      AppState.selectedCustomer = customer;
       AppState.loadLoans("CREATE");
       Main.setUi(AppUI.LC_PRIMARY);
     } else {
-      AppState.isAccessingFromSearch = true;
-      AppState.loadAllCustomerDetails("VIEW");
-      Main.setUi(AppUI.CI_DETAILS);
+      if (nullFields) {
+        nullLabel.setVisible(true);
+      } else {
+        AppState.selectedCustomer = customer;
+        AppState.isAccessingFromSearch = true;
+        AppState.loadAllCustomerDetails("VIEW");
+        Main.setUi(AppUI.CI_DETAILS);
+      }
     }
+  }
+
+  private boolean nullFields(Customer customer) {
+    return (customer.getAddresses() == null
+        || customer.getCitizenship() == null
+        || customer.getCustomerId() == null
+        || customer.getDateOfBirth() == null
+        || customer.getEmails() == null
+        || customer.getEmployer() == null
+        || customer.getName() == null
+        || customer.getNotes() == null
+        || customer.getOccupation() == null
+        || customer.getPhones() == null
+        || customer.getTitle() == null
+        || customer.getVisa() == null);
   }
 }
