@@ -60,13 +60,20 @@ public class LoanSummaryController implements AccessTypeObserverLoan {
   @FXML
   private void handleConfirmLoanButtonAction() {
     confirmLoanButton.setStyle("");
-    if (AccessTypeNotifier.validateLoanObservers()) {
+    if (AccessTypeNotifier.validateLoanObservers()
+        && !AppState.loanDetailsAccessType.equals("VIEW")) {
       AppState.isCreatingLoan = false;
       AppState.loanDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyLoanObservers();
+      confirmLoanButton.setText("Edit Details");
 
-    } else {
+    } else if (!AppState.loanDetailsAccessType.equals("VIEW")) {
       confirmLoanButton.setStyle("-fx-border-color: red");
+    } else if (AppState.loanDetailsAccessType.equals("VIEW")) {
+      AppState.isCreatingLoan = false;
+      AppState.loanDetailsAccessType = "EDIT";
+      confirmLoanButton.setText("Confirm Loan");
+      AccessTypeNotifier.notifyLoanObservers();
     }
   }
 
