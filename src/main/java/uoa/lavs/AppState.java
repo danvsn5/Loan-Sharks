@@ -1,9 +1,12 @@
 package uoa.lavs;
 
 import java.io.IOException;
+import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.Customer;
+import uoa.lavs.loan.Loan;
 
 public class AppState {
   // This Class will be used for the reinitilasiation of scenes on demand by persisting the current
@@ -15,6 +18,9 @@ public class AppState {
   public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
   public static Boolean isAccessingFromSearch = false;
   public static Boolean isAccessingFromLoanSearch = false;
+  public static List<Customer> searchResultList;
+  public static List<Loan> loanSearchResultList;
+  public static Customer selectedCustomer;
 
   // Previous and current UI screens for return functionality
   public static AppUI previousUi;
@@ -54,7 +60,8 @@ public class AppState {
     SceneManager.addScene(AppUI.LC_SUMMARY, loadFxml("loan/loan_details/loan_summary"));
   }
 
-  public static void loadCustomerSearchResults(String searchString) throws IOException {
+  public static void loadCustomerSearchResults(List<Customer> searchResultList) throws IOException {
+    AppState.searchResultList = searchResultList;
     SceneManager.addScene(AppUI.CUSTOMER_RESULTS, loadFxml("customer/customer_search_results"));
     Main.setUi(AppUI.CUSTOMER_RESULTS);
   }
@@ -72,6 +79,18 @@ public class AppState {
 
   public static AppUI getCurrentUiName() {
     return currentUiName;
+  }
+
+  public static List<?> getSearchResultList() {
+    return searchResultList;
+  }
+
+  public static void setSelectedCustomer(Customer customer) {
+    selectedCustomer = customer;
+  }
+
+  public static Customer getSelectedCustomer() {
+    return selectedCustomer;
   }
 
   public static String[] getAllCountries() {

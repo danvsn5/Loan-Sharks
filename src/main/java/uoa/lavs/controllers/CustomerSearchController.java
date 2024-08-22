@@ -56,19 +56,19 @@ public class CustomerSearchController {
     } else {
       handleSearchWithNameLabelAction();
     }
-    usernameField.setText("");
-    idField.setText("");
   }
 
   @FXML
   private void enableIDSearch() {
     usernameField.setText("");
+    usernameField.setStyle("");
     state = "id";
   }
 
   @FXML
   private void enableNameSearch() {
     idField.setText("");
+    idField.setStyle("");
     state = "name";
   }
 
@@ -76,18 +76,32 @@ public class CustomerSearchController {
   private void handleSearchWithCustomerIDLabelAction() throws IOException {
     String searchString = idField.getText();
     SearchCustomer searchCustomer = new SearchCustomer();
-    Customer customer = searchCustomer.searchCustomerById(searchString);
-    List<Customer> listOfCustomers = new ArrayList<>();
-    listOfCustomers.add(customer);
-    AppState.loadCustomerSearchResults(searchString);
+    try {
+      Customer customer = searchCustomer.searchCustomerById(searchString);
+      List<Customer> listOfCustomers = new ArrayList<>();
+      listOfCustomers.add(customer);
+      AppState.loadCustomerSearchResults(listOfCustomers);
+      idField.setStyle("");
+      idField.setText("");
+    } catch (Exception e) {
+      idField.setStyle("-fx-border-color: red;");
+      e.printStackTrace();
+    }
   }
 
   @FXML
   private void handleSearchWithNameLabelAction() throws IOException {
     String searchString = usernameField.getText();
     SearchCustomer searchCustomer = new SearchCustomer();
-    List<Customer> listOfCustomers = searchCustomer.searchCustomerByName(searchString);
-    AppState.loadCustomerSearchResults(searchString);
+    try {
+      List<Customer> listOfCustomers = searchCustomer.searchCustomerByName(searchString);
+      AppState.loadCustomerSearchResults(listOfCustomers);
+      usernameField.setStyle("");
+      usernameField.setText("");
+    } catch (Exception e) {
+      usernameField.setStyle("-fx-border-color: red;");
+      e.printStackTrace();
+    }
   }
 
   @FXML

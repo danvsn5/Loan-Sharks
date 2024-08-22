@@ -40,6 +40,17 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
   private void initialize() {
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
+
+    if (AppState.isAccessingFromSearch) {
+      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+      customer = IndividualCustomerSingleton.getInstance();
+
+      employerNameField.setText(customer.getEmployer().getEmployerName());
+      employerEmailField.setText(customer.getEmployer().getEmployerEmail());
+      employerWebsiteField.setText(customer.getEmployer().getEmployerWebsite());
+      employerPhoneField.setText(customer.getEmployer().getEmployerPhone());
+      customerIsEmployerCheckbox.setSelected(customer.getEmployer().getOwnerOfCompany());
+    }
   }
 
   @Override

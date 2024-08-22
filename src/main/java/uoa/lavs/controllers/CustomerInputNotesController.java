@@ -30,6 +30,16 @@ public class CustomerInputNotesController implements AccessTypeObserver {
   private void initialize() {
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
+
+    if (AppState.isAccessingFromSearch) {
+      // TODO: I don't believe tihs is correct, it only sets the first note. Will need to fix later
+      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+      customer = IndividualCustomerSingleton.getInstance();
+
+      if (customer.getNotes().size() > 0) {
+        customerNotesField.setText(customer.getNotes().get(0).getLines()[0]);
+      }
+    }
   }
 
   @FXML
