@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.Customer;
 import uoa.lavs.loan.Loan;
+import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
 
 public class AppState {
   // This Class will be used for the reinitilasiation of scenes on demand by persisting the current
@@ -21,6 +22,8 @@ public class AppState {
   public static List<Customer> searchResultList;
   public static List<Loan> loanSearchResultList;
   public static Customer selectedCustomer;
+  public static boolean isOnLoanSummary = false;
+  public static LoadLoanSummary currentLoanSummary;
 
   // Previous and current UI screens for return functionality
   public static AppUI previousUi;
@@ -57,7 +60,13 @@ public class AppState {
     SceneManager.addScene(AppUI.LC_DURATION, loadFxml("loan/loan_details/duration_loan_details"));
     SceneManager.addScene(AppUI.LC_FINANCE, loadFxml("loan/loan_details/finance_loan_details"));
     SceneManager.addScene(AppUI.LC_PRIMARY, loadFxml("loan/loan_details/primary_loan_details"));
+    loadLoanSummary(accessType);
+  }
+
+  public static void loadLoanSummary(String accessType) throws IOException {
+    loanDetailsAccessType = accessType;
     SceneManager.addScene(AppUI.LC_SUMMARY, loadFxml("loan/loan_details/loan_summary"));
+    Main.setUi(AppUI.LC_SUMMARY);
   }
 
   public static void loadCustomerSearchResults(List<Customer> searchResultList) throws IOException {
@@ -91,6 +100,14 @@ public class AppState {
 
   public static Customer getSelectedCustomer() {
     return selectedCustomer;
+  }
+
+  public static void setCurrentLoanSummary(LoadLoanSummary loadLoanSummary) {
+    currentLoanSummary = loadLoanSummary;
+  }
+
+  public static LoadLoanSummary getCurrentLoanSummary() {
+    return currentLoanSummary;
   }
 
   public static String[] getAllCountries() {

@@ -143,7 +143,10 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
     setPrimaryDetails();
     LoanCreationHelper.createLoan(personalLoan);
     LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
-    Main.setUi(AppUI.LC_SUMMARY);
+    AppState.setCurrentLoanSummary(loadLoanSummary);
+    AppState.isOnLoanSummary = true;
+
+    AppState.loadLoanSummary(AppState.loanDetailsAccessType);
   }
 
   @FXML

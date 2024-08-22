@@ -81,7 +81,7 @@ public class SyncLoan extends Sync {
         + "LEFT JOIN loan_duration ld ON l.loanId = ld.loanId "
         + "LEFT JOIN loan_payment lp ON l.loanId = lp.loanId "
         + "LEFT JOIN loan_coborrower lc ON l.loanId = lc.loanId "
-        + "WHERE l.lastModified > ?";
+        + "WHERE l.lastModified > ? OR ld.lastModified > ? OR lp.lastModified > ? OR lc.lastModified > ?";
   }
 
   private UpdateLoan updateLoan(ResultSet resultSet, String loanId) throws SQLException {
