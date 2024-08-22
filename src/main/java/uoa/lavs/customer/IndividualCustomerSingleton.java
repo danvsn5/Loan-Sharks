@@ -49,4 +49,27 @@ public class IndividualCustomerSingleton {
   public static void resetInstance() {
     instance = null;
   }
+
+  public static void setInstanceCustomer(Customer selectedCustomer) {
+    ArrayList<Note> notes = selectedCustomer.getNotes();
+    ArrayList<Address> addresses = selectedCustomer.getAddresses();
+    ArrayList<Phone> phones = selectedCustomer.getPhones();
+    ArrayList<Email> emails = selectedCustomer.getEmails();
+    CustomerEmployer employer = selectedCustomer.getEmployer();
+
+    instance =
+        new IndividualCustomer(
+            selectedCustomer.getCustomerId(),
+            selectedCustomer.getTitle(),
+            selectedCustomer.getName(),
+            selectedCustomer.getDateOfBirth(),
+            selectedCustomer.getOccupation(),
+            selectedCustomer.getVisa(),
+            selectedCustomer.getCitizenship(),
+            notes,
+            addresses,
+            phones,
+            emails,
+            employer);
+  }
 }

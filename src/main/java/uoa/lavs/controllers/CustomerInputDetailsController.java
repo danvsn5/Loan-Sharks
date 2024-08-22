@@ -81,6 +81,21 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
         });
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
+
+    if (AppState.isAccessingFromSearch) {
+      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+      customer = IndividualCustomerSingleton.getInstance();
+
+      String[] name = customer.getName().split(" ");
+      customerFirstNameField.setText(name.length > 0 ? name[0] : "");
+      customerMiddleNameField.setText(name.length > 2 ? name[1] : "");
+      customerLastNameField.setText(name.length > 1 ? name[name.length - 1] : "");
+      customerDOBPicker.setValue(customer.getDateOfBirth());
+      customerOccupationField.setText(customer.getOccupation());
+      customerVisaBox.setValue(customer.getVisa());
+      customerTitleComboBox.setValue(customer.getTitle());
+      customerCitizenshipBox.setValue(customer.getCitizenship());
+    }
   }
 
   @Override
