@@ -141,24 +141,29 @@ public class ControllerHelper {
     for (TextField textField : textFields) {
       textField.setEditable(false);
       textField.setDisable(true);
+      textField.setOpacity(0.8);
     }
   }
 
   public static void setComboBoxesNonEditable(ComboBox<?>... comboBoxes) {
     for (ComboBox<?> comboBox : comboBoxes) {
       comboBox.setDisable(true);
+      comboBox.setOpacity(0.8);
+
     }
   }
 
   public static void setDatePickersNonEditable(DatePicker... datePickers) {
     for (DatePicker datePicker : datePickers) {
       datePicker.setDisable(true);
+      datePicker.setOpacity(0.8);
     }
   }
 
   public static void setRadioButtonsNonEditable(RadioButton... radioButtons) {
     for (RadioButton radioButton : radioButtons) {
       radioButton.setDisable(true);
+      radioButton.setOpacity(0.8);
     }
   }
 }
