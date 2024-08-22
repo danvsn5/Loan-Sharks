@@ -24,18 +24,6 @@ public class LoanCreationHelper {
 
     // Creates if loanid not in mainframe and updates if it is
     if (loanDAO.getLoan(loan.getLoanId()) == null) {
-      System.out.println("loan not in sql database. adding");
-      System.out.println("loan id is: " + loan.getLoanId());
-      System.out.println("loan principal is: " + loan.getPrincipal());
-      System.out.println("loan start date is: " + loan.getDuration().getStartDate());
-      System.out.println("loan term is: " + loan.getDuration().getLoanTerm());
-      System.out.println("loan rate type is: " + loan.getRateType());
-      System.out.println("loan rate is: " + loan.getRate());
-      System.out.println("loan compounding is: " + loan.getPayment().getCompounding());
-      System.out.println("loan payment frequency is: " + loan.getPayment().getPaymentFrequency());
-      System.out.println("loan payment amount is: " + loan.getPayment().getPaymentAmount());
-      System.out.println("loan interest only is: " + loan.getPayment().getInterestOnly());
-
       loanDAO.addLoan(loan);
       loanDurationDAO.addLoanDuration(loan.getDuration());
       loanPaymentDAO.addLoanPayment(loan.getPayment());

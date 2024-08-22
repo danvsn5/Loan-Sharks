@@ -12,7 +12,11 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.loan.PersonalLoan;
 import uoa.lavs.loan.PersonalLoanSingleton;
+import uoa.lavs.mainframe.Instance;
+import uoa.lavs.mainframe.LoanStatus;
+import uoa.lavs.mainframe.Status;
 import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
+import uoa.lavs.mainframe.messages.loan.UpdateLoanStatus;
 
 public class LoanSummaryController implements AccessTypeObserver {
   @FXML private TextField principalfField;
@@ -79,6 +83,17 @@ public class LoanSummaryController implements AccessTypeObserver {
 
   @FXML
   private void handleViewPaymentsButtonAction() throws IOException {
+    uoa.lavs.mainframe.Connection connection = Instance.getConnection();
+    UpdateLoanStatus updateLoanStatus = new UpdateLoanStatus();
+    updateLoanStatus.setLoanId(personalLoan.getLoanId());
+    updateLoanStatus.setStatus(LoanStatus.Pending);
+    Status status = updateLoanStatus.send(connection);
+    if (status.getErrorCode() == 0) {
+      System.out.println("Loan status updated successfully.");
+    } else {
+      System.out.println(
+          "Error updating loan status: " + status.getErrorCode() + status.getErrorMessage());
+    }
     AppState.loanLoanRepayments();
   }
 
