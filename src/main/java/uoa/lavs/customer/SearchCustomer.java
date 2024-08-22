@@ -9,6 +9,7 @@ import uoa.lavs.mainframe.messages.customer.FindCustomerAddress;
 import uoa.lavs.mainframe.messages.customer.FindCustomerAdvanced;
 import uoa.lavs.mainframe.messages.customer.LoadCustomer;
 import uoa.lavs.mainframe.messages.customer.LoadCustomerAddress;
+import uoa.lavs.mainframe.messages.customer.LoadCustomerAddresses;
 import uoa.lavs.mainframe.messages.customer.LoadCustomerEmails;
 import uoa.lavs.mainframe.messages.customer.LoadCustomerEmployer;
 import uoa.lavs.mainframe.messages.customer.LoadCustomerPhoneNumbers;
@@ -20,7 +21,7 @@ public class SearchCustomer {
 
   public Customer searchCustomerById(String customerId) {
     LoadCustomer loadCustomer = new LoadCustomer();
-    LoadCustomerAddress loadCustomerAddress = new LoadCustomerAddress();
+    LoadCustomerAddresses loadCustomerAddresses = new LoadCustomerAddresses();
     LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
     LoadCustomerPhoneNumbers loadCustomerPhones = new LoadCustomerPhoneNumbers();
     LoadCustomerEmails loadCustomerEmails = new LoadCustomerEmails();
@@ -30,7 +31,7 @@ public class SearchCustomer {
     loadCustomerPhones.setCustomerId(customerId);
     loadCustomerEmails.setCustomerId(customerId);
     loadCustomerEmployer.setNumber(1);
-    loadCustomerAddress.setCustomerId(customerId);
+    loadCustomerAddresses.setCustomerId(customerId);
 
     Connection connection = Instance.getConnection();
 
@@ -38,7 +39,7 @@ public class SearchCustomer {
 
     Status status = loadCustomer.send(connection);
     // Send the request for address
-    Status addressStatus = loadCustomerAddress.send(connection);
+    Status addressStatus = loadCustomerAddresses.send(connection);
     // Send the request for employer
     Status employerStatus = loadCustomerEmployer.send(connection);
     // Send the request for phone
@@ -95,7 +96,8 @@ public class SearchCustomer {
       findCustomerAddress.setCustomerId(customerId);
       findCustomerAddress.send(connection);
       int count = findCustomerAddress.getCountFromServer();
-      updateCustomerAddress(loadCustomerAddress, customer, count);
+      System.out.println("Count: " + count);
+      updateCustomerAddresses(loadCustomerAddresses, customer, count);
     }
 
     if (employerStatus.getErrorCode() == 0) {
@@ -119,7 +121,7 @@ public class SearchCustomer {
   // search customer by name
   public List<Customer> searchCustomerByName(String name) {
     FindCustomerAdvanced findCustomerAdvanced = new FindCustomerAdvanced();
-    LoadCustomerAddress loadCustomerAddress = new LoadCustomerAddress();
+    LoadCustomerAddresses loadCustomerAddresses = new LoadCustomerAddresses();
     LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
     LoadCustomerPhoneNumbers loadCustomerPhones = new LoadCustomerPhoneNumbers();
     LoadCustomerEmails loadCustomerEmails = new LoadCustomerEmails();
@@ -166,14 +168,14 @@ public class SearchCustomer {
         return null;
       }
 
-      loadCustomerAddress.setCustomerId(customerId);
+      loadCustomerAddresses.setCustomerId(customerId);
       loadCustomerEmployer.setCustomerId(customerId);
       loadCustomerEmployer.setNumber(1);
       loadCustomerPhones.setCustomerId(customerId);
       loadCustomerEmails.setCustomerId(customerId);
 
       // Send the request for address
-      Status addressStatus = loadCustomerAddress.send(connection);
+      Status addressStatus = loadCustomerAddresses.send(connection);
       // Send the request for employer
       System.out.println("Sending employer request...");
       Status employerStatus = loadCustomerEmployer.send(connection);
@@ -215,12 +217,12 @@ public class SearchCustomer {
 
       updateCustomerFields(loadCustomer, customer);
       if (addressStatus.getErrorCode() == 0) {
-
+        System.out.println("Updating addresses...");
         FindCustomerAddress findCustomerAddress = new FindCustomerAddress();
         findCustomerAddress.setCustomerId(customerId);
         findCustomerAddress.send(connection);
         int num = findCustomerAddress.getCountFromServer();
-        updateCustomerAddress(loadCustomerAddress, customer, num);
+        updateCustomerAddresses(loadCustomerAddresses, customer, num);
       }
 
       if (employerStatus.getErrorCode() == 0) {
@@ -257,12 +259,16 @@ public class SearchCustomer {
     customer.setVisa(loadCustomer.getVisaFromServer());
   }
 
-  private void updateCustomerAddress(
-      LoadCustomerAddress loadCustomerAddress, Customer customer, int count) {
+  private void updateCustomerAddresses(
+      LoadCustomerAddresses loadCustomerAddresses, Customer customer, int count) {
     ArrayList<Address> addresses = new ArrayList<>();
 
     for (int i = 1; i <= count; i++) {
+      LoadCustomerAddress loadCustomerAddress = new LoadCustomerAddress();
+      loadCustomerAddress.setCustomerId(customer.getCustomerId());
       loadCustomerAddress.setNumber(i);
+      loadCustomerAddress.send(Instance.getConnection());
+      System.out.println(loadCustomerAddress.getTypeFromServer());
       Address address =
           new Address(
               customer.getCustomerId(),

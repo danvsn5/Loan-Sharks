@@ -103,6 +103,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
+    setNotes();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
