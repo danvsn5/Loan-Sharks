@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,6 +20,7 @@ import uoa.lavs.customer.Email;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
 import uoa.lavs.customer.Phone;
+import uoa.lavs.sql.sql_to_mainframe.CustomerCreationHelper;
 
 public class CustomerInputContactController implements AccessTypeObserver {
   @FXML private TextField customerEmailTextField;
@@ -107,12 +109,15 @@ public class CustomerInputContactController implements AccessTypeObserver {
   }
 
   @FXML
-  private void handleEditButtonAction() {
+  private void handleEditButtonAction() throws IOException {
     if (AppState.customerDetailsAccessType.equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
-      AccessTypeNotifier.notifyCustomerObservers();
+
       setContactDetails();
+      CustomerCreationHelper.createCustomer(customer);
+
+      AccessTypeNotifier.notifyCustomerObservers();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
@@ -201,7 +206,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
       return false;
     }
 
-    // TODO: Set customer details (Chulshin or Jamie)
+    customer.setPhones(existingCustomerPhones);
+    customer.setEmails(existingCustomerEmails);
 
     return true;
   }
