@@ -43,6 +43,9 @@ public class CustomerSearchController {
   @FXML
   private ImageView connectionSymbol;
 
+  @FXML
+  private Label connectionLabel;
+
   String state;
 
   @FXML
@@ -144,12 +147,15 @@ public class CustomerSearchController {
         || status.getErrorCode() == 1010
         || status.getErrorCode() == 1020) {
       setRedSymbol();
+      connectionLabel.setText(status.getErrorMessage());
       // if the 'unknown' message got a response, it's online
     } else if (status.getErrorCode() == 100) {
       setGreenSymbol();
+      connectionLabel.setText("Connection is successful");
       // catch all for other messages
     } else {
       setOrangeSymbol();
+      connectionLabel.setText("Unidentified error. Please try again.");
     }
   }
 

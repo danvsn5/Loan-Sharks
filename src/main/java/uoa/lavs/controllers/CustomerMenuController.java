@@ -4,6 +4,8 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AppState;
@@ -58,12 +60,18 @@ public class CustomerMenuController {
         || status.getErrorCode() == 1010
         || status.getErrorCode() == 1020) {
       setRedSymbol();
+      ((Labeled) SceneManager.getScene(AppUI.CUSTOMER_SEARCH).lookup("#connectionLabel"))
+          .setText(status.getErrorMessage());
       // if the 'unknown' message got a response, it's online
     } else if (status.getErrorCode() == 100) {
       setGreenSymbol();
+      ((Labeled) SceneManager.getScene(AppUI.CUSTOMER_SEARCH).lookup("#connectionLabel"))
+          .setText("Connection is successful");
       // catch all for other messages
     } else {
       setOrangeSymbol();
+      ((Labeled) SceneManager.getScene(AppUI.CUSTOMER_SEARCH).lookup("#connectionLabel"))
+          .setText("Unidentified error. Please try again.");
     }
 
     Main.setUi(AppUI.CUSTOMER_SEARCH);
