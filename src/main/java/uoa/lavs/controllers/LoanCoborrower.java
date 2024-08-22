@@ -40,6 +40,8 @@ public class LoanCoborrower implements AccessTypeObserver {
   private void initialize() {
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
+
+    personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
   }
 
   @FXML
@@ -65,7 +67,7 @@ public class LoanCoborrower implements AccessTypeObserver {
     // Searches if mainframe/localdb has these ids and sets the style of the textfield accordingly
     SearchCustomer searchCustomer = new SearchCustomer();
     if (!coborrowerIDField1.getText().isEmpty()) {
-      if (coborrowerIDField1.getText() != personalLoan.getCustomerId()
+      if (!coborrowerIDField1.getText().equals(personalLoan.getCustomerId())
           && searchCustomer.searchCustomerById(coborrowerIDField1.getText()) != null) {
         coborrowerIDField1.setStyle("");
       } else {
@@ -74,7 +76,7 @@ public class LoanCoborrower implements AccessTypeObserver {
       }
     }
     if (!coborrowerIDField2.getText().isEmpty()) {
-      if (coborrowerIDField2.getText() != personalLoan.getCustomerId()
+      if (!coborrowerIDField2.getText().equals(personalLoan.getCustomerId())
           && searchCustomer.searchCustomerById(coborrowerIDField2.getText()) != null) {
         coborrowerIDField2.setStyle("");
       } else {
@@ -83,7 +85,7 @@ public class LoanCoborrower implements AccessTypeObserver {
       }
     }
     if (!coborrowerIDField3.getText().isEmpty()) {
-      if (coborrowerIDField3.getText() != personalLoan.getCustomerId()
+      if (!coborrowerIDField3.getText().equals(personalLoan.getCustomerId())
           && searchCustomer.searchCustomerById(coborrowerIDField3.getText()) != null) {
         coborrowerIDField3.setStyle("");
       } else {
@@ -164,7 +166,10 @@ public class LoanCoborrower implements AccessTypeObserver {
     LoanCreationHelper.createLoan(personalLoan);
     LoanCreationHelper.getLoanSummary(personalLoan);
     LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
-    Main.setUi(AppUI.LC_SUMMARY);
+    AppState.setCurrentLoanSummary(loadLoanSummary);
+    AppState.isOnLoanSummary = true;
+
+    AppState.loadLoanSummary(AppState.loanDetailsAccessType);
   }
 
   @FXML

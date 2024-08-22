@@ -69,6 +69,9 @@ public class LoanDurationController implements AccessTypeObserver {
         });
 
     termField.setDisable(true);
+
+    personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
+    termField.setText("30");
   }
 
   // Add methods for all buttons
@@ -161,7 +164,10 @@ public class LoanDurationController implements AccessTypeObserver {
     LoanCreationHelper.createLoan(personalLoan);
     LoanCreationHelper.getLoanSummary(personalLoan);
     LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
-    Main.setUi(AppUI.LC_SUMMARY);
+    AppState.setCurrentLoanSummary(loadLoanSummary);
+    AppState.isOnLoanSummary = true;
+
+    AppState.loadLoanSummary(AppState.loanDetailsAccessType);
   }
 
   @FXML

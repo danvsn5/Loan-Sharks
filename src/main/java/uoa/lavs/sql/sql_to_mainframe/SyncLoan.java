@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import uoa.lavs.loan.PersonalLoan;
+import uoa.lavs.loan.PersonalLoanSingleton;
 import uoa.lavs.mainframe.Frequency;
 import uoa.lavs.mainframe.RateType;
 import uoa.lavs.mainframe.Status;
@@ -12,6 +14,8 @@ import uoa.lavs.mainframe.messages.loan.LoadLoan;
 import uoa.lavs.mainframe.messages.loan.UpdateLoan;
 
 public class SyncLoan extends Sync {
+
+  PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @Override
   protected void syncMainframeData(
@@ -41,6 +45,7 @@ public class SyncLoan extends Sync {
       String newLoanId = updateLoan.getLoanIdFromServer();
 
       updateLoanIdInLocalDB(resultSet.getString("loanId"), newLoanId, localConn);
+      personalLoan.setLoanId(newLoanId);
 
       if (status.getErrorCode() == 0) {
         System.out.println("Loan updated successfully.");
@@ -76,7 +81,7 @@ public class SyncLoan extends Sync {
         + "LEFT JOIN loan_duration ld ON l.loanId = ld.loanId "
         + "LEFT JOIN loan_payment lp ON l.loanId = lp.loanId "
         + "LEFT JOIN loan_coborrower lc ON l.loanId = lc.loanId "
-        + "WHERE l.lastModified > ?";
+        + "WHERE l.lastModified > ? OR ld.lastModified > ? OR lp.lastModified > ? OR lc.lastModified > ?";
   }
 
   private UpdateLoan updateLoan(ResultSet resultSet, String loanId) throws SQLException {
@@ -84,7 +89,9 @@ public class SyncLoan extends Sync {
     updateLoan.setLoanId(loanId);
     updateLoan.setCustomerId(resultSet.getString("customerId"));
 
-    String compoundingStr = (resultSet.getString("compounding")).substring(0, 1).toUpperCase();
+    String compoundingStr =
+        (resultSet.getString("compounding")).substring(0, 1).toUpperCase()
+            + (resultSet.getString("compounding")).substring(1);
     Frequency compounding;
     try {
       compounding = Frequency.valueOf(compoundingStr);
@@ -97,7 +104,8 @@ public class SyncLoan extends Sync {
     updateLoan.setPaymentAmount(resultSet.getDouble("paymentAmount"));
 
     String paymentFrequencyStr =
-        (resultSet.getString("paymentFrequency")).substring(0, 1).toUpperCase();
+        (resultSet.getString("paymentFrequency")).substring(0, 1).toUpperCase()
+            + (resultSet.getString("paymentFrequency")).substring(1);
     Frequency paymentFrequency;
     try {
       paymentFrequency = Frequency.valueOf(paymentFrequencyStr);
@@ -107,7 +115,9 @@ public class SyncLoan extends Sync {
     updateLoan.setPaymentFrequency(paymentFrequency);
     updateLoan.setPrincipal(resultSet.getDouble("principal"));
 
-    String rateTypeStr = (resultSet.getString("rateType")).substring(0, 1).toUpperCase();
+    String rateTypeStr =
+        (resultSet.getString("rateType")).substring(0, 1).toUpperCase()
+            + (resultSet.getString("rateType")).substring(1);
     RateType rateType;
     try {
       rateType = RateType.valueOf(rateTypeStr);
