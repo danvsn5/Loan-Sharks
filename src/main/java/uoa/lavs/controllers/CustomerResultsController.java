@@ -109,6 +109,7 @@ public class CustomerResultsController {
 
   @FXML
   private void handleBackButtonAction() {
+    AppState.isAccessingFromSearch = false;
     Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 
