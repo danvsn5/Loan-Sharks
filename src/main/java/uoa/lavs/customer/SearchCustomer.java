@@ -91,13 +91,8 @@ public class SearchCustomer {
     updateCustomerFields(loadCustomer, customer);
 
     if (addressStatus.getErrorCode() == 0) {
-
-      FindCustomerAddress findCustomerAddress = new FindCustomerAddress();
-      findCustomerAddress.setCustomerId(customerId);
-      findCustomerAddress.send(connection);
-      int count = findCustomerAddress.getCountFromServer();
-      System.out.println("Count: " + count);
-      updateCustomerAddresses(loadCustomerAddresses, customer, count);
+      System.out.println("Updating addresses...");
+      updateCustomerAddresses(loadCustomerAddresses, customer);
     }
 
     if (employerStatus.getErrorCode() == 0) {
@@ -218,11 +213,7 @@ public class SearchCustomer {
       updateCustomerFields(loadCustomer, customer);
       if (addressStatus.getErrorCode() == 0) {
         System.out.println("Updating addresses...");
-        FindCustomerAddress findCustomerAddress = new FindCustomerAddress();
-        findCustomerAddress.setCustomerId(customerId);
-        findCustomerAddress.send(connection);
-        int num = findCustomerAddress.getCountFromServer();
-        updateCustomerAddresses(loadCustomerAddresses, customer, num);
+        updateCustomerAddresses(loadCustomerAddresses, customer);
       }
 
       if (employerStatus.getErrorCode() == 0) {
@@ -260,15 +251,38 @@ public class SearchCustomer {
   }
 
   private void updateCustomerAddresses(
-      LoadCustomerAddresses loadCustomerAddresses, Customer customer, int count) {
+      LoadCustomerAddresses loadCustomerAddresses, Customer customer) {
     ArrayList<Address> addresses = new ArrayList<>();
+
+    Integer count = loadCustomerAddresses.getCountFromServer();
+
+    if (count == null || count == 0) {
+      customer.setAddresses(addresses);
+      return;
+    }
 
     for (int i = 1; i <= count; i++) {
       LoadCustomerAddress loadCustomerAddress = new LoadCustomerAddress();
       loadCustomerAddress.setCustomerId(customer.getCustomerId());
       loadCustomerAddress.setNumber(i);
-      loadCustomerAddress.send(Instance.getConnection());
-      System.out.println(loadCustomerAddress.getTypeFromServer());
+      Status status;
+      int attempts = 0;
+      while (true) {
+        status = loadCustomerAddress.send(Instance.getConnection());
+        if (status.getErrorCode() == 0) {
+          break;
+        }
+        attempts++;
+        if (attempts > 5) {
+          System.out.println("Error loading address: " + status.getErrorCode());
+          break;
+        }
+      }
+
+      if (attempts > 5) {
+        continue;
+      }
+
       Address address =
           new Address(
               customer.getCustomerId(),
