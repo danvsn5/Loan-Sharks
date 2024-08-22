@@ -53,7 +53,9 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
         },
         new DatePicker[] {},
         new RadioButton[] {});
-    setPrimaryDetails();
+    // TODO set primary details onto the screen if not create type.
+    // setPrimaryDetails();
+
   }
 
   @Override
@@ -104,6 +106,7 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
     if (!validateData()) {
       return;
     }
+    // need to set the text field of primary borrower id in the gui
 
     personalLoan.setPrincipal(Double.parseDouble(principalField.getText()));
     personalLoan.setRate(Double.parseDouble(interestRateField.getText()));

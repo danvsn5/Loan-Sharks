@@ -16,6 +16,9 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.loan.LoanDuration;
+import uoa.lavs.loan.PersonalLoan;
+import uoa.lavs.loan.PersonalLoanSingleton;
 
 public class LoanDurationController implements AccessTypeObserver {
   @FXML private DatePicker startDatePicker;
@@ -29,6 +32,8 @@ public class LoanDurationController implements AccessTypeObserver {
   @FXML private ImageView staticReturnImageView;
 
   @FXML private Button editButton;
+
+  PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @FXML
   private void initialize() {
@@ -75,7 +80,8 @@ public class LoanDurationController implements AccessTypeObserver {
         new ComboBox<?>[] {},
         new DatePicker[] {startDatePicker},
         new RadioButton[] {});
-    setDurationDetails();
+    // TODO set dration details onto the screen if not create type.
+    // setDurationDetails();
   }
 
   @Override
@@ -118,26 +124,37 @@ public class LoanDurationController implements AccessTypeObserver {
   }
 
   private void setDurationDetails() {
-    // TODO Auto-generated method stub
+    if (!validateData()) {
+      return;
+    }
+
+    LoanDuration loanDuration = personalLoan.getDuration();
+    loanDuration.setStartDate(startDatePicker.getValue());
+    loanDuration.setPeriod(Integer.parseInt(periodField.getText()));
+    loanDuration.setLoanTerm(30);
   }
 
   @FXML
   private void handlePrimaryButtonAction() {
+    setDurationDetails();
     Main.setUi(AppUI.LC_PRIMARY);
   }
 
   @FXML
   private void handleCoborrowerButtonAction() {
+    setDurationDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
   @FXML
   private void handleFinanceButtonAction() {
+    setDurationDetails();
     Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML
   private void handleSummaryButtonAction() {
+    setDurationDetails();
     Main.setUi(AppUI.LC_SUMMARY);
   }
 

@@ -14,6 +14,7 @@ import uoa.lavs.AppState;
 import uoa.lavs.ControllerHelper;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.SearchCustomer;
 import uoa.lavs.loan.PersonalLoan;
 import uoa.lavs.loan.PersonalLoanSingleton;
 
@@ -48,22 +49,47 @@ public class LoanCoborrower implements AccessTypeObserver {
         new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {});
+    // TODO set coborrower details onto the screen if not create type.
+    // setCoborrowerDetails();
   }
 
   // Add methods for all buttons
 
   @Override
   public boolean validateData() {
-    // Add validation code here
     boolean isValid = true;
 
-    coborrowerIDField1.setStyle("");
-    coborrowerIDField2.setStyle("");
-    coborrowerIDField3.setStyle("");
+    // Searches if mainframe/localdb has these ids and sets the style of the textfield accordingly
+    SearchCustomer searchCustomer = new SearchCustomer();
+    if (!coborrowerIDField1.getText().isEmpty()) {
+      if (coborrowerIDField1.getText() != personalLoan.getCustomerId()
+          && searchCustomer.searchCustomerById(coborrowerIDField1.getText()) != null) {
+        coborrowerIDField1.setStyle("");
+      } else {
+        coborrowerIDField1.setStyle("-fx-border-color: red");
+        isValid = false;
+      }
+    }
+    if (!coborrowerIDField2.getText().isEmpty()) {
+      if (coborrowerIDField2.getText() != personalLoan.getCustomerId()
+          && searchCustomer.searchCustomerById(coborrowerIDField2.getText()) != null) {
+        coborrowerIDField2.setStyle("");
+      } else {
+        coborrowerIDField2.setStyle("-fx-border-color: red");
+        isValid = false;
+      }
+    }
+    if (!coborrowerIDField3.getText().isEmpty()) {
+      if (coborrowerIDField3.getText() != personalLoan.getCustomerId()
+          && searchCustomer.searchCustomerById(coborrowerIDField3.getText()) != null) {
+        coborrowerIDField3.setStyle("");
+      } else {
+        coborrowerIDField3.setStyle("-fx-border-color: red");
+        isValid = false;
+      }
+    }
 
-    // TODO: Add validation code here (Jamie or Chul). Need to also show Name
-
-    return true;
+    return isValid;
   }
 
   @FXML
@@ -88,31 +114,49 @@ public class LoanCoborrower implements AccessTypeObserver {
     }
 
     ArrayList<String> ids = personalLoan.getCoborrowerIds();
-    ids.set(0, coborrowerIDField1.getText());
-    ids.set(1, coborrowerIDField2.getText());
-    ids.set(2, coborrowerIDField3.getText());
+    if (!coborrowerIDField1.getText().isEmpty()) {
+      ids.set(0, coborrowerIDField1.getText());
+    }
+    if (!coborrowerIDField2.getText().isEmpty()) {
+      ids.set(1, coborrowerIDField2.getText());
+    }
+    if (!coborrowerIDField3.getText().isEmpty()) {
+      ids.set(2, coborrowerIDField3.getText());
+    }
   }
 
   @FXML
   private void handlePrimaryButtonAction() {
+    if (!validateData()) {
+      return;
+    }
     setCoborrowerDetails();
     Main.setUi(AppUI.LC_PRIMARY);
   }
 
   @FXML
   private void handleDurationButtonAction() {
+    if (!validateData()) {
+      return;
+    }
     setCoborrowerDetails();
     Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML
   private void handleFinanceButtonAction() {
+    if (!validateData()) {
+      return;
+    }
     setCoborrowerDetails();
     Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML
   private void handleSummaryButtonAction() {
+    if (!validateData()) {
+      return;
+    }
     setCoborrowerDetails();
     Main.setUi(AppUI.LC_SUMMARY);
   }

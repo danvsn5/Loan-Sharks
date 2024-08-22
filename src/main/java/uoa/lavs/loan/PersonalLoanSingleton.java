@@ -18,8 +18,7 @@ public class PersonalLoanSingleton {
 
       LoanDuration loanDuration = new LoanDuration("-1", null, 0, 0);
       LoanPayment loanPayment = new LoanPayment("-1", "", "", "", false);
-      instance =
-          new PersonalLoan("-1", "", new ArrayList<String>(), 0, 0, "", loanDuration, loanPayment);
+      instance = new PersonalLoan("-1", "", coborrowerIds, 0, 0, "", loanDuration, loanPayment);
     }
     return instance;
   }

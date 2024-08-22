@@ -9,6 +9,8 @@ import uoa.lavs.AccessTypeObserver;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.loan.PersonalLoan;
+import uoa.lavs.loan.PersonalLoanSingleton;
 
 public class LoanSummaryController implements AccessTypeObserver {
   @FXML private TextField principalfField;
@@ -28,6 +30,8 @@ public class LoanSummaryController implements AccessTypeObserver {
   @FXML private Button durationButton;
   @FXML private Button financeButton;
   @FXML private ImageView staticReturnImageView;
+
+  PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @FXML
   private void initialize() {
