@@ -151,6 +151,18 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     // Primary and mailing address check, only one address can have primary and
     // mailing
 
+    if (!isPrimarySelected) {
+      primaryAddressRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
+    if (!isMailingSelected) {
+      mailingAddressRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
     if (!isValid) {
       return false;
     }
@@ -222,14 +234,32 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleMailingAddressRadioAction() {
-    // Add mailing address radio button action code here
-
+    // overrule strategy: if the mailing button is selected, the isMailing is set to false
+    // for all other addresses and the current address is set to true
+    if (mailingAddressRadio.isSelected() && addresses.size() > 0) {
+      for (int i = 0; i < addresses.size(); i++) {
+        addresses.get(i).setIsMailing(false);
+        isMailingSelected = true;
+      }
+      addresses.get(currentAddress).setIsMailing(true);
+    } else {
+      isMailingSelected = false;
+    }
   }
 
   @FXML
   private void handlePrimaryAddressRadioAction() {
-    // Add mailing address radio button action code here
-
+    // overrule strategy: if the primary button is selected, the isPrimary is set to false
+    // for all other addresses and the current address is set to true
+    if (primaryAddressRadio.isSelected() && addresses.size() > 0) {
+      for (int i = 0; i < addresses.size(); i++) {
+        addresses.get(i).setIsPrimary(false);
+        isPrimarySelected = true;
+      }
+      addresses.get(currentAddress).setIsPrimary(true);
+    } else {
+      isPrimarySelected = false;
+    }
   }
 
   @FXML
@@ -348,7 +378,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleDecAddress() {
-    if (currentAddress == 0) {
+    if (currentAddress != 0) {
       if (currentAddress == 0) {
         return;
       }

@@ -57,6 +57,9 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private int currentEmailPage = 0;
   private int amountOfValidEmails = 0;
 
+  private boolean isPrimaryEmailSet = false;
+  private boolean isPrimaryPhoneSet = false;
+
   @FXML
   private void initialize() {
     customerPhoneTypeBox.getItems().addAll("Home", "Work", "Mobile");
@@ -166,6 +169,18 @@ public class CustomerInputContactController implements AccessTypeObserver {
       isValid = false;
     }
 
+    if (!isPrimaryPhoneSet) {
+      phonePrimaryRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
+    if (!isPrimaryEmailSet) {
+      emailPrimaryRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
     if (!isValid) {
       return false;
     }
@@ -198,6 +213,47 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML
   private void handleCustomerEmployerButtonAction() {
     Main.setUi(AppUI.CI_EMPLOYER);
+  }
+
+  @FXML
+  private void phonePrimaryRadioClick() {
+    if (phonePrimaryRadio.isSelected()) {
+      for (Phone phone : existingCustomerPhones) {
+        phone.setIsPrimary(false);
+      }
+      existingCustomerPhones.get(currentNumberPage).setIsPrimary(true);
+      isPrimaryPhoneSet = true;
+    } else {
+      isPrimaryPhoneSet = false;
+    }
+  }
+
+  @FXML
+  private void emailPrimaryRadioClick() {
+    if (emailPrimaryRadio.isSelected()) {
+      for (Email email : existingCustomerEmails) {
+        email.setIsPrimary(false);
+      }
+      existingCustomerEmails.get(currentEmailPage).setIsPrimary(true);
+      isPrimaryEmailSet = true;
+    } else {
+      isPrimaryEmailSet = false;
+    }
+  }
+
+  @FXML
+  private void sendTextRadioClick() {
+    if (customerPhoneTypeBox.getValue() == "Mobile") {
+
+      if (!sendTextRadio.isSelected()) {
+        sendTextRadio.setSelected(false);
+      } else {
+        sendTextRadio.setSelected(true);
+      }
+
+    } else {
+      sendTextRadio.setSelected(false);
+    }
   }
 
   @FXML
