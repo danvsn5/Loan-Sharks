@@ -42,6 +42,9 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
     updateUIBasedOnAccessType();
     rateTypeBox.getItems().addAll("Floating", "Fixed");
     borrowerIDField.setDisable(true);
+
+    personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
+    borrowerIDField.setText(personalLoan.getCustomerId());
   }
 
   @FXML

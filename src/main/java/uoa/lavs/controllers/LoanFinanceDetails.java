@@ -42,6 +42,8 @@ public class LoanFinanceDetails implements AccessTypeObserver {
     updateUIBasedOnAccessType();
     compoundingBox.getItems().addAll("Weekly", "Monthly", "Annually");
     paymentFrequencyBox.getItems().addAll("Weekly", "Fortnightly", "Monthly");
+
+    personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
   }
 
   @FXML

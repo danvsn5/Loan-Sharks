@@ -69,6 +69,8 @@ public class LoanDurationController implements AccessTypeObserver {
         });
 
     termField.setDisable(true);
+
+    personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
   }
 
   // Add methods for all buttons

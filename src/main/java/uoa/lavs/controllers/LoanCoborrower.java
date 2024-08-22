@@ -40,6 +40,8 @@ public class LoanCoborrower implements AccessTypeObserver {
   private void initialize() {
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
+
+    personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
   }
 
   @FXML

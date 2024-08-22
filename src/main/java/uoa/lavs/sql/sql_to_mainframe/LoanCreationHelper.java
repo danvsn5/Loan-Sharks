@@ -57,6 +57,8 @@ public class LoanCreationHelper {
       return loadLoanSummary;
     } else {
       System.out.println("Loan summary failed");
+      System.out.println(status.getErrorMessage());
+      System.out.println(status.getErrorCode());
       return null;
     }
   }
