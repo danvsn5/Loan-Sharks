@@ -162,9 +162,7 @@ public class LoanDurationController implements AccessTypeObserverLoan {
 
   @FXML
   private void handleSummaryButtonAction() throws IOException {
-    if (!validateData()) {
-      return;
-    }
+    AccessTypeNotifier.validateLoanObservers();
     setDurationDetails();
     LoanCreationHelper.createLoan(personalLoan);
     LoanCreationHelper.getLoanSummary(personalLoan);
@@ -181,6 +179,32 @@ public class LoanDurationController implements AccessTypeObserverLoan {
       Main.setUi(AppUI.LOAN_RESULTS);
     } else {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
+    }
+  }
+
+  @Override
+  public Button getButton() {
+    return durationButton;
+  }
+
+  @FXML
+  public void setInvalidButton(String style) {
+    Button currentButton = AppState.getCurrentButton();
+
+    String buttonId = currentButton.getId();
+
+    if (buttonId != null) {
+      if (buttonId.equals("coborrowerButton")) {
+        coborrowerButton.setStyle(style);
+      } else if (buttonId.equals("durationButton")) {
+        durationButton.setStyle(style);
+      } else if (buttonId.equals("financeButton")) {
+        financeButton.setStyle(style);
+      } else if (buttonId.equals("primaryButton")) {
+        primaryButton.setStyle(style);
+      } else if (buttonId.equals("summaryButton")) {
+        summaryButton.setStyle(style);
+      }
     }
   }
 }
