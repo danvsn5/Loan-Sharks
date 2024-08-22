@@ -27,9 +27,13 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
   @FXML private TextField employerPhoneField;
   @FXML private RadioButton customerIsEmployerCheckbox;
 
-  @FXML private Button detailsButton;
-  @FXML private Button addressButton;
-  @FXML private Button contactButton;
+  @FXML private Button customerDetailsButton;
+  @FXML private Button customerAddressButton;
+  @FXML private Button customerContactButton;
+  @FXML private Button customerEmployerButton;
+
+  // TODO: THIS IS AN EXCEPTION, THIS NEEDS TO SHOWN AS RED ONLY TO THE EMPLOYER DETAILS SCREEN AND
+  // ITSELF
   @FXML private Button employerAddressButton;
 
   @FXML private Button editButton;

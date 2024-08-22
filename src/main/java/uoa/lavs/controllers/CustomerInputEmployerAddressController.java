@@ -29,10 +29,14 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML private ComboBox<String> employerCountryBox;
 
-  @FXML private Button detailsButton;
-  @FXML private Button addressButton;
-  @FXML private Button contactButton;
-  @FXML private Button employerButton;
+  @FXML private Button customerDetailsButton;
+  @FXML private Button customerAddressButton;
+  @FXML private Button customerContactButton;
+  @FXML private Button customerEmployerButton;
+
+  // TODO: THIS IS AN EXCEPTION, THIS NEEDS TO SHOWN AS RED ONLY TO THE EMPLOYER DETAILS SCREEN AND
+  // ITSELF
+  @FXML private Button employerAddressButton;
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;

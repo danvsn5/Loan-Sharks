@@ -44,8 +44,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML private Button customerDetailsButton;
   @FXML private Button customerAddressButton;
-  @FXML private Button customerEmployerButton;
   @FXML private Button customerContactButton;
+  @FXML private Button customerEmployerButton;
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;

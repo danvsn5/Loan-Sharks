@@ -34,10 +34,10 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   @FXML private ImageView decAddress;
   @FXML private Label addressPageLabel;
 
-  @FXML private Button detailsButton;
-  @FXML private Button mailingAddressButton;
-  @FXML private Button contactButton;
-  @FXML private Button employerButton;
+  @FXML private Button customerDetailsButton;
+  @FXML private Button customerAddressButton;
+  @FXML private Button customerContactButton;
+  @FXML private Button customerEmployerButton;
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;

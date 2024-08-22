@@ -37,6 +37,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private ComboBox<String> customerCitizenshipBox;
 
   @FXML private Button notesButton;
+  @FXML private Button customerDetailsButton;
   @FXML private Button customerAddressButton;
   @FXML private Button customerContactButton;
   @FXML private Button customerEmployerButton;
