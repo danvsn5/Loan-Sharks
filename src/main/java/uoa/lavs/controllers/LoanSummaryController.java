@@ -42,6 +42,9 @@ public class LoanSummaryController implements AccessTypeObserver {
     updateUIBasedOnAccessType();
     if (AppState.isOnLoanSummary) {
       setSummaryDetails();
+      // TODO summary becomes null when you go back, change something, and then forwards to summary
+      // details and it doesn't update in the mainframe because there are no new rows in the sql db,
+      // although they have been updated
     }
   }
 
@@ -60,6 +63,7 @@ public class LoanSummaryController implements AccessTypeObserver {
 
   private void setSummaryDetails() {
     LoadLoanSummary summary = AppState.getCurrentLoanSummary();
+    System.out.println("summar is null: " + (summary == null));
 
     principalfField.setText(Double.toString(summary.getPrincipalFromServer()));
     annualRateField.setText(Double.toString(summary.getRateValueFromServer()));
