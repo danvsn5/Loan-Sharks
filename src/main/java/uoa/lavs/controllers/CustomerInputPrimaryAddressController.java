@@ -40,6 +40,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
 
+  @FXML private Label idBanner;
+
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   // private ArrayList<uoa.lavs.customer.Address> addresses =
@@ -81,6 +83,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     ControllerHelper.updateUIBasedOnAccessType(
         AppState.customerDetailsAccessType,
         editButton,
+        idBanner,
         new TextField[] {
           customerAddressLine1Field,
           customerAddressLine2Field,

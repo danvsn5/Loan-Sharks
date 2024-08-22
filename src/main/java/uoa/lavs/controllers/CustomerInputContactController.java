@@ -47,6 +47,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
 
+  @FXML private Label idBanner;
+
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   private ArrayList<Phone> existingCustomerPhones = customer.getPhones();
@@ -91,6 +93,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     ControllerHelper.updateUIBasedOnAccessType(
         AppState.customerDetailsAccessType,
         editButton,
+        idBanner,
         new TextField[] {
           customerEmailTextField,
           customerPhoneNumberOne,
