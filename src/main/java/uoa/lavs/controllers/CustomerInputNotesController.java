@@ -48,6 +48,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType.equals("CREATE")) {
       customerNotesField.setEditable(true);
       editButton.setText("Create Customer");
+      setNotes();
     }
     if (AppState.customerDetailsAccessType.equals("VIEW")) {
       customerNotesField.setEditable(false);
@@ -56,8 +57,8 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType.equals("EDIT")) {
       customerNotesField.setEditable(true);
       editButton.setText("Confirm Changes");
+      setNotes();
     }
-    setNotes();
   }
 
   private void setNotes() {

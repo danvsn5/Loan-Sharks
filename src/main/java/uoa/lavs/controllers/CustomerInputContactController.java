@@ -112,6 +112,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
+      setContactDetails();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
@@ -119,6 +120,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
+      setContactDetails();
     }
   }
 
