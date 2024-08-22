@@ -29,6 +29,8 @@ public class CustomerSearchController {
 
   @FXML private Button searchButton;
 
+  @FXML private ImageView connectionSymbol;
+
   String state;
 
   @FXML
