@@ -18,7 +18,7 @@ public class SyncLoan extends Sync {
   PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @Override
-  protected void syncMainframeData(
+  protected Status syncMainframeData(
       ResultSet resultSet, uoa.lavs.mainframe.Connection connection, java.sql.Connection localConn)
       throws SQLException, IOException {
     String loanId = resultSet.getString("loanId");
@@ -59,6 +59,8 @@ public class SyncLoan extends Sync {
             "Error updating loan: " + status.getErrorCode() + status.getErrorMessage());
       }
     }
+
+    return loadStatus;
   }
 
   @Override

@@ -9,7 +9,7 @@ import uoa.lavs.mainframe.messages.customer.UpdateCustomerAddress;
 
 public class SyncAddress extends Sync {
   @Override
-  protected void syncMainframeData(
+  protected Status syncMainframeData(
       ResultSet resultSet, uoa.lavs.mainframe.Connection connection, java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
@@ -37,6 +37,8 @@ public class SyncAddress extends Sync {
     } else {
       System.out.println("Error updating address: " + status.getErrorMessage());
     }
+
+    return status;
   }
 
   @Override

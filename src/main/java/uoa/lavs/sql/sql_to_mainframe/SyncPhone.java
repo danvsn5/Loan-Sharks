@@ -9,7 +9,7 @@ import uoa.lavs.mainframe.messages.customer.UpdateCustomerPhoneNumber;
 
 public class SyncPhone extends Sync {
   @Override
-  protected void syncMainframeData(
+  protected Status syncMainframeData(
       ResultSet resultSet, uoa.lavs.mainframe.Connection connection, java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
@@ -36,6 +36,8 @@ public class SyncPhone extends Sync {
     } else {
       System.out.println("Error updating phone number: " + status.getErrorMessage());
     }
+
+    return status;
   }
 
   @Override

@@ -220,7 +220,7 @@ public class SearchCustomer {
       status = loadCustomer.send(connection);
 
       if (status.getErrorCode() != 0) {
-        System.out.println("Error loading customer: " + status.getErrorCode());
+        System.out.println("Error customer: " + status.getErrorCode());
         return null;
       }
 
