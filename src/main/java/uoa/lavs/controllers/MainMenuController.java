@@ -68,11 +68,14 @@ public class MainMenuController {
       Status status = SyncManager.masterSync();
       if (status.getErrorCode() == 0) {
         System.out.println("Sync successful");
+        syncLabel.setText("Sync successful");
       } else {
         System.out.println("Sync failed: " + status.getErrorMessage());
+        syncLabel.setText("Sync failed: " + status.getErrorMessage());
       }
     } else {
       System.out.println("No need to sync");
+      syncLabel.setText("No need to sync");
     }
 
   }
