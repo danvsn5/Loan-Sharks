@@ -13,6 +13,7 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.loan.PersonalLoanSingleton;
 import uoa.lavs.mainframe.Connection;
 import uoa.lavs.mainframe.Instance;
 import uoa.lavs.mainframe.Request;
@@ -32,17 +33,44 @@ public class CustomerMenuController {
   private ImageView staticReturnImageView;
 
   @FXML
+  private ImageView connectionSymbol;
+
+  @FXML
+  private Label connectionLabel;
+
+  @FXML
   private void initialize() {
     // Add initialization code here
   }
 
   @FXML
   private void handleAddNewCustomerButtonAction() throws IOException {
-    IndividualCustomerSingleton.resetInstance();
-    AppState.loadAllCustomerDetails("CREATE");
-    Main.setUi(AppUI.CI_DETAILS);
-    AppState.setCurrentUiName(AppUI.CI_DETAILS);
-    AppState.setPreviousUi(AppUI.CUSTOMER_MENU);
+
+    Connection connection = Instance.getConnection();
+
+    Request request = new Request(1);
+
+    Response response = (connection.send(request));
+    uoa.lavs.mainframe.Status status = response.getStatus();
+
+    // there was an issue connecting to the database
+    if (status.getErrorCode() == 1000
+        || status.getErrorCode() == 1010
+        || status.getErrorCode() == 1020) {
+      setRedSymbol();
+      connectionLabel.setText(status.getErrorMessage());
+      // if the 'unknown' message got a response, it's online
+    } else if (status.getErrorCode() == 100) {
+      setGreenSymbol();
+      connectionLabel.setText("Connection is successful");
+      IndividualCustomerSingleton.resetInstance();
+      AppState.loadAllCustomerDetails("CREATE");
+      Main.setUi(AppUI.CI_DETAILS);
+      // catch all for other messages
+    } else {
+      setOrangeSymbol();
+      connectionLabel.setText("Unidentified error. Please try again.");
+    }
   }
 
   @FXML
