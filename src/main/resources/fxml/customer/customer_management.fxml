@@ -51,7 +51,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="connectionSymbol" fitHeight="51.0" fitWidth="51.0" layoutX="14.0" layoutY="655.0" onMouseClicked="#getConnectionSample" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="connectionSymbol" fitHeight="51.0" fitWidth="51.0" layoutX="14.0" layoutY="655.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/connection.png" />
          </image>
