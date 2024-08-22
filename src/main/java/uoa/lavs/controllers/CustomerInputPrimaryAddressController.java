@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +18,7 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.IndividualCustomerSingleton;
+import uoa.lavs.sql.sql_to_mainframe.CustomerCreationHelper;
 
 public class CustomerInputPrimaryAddressController implements AccessTypeObserver {
   @FXML private ComboBox<String> customerAddressTypeComboBox;
@@ -39,6 +41,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
+
+  @FXML private Label idBanner;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -81,6 +85,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     ControllerHelper.updateUIBasedOnAccessType(
         AppState.customerDetailsAccessType,
         editButton,
+        idBanner,
         new TextField[] {
           customerAddressLine1Field,
           customerAddressLine2Field,
@@ -188,6 +193,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleMailingAddressButtonAction() {
+    setAddressDetails();
     Main.setUi(AppUI.CI_MAILING_ADDRESS);
   }
 
@@ -204,12 +210,15 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   }
 
   @FXML
-  private void handleEditButtonAction() {
+  private void handleEditButtonAction() throws IOException {
     if (AppState.customerDetailsAccessType.equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
+      setAddressDetails();
+      CustomerCreationHelper.createCustomer(customer);
+
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
       AccessTypeNotifier.notifyCustomerObservers();
@@ -219,6 +228,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
+      setAddressDetails();
+      CustomerCreationHelper.createCustomer(customer);
     }
   }
 

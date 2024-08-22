@@ -36,7 +36,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
 
-      if (customer.getNotes().size() > 0) {
+      if (customer.getNotes().size() > 0 && customer.getNotes().get(0).getLines().length > 0) {
         customerNotesField.setText(customer.getNotes().get(0).getLines()[0]);
       }
     }
@@ -48,6 +48,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType.equals("CREATE")) {
       customerNotesField.setEditable(true);
       editButton.setText("Create Customer");
+      setNotes();
     }
     if (AppState.customerDetailsAccessType.equals("VIEW")) {
       customerNotesField.setEditable(false);
@@ -56,8 +57,8 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType.equals("EDIT")) {
       customerNotesField.setEditable(true);
       editButton.setText("Confirm Changes");
+      setNotes();
     }
-    setNotes();
   }
 
   private void setNotes() {
@@ -102,6 +103,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
+    setNotes();
     Main.setUi(AppUI.CI_DETAILS);
   }
 

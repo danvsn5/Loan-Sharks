@@ -3,6 +3,7 @@ package uoa.lavs;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
@@ -11,6 +12,7 @@ public class ControllerHelper {
   public static void updateUIBasedOnAccessType(
       String accessType,
       Button editButton,
+      Label idBanner,
       TextField[] textFields,
       ComboBox<?>[] comboBoxes,
       DatePicker[] datePickers,
@@ -28,6 +30,7 @@ public class ControllerHelper {
       setRadioButtonsEditable(radioButtons);
 
       editButton.setText("Create Customer");
+      idBanner.setText("Creating Customer");
     } else if (accessType.equals("EDIT")) {
       setFieldsEditable(textFields);
       setComboBoxesEditable(comboBoxes);
@@ -35,12 +38,14 @@ public class ControllerHelper {
       setRadioButtonsEditable(radioButtons);
 
       editButton.setText("Confirm Changes");
+      idBanner.setText("Editing Customer Details");
     } else if (accessType.equals("VIEW")) {
       setFieldsNonEditable(textFields);
       setComboBoxesNonEditable(comboBoxes);
       setDatePickersNonEditable(datePickers);
       setRadioButtonsNonEditable(radioButtons);
 
+      idBanner.setText("Viewing Customer Details");
       editButton.setText("Edit Details");
     }
   }

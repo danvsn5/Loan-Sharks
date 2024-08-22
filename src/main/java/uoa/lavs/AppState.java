@@ -81,7 +81,7 @@ public class AppState {
     return currentUiName;
   }
 
-  public static List<?> getSearchResultList() {
+  public static List<Customer> getSearchResultList() {
     return searchResultList;
   }
 
