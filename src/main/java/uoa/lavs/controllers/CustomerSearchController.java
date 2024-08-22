@@ -139,15 +139,15 @@ public class CustomerSearchController {
     Response response = (connection.send(request));
     uoa.lavs.mainframe.Status status = response.getStatus();
 
-    System.out.println("Status: " + status.getErrorCode());
-
     // there was an issue connecting to the database
     if (status.getErrorCode() == 1000
         || status.getErrorCode() == 1010
         || status.getErrorCode() == 1020) {
       setRedSymbol();
+      // if the 'unknown' message got a response, it's online
     } else if (status.getErrorCode() == 100) {
       setGreenSymbol();
+      // catch all for other messages
     } else {
       setOrangeSymbol();
     }
