@@ -36,7 +36,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
 
-      if (customer.getNotes().size() > 0) {
+      if (customer.getNotes().size() > 0 && customer.getNotes().get(0).getLines().length > 0) {
         customerNotesField.setText(customer.getNotes().get(0).getLines()[0]);
       }
     }
