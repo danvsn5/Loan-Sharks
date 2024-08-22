@@ -20,6 +20,7 @@
             <Image url="@../../../images/customer_details.png" />
          </image>
       </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="333.0" layoutX="8.0" layoutY="272.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1259.0" />
       <Button fx:id="editButton" layoutX="518.0" layoutY="613.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="regular-button" stylesheets="@../../../css/index.css" text="Edit Details">
          <font>
             <Font size="27.0" />
