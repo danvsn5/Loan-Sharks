@@ -154,12 +154,14 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (!isPrimaryPhoneSet) {
-      phonePrimaryRadio.setStyle("-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      phonePrimaryRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
       isValid = false;
     }
 
     if (!isPrimaryEmailSet) {
-      emailPrimaryRadio.setStyle("-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      emailPrimaryRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
       isValid = false;
     }
 
@@ -224,7 +226,19 @@ public class CustomerInputContactController implements AccessTypeObserver {
   }
 
   @FXML
-  private void sendTextRadioClick() {}
+  private void sendTextRadioClick() {
+    if (customerPhoneTypeBox.getValue() == "Mobile") {
+
+      if (!sendTextRadio.isSelected()) {
+        sendTextRadio.setSelected(false);
+      } else {
+        sendTextRadio.setSelected(true);
+      }
+
+    } else {
+      sendTextRadio.setSelected(false);
+    }
+  }
 
   @FXML
   private void handleBackButtonAction() {
