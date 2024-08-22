@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -15,6 +16,8 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.loan.PersonalLoan;
 import uoa.lavs.loan.PersonalLoanSingleton;
+import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
+import uoa.lavs.sql.sql_to_mainframe.LoanCreationHelper;
 
 public class LoanPrimaryDetails implements AccessTypeObserver {
   @FXML private TextField borrowerIDField;
@@ -133,8 +136,10 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   }
 
   @FXML
-  private void handleSummaryButtonAction() {
+  private void handleSummaryButtonAction() throws IOException {
     setPrimaryDetails();
+    LoanCreationHelper.createLoan(personalLoan);
+    LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
     Main.setUi(AppUI.LC_SUMMARY);
   }
 

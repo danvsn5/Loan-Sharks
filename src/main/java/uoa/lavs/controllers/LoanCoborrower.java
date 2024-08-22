@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +18,8 @@ import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.SearchCustomer;
 import uoa.lavs.loan.PersonalLoan;
 import uoa.lavs.loan.PersonalLoanSingleton;
+import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
+import uoa.lavs.sql.sql_to_mainframe.LoanCreationHelper;
 
 public class LoanCoborrower implements AccessTypeObserver {
   @FXML private TextField coborrowerIDField1;
@@ -153,11 +156,14 @@ public class LoanCoborrower implements AccessTypeObserver {
   }
 
   @FXML
-  private void handleSummaryButtonAction() {
+  private void handleSummaryButtonAction() throws IOException {
     if (!validateData()) {
       return;
     }
     setCoborrowerDetails();
+    LoanCreationHelper.createLoan(personalLoan);
+    LoanCreationHelper.getLoanSummary(personalLoan);
+    LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
     Main.setUi(AppUI.LC_SUMMARY);
   }
 

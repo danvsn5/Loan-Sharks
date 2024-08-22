@@ -52,7 +52,7 @@ public class CustomerResultsController {
       searchResultsNameList.add(IndividualCustomerSingleton.getInstance().getName());
       searchResultsIDList.add(IndividualCustomerSingleton.getInstance().getCustomerId());
     } else {
-      // allan to implement 
+      // allan to implement
     }
   }
 

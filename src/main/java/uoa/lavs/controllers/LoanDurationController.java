@@ -1,5 +1,6 @@
 package uoa.lavs.controllers;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.loan.LoanDuration;
 import uoa.lavs.loan.PersonalLoan;
 import uoa.lavs.loan.PersonalLoanSingleton;
+import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
+import uoa.lavs.sql.sql_to_mainframe.LoanCreationHelper;
 
 public class LoanDurationController implements AccessTypeObserver {
   @FXML private DatePicker startDatePicker;
@@ -153,8 +156,11 @@ public class LoanDurationController implements AccessTypeObserver {
   }
 
   @FXML
-  private void handleSummaryButtonAction() {
+  private void handleSummaryButtonAction() throws IOException {
     setDurationDetails();
+    LoanCreationHelper.createLoan(personalLoan);
+    LoanCreationHelper.getLoanSummary(personalLoan);
+    LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
     Main.setUi(AppUI.LC_SUMMARY);
   }
 
