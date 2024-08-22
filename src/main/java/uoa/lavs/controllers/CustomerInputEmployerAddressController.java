@@ -43,6 +43,18 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     employerCountryBox.getItems().addAll(AppState.getAllCountries());
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
+
+    if (AppState.isAccessingFromSearch) {
+      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+      customer = IndividualCustomerSingleton.getInstance();
+
+      employerAddressLine1Field.setText(customer.getEmployer().getLineOne());
+      employerAddressLine2Field.setText(customer.getEmployer().getLineTwo());
+      employerSuburbField.setText(customer.getEmployer().getSuburb());
+      employerCityField.setText(customer.getEmployer().getCity());
+      employerPostcodeField.setText(customer.getEmployer().getPostCode());
+      employerCountryBox.setValue(customer.getEmployer().getCountry());
+    }
   }
 
   @Override
