@@ -142,9 +142,9 @@ public class LoanPrimaryDetails implements AccessTypeObserver {
   private void handleSummaryButtonAction() throws IOException {
     setPrimaryDetails();
     LoanCreationHelper.createLoan(personalLoan);
+    LoanCreationHelper.getLoanSummary(personalLoan);
     LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
     AppState.setCurrentLoanSummary(loadLoanSummary);
-    AppState.isOnLoanSummary = true;
 
     AppState.loadLoanSummary(AppState.loanDetailsAccessType);
   }

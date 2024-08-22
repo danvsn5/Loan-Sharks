@@ -38,9 +38,14 @@ public class SyncLoan extends Sync {
         System.out.println("Error updating loan: " + status.getErrorMessage());
       }
     } else {
+      System.out.println("Error loading loan: " + loadStatus.getErrorMessage());
+      System.out.println(loadStatus.getErrorCode());
       System.out.println("Loan not found in mainframe, creating new loan");
       UpdateLoan updateLoan = updateLoan(resultSet, null);
       Status status = updateLoan.send(connection);
+      while (status.getErrorCode() == 1020) {
+        status = updateLoan.send(connection);
+      }
 
       String newLoanId = updateLoan.getLoanIdFromServer();
 
@@ -50,38 +55,23 @@ public class SyncLoan extends Sync {
       if (status.getErrorCode() == 0) {
         System.out.println("Loan updated successfully.");
       } else {
-        System.out.println("Error updating loan: " + status.getErrorMessage());
+        System.out.println(
+            "Error updating loan: " + status.getErrorCode() + status.getErrorMessage());
       }
     }
   }
 
   @Override
   protected String getSqlQuery() {
-    return "SELECT "
-        + "l.loanId, "
-        + "l.customerId, "
-        + "l.principal, "
-        + "l.rate, "
-        + "l.rateType, "
-        + "l.lastModified AS loanLastModified, "
-        + "ld.durationId, "
-        + "ld.startDate, "
-        + "ld.period, "
-        + "ld.loanTerm, "
-        + "ld.lastModified AS durationLastModified, "
-        + "lp.paymentId, "
-        + "lp.compounding, "
-        + "lp.paymentFrequency, "
-        + "lp.paymentAmount, "
-        + "lp.interestOnly, "
-        + "lp.lastModified AS paymentLastModified, "
-        + "lc.coborrowerId, "
-        + "lc.lastModified AS coborrowerLastModified "
-        + "FROM loan l "
-        + "LEFT JOIN loan_duration ld ON l.loanId = ld.loanId "
-        + "LEFT JOIN loan_payment lp ON l.loanId = lp.loanId "
-        + "LEFT JOIN loan_coborrower lc ON l.loanId = lc.loanId "
-        + "WHERE l.lastModified > ? OR ld.lastModified > ? OR lp.lastModified > ? OR lc.lastModified > ?";
+    return "SELECT l.loanId, l.customerId, l.principal, l.rate, l.rateType, l.lastModified AS"
+        + " loanLastModified, ld.durationId, ld.startDate, ld.period, ld.loanTerm,"
+        + " ld.lastModified AS durationLastModified, lp.paymentId, lp.compounding,"
+        + " lp.paymentFrequency, lp.paymentAmount, lp.interestOnly, lp.lastModified AS"
+        + " paymentLastModified, lc.coborrowerId, lc.lastModified AS coborrowerLastModified"
+        + " FROM loan l LEFT JOIN loan_duration ld ON l.loanId = ld.loanId LEFT JOIN"
+        + " loan_payment lp ON l.loanId = lp.loanId LEFT JOIN loan_coborrower lc ON l.loanId"
+        + " = lc.loanId WHERE l.lastModified > ? OR ld.lastModified > ? OR lp.lastModified >"
+        + " ? OR lc.lastModified > ?";
   }
 
   private UpdateLoan updateLoan(ResultSet resultSet, String loanId) throws SQLException {

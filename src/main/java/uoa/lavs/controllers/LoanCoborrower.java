@@ -167,7 +167,6 @@ public class LoanCoborrower implements AccessTypeObserver {
     LoanCreationHelper.getLoanSummary(personalLoan);
     LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
     AppState.setCurrentLoanSummary(loadLoanSummary);
-    AppState.isOnLoanSummary = true;
 
     AppState.loadLoanSummary(AppState.loanDetailsAccessType);
   }
