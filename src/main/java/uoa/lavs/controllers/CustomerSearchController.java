@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -15,26 +16,38 @@ import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.Customer;
 import uoa.lavs.customer.SearchCustomer;
+import uoa.lavs.mainframe.Connection;
+import uoa.lavs.mainframe.Instance;
+import uoa.lavs.mainframe.Request;
+import uoa.lavs.mainframe.Response;
 
 public class CustomerSearchController {
-  @FXML private Label searchWithCustomerIDLabel; // When click label, reveal text box.
+  @FXML
+  private Label searchWithCustomerIDLabel; // When click label, reveal text box.
 
-  @FXML private Label searchWithNameLabel; // When click label, reveal text box.
+  @FXML
+  private Label searchWithNameLabel; // When click label, reveal text box.
 
-  @FXML private ImageView staticReturnImageView;
+  @FXML
+  private ImageView staticReturnImageView;
 
-  @FXML private TextField usernameField;
+  @FXML
+  private TextField usernameField;
 
-  @FXML private TextField idField;
+  @FXML
+  private TextField idField;
 
-  @FXML private Button searchButton;
+  @FXML
+  private Button searchButton;
 
-  @FXML private ImageView connectionSymbol;
+  @FXML
+  private ImageView connectionSymbol;
 
   String state;
 
   @FXML
-  private void initialize() {}
+  private void initialize() {
+  }
 
   // When enter key is pressed, perform search.
   @FXML
@@ -115,4 +128,52 @@ public class CustomerSearchController {
       Main.setUi(AppUI.CUSTOMER_MENU);
     }
   }
+
+  @FXML
+  private void getConnectionSample() {
+
+    Connection connection = Instance.getConnection();
+
+    Request request = new Request(1);
+
+    Response response = (connection.send(request));
+    uoa.lavs.mainframe.Status status = response.getStatus();
+
+    System.out.println("Status: " + status.getErrorCode());
+
+    // there was an issue connecting to the database
+    if (status.getErrorCode() == 1000
+        || status.getErrorCode() == 1010
+        || status.getErrorCode() == 1020) {
+      setRedSymbol();
+    } else if (status.getErrorCode() == 100) {
+      setGreenSymbol();
+    } else {
+      setOrangeSymbol();
+    }
+  }
+
+  private void setRedSymbol() {
+    ColorAdjust red = new ColorAdjust();
+    red.setBrightness(0);
+    red.setSaturation(1);
+    connectionSymbol.setEffect(red);
+  }
+
+  private void setGreenSymbol() {
+    ColorAdjust green = new ColorAdjust();
+    green.setBrightness(-0.3);
+    green.setSaturation(1);
+    green.setHue(0.82);
+    connectionSymbol.setEffect(green);
+  }
+
+  private void setOrangeSymbol() {
+    ColorAdjust orange = new ColorAdjust();
+    orange.setBrightness(0.0);
+    orange.setSaturation(1);
+    orange.setHue(0.16);
+    connectionSymbol.setEffect(orange);
+  }
+
 }

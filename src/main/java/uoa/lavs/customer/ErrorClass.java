@@ -1,7 +1,8 @@
 package uoa.lavs.customer;
 
 public class ErrorClass {
-    // online 0 = offline, 1 = unsynced, 2 = online
+    // online 
+    // 0 = offline, 1 = unsynced, 2 = online
     private int online;
     private String message;
 
