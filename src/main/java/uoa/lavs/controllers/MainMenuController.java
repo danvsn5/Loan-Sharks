@@ -43,6 +43,9 @@ public class MainMenuController {
   private Button syncButton;
 
   @FXML
+  private Label syncLabel;
+
+  @FXML
   private void initialize() {
     welcomeLabel.setText("Welcome!");
     staticReturnImageView.setDisable(true);
@@ -59,7 +62,7 @@ public class MainMenuController {
   @FXML
   private void onClickSyncButton() throws SQLException, IOException {
     System.out.println("Sync button clicked");
-    // check if needs syncing 
+    // check if needs syncing
     if (SyncManager.checkIfNeedsSyncing()) {
       System.out.println("Needs to sync");
       Status status = SyncManager.masterSync();
@@ -71,7 +74,7 @@ public class MainMenuController {
     } else {
       System.out.println("No need to sync");
     }
-    
+
   }
 
   @FXML
