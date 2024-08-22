@@ -43,9 +43,6 @@ public class SyncManager {
       System.out.println(e.getMessage());
     } finally {
       try {
-        if (mainframeConnection != null) {
-          mainframeConnection.close();
-        }
         if (localConnection != null) {
           localConnection.close();
         }
