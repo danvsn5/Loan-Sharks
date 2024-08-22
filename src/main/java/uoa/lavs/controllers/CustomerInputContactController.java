@@ -136,6 +136,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
     customerPhoneNumberOne.setStyle("");
     customerEmailTextField.setStyle("");
     customerPhoneTypeBox.setStyle("");
+    phonePrimaryRadio.setStyle("");
+    emailPrimaryRadio.setStyle("");
 
     if (customerPhoneTypeBox.getValue() == null) {
       customerPhoneTypeBox.setStyle("-fx-border-color: red;");
