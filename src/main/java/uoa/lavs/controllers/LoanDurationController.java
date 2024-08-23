@@ -162,14 +162,17 @@ public class LoanDurationController implements AccessTypeObserverLoan {
 
   @FXML
   private void handleSummaryButtonAction() throws IOException {
-    AccessTypeNotifier.validateLoanObservers();
-    setDurationDetails();
-    LoanCreationHelper.createLoan(personalLoan);
-    LoanCreationHelper.getLoanSummary(personalLoan);
-    LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
-    AppState.setCurrentLoanSummary(loadLoanSummary);
 
-    AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+    setDurationDetails();
+
+    if (AccessTypeNotifier.validateLoanObservers()) {
+      LoanCreationHelper.createLoan(personalLoan);
+      LoanCreationHelper.getLoanSummary(personalLoan);
+      LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
+      AppState.setCurrentLoanSummary(loadLoanSummary);
+
+      AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+    }
   }
 
   @FXML

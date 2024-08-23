@@ -142,14 +142,16 @@ public class LoanPrimaryDetails implements AccessTypeObserverLoan {
 
   @FXML
   private void handleSummaryButtonAction() throws IOException {
-    AccessTypeNotifier.validateLoanObservers();
-    setPrimaryDetails();
-    LoanCreationHelper.createLoan(personalLoan);
-    LoanCreationHelper.getLoanSummary(personalLoan);
-    LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
-    AppState.setCurrentLoanSummary(loadLoanSummary);
 
-    AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+    setPrimaryDetails();
+    if (AccessTypeNotifier.validateLoanObservers()) {
+      LoanCreationHelper.createLoan(personalLoan);
+      LoanCreationHelper.getLoanSummary(personalLoan);
+      LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
+      AppState.setCurrentLoanSummary(loadLoanSummary);
+
+      AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+    }
   }
 
   @FXML

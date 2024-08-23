@@ -161,14 +161,16 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
 
   @FXML
   private void handleSummaryButtonAction() throws IOException {
-    AccessTypeNotifier.validateLoanObservers();
-    setCoborrowerDetails();
-    LoanCreationHelper.createLoan(personalLoan);
-    LoanCreationHelper.getLoanSummary(personalLoan);
-    LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
-    AppState.setCurrentLoanSummary(loadLoanSummary);
 
-    AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+    setCoborrowerDetails();
+    if (AccessTypeNotifier.validateLoanObservers()) {
+      LoanCreationHelper.createLoan(personalLoan);
+      LoanCreationHelper.getLoanSummary(personalLoan);
+      LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
+      AppState.setCurrentLoanSummary(loadLoanSummary);
+
+      AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+    }
   }
 
   @FXML
