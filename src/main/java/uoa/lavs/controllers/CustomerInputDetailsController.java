@@ -212,8 +212,8 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       // Save customer to database or perform necessary actions
       AppState.customerDetailsAccessType = "VIEW";
       setCustomerDetails();
-      CustomerCreationHelper.createCustomer(customer);
       AccessTypeNotifier.notifyCustomerObservers();
+      CustomerCreationHelper.createCustomer(customer);
 
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       // Switch to edit mode
