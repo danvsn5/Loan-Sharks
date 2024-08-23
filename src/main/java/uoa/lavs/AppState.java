@@ -39,6 +39,7 @@ public class AppState {
 
   public static void loadAllCustomerDetails(String accessType) throws IOException {
     customerDetailsAccessType = accessType;
+    currentButton = null;
     // Add all customer details scenes
     SceneManager.addScene(
         AppUI.CI_DETAILS, loadFxml("customer/customer_details/customer_details_details"));
@@ -56,6 +57,7 @@ public class AppState {
 
   public static void loadLoans(String accessType) throws IOException {
     loanDetailsAccessType = accessType;
+    currentButton = null;
     // Add all loan scenes
     SceneManager.addScene(
         AppUI.LC_COBORROWER, loadFxml("loan/loan_details/coborrower_loan_details"));
