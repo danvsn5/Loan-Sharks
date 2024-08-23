@@ -79,23 +79,28 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       existingCustomerPhones = customer.getPhones();
       existingCustomerEmails = customer.getEmails();
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(0).getType());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(0).getPrefix());
-      customerPhoneNumberOne.setText(existingCustomerPhones.get(0).getPhoneNumber());
-      sendTextRadio.setSelected(existingCustomerPhones.get(0).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(0).getIsPrimary());
-      if (phonePrimaryRadio.isSelected()) {
-        isPrimaryPhoneSet = true;
-      } else {
-        isPrimaryPhoneSet = false;
+      if (existingCustomerPhones.size() > 0) {
+
+        customerPhoneTypeBox.setValue(existingCustomerPhones.get(0).getType());
+        customerPhonePrefixField.setText(existingCustomerPhones.get(0).getPrefix());
+        customerPhoneNumberOne.setText(existingCustomerPhones.get(0).getPhoneNumber());
+        sendTextRadio.setSelected(existingCustomerPhones.get(0).getCanSendText());
+        phonePrimaryRadio.setSelected(existingCustomerPhones.get(0).getIsPrimary());
+        if (phonePrimaryRadio.isSelected()) {
+          isPrimaryPhoneSet = true;
+        } else {
+          isPrimaryPhoneSet = false;
+        }
       }
 
-      customerEmailTextField.setText(existingCustomerEmails.get(0).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(0).getIsPrimary());
-      if (emailPrimaryRadio.isSelected()) {
-        isPrimaryEmailSet = true;
-      } else {
-        isPrimaryEmailSet = false;
+      if (existingCustomerEmails.size() > 0) {
+        customerEmailTextField.setText(existingCustomerEmails.get(0).getEmailAddress());
+        emailPrimaryRadio.setSelected(existingCustomerEmails.get(0).getIsPrimary());
+        if (emailPrimaryRadio.isSelected()) {
+          isPrimaryEmailSet = true;
+        } else {
+          isPrimaryEmailSet = false;
+        }
       }
     }
   }

@@ -154,36 +154,36 @@ public class CustomerResultsController {
 
   private void loadCustomer(int index) throws IOException {
     Customer customer = searchResultList.get((currentPage - 1) * 6 + index - 1);
-    boolean nullFields = nullFields(customer);
+    // boolean nullFields = nullFields(customer);
     if (AppState.isCreatingLoan) {
       AppState.selectedCustomer = customer;
       AppState.loadLoans("CREATE");
       Main.setUi(AppUI.LC_PRIMARY);
-    } else {
-      if (nullFields) {
-        nullLabel.setVisible(true);
-      } else {
-        AppState.selectedCustomer = customer;
-        AppState.isAccessingFromSearch = true;
-        AppState.loadAllCustomerDetails("VIEW");
-        Main.setUi(AppUI.CI_DETAILS);
-      }
+    }
+    // else {
+    // if (nullFields) {
+    //   nullLabel.setVisible(true);
+    // }
+    else {
+      AppState.selectedCustomer = customer;
+      AppState.isAccessingFromSearch = true;
+      AppState.loadAllCustomerDetails("VIEW");
+      Main.setUi(AppUI.CI_DETAILS);
     }
   }
-
-  private boolean nullFields(Customer customer) {
-    System.out.println("Null Field check");
-    return (customer.getAddresses().size() == 0
-        || customer.getCitizenship().equals(null)
-        || customer.getCustomerId().equals(null)
-        || customer.getDateOfBirth().equals(null)
-        || customer.getEmails().size() == 0
-        || customer.getEmployer().equals(null)
-        || customer.getName().equals(null)
-        || customer.getNotes().equals(null)
-        || customer.getOccupation().equals(null)
-        || customer.getPhones().size() == 0
-        || customer.getTitle().equals(null)
-        || customer.getVisa().equals(null));
-  }
 }
+
+  // private boolean nullFields(Customer customer) {
+  //   System.out.println("Null Field check");
+  //   return (customer.getAddresses().size() == 0
+  //       || customer.getCitizenship().equals(null)
+  //       || customer.getCustomerId().equals(null)
+  //       || customer.getDateOfBirth().equals(null)
+  //       || customer.getEmails().size() == 0
+  //       || customer.getEmployer().equals(null)
+  //       || customer.getName().equals(null)
+  //       || customer.getNotes().equals(null)
+  //       || customer.getOccupation().equals(null)
+  //      || customer.getPhones().size() == 0
+  //     || customer.getTitle().equals(null)
+  //    || customer.getVisa().equals(null));
