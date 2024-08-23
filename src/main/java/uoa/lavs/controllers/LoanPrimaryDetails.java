@@ -156,12 +156,13 @@ public class LoanPrimaryDetails implements AccessTypeObserverLoan {
 
   @FXML
   private void handleBackButtonAction() {
-    // Need to add logic if they got here from loan search
     if (AppState.isAccessingFromLoanSearch) {
       AppState.isAccessingFromLoanSearch = false;
       Main.setUi(AppUI.LOAN_RESULTS);
-    } else {
+    } else if (AppState.isCreatingLoan) {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
+    } else {
+      Main.setUi(AppUI.LC_SUMMARY);
     }
   }
 

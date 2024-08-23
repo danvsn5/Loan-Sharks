@@ -178,8 +178,10 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
     if (AppState.isAccessingFromLoanSearch) {
       AppState.isAccessingFromLoanSearch = false;
       Main.setUi(AppUI.LOAN_RESULTS);
-    } else {
+    } else if (AppState.isCreatingLoan) {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
+    } else {
+      Main.setUi(AppUI.LC_SUMMARY);
     }
   }
 
