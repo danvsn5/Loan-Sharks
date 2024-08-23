@@ -38,7 +38,16 @@ public class AccessTypeNotifier {
     boolean isValid = true;
     for (AccessTypeObserverLoan observer : loanObservers) {
       if (!observer.validateData()) {
+        AppState.setCurrentButton(observer.getButton());
+        for (AccessTypeObserverLoan disableObserer : loanObservers) {
+          disableObserer.setInvalidButton("-fx-border-color: red;");
+        }
         isValid = false;
+      } else {
+        AppState.setCurrentButton(observer.getButton());
+        for (AccessTypeObserverLoan disableObserer : loanObservers) {
+          disableObserer.setInvalidButton("");
+        }
       }
     }
     return isValid;

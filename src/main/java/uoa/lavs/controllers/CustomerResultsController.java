@@ -173,16 +173,16 @@ public class CustomerResultsController {
 
   private boolean nullFields(Customer customer) {
     System.out.println("Null Field check");
-    return (customer.getAddresses().equals(null)
+    return (customer.getAddresses().size() == 0
         || customer.getCitizenship().equals(null)
         || customer.getCustomerId().equals(null)
         || customer.getDateOfBirth().equals(null)
-        || customer.getEmails().equals(null)
+        || customer.getEmails().size() == 0
         || customer.getEmployer().equals(null)
         || customer.getName().equals(null)
         || customer.getNotes().equals(null)
         || customer.getOccupation().equals(null)
-        || customer.getPhones().equals(null)
+        || customer.getPhones().size() == 0
         || customer.getTitle().equals(null)
         || customer.getVisa().equals(null));
   }

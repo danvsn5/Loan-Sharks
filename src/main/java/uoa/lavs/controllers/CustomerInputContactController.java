@@ -79,14 +79,24 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       existingCustomerPhones = customer.getPhones();
       existingCustomerEmails = customer.getEmails();
-      customerPhoneTypeBox.setValue(customer.getPhones().get(0).getType());
-      customerPhonePrefixField.setText(customer.getPhones().get(0).getPrefix());
-      customerPhoneNumberOne.setText(customer.getPhones().get(0).getPhoneNumber());
-      sendTextRadio.setSelected(customer.getPhones().get(0).getCanSendText());
-      phonePrimaryRadio.setSelected(customer.getPhones().get(0).getIsPrimary());
+      customerPhoneTypeBox.setValue(existingCustomerPhones.get(0).getType());
+      customerPhonePrefixField.setText(existingCustomerPhones.get(0).getPrefix());
+      customerPhoneNumberOne.setText(existingCustomerPhones.get(0).getPhoneNumber());
+      sendTextRadio.setSelected(existingCustomerPhones.get(0).getCanSendText());
+      phonePrimaryRadio.setSelected(existingCustomerPhones.get(0).getIsPrimary());
+      if (phonePrimaryRadio.isSelected()) {
+        isPrimaryPhoneSet = true;
+      } else {
+        isPrimaryPhoneSet = false;
+      }
 
-      customerEmailTextField.setText(customer.getEmails().get(0).getEmailAddress());
-      emailPrimaryRadio.setSelected(customer.getEmails().get(0).getIsPrimary());
+      customerEmailTextField.setText(existingCustomerEmails.get(0).getEmailAddress());
+      emailPrimaryRadio.setSelected(existingCustomerEmails.get(0).getIsPrimary());
+      if (emailPrimaryRadio.isSelected()) {
+        isPrimaryEmailSet = true;
+      } else {
+        isPrimaryEmailSet = false;
+      }
     }
   }
 

@@ -142,26 +142,53 @@ public class LoanPrimaryDetails implements AccessTypeObserverLoan {
 
   @FXML
   private void handleSummaryButtonAction() throws IOException {
-    if (!validateData()) {
-      return;
-    }
-    setPrimaryDetails();
-    LoanCreationHelper.createLoan(personalLoan);
-    LoanCreationHelper.getLoanSummary(personalLoan);
-    LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
-    AppState.setCurrentLoanSummary(loadLoanSummary);
 
-    AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+    setPrimaryDetails();
+    if (AccessTypeNotifier.validateLoanObservers()) {
+      LoanCreationHelper.createLoan(personalLoan);
+      LoanCreationHelper.getLoanSummary(personalLoan);
+      LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
+      AppState.setCurrentLoanSummary(loadLoanSummary);
+
+      AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+    }
   }
 
   @FXML
   private void handleBackButtonAction() {
-    // Need to add logic if they got here from loan search
     if (AppState.isAccessingFromLoanSearch) {
       AppState.isAccessingFromLoanSearch = false;
       Main.setUi(AppUI.LOAN_RESULTS);
-    } else {
+    } else if (AppState.isCreatingLoan) {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
+    } else {
+      Main.setUi(AppUI.LC_SUMMARY);
+    }
+  }
+
+  @Override
+  public Button getButton() {
+    return primaryButton;
+  }
+
+  @FXML
+  public void setInvalidButton(String style) {
+    Button currentButton = AppState.getCurrentButton();
+
+    String buttonId = currentButton.getId();
+
+    if (buttonId != null) {
+      if (buttonId.equals("coborrowerButton")) {
+        coborrowerButton.setStyle(style);
+      } else if (buttonId.equals("durationButton")) {
+        durationButton.setStyle(style);
+      } else if (buttonId.equals("financeButton")) {
+        financeButton.setStyle(style);
+      } else if (buttonId.equals("primaryButton")) {
+        primaryButton.setStyle(style);
+      } else if (buttonId.equals("summaryButton")) {
+        summaryButton.setStyle(style);
+      }
     }
   }
 }

@@ -167,4 +167,16 @@ public class LoanSummaryController implements AccessTypeObserverLoan {
     // No Data to validate
     return true;
   }
+
+  @Override
+  public Button getButton() {
+    // Fake Button
+    Button button = new Button();
+    return button;
+  }
+
+  @Override
+  public void setInvalidButton(String string) {
+    // Do nothing
+  }
 }

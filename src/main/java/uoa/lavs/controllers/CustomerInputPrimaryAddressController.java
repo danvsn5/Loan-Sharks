@@ -67,14 +67,21 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       customer = IndividualCustomerSingleton.getInstance();
 
       if (customer.getAddresses().size() > 0) {
+        addresses = customer.getAddresses();
         customerAddressTypeComboBox.setValue(customer.getAddresses().get(0).getAddressType());
         customerAddressLine1Field.setText(customer.getAddresses().get(0).getAddressLineOne());
         customerAddressLine2Field.setText(customer.getAddresses().get(0).getAddressLineTwo());
         customerSuburbField.setText(customer.getAddresses().get(0).getSuburb());
         customerCityField.setText(customer.getAddresses().get(0).getCity());
-        customerPostcodeField.setText(customer.getAddresses().get(0).getPostCode());
-        mailingAddressRadio.setSelected(customer.getAddresses().get(0).getIsMailing());
-        primaryAddressRadio.setSelected(customer.getAddresses().get(0).getIsPrimary());
+        customerPostcodeField.setText(addresses.get(0).getPostCode());
+        mailingAddressRadio.setSelected(addresses.get(0).getIsMailing());
+        primaryAddressRadio.setSelected(addresses.get(0).getIsPrimary());
+        if (mailingAddressRadio.isSelected()) {
+          isMailingSelected = true;
+        }
+        if (primaryAddressRadio.isSelected()) {
+          isPrimarySelected = true;
+        }
       }
     }
   }
@@ -229,7 +236,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
       setAddressDetails();
-      CustomerCreationHelper.createCustomer(customer);
     }
   }
 
