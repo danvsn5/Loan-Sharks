@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -67,11 +68,33 @@ public class CustomerResultsController {
         Customer customer = searchResultList.get(resultIndex);
         getLabelByIndex(i + 1, "name").setText(customer.getName());
         getLabelByIndex(i + 1, "id").setText(customer.getCustomerId());
+        // Enable the rectangle
+        getRectangleByIndex(i + 1).setDisable(false);
       } else {
         getLabelByIndex(i + 1, "name").setText("");
         getLabelByIndex(i + 1, "id").setText("");
+        // Disable the rectangle too
+        getRectangleByIndex(i + 1).setDisable(true);
       }
     }
+  }
+
+  private Node getRectangleByIndex(int i) {
+    switch (i) {
+      case 1:
+        return searchResultsRectangle1;
+      case 2:
+        return searchResultsRectangle2;
+      case 3:
+        return searchResultsRectangle3;
+      case 4:
+        return searchResultsRectangle4;
+      case 5:
+        return searchResultsRectangle5;
+      case 6:
+        return searchResultsRectangle6;
+    }
+    return null;
   }
 
   private Label getLabelByIndex(int index, String type) {
@@ -155,10 +178,15 @@ public class CustomerResultsController {
   private void loadCustomer(int index) throws IOException {
     Customer customer = searchResultList.get((currentPage - 1) * 6 + index - 1);
     // boolean nullFields = nullFields(customer);
-    if (AppState.isCreatingLoan) {
-      AppState.selectedCustomer = customer;
-      AppState.loadLoans("CREATE");
-      Main.setUi(AppUI.LC_PRIMARY);
+    if (AppState.isCreatingLoan && validateCustomer(customer)) {
+      if (validateCustomer(customer)) {
+        AppState.selectedCustomer = customer;
+        AppState.loadLoans("CREATE");
+        Main.setUi(AppUI.LC_PRIMARY);
+      } else {
+        nullLabel.setVisible(true);
+        nullLabel.setText("Customer does not have a mailing address and/or contact method");
+      }
     }
     // else {
     // if (nullFields) {
@@ -170,6 +198,40 @@ public class CustomerResultsController {
       AppState.loadAllCustomerDetails("VIEW");
       Main.setUi(AppUI.CI_DETAILS);
     }
+  }
+
+  private boolean validateCustomer(Customer customer) {
+    /**
+     * Check that the customer has at least one mailing address (see Screen 06: Customer Address.)
+     * If the customer does not have a mailing address, the loan cannot proceed. Check that the
+     * customer has at least one alternate contact method (phone or email.)
+     */
+    System.out.println("Validating customer");
+    boolean hasAddress = false;
+    boolean hasMailingAddress = false;
+    boolean hasPrimaryAddress = false;
+
+    boolean hasContact = false;
+    if (customer.getAddresses().size() > 0) {
+      System.out.println("Customer has addresses");
+      hasAddress = true;
+      for (int i = 0; i < customer.getAddresses().size(); i++) {
+        if (customer.getAddresses().get(i).getIsMailing()) {
+          System.out.println("Customer has mailing address");
+          hasMailingAddress = true;
+        }
+        if (customer.getAddresses().get(i).getIsPrimary()) {
+          System.out.println("Customer has primary address");
+          hasPrimaryAddress = true;
+        }
+      }
+    }
+    if (customer.getPhones().size() > 0 || customer.getEmails().size() > 0) {
+      System.out.println("Customer has contact");
+      hasContact = true;
+    }
+
+    return hasAddress && hasMailingAddress && hasPrimaryAddress && hasContact;
   }
 }
 
