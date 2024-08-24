@@ -47,6 +47,13 @@ public class LoanPrimaryDetails implements AccessTypeObserverLoan {
 
     personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
     borrowerIDField.setText(personalLoan.getCustomerId());
+
+    // Set dummy values
+    if (AppState.loanDetailsAccessType.equals("CREATE")) {
+      principalField.setText("100");
+      interestRateField.setText("10");
+      rateTypeBox.setValue("Floating");
+    }
   }
 
   @FXML
