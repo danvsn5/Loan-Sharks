@@ -20,7 +20,7 @@ public class SyncEmployer extends Sync {
     Integer count = loadCustomerEmployers.getCountFromServer();
 
     UpdateCustomerEmployer updateCustomerEmployer = updateCustomerEmployer(resultSet, customer_id);
-    if (count == null) {
+    if (count == null || count == 0) {
       System.out.println("Employer not found in mainframe. Creating new employer.");
       updateCustomerEmployer.setNumber(null);
     } else {
@@ -32,7 +32,7 @@ public class SyncEmployer extends Sync {
     if (status.getErrorCode() == 0) {
       System.out.println("Employer updated successfully.");
     } else {
-      System.out.println("Error updating employer: " + status.getErrorMessage());
+      System.out.println("Error dinging employer: " + status.getErrorMessage());
     }
 
     return status;
@@ -42,7 +42,6 @@ public class SyncEmployer extends Sync {
     UpdateCustomerEmployer updateCustomerEmployer = new UpdateCustomerEmployer();
     try {
       updateCustomerEmployer.setCustomerId(customer_id);
-      updateCustomerEmployer.setNumber(1);
       updateCustomerEmployer.setName(resultSet.getString("employerName"));
       updateCustomerEmployer.setLine1(resultSet.getString("addressLineOne"));
       updateCustomerEmployer.setLine2(resultSet.getString("addressLineTwo"));
