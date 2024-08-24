@@ -150,42 +150,54 @@ public class LoanRepaymentsController {
   @FXML
   private void setLabelValues(
       int index, String month, String principal, String interest, String remaining) {
+    // Format the remaining amount to 2 decimal places
+    String formattedRemaining = "";
+    String formattedPrincipal = "";
+
+    if (!principal.isBlank()) {
+      formattedRemaining = String.format("%.2f", Double.parseDouble(remaining));
+    }
+
+    if (!principal.isBlank()) {
+      formattedPrincipal = String.format("%.2f", Double.parseDouble(principal));
+    }
+
     switch (index) {
       case 0:
         monthLabel.setText(month);
-        principalLabel.setText(principal);
+        principalLabel.setText(formattedPrincipal);
         interestLabel.setText(interest);
-        remLabel.setText(remaining);
+        remLabel.setText(formattedRemaining);
         break;
       case 1:
         monthLabel1.setText(month);
-        principalLabel1.setText(principal);
+        principalLabel1.setText(formattedPrincipal);
         interestLabel1.setText(interest);
-        remLabel1.setText(remaining);
+        remLabel1.setText(formattedRemaining);
         break;
       case 2:
         monthLabel2.setText(month);
-        principalLabel2.setText(principal);
+        principalLabel2.setText(formattedPrincipal);
         interestLabel2.setText(interest);
-        remLabel2.setText(remaining);
+        remLabel2.setText(formattedRemaining);
         break;
       case 3:
         monthLabel3.setText(month);
-        principalLabel3.setText(principal);
+        principalLabel3.setText(formattedPrincipal);
         interestLabel3.setText(interest);
-        remLabel3.setText(remaining);
+        remLabel3.setText(formattedRemaining);
         break;
       case 4:
         monthLabel4.setText(month);
-        principalLabel4.setText(principal);
+        principalLabel4.setText(formattedPrincipal);
         interestLabel4.setText(interest);
-        remLabel4.setText(remaining);
+        remLabel4.setText(formattedRemaining);
         break;
       case 5:
         monthLabel5.setText(month);
-        principalLabel5.setText(principal);
+        principalLabel5.setText(formattedPrincipal);
         interestLabel5.setText(interest);
-        remLabel5.setText(remaining);
+        remLabel5.setText(formattedRemaining);
         break;
     }
   }

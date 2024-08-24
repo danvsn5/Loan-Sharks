@@ -375,7 +375,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       }
     }
 
-    if (AppState.customerDetailsAccessType == "VIEW") {
+    if (AppState.customerDetailsAccessType == "VIEW" && currentAddress < addresses.size() - 1) {
 
       // increment the current address counter
       currentAddress++;
@@ -459,7 +459,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
       }
 
-      if (AppState.customerDetailsAccessType == "VIEW") {
+      if (AppState.customerDetailsAccessType == "VIEW" && currentAddress > 0) {
 
         // decrement the current address counter
         currentAddress--;

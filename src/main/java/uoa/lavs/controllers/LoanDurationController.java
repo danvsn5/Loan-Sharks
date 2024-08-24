@@ -74,6 +74,12 @@ public class LoanDurationController implements AccessTypeObserverLoan {
 
     personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
     termField.setText("30");
+
+    // Set dummy values
+    if (AppState.loanDetailsAccessType.equals("CREATE")) {
+      startDatePicker.setValue(LocalDate.now());
+      periodField.setText("30");
+    }
   }
 
   // Add methods for all buttons

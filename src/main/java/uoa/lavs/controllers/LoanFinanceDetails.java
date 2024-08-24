@@ -46,6 +46,13 @@ public class LoanFinanceDetails implements AccessTypeObserverLoan {
     paymentFrequencyBox.getItems().addAll("Weekly", "Fortnightly", "Monthly");
 
     personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
+
+    // Set dummy values
+    if (AppState.loanDetailsAccessType.equals("CREATE")) {
+      compoundingBox.setValue("Monthly");
+      paymentFrequencyBox.setValue("Monthly");
+      paymentValueField.setText("10");
+    }
   }
 
   @FXML
