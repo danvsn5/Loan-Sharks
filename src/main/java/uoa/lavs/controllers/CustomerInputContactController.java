@@ -23,34 +23,56 @@ import uoa.lavs.customer.Phone;
 import uoa.lavs.sql.sql_to_mainframe.CustomerCreationHelper;
 
 public class CustomerInputContactController implements AccessTypeObserver {
-  @FXML private TextField customerEmailTextField;
-  @FXML private TextField customerPhoneNumberOne;
+  @FXML
+  private TextField customerEmailTextField;
+  @FXML
+  private TextField customerPhoneNumberOne;
 
-  @FXML private TextField customerPhonePrefixField;
-  @FXML private ComboBox<String> customerPhoneTypeBox;
-  @FXML private RadioButton sendTextRadio;
-  @FXML private RadioButton phonePrimaryRadio;
-  @FXML private RadioButton emailPrimaryRadio;
+  @FXML
+  private TextField customerPhonePrefixField;
+  @FXML
+  private ComboBox<String> customerPhoneTypeBox;
+  @FXML
+  private RadioButton sendTextRadio;
+  @FXML
+  private RadioButton phonePrimaryRadio;
+  @FXML
+  private RadioButton emailPrimaryRadio;
 
-  @FXML private ImageView incPhone;
-  @FXML private ImageView incEmail;
-  @FXML private ImageView decPhone;
-  @FXML private ImageView decEmail;
-  @FXML private Label emailPageLabel;
-  @FXML private Label phonePageLabel;
+  @FXML
+  private ImageView incPhone;
+  @FXML
+  private ImageView incEmail;
+  @FXML
+  private ImageView decPhone;
+  @FXML
+  private ImageView decEmail;
+  @FXML
+  private Label emailPageLabel;
+  @FXML
+  private Label phonePageLabel;
 
-  @FXML private TextField customerPreferredContactBox;
-  @FXML private TextField customerAltContactBox;
+  @FXML
+  private TextField customerPreferredContactBox;
+  @FXML
+  private TextField customerAltContactBox;
 
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerContactButton;
-  @FXML private Button customerEmployerButton;
+  @FXML
+  private Button customerDetailsButton;
+  @FXML
+  private Button customerAddressButton;
+  @FXML
+  private Button customerContactButton;
+  @FXML
+  private Button customerEmployerButton;
 
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
+  @FXML
+  private Button editButton;
+  @FXML
+  private ImageView staticReturnImageView;
 
-  @FXML private Label idBanner;
+  @FXML
+  private Label idBanner;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -131,15 +153,15 @@ public class CustomerInputContactController implements AccessTypeObserver {
         editButton,
         idBanner,
         new TextField[] {
-          customerEmailTextField,
-          customerPhoneNumberOne,
-          customerPreferredContactBox,
-          customerAltContactBox,
-          customerPhonePrefixField
+            customerEmailTextField,
+            customerPhoneNumberOne,
+            customerPreferredContactBox,
+            customerAltContactBox,
+            customerPhonePrefixField
         },
-        new ComboBox<?>[] {customerPhoneTypeBox},
+        new ComboBox<?>[] { customerPhoneTypeBox },
         new DatePicker[] {},
-        new RadioButton[] {sendTextRadio, phonePrimaryRadio, emailPrimaryRadio});
+        new RadioButton[] { sendTextRadio, phonePrimaryRadio, emailPrimaryRadio });
   }
 
   @FXML
@@ -240,25 +262,23 @@ public class CustomerInputContactController implements AccessTypeObserver {
       return false;
     }
     // create a new phone number
-    Phone newPhone =
-        new Phone(
-            customer.getCustomerId(),
-            customerPhoneTypeBox.getValue(),
-            customerPhonePrefixField.getText(),
-            customerPhoneNumberOne.getText(),
-            phonePrimaryRadio.isSelected(),
-            sendTextRadio.isSelected());
+    Phone newPhone = new Phone(
+        customer.getCustomerId(),
+        customerPhoneTypeBox.getValue(),
+        customerPhonePrefixField.getText(),
+        customerPhoneNumberOne.getText(),
+        phonePrimaryRadio.isSelected(),
+        sendTextRadio.isSelected());
 
     // if the current number page is the same as the amount of valid numbers
     existingCustomerPhones.set(currentNumberPage, newPhone);
     customer.setPhones(existingCustomerPhones);
 
     // create a new email
-    Email newEmail =
-        new Email(
-            customer.getCustomerId(),
-            customerEmailTextField.getText(),
-            emailPrimaryRadio.isSelected());
+    Email newEmail = new Email(
+        customer.getCustomerId(),
+        customerEmailTextField.getText(),
+        emailPrimaryRadio.isSelected());
 
     // if the current email page is the same as the amount of valid emails
     existingCustomerEmails.set(currentEmailPage, newEmail);
@@ -336,15 +356,21 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private void handleIncPhone() {
 
     if (AppState.customerDetailsAccessType == "VIEW") {
-      currentNumberPage++;
-      phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
-      customerPhoneNumberOne.setText(
-          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+      if (currentNumberPage < existingCustomerPhones.size() - 1) {
+
+        currentNumberPage++;
+        phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
+
+        customerPhoneNumberOne.setText(
+            existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
+        customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
+        customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
+        sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
+        phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+
+      }
+
     }
     if (AppState.customerDetailsAccessType == "CREATE") {
 
@@ -374,14 +400,13 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       // get the current fields and replace the current number page with the phone
       // fields
-      Phone newPhone =
-          new Phone(
-              customer.getCustomerId(),
-              customerPhoneTypeBox.getValue(),
-              customerPhonePrefixField.getText(),
-              customerPhoneNumberOne.getText(),
-              phonePrimaryRadio.isSelected(),
-              sendTextRadio.isSelected());
+      Phone newPhone = new Phone(
+          customer.getCustomerId(),
+          customerPhoneTypeBox.getValue(),
+          customerPhonePrefixField.getText(),
+          customerPhoneNumberOne.getText(),
+          phonePrimaryRadio.isSelected(),
+          sendTextRadio.isSelected());
 
       existingCustomerPhones.set(currentNumberPage, newPhone);
 
@@ -432,14 +457,13 @@ public class CustomerInputContactController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType == "EDIT") {
       // get the current fields and replace the current number page with the phone
       // fields
-      Phone newPhone =
-          new Phone(
-              customer.getCustomerId(),
-              customerPhoneTypeBox.getValue(),
-              customerPhonePrefixField.getText(),
-              customerPhoneNumberOne.getText(),
-              phonePrimaryRadio.isSelected(),
-              sendTextRadio.isSelected());
+      Phone newPhone = new Phone(
+          customer.getCustomerId(),
+          customerPhoneTypeBox.getValue(),
+          customerPhonePrefixField.getText(),
+          customerPhoneNumberOne.getText(),
+          phonePrimaryRadio.isSelected(),
+          sendTextRadio.isSelected());
 
       existingCustomerPhones.set(currentNumberPage, newPhone);
 
@@ -517,11 +541,10 @@ public class CustomerInputContactController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType == "CREATE") {
       // get the current fields and replace the current email page with the email
       // fields
-      Email newEmail =
-          new Email(
-              customer.getCustomerId(),
-              customerEmailTextField.getText(),
-              emailPrimaryRadio.isSelected());
+      Email newEmail = new Email(
+          customer.getCustomerId(),
+          customerEmailTextField.getText(),
+          emailPrimaryRadio.isSelected());
 
       existingCustomerEmails.set(currentEmailPage, newEmail);
       setContactDetails();
@@ -540,11 +563,10 @@ public class CustomerInputContactController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType == "EDIT") {
       // get the current fields and replace the current email page with the email
       // fields
-      Email newEmail =
-          new Email(
-              customer.getCustomerId(),
-              customerEmailTextField.getText(),
-              emailPrimaryRadio.isSelected());
+      Email newEmail = new Email(
+          customer.getCustomerId(),
+          customerEmailTextField.getText(),
+          emailPrimaryRadio.isSelected());
 
       existingCustomerEmails.set(currentEmailPage, newEmail);
 
