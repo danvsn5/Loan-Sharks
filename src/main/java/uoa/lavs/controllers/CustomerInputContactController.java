@@ -289,7 +289,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   private boolean setPhoneDetails(String location) {
 
-    if (location != "dec") {
+    if (location != "dec" && location != "decEdit") {
       if (!validateData()) {
         return false;
       }
@@ -305,7 +305,11 @@ public class CustomerInputContactController implements AccessTypeObserver {
         sendTextRadio.isSelected());
 
     // sets the details for the current number page for the existing phones;
-    existingCustomerPhones.set(currentNumberPage, newPhone);
+    if (location != "decEdit") {
+      existingCustomerPhones.set(currentNumberPage, newPhone);
+    } else {
+      existingCustomerPhones.add(newPhone);
+    }
     customer.setPhones(existingCustomerPhones);
 
     return true;
@@ -498,18 +502,9 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
-      // get the current fields and replace the current number page with the phone
-      // fields
-      Phone newPhone = new Phone(
-          customer.getCustomerId(),
-          customerPhoneTypeBox.getValue(),
-          customerPhonePrefixField.getText(),
-          customerPhoneNumberOne.getText(),
-          phonePrimaryRadio.isSelected(),
-          sendTextRadio.isSelected());
 
-      existingCustomerPhones.set(currentNumberPage, newPhone);
-
+      // if page is decrementing, skip validation but continue to add the fields
+      setPhoneDetails("decEdit");
       if (currentNumberPage != 0) {
         currentNumberPage--;
         phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
@@ -522,6 +517,15 @@ public class CustomerInputContactController implements AccessTypeObserver {
       customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
       sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
       phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+
+      if (validateData()) {
+        customerPhonePrefixField.setStyle("");
+        customerPhoneNumberOne.setStyle("");
+        customerEmailTextField.setStyle("");
+        customerPhoneTypeBox.setStyle("");
+        phonePrimaryRadio.setStyle("");
+        emailPrimaryRadio.setStyle("");
+      }
     }
   }
 
