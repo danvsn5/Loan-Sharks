@@ -496,11 +496,11 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private void handleIncEmail() {
     if (AppState.customerDetailsAccessType == "VIEW") {
 
-      currentEmailPage++;
-      emailPageLabel.setText("Email: " + (currentEmailPage + 1));
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+      if (currentEmailPage < existingCustomerEmails.size() - 1) {
+        currentEmailPage++;
+        emailPageLabel.setText("Email: " + (currentEmailPage + 1));
+        setEmailDetailsUI("value");
+      }
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
@@ -633,5 +633,16 @@ public class CustomerInputContactController implements AccessTypeObserver {
       phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
     }
 
+  }
+
+  public void setEmailDetailsUI(String setting) {
+
+    if (setting == "empty") {
+      customerEmailTextField.setText("");
+      emailPrimaryRadio.setSelected(false);
+    } else {
+      customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
+      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+    }
   }
 }
