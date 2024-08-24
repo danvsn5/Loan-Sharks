@@ -435,6 +435,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
 
     }
+
     if (AppState.customerDetailsAccessType == "CREATE") {
 
       if (!setPhoneDetails("inc")) {
@@ -479,7 +480,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType == "VIEW" && currentNumberPage != 0) {
       currentNumberPage--;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
-
       setPhoneDetailsUI("value");
     }
 
@@ -499,10 +499,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
       if (validateData()) {
         customerPhonePrefixField.setStyle("");
         customerPhoneNumberOne.setStyle("");
-        customerEmailTextField.setStyle("");
         customerPhoneTypeBox.setStyle("");
         phonePrimaryRadio.setStyle("");
-        emailPrimaryRadio.setStyle("");
       }
     }
 
@@ -583,21 +581,13 @@ public class CustomerInputContactController implements AccessTypeObserver {
     if (AppState.customerDetailsAccessType == "VIEW" && currentEmailPage != 0) {
       currentEmailPage--;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+      setEmailDetailsUI("value");
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
-      // get the current fields and replace the current email page with the email
-      // fields
-      Email newEmail = new Email(
-          customer.getCustomerId(),
-          customerEmailTextField.getText(),
-          emailPrimaryRadio.isSelected());
 
-      existingCustomerEmails.set(currentEmailPage, newEmail);
-      setContactDetails();
+      // if page is decrementing, skip validation but continue to add the fields
+      setEmailDetails("dec");
 
       if (currentEmailPage != 0) {
         currentEmailPage--;
@@ -605,9 +595,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
 
       // set all the fields to the previous email
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+      setEmailDetailsUI("value");
+
+      if (validateData()) {
+        customerEmailTextField.setStyle("");
+        emailPrimaryRadio.setStyle("");
+      }
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
