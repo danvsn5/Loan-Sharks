@@ -287,10 +287,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
     return true;
   }
 
-  private boolean setPhoneDetails() {
+  private boolean setPhoneDetails(String location) {
 
-    if (!validateData()) {
-      return false;
+    if (location != "dec") {
+      if (!validateData()) {
+        return false;
+      }
     }
 
     // create a new phone number
@@ -396,7 +398,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
     if (AppState.customerDetailsAccessType == "CREATE") {
 
-      if (!setPhoneDetails()) {
+      if (!setPhoneDetails("inc")) {
         // if a field is invalid, return
         return;
       }
@@ -463,7 +465,9 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
-      setContactDetails();
+
+      // if page is decrementing, skip validation but continue to add the fields
+      setPhoneDetails("dec");
 
       if (currentNumberPage != 0) {
         currentNumberPage--;
@@ -477,6 +481,15 @@ public class CustomerInputContactController implements AccessTypeObserver {
       customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
       sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
       phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+
+      if (validateData()) {
+        customerPhonePrefixField.setStyle("");
+        customerPhoneNumberOne.setStyle("");
+        customerEmailTextField.setStyle("");
+        customerPhoneTypeBox.setStyle("");
+        phonePrimaryRadio.setStyle("");
+        emailPrimaryRadio.setStyle("");
+      }
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
