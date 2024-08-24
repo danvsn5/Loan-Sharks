@@ -183,7 +183,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       setEmployerDetails();
-      CustomerCreationHelper.createCustomer(customer);
+      CustomerCreationHelper.createCustomer(customer, false);
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
@@ -196,6 +196,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
       setEmployerDetails();
+      CustomerCreationHelper.createCustomer(customer, true);
     }
   }
 

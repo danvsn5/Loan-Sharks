@@ -235,7 +235,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
       setAddressDetails();
-      CustomerCreationHelper.createCustomer(customer);
+      CustomerCreationHelper.createCustomer(customer, false);
 
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       AppState.customerDetailsAccessType = "EDIT";
@@ -247,6 +247,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
       setAddressDetails();
+      CustomerCreationHelper.createCustomer(customer, true);
     }
   }
 

@@ -225,7 +225,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       AppState.customerDetailsAccessType = "VIEW";
       setCustomerDetails();
       AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer);
+      CustomerCreationHelper.createCustomer(customer, false);
 
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
       // Switch to edit mode
@@ -238,6 +238,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       setCustomerDetails();
+      CustomerCreationHelper.createCustomer(customer, true);
     }
   }
 

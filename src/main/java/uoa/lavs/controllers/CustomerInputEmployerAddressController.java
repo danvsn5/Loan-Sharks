@@ -198,7 +198,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
         && AccessTypeNotifier.validateCustomerObservers()) {
       AppState.customerDetailsAccessType = "VIEW";
       setAddressDetails();
-      CustomerCreationHelper.createCustomer(customer);
+      CustomerCreationHelper.createCustomer(customer, false);
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
@@ -211,6 +211,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
       setAddressDetails();
+      CustomerCreationHelper.createCustomer(customer, true);
     }
   }
 
