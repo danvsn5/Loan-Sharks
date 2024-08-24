@@ -62,6 +62,17 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     updateUIBasedOnAccessType();
     addressPageLabel.setText("Address: " + (currentAddress + 1));
 
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+      customerAddressTypeComboBox.setValue("Home");
+      customerAddressLine1Field.setText("123 Fake Street");
+      customerAddressLine2Field.setText("Apt 1");
+      customerSuburbField.setText("Fake Suburb");
+      customerCityField.setText("Fake City");
+      customerPostcodeField.setText("123456");
+      mailingAddressRadio.setSelected(false);
+      primaryAddressRadio.setSelected(false);
+    }
+
     if (AppState.isAccessingFromSearch) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();

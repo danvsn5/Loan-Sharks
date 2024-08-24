@@ -50,6 +50,16 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
 
+    // Set Dummy data
+    if (AppState.customerDetailsAccessType == "CREATE") {
+      employerAddressLine1Field.setText("123 Fake Street");
+      employerAddressLine2Field.setText("Apt 1");
+      employerSuburbField.setText("Fake Suburb");
+      employerCityField.setText("Fake City");
+      employerPostcodeField.setText("123456");
+      employerCountryBox.setValue("New Zealand");
+    }
+
     if (AppState.isAccessingFromSearch) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();

@@ -20,7 +20,9 @@ public class SyncCustomer extends Sync {
     findCustomer.setCustomerId(customer_id);
     findCustomer.send(connection);
 
-    if (findCustomer.getCustomerCountFromServer() == 0) {
+    Integer count = findCustomer.getCustomerCountFromServer();
+
+    if (count == null || count == 0) {
       System.out.println("Customer not found in mainframe. Creating new customer.");
       customer_id = null;
     }

@@ -83,6 +83,18 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
 
+    // Set dummy values
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+      customerTitleComboBox.setValue("Mr");
+      customerFirstNameField.setText("John");
+      customerMiddleNameField.setText("Doe");
+      customerLastNameField.setText("Smith");
+      customerDOBPicker.setValue(LocalDate.now());
+      customerOccupationField.setText("Software Developer");
+      customerVisaBox.setValue("NZ Citizen");
+      customerCitizenshipBox.setValue("New Zealand");
+    }
+
     if (AppState.isAccessingFromSearch) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
