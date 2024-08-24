@@ -287,6 +287,28 @@ public class CustomerInputContactController implements AccessTypeObserver {
     return true;
   }
 
+  private boolean setPhoneDetails() {
+
+    if (!validateData()) {
+      return false;
+    }
+
+    // create a new phone number
+    Phone newPhone = new Phone(
+        customer.getCustomerId(),
+        customerPhoneTypeBox.getValue(),
+        customerPhonePrefixField.getText(),
+        customerPhoneNumberOne.getText(),
+        phonePrimaryRadio.isSelected(),
+        sendTextRadio.isSelected());
+
+    // sets the details for the current number page for the existing phones;
+    existingCustomerPhones.set(currentNumberPage, newPhone);
+    customer.setPhones(existingCustomerPhones);
+
+    return true;
+  }
+
   // add handlers for all buttons
   @FXML
   private void handleCustomerDetailsButtonAction() {
@@ -374,7 +396,10 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
     if (AppState.customerDetailsAccessType == "CREATE") {
 
-      setContactDetails();
+      if (!setPhoneDetails()) {
+        // if a field is invalid, return
+        return;
+      }
       currentNumberPage++;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
       amountOfValidNumbers++;
