@@ -323,7 +323,9 @@ public class CustomerInputContactController implements AccessTypeObserver {
     if (location != "decEdit") {
       existingCustomerPhones.set(currentNumberPage, newPhone);
     } else {
-      existingCustomerPhones.add(newPhone);
+      if (currentNumberPage == existingCustomerPhones.size() && validateData()) {
+        existingCustomerPhones.add(newPhone);
+      }
     }
     customer.setPhones(existingCustomerPhones);
 
