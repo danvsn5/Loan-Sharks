@@ -23,34 +23,56 @@ import uoa.lavs.customer.Phone;
 import uoa.lavs.sql.sql_to_mainframe.CustomerCreationHelper;
 
 public class CustomerInputContactController implements AccessTypeObserver {
-  @FXML private TextField customerEmailTextField;
-  @FXML private TextField customerPhoneNumberOne;
+  @FXML
+  private TextField customerEmailTextField;
+  @FXML
+  private TextField customerPhoneNumberOne;
 
-  @FXML private TextField customerPhonePrefixField;
-  @FXML private ComboBox<String> customerPhoneTypeBox;
-  @FXML private RadioButton sendTextRadio;
-  @FXML private RadioButton phonePrimaryRadio;
-  @FXML private RadioButton emailPrimaryRadio;
+  @FXML
+  private TextField customerPhonePrefixField;
+  @FXML
+  private ComboBox<String> customerPhoneTypeBox;
+  @FXML
+  private RadioButton sendTextRadio;
+  @FXML
+  private RadioButton phonePrimaryRadio;
+  @FXML
+  private RadioButton emailPrimaryRadio;
 
-  @FXML private ImageView incPhone;
-  @FXML private ImageView incEmail;
-  @FXML private ImageView decPhone;
-  @FXML private ImageView decEmail;
-  @FXML private Label emailPageLabel;
-  @FXML private Label phonePageLabel;
+  @FXML
+  private ImageView incPhone;
+  @FXML
+  private ImageView incEmail;
+  @FXML
+  private ImageView decPhone;
+  @FXML
+  private ImageView decEmail;
+  @FXML
+  private Label emailPageLabel;
+  @FXML
+  private Label phonePageLabel;
 
-  @FXML private TextField customerPreferredContactBox;
-  @FXML private TextField customerAltContactBox;
+  @FXML
+  private TextField customerPreferredContactBox;
+  @FXML
+  private TextField customerAltContactBox;
 
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerContactButton;
-  @FXML private Button customerEmployerButton;
+  @FXML
+  private Button customerDetailsButton;
+  @FXML
+  private Button customerAddressButton;
+  @FXML
+  private Button customerContactButton;
+  @FXML
+  private Button customerEmployerButton;
 
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
+  @FXML
+  private Button editButton;
+  @FXML
+  private ImageView staticReturnImageView;
 
-  @FXML private Label idBanner;
+  @FXML
+  private Label idBanner;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -121,6 +143,21 @@ public class CustomerInputContactController implements AccessTypeObserver {
         }
       }
     }
+
+    // iterate through all existing phone numbers and emails; if ANY of of them have
+    // a getIspPrimary for phones or emails set to true, set the isPrimaryPhoneSet
+    // or isPrimaryEmailSet to true
+    for (Phone phone : existingCustomerPhones) {
+      if (phone.getIsPrimary()) {
+        isPrimaryPhoneSet = true;
+      }
+    }
+    for (Email email : existingCustomerEmails) {
+      if (email.getIsPrimary()) {
+        isPrimaryEmailSet = true;
+      }
+    }
+
   }
 
   @FXML
@@ -131,15 +168,15 @@ public class CustomerInputContactController implements AccessTypeObserver {
         editButton,
         idBanner,
         new TextField[] {
-          customerEmailTextField,
-          customerPhoneNumberOne,
-          customerPreferredContactBox,
-          customerAltContactBox,
-          customerPhonePrefixField
+            customerEmailTextField,
+            customerPhoneNumberOne,
+            customerPreferredContactBox,
+            customerAltContactBox,
+            customerPhonePrefixField
         },
-        new ComboBox<?>[] {customerPhoneTypeBox},
+        new ComboBox<?>[] { customerPhoneTypeBox },
         new DatePicker[] {},
-        new RadioButton[] {sendTextRadio, phonePrimaryRadio, emailPrimaryRadio});
+        new RadioButton[] { sendTextRadio, phonePrimaryRadio, emailPrimaryRadio });
   }
 
   @FXML
@@ -175,7 +212,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
     // primary email needs to be checked that there in one set somewhere and no 2
     // are set
 
-    boolean isValid = true;
+    boolean isPhoneValid = true;
+    boolean isEmailValid = true;
     customerPhonePrefixField.setStyle("");
     customerPhoneNumberOne.setStyle("");
     customerEmailTextField.setStyle("");
@@ -183,7 +221,20 @@ public class CustomerInputContactController implements AccessTypeObserver {
     phonePrimaryRadio.setStyle("");
     emailPrimaryRadio.setStyle("");
 
-    if (customerPhoneTypeBox.getValue() == null) {
+    isPhoneValid = validatePhone();
+    isEmailValid = validateEmail();
+
+    if (!isPhoneValid || !isEmailValid)
+      return false;
+
+    return true;
+  }
+
+  private boolean validatePhone() {
+
+    boolean isValid = true;
+
+    if (customerPhoneTypeBox.getValue() == "" || customerPhoneTypeBox.getValue() == null) {
       customerPhoneTypeBox.setStyle("-fx-border-color: red;");
       isValid = false;
     }
@@ -206,6 +257,19 @@ public class CustomerInputContactController implements AccessTypeObserver {
       isValid = false;
     }
 
+    if (!isPrimaryPhoneSet) {
+      phonePrimaryRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  private boolean validateEmail() {
+
+    boolean isValid = true;
+
     // Regex taken from
     // https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
     if (customerEmailTextField.getText().isEmpty()
@@ -215,23 +279,13 @@ public class CustomerInputContactController implements AccessTypeObserver {
       isValid = false;
     }
 
-    if (!isPrimaryPhoneSet) {
-      phonePrimaryRadio.setStyle(
-          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
-      isValid = false;
-    }
-
     if (!isPrimaryEmailSet) {
       emailPrimaryRadio.setStyle(
           "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
       isValid = false;
     }
 
-    if (!isValid) {
-      return false;
-    }
-
-    return true;
+    return isValid;
   }
 
   private boolean setContactDetails() {
@@ -240,28 +294,90 @@ public class CustomerInputContactController implements AccessTypeObserver {
       return false;
     }
     // create a new phone number
-    Phone newPhone =
-        new Phone(
-            customer.getCustomerId(),
-            customerPhoneTypeBox.getValue(),
-            customerPhonePrefixField.getText(),
-            customerPhoneNumberOne.getText(),
-            phonePrimaryRadio.isSelected(),
-            sendTextRadio.isSelected());
+    Phone newPhone = new Phone(
+        customer.getCustomerId(),
+        customerPhoneTypeBox.getValue(),
+        customerPhonePrefixField.getText(),
+        customerPhoneNumberOne.getText(),
+        phonePrimaryRadio.isSelected(),
+        sendTextRadio.isSelected());
 
     // if the current number page is the same as the amount of valid numbers
     existingCustomerPhones.set(currentNumberPage, newPhone);
     customer.setPhones(existingCustomerPhones);
 
     // create a new email
-    Email newEmail =
-        new Email(
-            customer.getCustomerId(),
-            customerEmailTextField.getText(),
-            emailPrimaryRadio.isSelected());
+    Email newEmail = new Email(
+        customer.getCustomerId(),
+        customerEmailTextField.getText(),
+        emailPrimaryRadio.isSelected());
 
     // if the current email page is the same as the amount of valid emails
     existingCustomerEmails.set(currentEmailPage, newEmail);
+    customer.setEmails(existingCustomerEmails);
+
+    return true;
+  }
+
+  private boolean setPhoneDetails(String location) {
+
+    if (location != "dec") {
+      if (!validatePhone()) {
+        return false;
+      }
+    }
+
+    // create a new phone number
+    Phone newPhone = new Phone(
+        customer.getCustomerId(),
+        customerPhoneTypeBox.getValue(),
+        customerPhonePrefixField.getText(),
+        customerPhoneNumberOne.getText(),
+        phonePrimaryRadio.isSelected(),
+        sendTextRadio.isSelected());
+
+    // sets the details for the current number page for the existing phones;
+    if (location != "decEdit" && location != "incEdit") {
+      existingCustomerPhones.set(currentNumberPage, newPhone);
+    } else {
+      if (currentNumberPage == existingCustomerPhones.size() && validatePhone()) {
+        existingCustomerPhones.add(newPhone);
+        System.out.println("Added new phone number");
+      }
+    }
+    customer.setPhones(existingCustomerPhones);
+
+    return true;
+  }
+
+  private boolean setEmailDetails(String location) {
+
+    if (location != "dec") {
+      if (!validateEmail()) {
+        return false;
+      }
+    }
+
+    // create a new email
+    Email newEmail = new Email(
+        customer.getCustomerId(),
+        customerEmailTextField.getText(),
+        emailPrimaryRadio.isSelected());
+
+    // sets the details for the current email page for the existing emails;
+    if (location != "decEdit" && location != "incEdit") {
+      existingCustomerEmails.set(currentEmailPage, newEmail);
+    } else {
+      // only add a new email if the current page is the same as the amount of valid
+      // emails
+      if (currentEmailPage == existingCustomerEmails.size()) {
+
+        if (validateEmail()) {
+          existingCustomerEmails.add(newEmail);
+        }
+
+      }
+    }
     customer.setEmails(existingCustomerEmails);
 
     return true;
@@ -336,84 +452,71 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private void handleIncPhone() {
 
     if (AppState.customerDetailsAccessType == "VIEW") {
-      currentNumberPage++;
-      phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
-      customerPhoneNumberOne.setText(
-          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+      if (currentNumberPage < existingCustomerPhones.size() - 1) {
+
+        currentNumberPage++;
+        phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
+
+        setPhoneDetailsUI("value");
+
+      }
+
     }
+
     if (AppState.customerDetailsAccessType == "CREATE") {
 
-      setContactDetails();
+      if (!setPhoneDetails("inc")) {
+        // if a field is invalid, return
+        return;
+      }
       currentNumberPage++;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
       amountOfValidNumbers++;
       // set all the fields to empty
 
       if (currentNumberPage == amountOfValidNumbers) {
-        customerPhoneNumberOne.setText("");
-        customerPhonePrefixField.setText("");
-        customerPhoneTypeBox.setValue("");
-        sendTextRadio.setSelected(false);
-        phonePrimaryRadio.setSelected(false);
+        setPhoneDetailsUI("empty");
+
       } else {
-        customerPhoneNumberOne.setText(
-            existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-        customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-        customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-        sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-        phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+        setPhoneDetailsUI("value");
       }
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
 
-      // get the current fields and replace the current number page with the phone
-      // fields
-      Phone newPhone =
-          new Phone(
-              customer.getCustomerId(),
-              customerPhoneTypeBox.getValue(),
-              customerPhonePrefixField.getText(),
-              customerPhoneNumberOne.getText(),
-              phonePrimaryRadio.isSelected(),
-              sendTextRadio.isSelected());
-
-      existingCustomerPhones.set(currentNumberPage, newPhone);
+      if (!setPhoneDetails("incEdit")) {
+        // if a field is invalid, return
+        return;
+      }
 
       currentNumberPage++;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
-      // set all the fields to the next phone number
-      customerPhoneNumberOne.setText(
-          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+      if (currentNumberPage == existingCustomerPhones.size()) {
+
+        // set all the fields to the next phone number
+        setPhoneDetailsUI("empty");
+      } else {
+        setPhoneDetailsUI("value");
+      }
     }
+
   }
 
   @FXML
   private void handleDecPhone() {
+
     if (AppState.customerDetailsAccessType == "VIEW" && currentNumberPage != 0) {
       currentNumberPage--;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
-
-      customerPhoneNumberOne.setText(
-          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+      setPhoneDetailsUI("value");
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
-      setContactDetails();
+
+      // if page is decrementing, skip validation but continue to add the fields
+      setPhoneDetails("dec");
 
       if (currentNumberPage != 0) {
         currentNumberPage--;
@@ -421,110 +524,101 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
 
       // set all the fields to the previous phone number
-      customerPhoneNumberOne.setText(
-          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+      setPhoneDetailsUI("value");
+
+      if (validatePhone()) {
+        customerPhonePrefixField.setStyle("");
+        customerPhoneNumberOne.setStyle("");
+        customerPhoneTypeBox.setStyle("");
+        phonePrimaryRadio.setStyle("");
+      }
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
-      // get the current fields and replace the current number page with the phone
-      // fields
-      Phone newPhone =
-          new Phone(
-              customer.getCustomerId(),
-              customerPhoneTypeBox.getValue(),
-              customerPhonePrefixField.getText(),
-              customerPhoneNumberOne.getText(),
-              phonePrimaryRadio.isSelected(),
-              sendTextRadio.isSelected());
 
-      existingCustomerPhones.set(currentNumberPage, newPhone);
-
+      // if page is decrementing, skip validation but continue to add the fields
+      setPhoneDetails("decEdit");
       if (currentNumberPage != 0) {
         currentNumberPage--;
         phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
       }
 
       // set all the fields to the previous phone number
-      customerPhoneNumberOne.setText(
-          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+      setPhoneDetailsUI("value");
+
+      if (validatePhone()) {
+        customerPhonePrefixField.setStyle("");
+        customerPhoneNumberOne.setStyle("");
+        customerPhoneTypeBox.setStyle("");
+        phonePrimaryRadio.setStyle("");
+      }
     }
+
   }
 
   @FXML
   private void handleIncEmail() {
+
     if (AppState.customerDetailsAccessType == "VIEW") {
 
-      currentEmailPage++;
-      emailPageLabel.setText("Email: " + (currentEmailPage + 1));
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+      if (currentEmailPage < existingCustomerEmails.size() - 1) {
+        currentEmailPage++;
+        emailPageLabel.setText("Email: " + (currentEmailPage + 1));
+        setEmailDetailsUI("value");
+      }
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
-      setContactDetails();
+
+      if (!setEmailDetails("inc")) {
+        // if a field is invalid, return; suggesting to the user that the first email
+        // that you enter is the primary email
+        return;
+      }
       currentEmailPage++;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       amountOfValidEmails++;
       // set all the fields to empty
       if (currentEmailPage == amountOfValidEmails) {
-        customerEmailTextField.setText("");
-        emailPrimaryRadio.setSelected(false);
+        setEmailDetailsUI("empty");
       } else {
-        customerEmailTextField.setText(
-            existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-        emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+        setEmailDetailsUI("value");
       }
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
-      setContactDetails();
 
+      if (!setEmailDetails("incEdit")) {
+        // if a field is invalid, return
+        return;
+      }
       currentEmailPage++;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
 
-      // if the current email page is the same as the amount of valid emails
-      if (currentEmailPage == amountOfValidEmails) {
-        currentEmailPage++;
-        amountOfValidEmails++;
+      if (currentEmailPage == existingCustomerEmails.size()) {
+        // set all the fields to the next email
+        setEmailDetailsUI("empty");
+      } else {
+        setEmailDetailsUI("value");
       }
 
-      // set all the fields to the next email
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
     }
+
   }
 
   @FXML
   private void handleDecEmail() {
+
     if (AppState.customerDetailsAccessType == "VIEW" && currentEmailPage != 0) {
       currentEmailPage--;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+      setEmailDetailsUI("value");
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
-      // get the current fields and replace the current email page with the email
-      // fields
-      Email newEmail =
-          new Email(
-              customer.getCustomerId(),
-              customerEmailTextField.getText(),
-              emailPrimaryRadio.isSelected());
 
-      existingCustomerEmails.set(currentEmailPage, newEmail);
-      setContactDetails();
+      // if page is decrementing, skip validation but continue to add the fields
+      setEmailDetails("dec");
 
       if (currentEmailPage != 0) {
         currentEmailPage--;
@@ -532,32 +626,32 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
 
       // set all the fields to the previous email
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+      setEmailDetailsUI("value");
+
+      if (validateEmail()) {
+        customerEmailTextField.setStyle("");
+        emailPrimaryRadio.setStyle("");
+      }
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
-      // get the current fields and replace the current email page with the email
-      // fields
-      Email newEmail =
-          new Email(
-              customer.getCustomerId(),
-              customerEmailTextField.getText(),
-              emailPrimaryRadio.isSelected());
 
-      existingCustomerEmails.set(currentEmailPage, newEmail);
+      // if page is decrementing, skip validation but continue to add the fields
+      setEmailDetails("decEdit");
 
       if (currentEmailPage != 0) {
         currentEmailPage--;
         emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       }
 
-      // set all the fields to the previous email
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+      setEmailDetailsUI("value");
+
+      if (validateEmail()) {
+        customerEmailTextField.setStyle("");
+        emailPrimaryRadio.setStyle("");
+      }
     }
+
   }
 
   @Override
@@ -581,6 +675,36 @@ public class CustomerInputContactController implements AccessTypeObserver {
       } else if (buttonId.equals("customerEmployerButton")) {
         customerEmployerButton.setStyle(style);
       }
+    }
+  }
+
+  public void setPhoneDetailsUI(String setting) {
+
+    if (setting == "empty") {
+      customerPhoneNumberOne.setText("");
+      customerPhonePrefixField.setText("");
+      customerPhoneTypeBox.setValue("");
+      sendTextRadio.setSelected(false);
+      phonePrimaryRadio.setSelected(false);
+    } else {
+      customerPhoneNumberOne.setText(
+          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
+      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
+      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
+      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
+      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+    }
+
+  }
+
+  public void setEmailDetailsUI(String setting) {
+
+    if (setting == "empty") {
+      customerEmailTextField.setText("");
+      emailPrimaryRadio.setSelected(false);
+    } else {
+      customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
+      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
     }
   }
 }
