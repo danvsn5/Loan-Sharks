@@ -332,7 +332,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   private boolean setEmailDetails(String location) {
 
-    if (location != "dec" && location != "decEdit") {
+    if (location != "dec") {
       if (!validateData()) {
         return false;
       }
@@ -346,9 +346,21 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
     // sets the details for the current email page for the existing emails;
     if (location != "decEdit") {
+      System.out.println("Setting existing email");
       existingCustomerEmails.set(currentEmailPage, newEmail);
     } else {
-      existingCustomerEmails.add(newEmail);
+      // only add a new email if the current page is the same as the amount of valid
+      // emails
+      if (currentEmailPage == existingCustomerEmails.size()) {
+
+        if (validateData()) {
+          System.out.println("Adding new email");
+          System.out.println("Current email page: " + currentEmailPage);
+          System.out.println(customerEmailTextField.getText());
+          existingCustomerEmails.add(newEmail);
+        }
+
+      }
     }
     customer.setEmails(existingCustomerEmails);
 
@@ -519,10 +531,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
       if (validateData()) {
         customerPhonePrefixField.setStyle("");
         customerPhoneNumberOne.setStyle("");
-        customerEmailTextField.setStyle("");
         customerPhoneTypeBox.setStyle("");
         phonePrimaryRadio.setStyle("");
-        emailPrimaryRadio.setStyle("");
       }
     }
   }
@@ -562,7 +572,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
         // if a field is invalid, return
         return;
       }
-
+      System.out.println("Current email page: " + currentEmailPage);
+      System.out.println("Existing customer emails size: " + existingCustomerEmails.size());
       currentEmailPage++;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
 
@@ -604,24 +615,21 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
-      // get the current fields and replace the current email page with the email
-      // fields
-      Email newEmail = new Email(
-          customer.getCustomerId(),
-          customerEmailTextField.getText(),
-          emailPrimaryRadio.isSelected());
 
-      existingCustomerEmails.set(currentEmailPage, newEmail);
+      // if page is decrementing, skip validation but continue to add the fields
+      setEmailDetails("decEdit");
 
       if (currentEmailPage != 0) {
         currentEmailPage--;
         emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       }
 
-      // set all the fields to the previous email
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+      setEmailDetailsUI("value");
+
+      if (validateData()) {
+        customerEmailTextField.setStyle("");
+        emailPrimaryRadio.setStyle("");
+      }
     }
   }
 
