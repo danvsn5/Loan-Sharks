@@ -12,7 +12,11 @@ import javafx.scene.shape.Rectangle;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
+import uoa.lavs.customer.Address;
 import uoa.lavs.customer.Customer;
+import uoa.lavs.customer.CustomerEmployer;
+import uoa.lavs.customer.Email;
+import uoa.lavs.customer.Phone;
 
 public class CustomerResultsController {
   // make labels for name and ID, 6 each
@@ -177,9 +181,8 @@ public class CustomerResultsController {
 
   private void loadCustomer(int index) throws IOException {
     Customer customer = searchResultList.get((currentPage - 1) * 6 + index - 1);
-    // boolean nullFields = nullFields(customer);
-    if (AppState.isCreatingLoan && validateCustomer(customer)) {
-      if (validateCustomer(customer)) {
+    if (AppState.isCreatingLoan && validateCustomerForLoan(customer)) {
+      if (validateCustomerForLoan(customer)) {
         AppState.selectedCustomer = customer;
         AppState.loadLoans("CREATE");
         Main.setUi(AppUI.LC_PRIMARY);
@@ -187,12 +190,8 @@ public class CustomerResultsController {
         nullLabel.setVisible(true);
         nullLabel.setText("Customer does not have a mailing address and/or contact method");
       }
-    }
-    // else {
-    // if (nullFields) {
-    //   nullLabel.setVisible(true);
-    // }
-    else {
+    } else {
+      nullFields(customer);
       AppState.selectedCustomer = customer;
       AppState.isAccessingFromSearch = true;
       AppState.loadAllCustomerDetails("VIEW");
@@ -200,7 +199,7 @@ public class CustomerResultsController {
     }
   }
 
-  private boolean validateCustomer(Customer customer) {
+  private boolean validateCustomerForLoan(Customer customer) {
     /**
      * Check that the customer has at least one mailing address (see Screen 06: Customer Address.)
      * If the customer does not have a mailing address, the loan cannot proceed. Check that the
@@ -233,19 +232,70 @@ public class CustomerResultsController {
 
     return hasAddress && hasMailingAddress && hasPrimaryAddress && hasContact;
   }
-}
 
-  // private boolean nullFields(Customer customer) {
-  //   System.out.println("Null Field check");
-  //   return (customer.getAddresses().size() == 0
-  //       || customer.getCitizenship().equals(null)
-  //       || customer.getCustomerId().equals(null)
-  //       || customer.getDateOfBirth().equals(null)
-  //       || customer.getEmails().size() == 0
-  //       || customer.getEmployer().equals(null)
-  //       || customer.getName().equals(null)
-  //       || customer.getNotes().equals(null)
-  //       || customer.getOccupation().equals(null)
-  //      || customer.getPhones().size() == 0
-  //     || customer.getTitle().equals(null)
-  //    || customer.getVisa().equals(null));
+  private void nullFields(Customer customer) {
+    // This method checks for any null / empty fields in the customer object. If any are found, it
+    // will set the values within as empty strings.
+    System.out.println("Checking for null fields");
+    if (customer.getCustomerId() == null) {
+      System.out.println("Customer ID is null");
+      customer.setCustomerId("");
+    }
+    if (customer.getAddresses() == null) {
+      System.out.println("Customer addresses is null");
+      ArrayList<Address> addresses = new ArrayList<>();
+      addresses.add(new Address("", "", "", "", "", "", "", "", false, false));
+      customer.setAddresses(addresses);
+    }
+    if (customer.getEmails() == null) {
+      System.out.println("Customer emails is null");
+      ArrayList<Email> emails = new ArrayList<>();
+      emails.add(new Email("", "", false));
+      customer.setEmails(emails);
+    }
+    if (customer.getEmployer() == null) {
+      System.out.println("Customer employer is null");
+      CustomerEmployer employer =
+          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false);
+      customer.setEmployer(employer);
+    }
+
+    if (customer.getName() == null) {
+      System.out.println("Customer name is null");
+      customer.setName("");
+    }
+
+    if (customer.getPhones() == null) {
+      System.out.println("Customer phones is null");
+      ArrayList<Phone> phones = new ArrayList<>();
+      phones.add(new Phone("", "", "", "", false, false));
+      customer.setPhones(phones);
+    }
+
+    if (customer.getNotes() == null) {
+      System.out.println("Customer notes is null");
+      customer.setNotes(new ArrayList<>());
+    }
+
+    if (customer.getOccupation() == null) {
+      System.out.println("Customer occupation is null");
+      customer.setOccupation("");
+    }
+    if (customer.getVisa() == null) {
+      System.out.println("Customer visa is null");
+      customer.setVisa("");
+    }
+    if (customer.getCitizenship() == null) {
+      System.out.println("Customer citizenship is null");
+      customer.setCitizenship("");
+    }
+    if (customer.getDateOfBirth() == null) {
+      System.out.println("Customer date of birth is null");
+      customer.setDateOfBirth(null);
+    }
+    if (customer.getTitle() == null) {
+      System.out.println("Customer title is null");
+      customer.setTitle("");
+    }
+  }
+}
