@@ -390,12 +390,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
         currentNumberPage++;
         phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
-        customerPhoneNumberOne.setText(
-            existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-        customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-        customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-        sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-        phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+        setPhoneDetailsUI("value");
 
       }
 
@@ -412,18 +407,10 @@ public class CustomerInputContactController implements AccessTypeObserver {
       // set all the fields to empty
 
       if (currentNumberPage == amountOfValidNumbers) {
-        customerPhoneNumberOne.setText("");
-        customerPhonePrefixField.setText("");
-        customerPhoneTypeBox.setValue("");
-        sendTextRadio.setSelected(false);
-        phonePrimaryRadio.setSelected(false);
+        setPhoneDetailsUI("empty");
+
       } else {
-        customerPhoneNumberOne.setText(
-            existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-        customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-        customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-        sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-        phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+        setPhoneDetailsUI("value");
       }
     }
 
@@ -443,18 +430,9 @@ public class CustomerInputContactController implements AccessTypeObserver {
       if (currentNumberPage == existingCustomerPhones.size()) {
 
         // set all the fields to the next phone number
-        customerPhoneNumberOne.setText("");
-        customerPhonePrefixField.setText("");
-        customerPhoneTypeBox.setValue("");
-        sendTextRadio.setSelected(false);
-        phonePrimaryRadio.setSelected(false);
+        setPhoneDetailsUI("empty");
       } else {
-        customerPhoneNumberOne.setText(
-            existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-        customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-        customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-        sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-        phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+        setPhoneDetailsUI("value");
       }
     }
   }
@@ -465,12 +443,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       currentNumberPage--;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
-      customerPhoneNumberOne.setText(
-          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+      setPhoneDetailsUI("value");
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
@@ -484,12 +457,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
 
       // set all the fields to the previous phone number
-      customerPhoneNumberOne.setText(
-          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+      setPhoneDetailsUI("value");
 
       if (validateData()) {
         customerPhonePrefixField.setStyle("");
@@ -511,12 +479,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
 
       // set all the fields to the previous phone number
-      customerPhoneNumberOne.setText(
-          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
-      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
-      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
-      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
-      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+      setPhoneDetailsUI("value");
 
       if (validateData()) {
         customerPhonePrefixField.setStyle("");
@@ -651,5 +614,24 @@ public class CustomerInputContactController implements AccessTypeObserver {
         customerEmployerButton.setStyle(style);
       }
     }
+  }
+
+  public void setPhoneDetailsUI(String setting) {
+
+    if (setting == "empty") {
+      customerPhoneNumberOne.setText("");
+      customerPhonePrefixField.setText("");
+      customerPhoneTypeBox.setValue("");
+      sendTextRadio.setSelected(false);
+      phonePrimaryRadio.setSelected(false);
+    } else {
+      customerPhoneNumberOne.setText(
+          existingCustomerPhones.get(currentNumberPage).getPhoneNumber());
+      customerPhonePrefixField.setText(existingCustomerPhones.get(currentNumberPage).getPrefix());
+      customerPhoneTypeBox.setValue(existingCustomerPhones.get(currentNumberPage).getType());
+      sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
+      phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
+    }
+
   }
 }
