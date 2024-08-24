@@ -70,8 +70,8 @@ public class Main extends Application {
   }
 
   private static Parent loadFxml(final String fxml) throws IOException {
-    String fxmlPath = "/fxml/" + fxml + ".fxml";
-    System.out.println("Loading FXML from path: " + fxmlPath);
+    // String fxmlPath = "/fxml/" + fxml + ".fxml";
+    // System.out.println("Loading FXML from path: " + fxmlPath);
     return new FXMLLoader(Main.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
