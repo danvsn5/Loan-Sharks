@@ -4,32 +4,22 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.loan.PersonalLoanSingleton;
-import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Instance;
-import uoa.lavs.mainframe.Request;
-import uoa.lavs.mainframe.Response;
 
 public class LoanMenuController {
-  @FXML
-  private Button createNewLoanButton;
+  @FXML private Button createNewLoanButton;
 
-  @FXML
-  private Button findLoanButton;
+  @FXML private Button findLoanButton;
 
-  @FXML
-  private ImageView staticReturnImageView;
+  @FXML private ImageView staticReturnImageView;
 
-  @FXML
-  private ImageView connectionSymbol;
+  @FXML private ImageView connectionSymbol;
 
-  @FXML
-  private Label connectionLabel;
+  @FXML private Label connectionLabel;
 
   @FXML
   private void initialize() {
@@ -39,32 +29,32 @@ public class LoanMenuController {
   @FXML
   private void handleCreateNewLoanButtonAction() {
 
-    Connection connection = Instance.getConnection();
+    // BYPASSING THE CONNECTION TO THE DATABASE
 
-    Request request = new Request(1);
+    // Connection connection = Instance.getConnection();
 
-    Response response = (connection.send(request));
-    uoa.lavs.mainframe.Status status = response.getStatus();
+    //  Request request = new Request(1);
+
+    //   Response response = (connection.send(request));
+    //   uoa.lavs.mainframe.Status status = response.getStatus();
 
     // there was an issue connecting to the database
-    if (status.getErrorCode() == 1000
-        || status.getErrorCode() == 1010
-        || status.getErrorCode() == 1020) {
-      setRedSymbol();
-      connectionLabel.setText(status.getErrorMessage());
-      // if the 'unknown' message got a response, it's online
-    } else if (status.getErrorCode() == 100) {
-      setGreenSymbol();
-      connectionLabel.setText("");
-      PersonalLoanSingleton.resetInstance();
-      AppState.isCreatingLoan = true;
-      Main.setUi(AppUI.CUSTOMER_SEARCH);
-      // catch all for other messages
-    } else {
-      setOrangeSymbol();
-      connectionLabel.setText("Unidentified error. Please try again.");
-    }
-
+    //   if (status.getErrorCode() == 1000
+    //       || status.getErrorCode() == 1010
+    //       || status.getErrorCode() == 1020) {
+    //     setRedSymbol();
+    //    connectionLabel.setText(status.getErrorMessage());
+    // if the 'unknown' message got a response, it's online
+    //   } else if (status.getErrorCode() == 100) {
+    //     setGreenSymbol();
+    //     connectionLabel.setText("");
+    PersonalLoanSingleton.resetInstance();
+    AppState.isCreatingLoan = true;
+    Main.setUi(AppUI.CUSTOMER_SEARCH);
+    // catch all for other messages
+    //   } else {
+    //     setOrangeSymbol();
+    //     connectionLabel.setText("Unidentified error. Please try again.");
   }
 
   @FXML
