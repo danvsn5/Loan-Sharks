@@ -18,16 +18,28 @@ import uoa.lavs.sql.oop_to_sql.customer.NotesDAO;
 import uoa.lavs.sql.oop_to_sql.customer.PhoneDAO;
 
 public class CustomerCreationHelper {
-  public static void createCustomer(IndividualCustomer customer) throws IOException {
+  public static void createCustomer(IndividualCustomer customer, boolean currentlyExists) throws IOException {
     CustomerDAO customerdao = new CustomerDAO();
-    customerdao.addCustomer(customer);
+
+    if (!currentlyExists) {
+      customerdao.addCustomer(customer);
+    } else {
+      customerdao.updateCustomer(customer);
+    }
+    
 
     NotesDAO notesdao = new NotesDAO();
     ArrayList<Note> notes = customer.getNotes();
     for (Note note : notes) {
       note.setCustomerId(customer.getCustomerId());
-      notesdao.addNote(note);
+      if (!currentlyExists) {
+        notesdao.addNote(note);
+      } else {
+        notesdao.updateNote(note);
+      }
     }
+
+
 
     AddressDAO addressdao = new AddressDAO();
     ArrayList<Address> addresses = customer.getAddresses();
@@ -42,7 +54,12 @@ public class CustomerCreationHelper {
       }
 
       address.setCustomerId(customer.getCustomerId());
-      addressdao.addAddress(address);
+      if (!currentlyExists) {
+        addressdao.addAddress(address);
+      } else {
+        addressdao.updateAddress(address);
+      }
+      
     }
 
     PhoneDAO phonedao = new PhoneDAO();
@@ -53,7 +70,11 @@ public class CustomerCreationHelper {
       }
       // System.out.println("not skipping phone");
       phone.setCustomerId(customer.getCustomerId());
-      phonedao.addPhone(phone);
+      if (!currentlyExists) {
+        phonedao.addPhone(phone);
+      } else {
+        phonedao.updatePhone(phone);
+      }
     }
 
     EmailDAO emaildao = new EmailDAO();
@@ -64,12 +85,20 @@ public class CustomerCreationHelper {
       }
 
       email.setCustomerId(customer.getCustomerId());
-      emaildao.addEmail(email);
+      if (!currentlyExists) {
+        emaildao.addEmail(email);
+      } else {
+        emaildao.updateEmail(email);
+      }
     }
 
     CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
     customer.getEmployer().setCustomerId(customer.getCustomerId());
-    employerdao.addCustomerEmployer(customer.getEmployer());
+    if (!currentlyExists) {
+      employerdao.addCustomerEmployer(customer.getEmployer());
+    } else {
+      employerdao.updateCustomerEmployer(customer.getEmployer());
+    }
 
     SyncCustomer syncCustomer = new SyncCustomer();
     SyncAddress syncAddress = new SyncAddress();
