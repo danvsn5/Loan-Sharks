@@ -321,7 +321,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   private boolean setPhoneDetails(String location) {
 
-    if (location != "dec" && location != "decEdit") {
+    if (location != "dec") {
       if (!validatePhone()) {
         return false;
       }
@@ -337,11 +337,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
         sendTextRadio.isSelected());
 
     // sets the details for the current number page for the existing phones;
-    if (location != "decEdit") {
+    if (location != "decEdit" && location != "incEdit") {
       existingCustomerPhones.set(currentNumberPage, newPhone);
     } else {
       if (currentNumberPage == existingCustomerPhones.size() && validatePhone()) {
         existingCustomerPhones.add(newPhone);
+        System.out.println("Added new phone number");
       }
     }
     customer.setPhones(existingCustomerPhones);
@@ -364,7 +365,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
         emailPrimaryRadio.isSelected());
 
     // sets the details for the current email page for the existing emails;
-    if (location != "decEdit") {
+    if (location != "decEdit" && location != "incEdit") {
       existingCustomerEmails.set(currentEmailPage, newEmail);
     } else {
       // only add a new email if the current page is the same as the amount of valid
@@ -484,7 +485,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
     if (AppState.customerDetailsAccessType == "EDIT") {
 
-      if (!setPhoneDetails("inc")) {
+      if (!setPhoneDetails("incEdit")) {
         // if a field is invalid, return
         return;
       }
@@ -500,10 +501,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
         setPhoneDetailsUI("value");
       }
     }
+
   }
 
   @FXML
   private void handleDecPhone() {
+
     if (AppState.customerDetailsAccessType == "VIEW" && currentNumberPage != 0) {
       currentNumberPage--;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
@@ -550,10 +553,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
         phonePrimaryRadio.setStyle("");
       }
     }
+
   }
 
   @FXML
   private void handleIncEmail() {
+
     if (AppState.customerDetailsAccessType == "VIEW") {
 
       if (currentEmailPage < existingCustomerEmails.size() - 1) {
@@ -583,7 +588,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
     if (AppState.customerDetailsAccessType == "EDIT") {
 
-      if (!setEmailDetails("inc")) {
+      if (!setEmailDetails("incEdit")) {
         // if a field is invalid, return
         return;
       }
@@ -598,10 +603,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
 
     }
+
   }
 
   @FXML
   private void handleDecEmail() {
+
     if (AppState.customerDetailsAccessType == "VIEW" && currentEmailPage != 0) {
       currentEmailPage--;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
@@ -644,6 +651,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
         emailPrimaryRadio.setStyle("");
       }
     }
+
   }
 
   @Override
