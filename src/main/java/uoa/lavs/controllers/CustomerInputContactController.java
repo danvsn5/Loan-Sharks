@@ -73,6 +73,24 @@ public class CustomerInputContactController implements AccessTypeObserver {
     phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
     emailPageLabel.setText("Email: " + (currentEmailPage + 1));
 
+    // Set dummy data
+    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+
+      customerPhoneTypeBox.setValue("Mobile");
+      customerPhonePrefixField.setText("+1");
+      customerPhoneNumberOne.setText("1234567890");
+      sendTextRadio.setSelected(true);
+      phonePrimaryRadio.setSelected(true);
+      isPrimaryPhoneSet = true;
+
+      customerEmailTextField.setText("dummy@example.com");
+      emailPrimaryRadio.setSelected(true);
+      isPrimaryEmailSet = true;
+
+      customerPreferredContactBox.setText("Preferred Contact");
+      customerAltContactBox.setText("Alternate Contact");
+    }
+
     if (AppState.isAccessingFromSearch) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
