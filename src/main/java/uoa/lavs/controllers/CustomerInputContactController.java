@@ -212,7 +212,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
     // primary email needs to be checked that there in one set somewhere and no 2
     // are set
 
-    boolean isValid = true;
+    boolean isPhoneValid = true;
+    boolean isEmailValid = true;
     customerPhonePrefixField.setStyle("");
     customerPhoneNumberOne.setStyle("");
     customerEmailTextField.setStyle("");
@@ -220,7 +221,20 @@ public class CustomerInputContactController implements AccessTypeObserver {
     phonePrimaryRadio.setStyle("");
     emailPrimaryRadio.setStyle("");
 
-    if (customerPhoneTypeBox.getValue() == null) {
+    isPhoneValid = validatePhone();
+    isEmailValid = validateEmail();
+
+    if (!isPhoneValid || !isEmailValid)
+      return false;
+
+    return true;
+  }
+
+  private boolean validatePhone() {
+
+    boolean isValid = true;
+
+    if (customerPhoneTypeBox.getValue() == "" || customerPhoneTypeBox.getValue() == null) {
       customerPhoneTypeBox.setStyle("-fx-border-color: red;");
       isValid = false;
     }
@@ -243,6 +257,19 @@ public class CustomerInputContactController implements AccessTypeObserver {
       isValid = false;
     }
 
+    if (!isPrimaryPhoneSet) {
+      phonePrimaryRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  private boolean validateEmail() {
+
+    boolean isValid = true;
+
     // Regex taken from
     // https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
     if (customerEmailTextField.getText().isEmpty()
@@ -252,23 +279,13 @@ public class CustomerInputContactController implements AccessTypeObserver {
       isValid = false;
     }
 
-    if (!isPrimaryPhoneSet) {
-      phonePrimaryRadio.setStyle(
-          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
-      isValid = false;
-    }
-
     if (!isPrimaryEmailSet) {
       emailPrimaryRadio.setStyle(
           "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
       isValid = false;
     }
 
-    if (!isValid) {
-      return false;
-    }
-
-    return true;
+    return isValid;
   }
 
   private boolean setContactDetails() {
@@ -305,7 +322,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private boolean setPhoneDetails(String location) {
 
     if (location != "dec" && location != "decEdit") {
-      if (!validateData()) {
+      if (!validatePhone()) {
         return false;
       }
     }
@@ -323,7 +340,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     if (location != "decEdit") {
       existingCustomerPhones.set(currentNumberPage, newPhone);
     } else {
-      if (currentNumberPage == existingCustomerPhones.size() && validateData()) {
+      if (currentNumberPage == existingCustomerPhones.size() && validatePhone()) {
         existingCustomerPhones.add(newPhone);
       }
     }
@@ -335,7 +352,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private boolean setEmailDetails(String location) {
 
     if (location != "dec") {
-      if (!validateData()) {
+      if (!validateEmail()) {
         return false;
       }
     }
@@ -348,17 +365,13 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
     // sets the details for the current email page for the existing emails;
     if (location != "decEdit") {
-      System.out.println("Setting existing email");
       existingCustomerEmails.set(currentEmailPage, newEmail);
     } else {
       // only add a new email if the current page is the same as the amount of valid
       // emails
       if (currentEmailPage == existingCustomerEmails.size()) {
 
-        if (validateData()) {
-          System.out.println("Adding new email");
-          System.out.println("Current email page: " + currentEmailPage);
-          System.out.println(customerEmailTextField.getText());
+        if (validateEmail()) {
           existingCustomerEmails.add(newEmail);
         }
 
@@ -510,7 +523,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       // set all the fields to the previous phone number
       setPhoneDetailsUI("value");
 
-      if (validateData()) {
+      if (validatePhone()) {
         customerPhonePrefixField.setStyle("");
         customerPhoneNumberOne.setStyle("");
         customerPhoneTypeBox.setStyle("");
@@ -530,7 +543,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       // set all the fields to the previous phone number
       setPhoneDetailsUI("value");
 
-      if (validateData()) {
+      if (validatePhone()) {
         customerPhonePrefixField.setStyle("");
         customerPhoneNumberOne.setStyle("");
         customerPhoneTypeBox.setStyle("");
@@ -574,8 +587,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
         // if a field is invalid, return
         return;
       }
-      System.out.println("Current email page: " + currentEmailPage);
-      System.out.println("Existing customer emails size: " + existingCustomerEmails.size());
       currentEmailPage++;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
 
@@ -610,7 +621,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       // set all the fields to the previous email
       setEmailDetailsUI("value");
 
-      if (validateData()) {
+      if (validateEmail()) {
         customerEmailTextField.setStyle("");
         emailPrimaryRadio.setStyle("");
       }
@@ -628,7 +639,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       setEmailDetailsUI("value");
 
-      if (validateData()) {
+      if (validateEmail()) {
         customerEmailTextField.setStyle("");
         emailPrimaryRadio.setStyle("");
       }
