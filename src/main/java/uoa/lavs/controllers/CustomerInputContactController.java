@@ -243,11 +243,11 @@ public class CustomerInputContactController implements AccessTypeObserver {
       isValid = false;
     }
 
-    // if (!isPrimaryEmailSet) {
-    // emailPrimaryRadio.setStyle(
-    // "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
-    // isValid = false;
-    // }
+    if (!isPrimaryEmailSet) {
+    emailPrimaryRadio.setStyle(
+    "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+    isValid = false;
+    }
 
     if (!isValid) {
       return false;
@@ -311,6 +311,31 @@ public class CustomerInputContactController implements AccessTypeObserver {
       existingCustomerPhones.add(newPhone);
     }
     customer.setPhones(existingCustomerPhones);
+
+    return true;
+  }
+
+  private boolean setEmailDetails(String location) {
+
+    if (location != "dec" && location != "decEdit") {
+      if (!validateData()) {
+        return false;
+      }
+    }
+
+    // create a new email
+    Email newEmail = new Email(
+        customer.getCustomerId(),
+        customerEmailTextField.getText(),
+        emailPrimaryRadio.isSelected());
+
+    // sets the details for the current email page for the existing emails;
+    if (location != "decEdit") {
+      existingCustomerEmails.set(currentEmailPage, newEmail);
+    } else {
+      existingCustomerEmails.add(newEmail);
+    }
+    customer.setEmails(existingCustomerEmails);
 
     return true;
   }
@@ -504,18 +529,20 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
-      setContactDetails();
+
+      if (!setEmailDetails("inc")) {
+        // if a field is invalid, return; suggesting to the user that the first email
+        // that you enter is the primary email
+        return;
+      }
       currentEmailPage++;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       amountOfValidEmails++;
       // set all the fields to empty
       if (currentEmailPage == amountOfValidEmails) {
-        customerEmailTextField.setText("");
-        emailPrimaryRadio.setSelected(false);
+        setEmailDetailsUI("empty");
       } else {
-        customerEmailTextField.setText(
-            existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-        emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
+        setEmailDetailsUI("value");
       }
     }
 
