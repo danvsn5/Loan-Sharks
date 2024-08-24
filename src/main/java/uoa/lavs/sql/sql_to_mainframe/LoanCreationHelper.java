@@ -22,12 +22,12 @@ public class LoanCreationHelper {
     LoanDuration loanDuration = loan.getDuration();
     LoanPayment loanPayment = loan.getPayment();
 
-    if (loan.getLoanId() == null
-        || loan.getLoanId().equals("")
-        || loan.getCustomerId() == null
-        || loan.getCustomerId().equals("")
-        || loan.getPrincipal() == 0
+    if (loan.getPrincipal() == 0
+        || !Double.toString(loan.getPrincipal()).matches("^\\d+(\\.\\d+)?$")
+        || Double.toString(loan.getPrincipal()).length() > 15
         || loan.getRate() == 0
+        || !Double.toString(loan.getRate()).matches("^\\d+(\\.\\d+)?$")
+        || Double.toString(loan.getRate()).length() > 5
         || loan.getRateType() == null
         || loan.getRateType().equals("")) {
       return false;
@@ -35,13 +35,16 @@ public class LoanCreationHelper {
 
     if (loanDuration.getStartDate() == null
         || loanDuration.getPeriod() == 0
+        || !Integer.toString(loanDuration.getPeriod()).matches("[0-9]+")
+        || Integer.toString(loanDuration.getPeriod()).length() > 5
         || loanDuration.getLoanTerm() == 0) {
       return false;
     }
 
     if (loanPayment.getCompounding().equals("")
         || loanPayment.getPaymentFrequency().equals("")
-        || loanPayment.getPaymentAmount().equals("")) {
+        || loanPayment.getPaymentAmount().equals("")
+        || !loanPayment.getPaymentAmount().matches("^\\d+(\\.\\d+)?$")) {
       return false;
     }
 
