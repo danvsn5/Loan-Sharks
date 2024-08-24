@@ -143,6 +143,21 @@ public class CustomerInputContactController implements AccessTypeObserver {
         }
       }
     }
+
+    // iterate through all existing phone numbers and emails; if ANY of of them have
+    // a getIspPrimary for phones or emails set to true, set the isPrimaryPhoneSet
+    // or isPrimaryEmailSet to true
+    for (Phone phone : existingCustomerPhones) {
+      if (phone.getIsPrimary()) {
+        isPrimaryPhoneSet = true;
+      }
+    }
+    for (Email email : existingCustomerEmails) {
+      if (email.getIsPrimary()) {
+        isPrimaryEmailSet = true;
+      }
+    }
+
   }
 
   @FXML
@@ -244,9 +259,9 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (!isPrimaryEmailSet) {
-    emailPrimaryRadio.setStyle(
-    "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
-    isValid = false;
+      emailPrimaryRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
     }
 
     if (!isValid) {
@@ -441,9 +456,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
     if (AppState.customerDetailsAccessType == "EDIT") {
 
-      // get the current fields and replace the current number page with the phone
-      // fields
-
       if (!setPhoneDetails("inc")) {
         // if a field is invalid, return
         return;
@@ -547,21 +559,22 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
-      setContactDetails();
+
+      if (!setEmailDetails("inc")) {
+        // if a field is invalid, return
+        return;
+      }
 
       currentEmailPage++;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
 
-      // if the current email page is the same as the amount of valid emails
-      if (currentEmailPage == amountOfValidEmails) {
-        currentEmailPage++;
-        amountOfValidEmails++;
+      if (currentEmailPage == existingCustomerEmails.size()) {
+        // set all the fields to the next email
+        setEmailDetailsUI("empty");
+      } else {
+        setEmailDetailsUI("value");
       }
 
-      // set all the fields to the next email
-      customerEmailTextField.setText(
-          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
-      emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
     }
   }
 
