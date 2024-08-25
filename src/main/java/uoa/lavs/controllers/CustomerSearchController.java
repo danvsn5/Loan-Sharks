@@ -22,35 +22,26 @@ import uoa.lavs.mainframe.Request;
 import uoa.lavs.mainframe.Response;
 
 public class CustomerSearchController {
-  @FXML
-  private Label searchWithCustomerIDLabel; // When click label, reveal text box.
+  @FXML private Label searchWithCustomerIDLabel; // When click label, reveal text box.
 
-  @FXML
-  private Label searchWithNameLabel; // When click label, reveal text box.
+  @FXML private Label searchWithNameLabel; // When click label, reveal text box.
 
-  @FXML
-  private ImageView staticReturnImageView;
+  @FXML private ImageView staticReturnImageView;
 
-  @FXML
-  private TextField usernameField;
+  @FXML private TextField usernameField;
 
-  @FXML
-  private TextField idField;
+  @FXML private TextField idField;
 
-  @FXML
-  private Button searchButton;
+  @FXML private Button searchButton;
 
-  @FXML
-  private ImageView connectionSymbol;
+  @FXML private ImageView connectionSymbol;
 
-  @FXML
-  private Label connectionLabel;
+  @FXML private Label connectionLabel;
 
   String state;
 
   @FXML
-  private void initialize() {
-  }
+  private void initialize() {}
 
   // When enter key is pressed, perform search.
   @FXML
@@ -95,7 +86,8 @@ public class CustomerSearchController {
     String searchString = idField.getText();
     SearchCustomer searchCustomer = new SearchCustomer();
     try {
-      Customer customer = searchCustomer.searchCustomerById(searchString);
+      Connection connection = Instance.getConnection();
+      Customer customer = searchCustomer.searchCustomerById(searchString, connection);
       searchCustomer.getStatusInstance().getErrorCode();
 
       if (searchCustomer.getStatusInstance().getErrorCode() == 1000
@@ -125,7 +117,9 @@ public class CustomerSearchController {
     String searchString = usernameField.getText();
     SearchCustomer searchCustomer = new SearchCustomer();
     try {
-      List<Customer> listOfCustomers = searchCustomer.searchCustomerByName(searchString);
+      Connection connection = Instance.getConnection();
+      List<Customer> listOfCustomers =
+          searchCustomer.searchCustomerByName(searchString, connection);
       searchCustomer.getStatusInstance().getErrorCode();
 
       if (searchCustomer.getStatusInstance().getErrorCode() == 1000
@@ -210,5 +204,4 @@ public class CustomerSearchController {
     orange.setHue(0.16);
     connectionSymbol.setEffect(orange);
   }
-
 }

@@ -18,6 +18,8 @@ import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.customer.SearchCustomer;
 import uoa.lavs.loan.PersonalLoan;
 import uoa.lavs.loan.PersonalLoanSingleton;
+import uoa.lavs.mainframe.Connection;
+import uoa.lavs.mainframe.Instance;
 import uoa.lavs.mainframe.messages.loan.LoadLoanSummary;
 import uoa.lavs.sql.sql_to_mainframe.LoanCreationHelper;
 
@@ -68,9 +70,11 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
 
     // Searches if mainframe/localdb has these ids and sets the style of the textfield accordingly
     SearchCustomer searchCustomer = new SearchCustomer();
+    Connection connection = Instance.getConnection();
+
     if (!coborrowerIDField1.getText().isEmpty()) {
       if (!coborrowerIDField1.getText().equals(personalLoan.getCustomerId())
-          && searchCustomer.searchCustomerById(coborrowerIDField1.getText()) != null) {
+          && searchCustomer.searchCustomerById(coborrowerIDField1.getText(), connection) != null) {
         coborrowerIDField1.setStyle("");
       } else {
         coborrowerIDField1.setStyle("-fx-border-color: red");
@@ -79,7 +83,7 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
     }
     if (!coborrowerIDField2.getText().isEmpty()) {
       if (!coborrowerIDField2.getText().equals(personalLoan.getCustomerId())
-          && searchCustomer.searchCustomerById(coborrowerIDField2.getText()) != null) {
+          && searchCustomer.searchCustomerById(coborrowerIDField2.getText(), connection) != null) {
         coborrowerIDField2.setStyle("");
       } else {
         coborrowerIDField2.setStyle("-fx-border-color: red");
@@ -88,7 +92,7 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
     }
     if (!coborrowerIDField3.getText().isEmpty()) {
       if (!coborrowerIDField3.getText().equals(personalLoan.getCustomerId())
-          && searchCustomer.searchCustomerById(coborrowerIDField3.getText()) != null) {
+          && searchCustomer.searchCustomerById(coborrowerIDField3.getText(), connection) != null) {
         coborrowerIDField3.setStyle("");
       } else {
         coborrowerIDField3.setStyle("-fx-border-color: red");
