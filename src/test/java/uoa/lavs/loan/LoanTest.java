@@ -111,4 +111,16 @@ public class LoanTest {
     loan.setPayment(newPayment);
     assertEquals(newPayment, loan.getPayment());
   }
+
+  @Test
+  public void testGetRateType() {
+    assertEquals(rateType, loan.getRateType());
+  }
+
+  @Test 
+  public void testSetRateType() {
+    loan.setRateType("variable");
+    assertEquals("variable", loan.getRateType());
+  }
+
 }
