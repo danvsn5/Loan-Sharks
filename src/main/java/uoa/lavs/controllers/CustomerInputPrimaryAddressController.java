@@ -222,7 +222,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     }
 
     // create a new address with input details
-
     Address address = new Address(
         customer.getCustomerId(),
         customerAddressTypeComboBox.getValue(),
@@ -362,93 +361,88 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
     }
 
-    if (AppState.customerDetailsAccessType == "VIEW" && currentAddress < addresses.size() - 1) {
+    if (AppState.customerDetailsAccessType == "VIEW") {
 
-      // increment the current address counter
-      currentAddress++;
-      addressPageLabel.setText("Address: " + (currentAddress + 1));
-
-      // set all the fields to the new currentAddress
-      setAddressDetailsUI("value");
-
+      if (currentAddress < existingCustomerAddresses.size() - 1) {
+        currentAddress++;
+        addressPageLabel.setText("Address: " + (currentAddress + 1));
+        setAddressDetailsUI("value");
+      }
     }
 
     if (AppState.customerDetailsAccessType == "EDIT") {
 
+      if (!setAddressDetails("incEdit")) {
+        // if a field is invalid, then do not increment and return
+        return;
+      }
+
       currentAddress++;
       addressPageLabel.setText("Address: " + (currentAddress + 1));
 
       // set all the fields to the new currentAddress
-      setAddressDetailsUI("value");
+      if (currentAddress == existingCustomerAddresses.size()) {
+        setAddressDetailsUI("empty");
+      } else {
+        setAddressDetailsUI("value");
+      }
 
     }
   }
 
   @FXML
   private void handleDecAddress() {
-    if (currentAddress != 0) {
-      if (currentAddress == 0) {
-        return;
-      }
-      if (AppState.customerDetailsAccessType == "CREATE") {
-        if (currentAddress == addresses.size()) {
-          // gets all the input fields and adds them to an address instance
-          uoa.lavs.customer.Address address = new uoa.lavs.customer.Address(
-              customer.getCustomerId(),
-              customerAddressTypeComboBox.getValue(),
-              customerAddressLine1Field.getText(),
-              customerAddressLine2Field.getText(),
-              customerSuburbField.getText(),
-              customerPostcodeField.getText(),
-              customerCityField.getText(),
-              "New Zealand",
-              primaryAddressRadio.isSelected(),
-              mailingAddressRadio.isSelected());
-          addresses.add(address);
+    if (AppState.customerDetailsAccessType == "CREATE") {
 
-        } else {
-          addresses.get(currentAddress).setAddressType(customerAddressTypeComboBox.getValue());
-          addresses.get(currentAddress).setAddressLineOne(customerAddressLine1Field.getText());
-          addresses.get(currentAddress).setAddressLineTwo(customerAddressLine2Field.getText());
-          addresses.get(currentAddress).setSuburb(customerSuburbField.getText());
-          addresses.get(currentAddress).setPostCode(customerPostcodeField.getText());
-          addresses.get(currentAddress).setCity(customerCityField.getText());
-          addresses.get(currentAddress).setCountry("New Zealand");
-          addresses.get(currentAddress).setIsPrimary(primaryAddressRadio.isSelected());
-          addresses.get(currentAddress).setIsMailing(mailingAddressRadio.isSelected());
-        }
+      setAddressDetails("dec");
 
-        // decrement the current address counter
+      if (currentAddress != 0) {
         currentAddress--;
         addressPageLabel.setText("Address: " + (currentAddress + 1));
-
-        // set all the fields to the new currentAddress
-        setAddressDetailsUI("value");
-
       }
 
-      if (AppState.customerDetailsAccessType == "VIEW" && currentAddress > 0) {
+      setAddressDetailsUI("value");
 
-        // decrement the current address counter
+      if (validateData()) {
+        customerAddressTypeComboBox.setStyle("");
+        customerAddressLine1Field.setStyle("");
+        customerAddressLine2Field.setStyle("");
+        customerSuburbField.setStyle("");
+        customerCityField.setStyle("");
+        customerPostcodeField.setStyle("");
+        mailingAddressRadio.setStyle("");
+        primaryAddressRadio.setStyle("");
+      }
+
+    }
+
+    if (AppState.customerDetailsAccessType == "VIEW" && currentAddress > 0) {
+      currentAddress--;
+      addressPageLabel.setText("Address: " + (currentAddress + 1));
+      setAddressDetailsUI("value");
+    }
+
+    if (AppState.customerDetailsAccessType == "EDIT") {
+
+      setAddressDetails("dec");
+      if (currentAddress != 0) {
         currentAddress--;
         addressPageLabel.setText("Address: " + (currentAddress + 1));
-
-        // set all the fields to the new currentAddress
-        setAddressDetailsUI("value");
-
       }
 
-      if (AppState.customerDetailsAccessType == "EDIT") {
+      setAddressDetailsUI("value");
 
-        if (currentAddress != 0) {
-          // decrement the current address counter
-          currentAddress--;
-          addressPageLabel.setText("Address: " + (currentAddress + 1));
-
-          // set all the fields to the new currentAddress
-          setAddressDetailsUI("value");
-        }
+      if (validateData()) {
+        customerAddressTypeComboBox.setStyle("");
+        customerAddressLine1Field.setStyle("");
+        customerAddressLine2Field.setStyle("");
+        customerSuburbField.setStyle("");
+        customerCityField.setStyle("");
+        customerPostcodeField.setStyle("");
+        mailingAddressRadio.setStyle("");
+        primaryAddressRadio.setStyle("");
       }
+
     }
   }
 
@@ -488,14 +482,14 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       mailingAddressRadio.setSelected(false);
       primaryAddressRadio.setSelected(false);
     } else {
-      customerAddressTypeComboBox.setValue(addresses.get(currentAddress).getAddressType());
-      customerAddressLine1Field.setText(addresses.get(currentAddress).getAddressLineOne());
-      customerAddressLine2Field.setText(addresses.get(currentAddress).getAddressLineTwo());
-      customerSuburbField.setText(addresses.get(currentAddress).getSuburb());
-      customerCityField.setText(addresses.get(currentAddress).getCity());
-      customerPostcodeField.setText(addresses.get(currentAddress).getPostCode());
-      mailingAddressRadio.setSelected(addresses.get(currentAddress).getIsMailing());
-      primaryAddressRadio.setSelected(addresses.get(currentAddress).getIsPrimary());
+      customerAddressTypeComboBox.setValue(existingCustomerAddresses.get(currentAddress).getAddressType());
+      customerAddressLine1Field.setText(existingCustomerAddresses.get(currentAddress).getAddressLineOne());
+      customerAddressLine2Field.setText(existingCustomerAddresses.get(currentAddress).getAddressLineTwo());
+      customerSuburbField.setText(existingCustomerAddresses.get(currentAddress).getSuburb());
+      customerCityField.setText(existingCustomerAddresses.get(currentAddress).getCity());
+      customerPostcodeField.setText(existingCustomerAddresses.get(currentAddress).getPostCode());
+      mailingAddressRadio.setSelected(existingCustomerAddresses.get(currentAddress).getIsMailing());
+      primaryAddressRadio.setSelected(existingCustomerAddresses.get(currentAddress).getIsPrimary());
     }
 
   }
