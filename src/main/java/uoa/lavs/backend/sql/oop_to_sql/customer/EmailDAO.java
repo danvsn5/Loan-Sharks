@@ -35,6 +35,7 @@ public class EmailDAO {
   }
 
   public int getNextEmailIdForCustomer(String customerId) {
+    int maxEmailId = 0;
     String sql = "SELECT MAX(emailId) FROM customer_email WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -43,13 +44,13 @@ public class EmailDAO {
       ResultSet rs = pstmt.executeQuery();
 
       if (rs.next()) {
-        int maxEmailId = rs.getInt(1);
-        return maxEmailId + 1;
+        maxEmailId = rs.getInt(1);
+        
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-    return 1;
+    return maxEmailId + 1;
   }
 
   public void updateEmail(Email email) {
@@ -73,27 +74,15 @@ public class EmailDAO {
   }
 
   public Email getEmail(String customerId, int emailId) {
-    String sql = "SELECT * FROM customer_email WHERE customerId = ? AND emailId = ?";
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-      pstmt.setString(1, customerId);
-      pstmt.setInt(2, emailId);
-      ResultSet rs = pstmt.executeQuery();
-
-      if (rs.next()) {
-        String emailAddress = rs.getString("emailAddress");
-        boolean isPrimary = rs.getBoolean("isPrimary");
-
-        Email retrievedEmail = new Email(customerId, emailAddress, isPrimary);
-        retrievedEmail.setEmailId(emailId);
-        return retrievedEmail;
+    Email retrievedEmail = null;
+    ArrayList<Email> emails = getEmails(customerId);
+    for (Email email : emails) {
+      if (email.getEmailId() == emailId) {
+        retrievedEmail = email;
+        break;
       }
-
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
     }
-    return null;
+    return retrievedEmail;
   }
 
   public ArrayList<Email> getEmails(String customerId) {
@@ -116,7 +105,6 @@ public class EmailDAO {
 
         emails.add(retrievedEmail);
       }
-      return emails;
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
