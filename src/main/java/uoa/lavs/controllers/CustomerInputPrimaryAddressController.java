@@ -231,10 +231,18 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   private void handleEditButtonAction() throws IOException {
     if (AppState.customerDetailsAccessType.equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
+      setAddressDetails();
+
+      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
+      if (!customerIsValid) {
+        System.out.println("Customer is not valid and thus will not be created");
+        editButton.setStyle("-fx-border-color: red");
+        return;
+      }
+
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-      setAddressDetails();
       CustomerCreationHelper.createCustomer(customer, false);
 
     } else if (AppState.customerDetailsAccessType.equals("VIEW")) {

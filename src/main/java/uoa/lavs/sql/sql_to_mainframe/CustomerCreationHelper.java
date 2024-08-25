@@ -6,6 +6,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import uoa.lavs.customer.Address;
+import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.Email;
 import uoa.lavs.customer.IndividualCustomer;
 import uoa.lavs.customer.Note;
@@ -18,7 +19,128 @@ import uoa.lavs.sql.oop_to_sql.customer.NotesDAO;
 import uoa.lavs.sql.oop_to_sql.customer.PhoneDAO;
 
 public class CustomerCreationHelper {
-  public static void createCustomer(IndividualCustomer customer, boolean currentlyExists) throws IOException {
+  public static boolean validateCustomer(IndividualCustomer customer) {
+    ArrayList<Address> addresses = customer.getAddresses();
+    ArrayList<Phone> phones = customer.getPhones();
+    ArrayList<Email> emails = customer.getEmails();
+    CustomerEmployer employer = customer.getEmployer();
+
+    // CUSTOMER VALIDATION
+    if (customer.getTitle().equals("")
+        || customer.getName().equals("")
+        || customer.getDateOfBirth() == null
+        || customer.getOccupation().equals("")
+        || customer.getOccupation().length() > 40
+        || customer.getVisa().equals("")
+        || customer.getCitizenship().equals("")) {
+      return false;
+    }
+
+    // ADDRESS VALIDATION
+    if (addresses.size() == 0) {
+      return false;
+    } else if (addresses.get(0).getAddressType().equals("")
+        || addresses.get(0).getAddressLineOne().equals("")
+        || addresses.get(0).getAddressLineOne().length() > 60
+        || addresses.get(0).getAddressLineTwo().length() > 60
+        || addresses.get(0).getSuburb().equals("")
+        || addresses.get(0).getSuburb().length() > 30
+        || addresses.get(0).getPostCode().equals("")
+        || addresses.get(0).getPostCode().length() > 10
+        || !addresses.get(0).getPostCode().matches("[0-9]+")
+        || addresses.get(0).getCity().equals("")
+        || addresses.get(0).getCity().length() > 30
+        || addresses.get(0).getCountry().equals("")) {
+      return false;
+    }
+    boolean primaryAddressSet = false;
+    boolean mailingAddressSet = false;
+    for (Address address : addresses) {
+      if (address.getIsPrimary()) {
+        primaryAddressSet = true;
+      }
+      if (address.getIsMailing()) {
+        mailingAddressSet = true;
+      }
+    }
+    if (!primaryAddressSet || !mailingAddressSet) {
+      return false;
+    }
+
+    // EMAIL VALIDATION
+    if (emails.size() == 0) {
+      return false;
+    } else if (emails.get(0).getEmailAddress().equals("")) {
+      return false;
+    }
+    boolean primaryEmailSet = false;
+    for (Email email : emails) {
+      if (email.getIsPrimary()) {
+        primaryEmailSet = true;
+        break;
+      }
+    }
+    if (!primaryEmailSet) {
+      return false;
+    }
+
+    // PHONE VALIDATION
+    if (phones.size() == 0) {
+      return false;
+    } else if (phones.get(0).getType().equals("")
+        || phones.get(0).getPrefix().equals("")
+        || phones.get(0).getPrefix().length() > 10
+        || !phones.get(0).getPrefix().matches("[0-9\\+]+")
+        || phones.get(0).getPhoneNumber().equals("")
+        || phones.get(0).getPhoneNumber().length() > 20
+        || !phones.get(0).getPhoneNumber().matches("[0-9\\-]+")
+        || phones.get(0).getType().equals("")) {
+      return false;
+    }
+    boolean primaryPhoneSet = false;
+    for (Phone phone : phones) {
+      if (phone.getIsPrimary()) {
+        primaryPhoneSet = true;
+        break;
+      }
+    }
+    if (!primaryPhoneSet) {
+      return false;
+    }
+
+    // EMPLOYER VALIDATION
+    if (employer.getEmployerName().equals("")
+        || employer.getEmployerName().length() > 60
+        || employer.getEmployerEmail().equals("")
+        || employer.getEmployerEmail().length() > 60
+        || !employer.getEmployerEmail().matches("^[^@]+@[^@]+\\.[^@]+$")
+        || employer.getEmployerWebsite().equals("")
+        || employer.getEmployerWebsite().length() > 60
+        || !employer
+            .getEmployerWebsite()
+            .matches(
+                "[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")
+        || employer.getEmployerPhone().equals("")
+        || employer.getEmployerPhone().length() > 30
+        || !employer.getEmployerPhone().matches("^\\+?[0-9\\-]{1,30}$")
+        || employer.getLineOne().equals("")
+        || employer.getLineOne().length() > 60
+        || employer.getLineTwo().length() > 60
+        || employer.getSuburb().equals("")
+        || employer.getSuburb().length() > 30
+        || employer.getCity().equals("")
+        || employer.getCity().length() > 30
+        || employer.getPostCode().equals("")
+        || !employer.getPostCode().matches("[0-9]{1,10}")
+        || employer.getCountry().equals("")) {
+      return false;
+    }
+
+    return true;
+  }
+
+  public static void createCustomer(IndividualCustomer customer, boolean currentlyExists)
+      throws IOException {
     CustomerDAO customerdao = new CustomerDAO();
 
     if (!currentlyExists) {
@@ -56,7 +178,6 @@ public class CustomerCreationHelper {
       } else {
         addressdao.updateAddress(address);
       }
-
     }
 
     PhoneDAO phonedao = new PhoneDAO();
