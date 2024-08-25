@@ -1,5 +1,6 @@
 package uoa.lavs.oop.customer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -110,5 +111,24 @@ public class IndividualCustomerSingletonTest {
   public void testSingleUniqueInstance() {
     assertSame(
         IndividualCustomerSingleton.getInstance(), IndividualCustomerSingleton.getInstance());
+  }
+
+  @Test
+  public void testSetInstanceCustomer() {
+    IndividualCustomerSingleton.setInstanceCustomer(newCustomer);
+    customer = IndividualCustomerSingleton.getInstance();
+
+    assertEquals(customer.getCustomerId(), newCustomer.getCustomerId());
+    assertEquals(customer.getTitle(), newCustomer.getTitle());
+    assertEquals(customer.getName(), newCustomer.getName());
+    assertEquals(customer.getDateOfBirth(), newCustomer.getDateOfBirth());
+    assertEquals(customer.getOccupation(), newCustomer.getOccupation());
+    assertEquals(customer.getVisa(), newCustomer.getVisa());
+    assertEquals(customer.getCitizenship(), newCustomer.getCitizenship());
+    assertEquals(customer.getNotes(), newCustomer.getNotes());
+    assertEquals(customer.getAddresses(), newCustomer.getAddresses());
+    assertEquals(customer.getPhones(), newCustomer.getPhones());
+    assertEquals(customer.getEmails(), newCustomer.getEmails());
+    assertEquals(customer.getEmployer(), newCustomer.getEmployer());
   }
 }

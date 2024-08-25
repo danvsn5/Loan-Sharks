@@ -86,7 +86,8 @@ public class CustomerSearchController {
     String searchString = idField.getText();
     SearchCustomer searchCustomer = new SearchCustomer();
     try {
-      Customer customer = searchCustomer.searchCustomerById(searchString);
+      Connection connection = Instance.getConnection();
+      Customer customer = searchCustomer.searchCustomerById(searchString, connection);
       searchCustomer.getStatusInstance().getErrorCode();
 
       if (searchCustomer.getStatusInstance().getErrorCode() == 1000
@@ -116,7 +117,9 @@ public class CustomerSearchController {
     String searchString = usernameField.getText();
     SearchCustomer searchCustomer = new SearchCustomer();
     try {
-      List<Customer> listOfCustomers = searchCustomer.searchCustomerByName(searchString);
+      Connection connection = Instance.getConnection();
+      List<Customer> listOfCustomers =
+          searchCustomer.searchCustomerByName(searchString, connection);
       searchCustomer.getStatusInstance().getErrorCode();
 
       if (searchCustomer.getStatusInstance().getErrorCode() == 1000

@@ -2,12 +2,9 @@ package uoa.lavs.backend.oop.customer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import uoa.lavs.backend.sql.oop_to_sql.customer.CustomerDAO;
 import uoa.lavs.legacy.mainframe.Connection;
-import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.Status;
-import uoa.lavs.legacy.mainframe.messages.customer.FindCustomerAddress;
 import uoa.lavs.legacy.mainframe.messages.customer.FindCustomerAdvanced;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomer;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerAddress;
@@ -31,7 +28,7 @@ public class SearchCustomer {
     this.statusInstance = statusInstance;
   }
 
-  public Customer searchCustomerById(String customerId) {
+  public Customer searchCustomerById(String customerId, Connection connection) {
     LoadCustomer loadCustomer = new LoadCustomer();
     LoadCustomerAddresses loadCustomerAddresses = new LoadCustomerAddresses();
     LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
@@ -44,8 +41,6 @@ public class SearchCustomer {
     loadCustomerEmails.setCustomerId(customerId);
     loadCustomerEmployer.setNumber(1);
     loadCustomerAddresses.setCustomerId(customerId);
-
-    Connection connection = Instance.getConnection();
 
     // Send the request for customer
 
@@ -86,19 +81,20 @@ public class SearchCustomer {
       return null;
     }
 
-    Customer customer = new IndividualCustomer(
-        "",
-        "",
-        "",
-        null,
-        "",
-        "",
-        "",
-        new ArrayList<>(),
-        new ArrayList<>(),
-        new ArrayList<>(),
-        new ArrayList<>(),
-        new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false));
+    Customer customer =
+        new IndividualCustomer(
+            "",
+            "",
+            "",
+            null,
+            "",
+            "",
+            "",
+            new ArrayList<>(),
+            new ArrayList<>(),
+            new ArrayList<>(),
+            new ArrayList<>(),
+            new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false));
     customer.setCustomerId(customerId);
 
     // Update customer fields
@@ -106,7 +102,7 @@ public class SearchCustomer {
 
     if (addressStatus.getErrorCode() == 0) {
       System.out.println("Updating addresses...");
-      updateCustomerAddresses(loadCustomerAddresses, customer);
+      updateCustomerAddresses(loadCustomerAddresses, customer, connection);
     }
 
     if (employerStatus.getErrorCode() == 0) {
@@ -115,10 +111,12 @@ public class SearchCustomer {
     }
 
     if (phoneStatus.getErrorCode() == 0) {
+      System.out.println("Updating phones...");
       updateCustomerPhones(loadCustomerPhones, customer);
     }
 
     if (emailStatus.getErrorCode() == 0) {
+      System.out.println("Updating emails...");
       updateCustomerEmails(loadCustomerEmails, customer);
     }
 
@@ -128,13 +126,12 @@ public class SearchCustomer {
   }
 
   // search customer by name
-  public List<Customer> searchCustomerByName(String name) {
+  public List<Customer> searchCustomerByName(String name, Connection connection) {
     FindCustomerAdvanced findCustomerAdvanced = new FindCustomerAdvanced();
     LoadCustomerAddresses loadCustomerAddresses = new LoadCustomerAddresses();
     LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
     LoadCustomerPhoneNumbers loadCustomerPhones = new LoadCustomerPhoneNumbers();
     LoadCustomerEmails loadCustomerEmails = new LoadCustomerEmails();
-    Connection connection = Instance.getConnection();
 
     findCustomerAdvanced.setSearchName(name);
     Status status = findCustomerAdvanced.send(connection);
@@ -200,19 +197,20 @@ public class SearchCustomer {
         return null;
       }
 
-      Customer customer = new IndividualCustomer(
-          "",
-          "",
-          "",
-          null,
-          "",
-          "",
-          "",
-          new ArrayList<>(),
-          new ArrayList<>(),
-          new ArrayList<>(),
-          new ArrayList<>(),
-          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false));
+      Customer customer =
+          new IndividualCustomer(
+              "",
+              "",
+              "",
+              null,
+              "",
+              "",
+              "",
+              new ArrayList<>(),
+              new ArrayList<>(),
+              new ArrayList<>(),
+              new ArrayList<>(),
+              new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false));
       customer.setCustomerId(customerId);
 
       LoadCustomer loadCustomer = new LoadCustomer();
@@ -228,7 +226,7 @@ public class SearchCustomer {
       updateCustomerFields(loadCustomer, customer);
       if (addressStatus.getErrorCode() == 0) {
         System.out.println("Updating addresses...");
-        updateCustomerAddresses(loadCustomerAddresses, customer);
+        updateCustomerAddresses(loadCustomerAddresses, customer, connection);
       }
 
       if (employerStatus.getErrorCode() == 0) {
@@ -266,10 +264,21 @@ public class SearchCustomer {
   }
 
   private void updateCustomerAddresses(
-      LoadCustomerAddresses loadCustomerAddresses, Customer customer) {
+      LoadCustomerAddresses loadCustomerAddresses, Customer customer, Connection connection) {
     ArrayList<Address> addresses = new ArrayList<>();
 
     Integer count = loadCustomerAddresses.getCountFromServer();
+    int primary = 0;
+    int mailing = 0;
+
+    for (int i = 1; i <= count; i++) {
+      if (loadCustomerAddresses.getIsPrimaryFromServer(i)) {
+        primary = i;
+      }
+      if (loadCustomerAddresses.getIsMailingFromServer(i)) {
+        mailing = i;
+      }
+    }
 
     if (count == null || count == 0) {
       customer.setAddresses(addresses);
@@ -280,23 +289,25 @@ public class SearchCustomer {
       LoadCustomerAddress loadCustomerAddress = new LoadCustomerAddress();
       loadCustomerAddress.setCustomerId(customer.getCustomerId());
       loadCustomerAddress.setNumber(i);
-      Status status;
-      int attempts = 0;
-      while (true) {
-        status = loadCustomerAddress.send(Instance.getConnection());
-        if (status.getErrorCode() == 0) {
-          break;
-        }
-        attempts++;
-        if (attempts > 5) {
-          System.out.println("Error loading address: " + status.getErrorCode());
-          break;
-        }
-      }
+      Status status = loadCustomerAddress.send(connection);
+      System.out.println("Status: " + status.getErrorCode());
 
-      if (attempts > 5) {
-        continue;
-      }
+      // int attempts = 0;
+      // while (true) {
+      //   status = loadCustomerAddress.send(Instance.getConnection());
+      //   if (status.getErrorCode() == 0) {
+      //     break;
+      //   }
+      //   attempts++;
+      //   if (attempts > 5) {
+      //     System.out.println("Error loading address: " + status.getErrorCode());
+      //     break;
+      //   }
+      // }
+
+      // if (attempts > 5) {
+      //   continue;
+      // }
 
       Address address =
           new Address(
@@ -308,10 +319,25 @@ public class SearchCustomer {
               loadCustomerAddress.getPostCodeFromServer(),
               loadCustomerAddress.getCityFromServer(),
               loadCustomerAddress.getCountryFromServer(),
-              loadCustomerAddress.getIsPrimaryFromServer(),
-              loadCustomerAddress.getIsMailingFromServer());
+              false,
+              false);
+      if (i == primary) {
+        address.setIsPrimary(true);
+      }
+      if (i == mailing) {
+        address.setIsMailing(true);
+      }
       address.setAddressId(i);
       addresses.add(address);
+      System.out.println("address type: " + address.getAddressType());
+      System.out.println("address line 1: " + address.getAddressLineOne());
+      System.out.println("address line 2: " + address.getAddressLineTwo());
+      System.out.println("address suburb: " + address.getSuburb());
+      System.out.println("address city: " + address.getCity());
+      System.out.println("address country: " + address.getCountry());
+      System.out.println("address post code: " + address.getPostCode());
+      System.out.println("address is primary: " + address.getIsPrimary());
+      System.out.println("address is mailing: " + address.getIsMailing());
     }
     customer.setAddresses(addresses);
   }
@@ -339,13 +365,14 @@ public class SearchCustomer {
     ArrayList<Phone> phoneNumbers = new ArrayList<>();
     int count = loadCustomerPhones.getCountFromServer();
     for (int i = 1; i <= count; i++) {
-      Phone phoneNumber = new Phone(
-          customer.getCustomerId(),
-          loadCustomerPhones.getTypeFromServer(i),
-          loadCustomerPhones.getPrefixFromServer(i),
-          loadCustomerPhones.getPhoneNumberFromServer(i),
-          loadCustomerPhones.getIsPrimaryFromServer(i),
-          loadCustomerPhones.getCanSendTxtFromServer(i));
+      Phone phoneNumber =
+          new Phone(
+              customer.getCustomerId(),
+              loadCustomerPhones.getTypeFromServer(i),
+              loadCustomerPhones.getPrefixFromServer(i),
+              loadCustomerPhones.getPhoneNumberFromServer(i),
+              loadCustomerPhones.getIsPrimaryFromServer(i),
+              loadCustomerPhones.getCanSendTxtFromServer(i));
       phoneNumbers.add(phoneNumber);
     }
     customer.setPhones(phoneNumbers);
@@ -356,18 +383,20 @@ public class SearchCustomer {
 
     int count = loadCustomerEmails.getCountFromServer();
     for (int i = 1; i <= count; i++) {
-      Email email = new Email(
-          customer.getCustomerId(),
-          loadCustomerEmails.getAddressFromServer(i),
-          loadCustomerEmails.getIsPrimaryFromServer(i));
+      Email email =
+          new Email(
+              customer.getCustomerId(),
+              loadCustomerEmails.getAddressFromServer(i),
+              loadCustomerEmails.getIsPrimaryFromServer(i));
       emails.add(email);
     }
     customer.setEmails(emails);
   }
 
-  public static void main(String[] args) {
-    SearchCustomer searchCustomer = new SearchCustomer();
-    Customer customer = searchCustomer.searchCustomerById("1");
-    System.out.println(customer.getCitizenship());
-  }
+  // public static void main(String[] args) {
+  //   SearchCustomer searchCustomer = new SearchCustomer();
+  //   Connection connection = Instance.getConnection();
+  //   Customer customer = searchCustomer.searchCustomerById("1", connection);
+  //   System.out.println(customer.getCitizenship());
+  // }
 }

@@ -37,9 +37,23 @@ public class NoteTest {
   }
 
   @Test
+  public void testGetAndSetNoteId() {
+    int noteId = 1;
+    note.setNoteId(noteId);
+    assertEquals(noteId, note.getNoteId());
+  }
+
+  @Test
   public void testSetLines() {
     String[] newLines = new String[] {"Allergic to peanuts", "Allergic to dairy"};
     note.setLines(newLines);
     assertEquals(newLines, note.getLines());
+  }
+
+  @Test
+  public void testSetLine() {
+    String newLine = "Allergic to dairy";
+    note.setLine(0, newLine);
+    assertEquals(newLine, note.getLines()[0]);
   }
 }
