@@ -162,6 +162,7 @@ public class CustomerCreationHelper {
 
     AddressDAO addressdao = new AddressDAO();
     ArrayList<Address> addresses = customer.getAddresses();
+    int numberOfDatabaseAddresses = addressdao.getAddresses(customer.getCustomerId()).size();
     for (Address address : addresses) {
       if (address.getAddressType() == null
           || address.getAddressLineOne() == ""
@@ -176,7 +177,14 @@ public class CustomerCreationHelper {
       if (!currentlyExists) {
         addressdao.addAddress(address);
       } else {
-        addressdao.updateAddress(address);
+
+        // if the customer currently exists, but does not have an address with that ID,
+        // then create an address instead of adding one
+        if (address.getAddressId() > numberOfDatabaseAddresses) {
+          addressdao.addAddress(address);
+        } else {
+          addressdao.updateAddress(address);
+        }
       }
     }
 
