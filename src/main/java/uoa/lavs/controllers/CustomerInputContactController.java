@@ -23,56 +23,34 @@ import uoa.lavs.customer.Phone;
 import uoa.lavs.sql.sql_to_mainframe.CustomerCreationHelper;
 
 public class CustomerInputContactController implements AccessTypeObserver {
-  @FXML
-  private TextField customerEmailTextField;
-  @FXML
-  private TextField customerPhoneNumberOne;
+  @FXML private TextField customerEmailTextField;
+  @FXML private TextField customerPhoneNumberOne;
 
-  @FXML
-  private TextField customerPhonePrefixField;
-  @FXML
-  private ComboBox<String> customerPhoneTypeBox;
-  @FXML
-  private RadioButton sendTextRadio;
-  @FXML
-  private RadioButton phonePrimaryRadio;
-  @FXML
-  private RadioButton emailPrimaryRadio;
+  @FXML private TextField customerPhonePrefixField;
+  @FXML private ComboBox<String> customerPhoneTypeBox;
+  @FXML private RadioButton sendTextRadio;
+  @FXML private RadioButton phonePrimaryRadio;
+  @FXML private RadioButton emailPrimaryRadio;
 
-  @FXML
-  private ImageView incPhone;
-  @FXML
-  private ImageView incEmail;
-  @FXML
-  private ImageView decPhone;
-  @FXML
-  private ImageView decEmail;
-  @FXML
-  private Label emailPageLabel;
-  @FXML
-  private Label phonePageLabel;
+  @FXML private ImageView incPhone;
+  @FXML private ImageView incEmail;
+  @FXML private ImageView decPhone;
+  @FXML private ImageView decEmail;
+  @FXML private Label emailPageLabel;
+  @FXML private Label phonePageLabel;
 
-  @FXML
-  private TextField customerPreferredContactBox;
-  @FXML
-  private TextField customerAltContactBox;
+  @FXML private TextField customerPreferredContactBox;
+  @FXML private TextField customerAltContactBox;
 
-  @FXML
-  private Button customerDetailsButton;
-  @FXML
-  private Button customerAddressButton;
-  @FXML
-  private Button customerContactButton;
-  @FXML
-  private Button customerEmployerButton;
+  @FXML private Button customerDetailsButton;
+  @FXML private Button customerAddressButton;
+  @FXML private Button customerContactButton;
+  @FXML private Button customerEmployerButton;
 
-  @FXML
-  private Button editButton;
-  @FXML
-  private ImageView staticReturnImageView;
+  @FXML private Button editButton;
+  @FXML private ImageView staticReturnImageView;
 
-  @FXML
-  private Label idBanner;
+  @FXML private Label idBanner;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -157,7 +135,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
         isPrimaryEmailSet = true;
       }
     }
-
   }
 
   @FXML
@@ -168,15 +145,15 @@ public class CustomerInputContactController implements AccessTypeObserver {
         editButton,
         idBanner,
         new TextField[] {
-            customerEmailTextField,
-            customerPhoneNumberOne,
-            customerPreferredContactBox,
-            customerAltContactBox,
-            customerPhonePrefixField
+          customerEmailTextField,
+          customerPhoneNumberOne,
+          customerPreferredContactBox,
+          customerAltContactBox,
+          customerPhonePrefixField
         },
-        new ComboBox<?>[] { customerPhoneTypeBox },
+        new ComboBox<?>[] {customerPhoneTypeBox},
         new DatePicker[] {},
-        new RadioButton[] { sendTextRadio, phonePrimaryRadio, emailPrimaryRadio });
+        new RadioButton[] {sendTextRadio, phonePrimaryRadio, emailPrimaryRadio});
   }
 
   @FXML
@@ -225,8 +202,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     isPhoneValid = validatePhone();
     isEmailValid = validateEmail();
 
-    if (!isPhoneValid || !isEmailValid)
-      return false;
+    if (!isPhoneValid || !isEmailValid) return false;
 
     return true;
   }
@@ -295,23 +271,25 @@ public class CustomerInputContactController implements AccessTypeObserver {
       return false;
     }
     // create a new phone number
-    Phone newPhone = new Phone(
-        customer.getCustomerId(),
-        customerPhoneTypeBox.getValue(),
-        customerPhonePrefixField.getText(),
-        customerPhoneNumberOne.getText(),
-        phonePrimaryRadio.isSelected(),
-        sendTextRadio.isSelected());
+    Phone newPhone =
+        new Phone(
+            customer.getCustomerId(),
+            customerPhoneTypeBox.getValue(),
+            customerPhonePrefixField.getText(),
+            customerPhoneNumberOne.getText(),
+            phonePrimaryRadio.isSelected(),
+            sendTextRadio.isSelected());
 
     // if the current number page is the same as the amount of valid numbers
     existingCustomerPhones.set(currentNumberPage, newPhone);
     customer.setPhones(existingCustomerPhones);
 
     // create a new email
-    Email newEmail = new Email(
-        customer.getCustomerId(),
-        customerEmailTextField.getText(),
-        emailPrimaryRadio.isSelected());
+    Email newEmail =
+        new Email(
+            customer.getCustomerId(),
+            customerEmailTextField.getText(),
+            emailPrimaryRadio.isSelected());
 
     // if the current email page is the same as the amount of valid emails
     existingCustomerEmails.set(currentEmailPage, newEmail);
@@ -329,13 +307,14 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     // create a new phone number
-    Phone newPhone = new Phone(
-        customer.getCustomerId(),
-        customerPhoneTypeBox.getValue(),
-        customerPhonePrefixField.getText(),
-        customerPhoneNumberOne.getText(),
-        phonePrimaryRadio.isSelected(),
-        sendTextRadio.isSelected());
+    Phone newPhone =
+        new Phone(
+            customer.getCustomerId(),
+            customerPhoneTypeBox.getValue(),
+            customerPhonePrefixField.getText(),
+            customerPhoneNumberOne.getText(),
+            phonePrimaryRadio.isSelected(),
+            sendTextRadio.isSelected());
 
     // sets the details for the current number page for the existing phones;
     if (location != "decEdit" && location != "incEdit") {
@@ -360,10 +339,11 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     // create a new email
-    Email newEmail = new Email(
-        customer.getCustomerId(),
-        customerEmailTextField.getText(),
-        emailPrimaryRadio.isSelected());
+    Email newEmail =
+        new Email(
+            customer.getCustomerId(),
+            customerEmailTextField.getText(),
+            emailPrimaryRadio.isSelected());
 
     // sets the details for the current email page for the existing emails;
     if (location != "decEdit" && location != "incEdit") {
@@ -376,7 +356,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
         if (validateEmail()) {
           existingCustomerEmails.add(newEmail);
         }
-
       }
     }
     customer.setEmails(existingCustomerEmails);
@@ -443,7 +422,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private void handleBackButtonAction() {
     if (AppState.isAccessingFromSearch) {
       AppState.isAccessingFromSearch = false;
-      Main.setUi(AppUI.CUSTOMER_RESULTS);
+      Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
     }
@@ -460,9 +439,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
         phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
 
         setPhoneDetailsUI("value");
-
       }
-
     }
 
     if (AppState.customerDetailsAccessType == "CREATE") {
@@ -502,7 +479,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
         setPhoneDetailsUI("value");
       }
     }
-
   }
 
   @FXML
@@ -554,7 +530,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
         phonePrimaryRadio.setStyle("");
       }
     }
-
   }
 
   @FXML
@@ -602,9 +577,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       } else {
         setEmailDetailsUI("value");
       }
-
     }
-
   }
 
   @FXML
@@ -652,7 +625,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
         emailPrimaryRadio.setStyle("");
       }
     }
-
   }
 
   @Override
@@ -695,7 +667,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
       sendTextRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getCanSendText());
       phonePrimaryRadio.setSelected(existingCustomerPhones.get(currentNumberPage).getIsPrimary());
     }
-
   }
 
   public void setEmailDetailsUI(String setting) {
@@ -704,7 +675,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
       customerEmailTextField.setText("");
       emailPrimaryRadio.setSelected(false);
     } else {
-      customerEmailTextField.setText(existingCustomerEmails.get(currentEmailPage).getEmailAddress());
+      customerEmailTextField.setText(
+          existingCustomerEmails.get(currentEmailPage).getEmailAddress());
       emailPrimaryRadio.setSelected(existingCustomerEmails.get(currentEmailPage).getIsPrimary());
     }
   }

@@ -27,9 +27,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private Label idBanner;
 
   @FXML private ComboBox<String> customerTitleComboBox;
-  @FXML private TextField customerFirstNameField;
-  @FXML private TextField customerMiddleNameField;
-  @FXML private TextField customerLastNameField;
+  @FXML private TextField customerNameField;
   @FXML private DatePicker customerDOBPicker;
   @FXML private TextField customerOccupationField;
   @FXML private ComboBox<String> customerVisaBox;
@@ -86,9 +84,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     // Set dummy values
     if (AppState.customerDetailsAccessType.equals("CREATE")) {
       customerTitleComboBox.setValue("Mr");
-      customerFirstNameField.setText("John");
-      customerMiddleNameField.setText("Doe");
-      customerLastNameField.setText("Smith");
+      customerNameField.setText("John Doe Bingus");
       customerDOBPicker.setValue(LocalDate.now());
       customerOccupationField.setText("Software Developer");
       customerVisaBox.setValue("NZ Citizen");
@@ -99,10 +95,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
 
-      String[] name = customer.getName().split(" ");
-      customerFirstNameField.setText(name.length > 0 ? name[0] : "");
-      customerMiddleNameField.setText(name.length > 2 ? name[1] : "");
-      customerLastNameField.setText(name.length > 1 ? name[name.length - 1] : "");
+      customerNameField.setText(customer.getName());
       customerDOBPicker.setValue(customer.getDateOfBirth());
       customerOccupationField.setText(customer.getOccupation());
       customerVisaBox.setValue(customer.getVisa());
@@ -118,12 +111,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
         AppState.customerDetailsAccessType,
         editButton,
         idBanner,
-        new TextField[] {
-          customerFirstNameField,
-          customerMiddleNameField,
-          customerLastNameField,
-          customerOccupationField
-        },
+        new TextField[] {customerNameField, customerOccupationField},
         new ComboBox<?>[] {customerTitleComboBox, customerVisaBox, customerCitizenshipBox},
         new DatePicker[] {customerDOBPicker},
         new RadioButton[] {});
@@ -135,9 +123,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
 
     // Clear previous error styles
     customerTitleComboBox.setStyle("");
-    customerFirstNameField.setStyle("");
-    customerMiddleNameField.setStyle("");
-    customerLastNameField.setStyle("");
+    customerNameField.setStyle("");
     customerDOBPicker.setStyle("");
     customerOccupationField.setStyle("");
     customerVisaBox.setStyle("");
@@ -148,14 +134,11 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       customerTitleComboBox.setStyle("-fx-border-color: red;");
       isValid = false;
     }
-    if (customerFirstNameField.getText().isEmpty()) {
-      customerFirstNameField.setStyle("-fx-border-color: red;");
+    if (customerNameField.getText().isEmpty() || customerNameField.getText().length() > 60) {
+      customerNameField.setStyle("-fx-border-color: red;");
       isValid = false;
     }
-    if (customerLastNameField.getText().isEmpty()) {
-      customerLastNameField.setStyle("-fx-border-color: red;");
-      isValid = false;
-    }
+
     if (customerDOBPicker.getValue() == null) {
       customerDOBPicker.setStyle("-fx-border-color: red;");
       isValid = false;
@@ -174,20 +157,6 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       isValid = false;
     }
 
-    String customerName =
-        customerFirstNameField.getText()
-            + " "
-            + customerMiddleNameField.getText()
-            + " "
-            + customerLastNameField.getText();
-
-    if (customerName.length() > 60) {
-      customerFirstNameField.setStyle("-fx-border-color: red;");
-      customerMiddleNameField.setStyle("-fx-border-color: red;");
-      customerLastNameField.setStyle("-fx-border-color: red;");
-      isValid = false;
-    }
-
     if (!isValid) {
       return false;
     }
@@ -203,12 +172,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
 
     // Set customer details
     customer.setTitle(customerTitleComboBox.getValue());
-    customer.setName(
-        customerFirstNameField.getText()
-            + " "
-            + customerMiddleNameField.getText()
-            + " "
-            + customerLastNameField.getText());
+    customer.setName(customerNameField.getText());
     customer.setDateOfBirth(customerDOBPicker.getValue());
     customer.setOccupation(customerOccupationField.getText());
     customer.setVisa(customerVisaBox.getValue());
@@ -270,7 +234,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   private void handleBackButtonAction() {
     if (AppState.isAccessingFromSearch) {
       AppState.isAccessingFromSearch = false;
-      Main.setUi(AppUI.CUSTOMER_RESULTS);
+      Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
     }

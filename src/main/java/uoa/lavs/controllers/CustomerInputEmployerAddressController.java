@@ -219,7 +219,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
   private void handleBackButtonAction() {
     if (AppState.isAccessingFromSearch) {
       AppState.isAccessingFromSearch = false;
-      Main.setUi(AppUI.CUSTOMER_RESULTS);
+      Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
     }
