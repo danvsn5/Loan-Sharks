@@ -46,6 +46,10 @@ public class CustomerResultsController {
   @FXML private Button nextButton;
   @FXML private ImageView staticReturnImageView;
 
+  @FXML private ImageView incResults;
+  @FXML private ImageView decResults;
+  @FXML private Label pageLabel;
+
   @FXML private Label nullLabel;
 
   int currentPage = 1;
@@ -146,7 +150,20 @@ public class CustomerResultsController {
 
   @FXML
   private void handleNextButtonAction() {
-    // Add logic to cycle between search results
+    if (searchResultList.size() > currentPage * 6) {
+      currentPage++;
+      populateLabels();
+      pageLabel.setText("Page " + currentPage);
+    }
+  }
+
+  @FXML
+  private void handlePreviousButtonAction() {
+    if (currentPage > 1) {
+      currentPage--;
+      populateLabels();
+      pageLabel.setText("Page " + currentPage);
+    }
   }
 
   // add methods for all buttons and rectangles
