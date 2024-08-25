@@ -43,14 +43,13 @@ public class SyncLoan extends Sync {
       System.out.println("Loan not found in mainframe, creating new loan");
       UpdateLoan updateLoan = updateLoan(resultSet, null);
       Status status = updateLoan.send(connection);
-      while (status.getErrorCode() == 1020) {
-        status = updateLoan.send(connection);
-      }
 
       String newLoanId = updateLoan.getLoanIdFromServer();
 
-      updateLoanIdInLocalDB(resultSet.getString("loanId"), newLoanId, localConn);
-      personalLoan.setLoanId(newLoanId);
+      if (newLoanId != null) {
+        updateLoanIdInLocalDB(resultSet.getString("loanId"), newLoanId, localConn);
+        personalLoan.setLoanId(newLoanId);
+      }
 
       if (status.getErrorCode() == 0) {
         System.out.println("Loan updated successfully.");
