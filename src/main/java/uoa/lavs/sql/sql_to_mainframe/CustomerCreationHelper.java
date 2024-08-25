@@ -26,7 +26,6 @@ public class CustomerCreationHelper {
     } else {
       customerdao.updateCustomer(customer);
     }
-    
 
     NotesDAO notesdao = new NotesDAO();
     ArrayList<Note> notes = customer.getNotes();
@@ -38,8 +37,6 @@ public class CustomerCreationHelper {
         notesdao.updateNote(note);
       }
     }
-
-
 
     AddressDAO addressdao = new AddressDAO();
     ArrayList<Address> addresses = customer.getAddresses();
@@ -59,7 +56,7 @@ public class CustomerCreationHelper {
       } else {
         addressdao.updateAddress(address);
       }
-      
+
     }
 
     PhoneDAO phonedao = new PhoneDAO();
@@ -79,6 +76,9 @@ public class CustomerCreationHelper {
 
     EmailDAO emaildao = new EmailDAO();
     ArrayList<Email> emails = customer.getEmails();
+    int numberOfDatabaseEmails = emaildao.getEmails(customer.getCustomerId()).size();
+    System.out.println("Email database size: " + numberOfDatabaseEmails);
+    System.out.println(emails.size());
     for (Email email : emails) {
       if (email.getEmailAddress() == "") {
         continue;
@@ -87,8 +87,20 @@ public class CustomerCreationHelper {
       email.setCustomerId(customer.getCustomerId());
       if (!currentlyExists) {
         emaildao.addEmail(email);
+        System.out
+            .println("Adding email with address: " + email.getEmailAddress() + " and ID: " + email.getEmailId());
       } else {
-        emaildao.updateEmail(email);
+
+        // if the customer currently exists, but does not have an email with that ID,
+        // then create an email instead of adding one
+        if (email.getEmailId() > numberOfDatabaseEmails) {
+          emaildao.addEmail(email);
+          System.out
+              .println("Adding email with address: " + email.getEmailAddress() + " and ID: " + email.getEmailId());
+        } else
+          emaildao.updateEmail(email);
+        System.out
+            .println("Updating email with address: " + email.getEmailAddress() + " and ID: " + email.getEmailId());
       }
     }
 
@@ -113,9 +125,8 @@ public class CustomerCreationHelper {
       lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
     }
 
-    SyncManager syncManager =
-        new SyncManager(
-            List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
+    SyncManager syncManager = new SyncManager(
+        List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
 
     syncManager.syncAll(lastSyncTime);
   }
