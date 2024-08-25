@@ -147,9 +147,11 @@ public class CustomerInputEmployerController extends AbstractCustomerController
   }
 
   @FXML
-  private void handleEditButtonAction() throws IOException {
+  @Override
+  protected void handleEditButtonAction() throws IOException {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
+
       setDetails();
 
       boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
@@ -163,12 +165,16 @@ public class CustomerInputEmployerController extends AbstractCustomerController
       CustomerCreationHelper.createCustomer(customer, false);
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
+
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
+
       AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
+
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
+
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();

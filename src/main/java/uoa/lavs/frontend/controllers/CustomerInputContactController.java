@@ -158,7 +158,8 @@ public class CustomerInputContactController extends AbstractCustomerController
   }
 
   @FXML
-  private void handleEditButtonAction() throws IOException {
+  @Override
+  protected void handleEditButtonAction() throws IOException {
     System.out.println("Edit button clicked");
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
@@ -172,13 +173,14 @@ public class CustomerInputContactController extends AbstractCustomerController
       }
 
       AppState.setCustomerDetailsAccessType("VIEW");
-
       CustomerCreationHelper.createCustomer(customer, false);
-
       AccessTypeNotifier.notifyCustomerObservers();
+
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
+
       AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
+
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
 

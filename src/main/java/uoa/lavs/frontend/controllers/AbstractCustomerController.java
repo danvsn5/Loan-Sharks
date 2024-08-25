@@ -1,5 +1,6 @@
 package uoa.lavs.frontend.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import uoa.lavs.Main;
@@ -15,6 +16,8 @@ public abstract class AbstractCustomerController {
   protected abstract void startWithCustomerID();
 
   protected abstract void setDetails();
+
+  protected abstract void handleEditButtonAction() throws IOException;
 
   @FXML
   protected void handleDetailsButtonAction() {

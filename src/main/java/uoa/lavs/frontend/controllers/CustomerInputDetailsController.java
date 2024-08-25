@@ -174,7 +174,8 @@ public class CustomerInputDetailsController extends AbstractCustomerController
   }
 
   @FXML
-  private void handleEditButtonAction() throws IOException {
+  @Override
+  protected void handleEditButtonAction() throws IOException {
     System.out.println("Edit button clicked");
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
@@ -188,22 +189,27 @@ public class CustomerInputDetailsController extends AbstractCustomerController
         editButton.setStyle("-fx-border-color: red");
         return;
       }
+
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       CustomerCreationHelper.createCustomer(customer, false);
 
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
+
       // Switch to edit mode
       AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
+
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
+
       // Handle confirm changes logic
       // Save changes to database or perform necessary actions
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       setDetails();
       CustomerCreationHelper.createCustomer(customer, true);
+
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && !AccessTypeNotifier.validateCustomerObservers()) {
       System.out.println("Invalid data");

@@ -64,6 +64,7 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
     updateUIBasedOnAccessType();
     addressPageLabel.setText("Address: " + (currentAddress + 1));
 
+    // Set dummy values
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
       customerAddressTypeComboBox.setValue("Home");
       customerAddressLine1Field.setText("123 Fake Street");
@@ -227,7 +228,8 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
   }
 
   @FXML
-  private void handleEditButtonAction() throws IOException {
+  @Override
+  protected void handleEditButtonAction() throws IOException {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       setAddressDetails("edit");
@@ -258,11 +260,14 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
       CustomerCreationHelper.createCustomer(customer, false);
 
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
+
       AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
+
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
+
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
