@@ -2,28 +2,17 @@ package uoa.lavs.sql.oop_to_sql.loan;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import uoa.lavs.customer.Address;
 import uoa.lavs.customer.Customer;
-import uoa.lavs.customer.CustomerEmployer;
-import uoa.lavs.customer.Email;
-import uoa.lavs.customer.IndividualCustomer;
-import uoa.lavs.customer.Note;
-import uoa.lavs.customer.Phone;
 import uoa.lavs.loan.ILoan;
 import uoa.lavs.loan.Loan;
 import uoa.lavs.loan.LoanDuration;
 import uoa.lavs.loan.LoanPayment;
 import uoa.lavs.loan.PersonalLoan;
 import uoa.lavs.sql.DatabaseConnection;
-import uoa.lavs.sql.oop_to_sql.customer.AddressDAO;
 import uoa.lavs.sql.oop_to_sql.customer.CustomerDAO;
-import uoa.lavs.sql.oop_to_sql.customer.CustomerEmployerDAO;
-import uoa.lavs.sql.oop_to_sql.customer.EmailDAO;
-import uoa.lavs.sql.oop_to_sql.customer.NotesDAO;
-import uoa.lavs.sql.oop_to_sql.customer.PhoneDAO;
 
 public class LoanDAO {
   public void addLoan(ILoan loan) {
@@ -65,7 +54,7 @@ public class LoanDAO {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, loanId);
-      var rs = pstmt.executeQuery();
+      ResultSet rs = pstmt.executeQuery();
 
       if (rs.next()) {
         String customerId = rs.getString("customerId");
@@ -98,7 +87,7 @@ public class LoanDAO {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, customerId);
-      var rs = pstmt.executeQuery();
+      ResultSet rs = pstmt.executeQuery();
 
       LoanDurationDAO durationDAO = new LoanDurationDAO();
       LoanPaymentDAO paymentDAO = new LoanPaymentDAO();
@@ -141,7 +130,7 @@ public class LoanDAO {
       try (Connection conn = DatabaseConnection.connect();
           PreparedStatement pstmt = conn.prepareStatement(sql)) {
         pstmt.setString(1, customer.getCustomerId());
-        var rs = pstmt.executeQuery();
+        ResultSet rs = pstmt.executeQuery();
 
         LoanDurationDAO durationDAO = new LoanDurationDAO();
         LoanPaymentDAO paymentDAO = new LoanPaymentDAO();
@@ -169,6 +158,7 @@ public class LoanDAO {
     return loans;
   }
 
+  /*
   public static void addLoanTest() {
     CustomerEmployerDAO employerDAO;
     CustomerEmployer employer;
@@ -292,4 +282,6 @@ public class LoanDAO {
   public static void main(String[] args) {
     addLoanTest();
   }
+
+   */
 }

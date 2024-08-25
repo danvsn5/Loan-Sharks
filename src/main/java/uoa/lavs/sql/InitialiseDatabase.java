@@ -8,23 +8,43 @@ public class InitialiseDatabase {
 
   public static void createDatabase() {
     try (Connection conn = DatabaseConnection.connect()) {
-      createCustomerEntity(conn);
-      createPhoneEntity(conn);
-      createEmailEntity(conn);
-      createCustomerAddressEntity(conn);
-      createCustomerEmployerEntity(conn);
-      createCustomerNotesEntity(conn);
-      createLoanEntity(conn);
-      createLoanDurationEntity(conn);
-      createLoanPaymentEntity(conn);
-      createLoanCoborrowerEntity(conn);
-      createSyncInfoEntity(conn);
+
+      try (Statement stmt = conn.createStatement()) {
+        String sql1 = getCreateCustomerEntityQuery();
+        String sql2 = getCreatePhoneEntityQuery();
+        String sql3 = getCreateEmailEntityQuery();
+        String sql4 = getCreateCustomerAddressEntityQuery();
+        String sql5 = getCreateCustomerNotesEntityQuery();
+        String sql6 = getCreateCustomerEmployerEntity();
+        String sql7 = getCreateLoanEntityQuery();
+        String sql8 = getCreateLoanDurationEntityQuery();
+        String sql9 = getCreateLoanPaymentEntityQuery();
+        String sql10 = getCreateLoanCoborrowerEntityQuery();
+        String sql11 = getCreateSyncInfoEntityQuery();
+        String sql12 = getInitialiseSyncInfoQuery();
+        stmt.addBatch(sql1);
+        stmt.addBatch(sql2);
+        stmt.addBatch(sql3);
+        stmt.addBatch(sql4);
+        stmt.addBatch(sql5);
+        stmt.addBatch(sql6);
+        stmt.addBatch(sql7);
+        stmt.addBatch(sql8);
+        stmt.addBatch(sql9);
+        stmt.addBatch(sql10);
+        stmt.addBatch(sql11);
+        stmt.addBatch(sql12);
+
+        stmt.executeBatch();
+      } catch (SQLException e) {
+        System.out.println(e.getMessage());
+      }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
   }
 
-  private static void createCustomerEntity(Connection conn) {
+  private static String getCreateCustomerEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer (\n"
             + "customerId VARCHAR(50) PRIMARY KEY, \n"
@@ -38,15 +58,10 @@ public class InitialiseDatabase {
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \n"
             + "FOREIGN KEY (employerId) REFERENCES CustomerEmployer(employerId)\n"
             + ");";
-
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createPhoneEntity(Connection conn) {
+  private static String getCreatePhoneEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_phone (\n"
             + "customerId VARCHAR(50), "
@@ -60,15 +75,10 @@ public class InitialiseDatabase {
             + "PRIMARY KEY (customerId, phoneId),\n"
             + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
             + ");";
-
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createEmailEntity(Connection conn) {
+  private static String getCreateEmailEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_email (\n"
             + "customerId VARCHAR(50), "
@@ -80,14 +90,10 @@ public class InitialiseDatabase {
             + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
             + ");";
 
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createCustomerAddressEntity(Connection conn) {
+  private static String getCreateCustomerAddressEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_address (\n"
             + "customerId VARCHAR(50),\n"
@@ -106,14 +112,10 @@ public class InitialiseDatabase {
             + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
             + ");";
 
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createCustomerNotesEntity(Connection conn) {
+  private static String getCreateCustomerNotesEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_notes (\n"
             + "customerId VARCHAR(50),\n"
@@ -124,14 +126,10 @@ public class InitialiseDatabase {
             + "FOREIGN KEY (customerId) REFERENCES customer(customerId)\n"
             + ");";
 
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createCustomerEmployerEntity(Connection conn) {
+  private static String getCreateCustomerEmployerEntity() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_employer ( "
             + "customerId VARCHAR(50) UNIQUE, "
@@ -151,14 +149,10 @@ public class InitialiseDatabase {
             + "FOREIGN KEY (customerId) REFERENCES customer(customerId) "
             + ");";
 
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createLoanEntity(Connection conn) {
+  private static String getCreateLoanEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan (\n"
             + "loanId VARCHAR(50) PRIMARY KEY, "
@@ -170,14 +164,10 @@ public class InitialiseDatabase {
             + "FOREIGN KEY (customerId) REFERENCES Customer(customerId)"
             + ");";
 
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createLoanDurationEntity(Connection conn) {
+  private static String getCreateLoanDurationEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_duration (\n"
             + "loanId VARCHAR(50), "
@@ -190,14 +180,10 @@ public class InitialiseDatabase {
             + "FOREIGN KEY (loanId) REFERENCES Loan(loanId)"
             + ");";
 
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createLoanPaymentEntity(Connection conn) {
+  private static String getCreateLoanPaymentEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_payment (\n"
             + "loanId VARCHAR(50), "
@@ -211,14 +197,10 @@ public class InitialiseDatabase {
             + "FOREIGN KEY (loanId) REFERENCES Loan(loanId)"
             + ");";
 
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createLoanCoborrowerEntity(Connection conn) {
+  private static String getCreateLoanCoborrowerEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_coborrower (\n"
             + "loanId VARCHAR(50), "
@@ -230,31 +212,28 @@ public class InitialiseDatabase {
             + "FOREIGN KEY (coborrowerId) REFERENCES Customer(customerId)"
             + ");";
 
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
-  private static void createSyncInfoEntity(Connection conn) {
+  private static String getCreateSyncInfoEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS sync_info (\n"
             + "id INTEGER PRIMARY KEY, "
             + "lastSyncTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "needsSyncing BOOLEAN DEFAULT 1);";
 
-    String insert = "INSERT INTO sync_info (id, needsSyncing) VALUES (1, 1);";
-
-    try (Statement stmt = conn.createStatement()) {
-      stmt.execute(sql);
-      stmt.execute(insert);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    return sql;
   }
 
+  private static String getInitialiseSyncInfoQuery() {
+    String insert = "INSERT INTO sync_info (id, needsSyncing) VALUES (1, 1);";
+    return insert;
+  }
+
+  /*
   public static void main(String[] args) {
     createDatabase();
   }
+
+  */
 }

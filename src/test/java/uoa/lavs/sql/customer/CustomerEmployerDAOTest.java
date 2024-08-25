@@ -151,6 +151,13 @@ public class CustomerEmployerDAOTest {
     }
   }
 
+  @Test
+  public void testGetCustomerEmployerNoResult() {
+    CustomerEmployer result = employerDAO.getCustomerEmployer("nonexistent_id");
+    Assertions.assertNull(
+        result, "Expected no employer to be found for a non-existent customer ID");
+  }
+
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);
