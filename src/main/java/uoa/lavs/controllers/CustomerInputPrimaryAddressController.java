@@ -97,7 +97,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     if (AppState.isAccessingFromSearch) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
-      
+
       if (existingCustomerAddresses.size() > 0) {
         customerAddressTypeComboBox.setValue(existingCustomerAddresses.get(0).getAddressType());
         customerAddressLine1Field.setText(existingCustomerAddresses.get(0).getAddressLineOne());
@@ -198,7 +198,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     // Primary and mailing address check, only one address can have primary and
     // mailing
 
-
     if (!AppState.customerDetailsAccessType.equals("CREATE")) {
       if (!isPrimarySelected) {
         primaryAddressRadio.setStyle(
@@ -212,10 +211,10 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         isValid = false;
       }
 
-
-    if (!isValid) {
-      System.out.println("Invalid Address Data");
-      return false;
+      if (!isValid) {
+        System.out.println("Invalid Address Data");
+        return false;
+      }
     }
 
     System.out.println("Valid Address Data");
