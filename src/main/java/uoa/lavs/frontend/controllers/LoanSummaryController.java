@@ -10,7 +10,7 @@ import uoa.lavs.Main;
 import uoa.lavs.backend.oop.loan.PersonalLoan;
 import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
 import uoa.lavs.frontend.AccessTypeNotifier;
-import uoa.lavs.frontend.AccessTypeObserverLoan;
+import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
 import uoa.lavs.legacy.mainframe.Instance;
@@ -19,7 +19,7 @@ import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 import uoa.lavs.legacy.mainframe.messages.loan.UpdateLoanStatus;
 
-public class LoanSummaryController implements AccessTypeObserverLoan {
+public class LoanSummaryController implements AccessTypeObserver {
   @FXML private TextField principalfField;
   @FXML private TextField annualRateField;
   @FXML private TextField termField;
@@ -49,7 +49,7 @@ public class LoanSummaryController implements AccessTypeObserverLoan {
     // Add initialization code here
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
-    if (AppState.isOnLoanSummary) {
+    if (AppState.getIsOnLoanSummary()) {
       setSummaryDetails();
       // TODO summary becomes null when you go back, change something, and then forwards to summary
       // details and it doesn't update in the mainframe because there are no new rows in the sql db,
@@ -61,17 +61,17 @@ public class LoanSummaryController implements AccessTypeObserverLoan {
   private void handleConfirmLoanButtonAction() {
     confirmLoanButton.setStyle("");
     if (AccessTypeNotifier.validateLoanObservers()
-        && !AppState.loanDetailsAccessType.equals("VIEW")) {
-      AppState.isCreatingLoan = false;
-      AppState.loanDetailsAccessType = "VIEW";
+        && !AppState.getLoanDetailsAccessType().equals("VIEW")) {
+      AppState.setIsCreatingLoan(false);
+      AppState.setLoanDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyLoanObservers();
       confirmLoanButton.setText("Edit Details");
 
-    } else if (!AppState.loanDetailsAccessType.equals("VIEW")) {
+    } else if (!AppState.getLoanDetailsAccessType().equals("VIEW")) {
       confirmLoanButton.setStyle("-fx-border-color: red");
-    } else if (AppState.loanDetailsAccessType.equals("VIEW")) {
-      AppState.isCreatingLoan = false;
-      AppState.loanDetailsAccessType = "EDIT";
+    } else if (AppState.getLoanDetailsAccessType().equals("VIEW")) {
+      AppState.setIsCreatingLoan(false);
+      AppState.setLoanDetailsAccessType("EDIT");
       confirmLoanButton.setText("Confirm Loan");
       AccessTypeNotifier.notifyLoanObservers();
     }
@@ -110,36 +110,33 @@ public class LoanSummaryController implements AccessTypeObserverLoan {
 
   @FXML
   private void handlePrimaryButtonAction() {
-    AppState.isOnLoanSummary = false;
+    AppState.setIsOnLoanSummary(false);
     Main.setUi(AppUI.LC_PRIMARY);
   }
 
   @FXML
   private void handleCoborrowerButtonAction() {
-    AppState.isOnLoanSummary = false;
+    AppState.setIsOnLoanSummary(false);
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
   @FXML
   private void handleDurationButtonAction() {
-    AppState.isOnLoanSummary = false;
+    AppState.setIsOnLoanSummary(false);
     Main.setUi(AppUI.LC_DURATION);
   }
 
   @FXML
   private void handleFinanceButtonAction() {
-    AppState.isOnLoanSummary = false;
+    AppState.setIsOnLoanSummary(false);
     Main.setUi(AppUI.LC_FINANCE);
   }
 
   @FXML
   private void handleBackButtonAction() {
     // Need to add logic if they got here from loan search
-    AppState.isOnLoanSummary = false;
-    if (AppState.isAccessingFromLoanSearch) {
-      AppState.isAccessingFromLoanSearch = false;
-      Main.setUi(AppUI.LOAN_RESULTS);
-    } else if (!AppState.isCreatingLoan) {
+    AppState.setIsOnLoanSummary(false);
+    if (!AppState.getIsCreatingLoan()) {
       Main.setUi(AppUI.LOAN_MENU);
     } else {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
@@ -149,7 +146,7 @@ public class LoanSummaryController implements AccessTypeObserverLoan {
   @Override
   public void updateUIBasedOnAccessType() {
     // Add logic to update UI based on access type
-    if (AppState.loanDetailsAccessType.equals("VIEW")) {
+    if (AppState.getLoanDetailsAccessType().equals("VIEW")) {
       confirmLoanButton.setText("Edit Details");
       viewPaymentsButton.setVisible(true);
       loanStatusField.setVisible(true);

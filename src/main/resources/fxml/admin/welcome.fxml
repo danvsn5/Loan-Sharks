@@ -82,6 +82,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="syncLabel" alignment="CENTER" layoutX="510.0" layoutY="673.0" prefHeight="34.0" prefWidth="259.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" />
+      <Label fx:id="syncLabel" alignment="CENTER" layoutX="311.0" layoutY="673.0" prefHeight="34.0" prefWidth="674.0" styleClass="sync-message" stylesheets="@../../css/index.css" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
    </children>
 </Pane>

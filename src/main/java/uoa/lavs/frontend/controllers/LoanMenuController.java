@@ -1,5 +1,6 @@
 package uoa.lavs.frontend.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -53,20 +54,22 @@ public class LoanMenuController {
       // connectionLabel.setText(status.getErrorMessage());
     }
     PersonalLoanSingleton.resetInstance();
-    AppState.isCreatingLoan = true;
+    AppState.setIsCreatingLoan(true);
     Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 
   @FXML
   private void handleFindLoanButtonAction() {
-    Main.setUi(AppUI.LOAN_SEARCH);
+    // Make it so this does tells the user this is not implemented
+    setRedSymbol();
+    connectionLabel.setText("This feature is not implemented yet.");
   }
 
   @FXML
-  private void handleBackButtonAction() {
+  private void handleBackButtonAction() throws IOException {
     // Add back button action code here
-    AppState.isCreatingLoan = false;
-    Main.setUi(AppUI.MAIN_MENU);
+    AppState.setIsCreatingLoan(false);
+    AppState.loadMainMenu();
   }
 
   private void setRedSymbol() {

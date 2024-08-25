@@ -49,7 +49,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     updateUIBasedOnAccessType();
 
     // Set dummy values
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
       employerNameField.setText("Fake Company");
       employerEmailField.setText("dada@dada.com");
       employerWebsiteField.setText("www.fake.com");
@@ -57,7 +57,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
       customerIsEmployerCheckbox.setSelected(true);
     }
 
-    if (AppState.isAccessingFromSearch) {
+    if (AppState.getIsAccessingFromSearch()) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
 
@@ -128,7 +128,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
   @Override
   public void updateUIBasedOnAccessType() {
     ControllerHelper.updateUIBasedOnAccessType(
-        AppState.customerDetailsAccessType,
+        AppState.getCustomerDetailsAccessType(),
         editButton,
         idBanner,
         new TextField[] {
@@ -181,7 +181,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
 
   @FXML
   private void handleEditButtonAction() throws IOException {
-    if (AppState.customerDetailsAccessType.equals("CREATE")
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       setEmployerDetails();
 
@@ -192,17 +192,17 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
         return;
       }
 
-      AppState.customerDetailsAccessType = "VIEW";
+      AppState.setCustomerDetailsAccessType("VIEW");
       CustomerCreationHelper.createCustomer(customer, false);
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
-      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
+      AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
-      AppState.customerDetailsAccessType = "VIEW";
+      AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
       setEmployerDetails();
@@ -212,8 +212,8 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
-    if (AppState.isAccessingFromSearch) {
-      AppState.isAccessingFromSearch = false;
+    if (AppState.getIsAccessingFromSearch()) {
+      AppState.setIsAccessingFromSearch(false);
       Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);

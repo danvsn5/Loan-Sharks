@@ -82,7 +82,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     updateUIBasedOnAccessType();
 
     // Set dummy values
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
       customerTitleComboBox.setValue("Mr");
       customerNameField.setText("John Doe Bingus");
       customerDOBPicker.setValue(LocalDate.now());
@@ -91,7 +91,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       customerCitizenshipBox.setValue("New Zealand");
     }
 
-    if (AppState.isAccessingFromSearch) {
+    if (AppState.getIsAccessingFromSearch()) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
 
@@ -108,7 +108,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML
   public void updateUIBasedOnAccessType() {
     ControllerHelper.updateUIBasedOnAccessType(
-        AppState.customerDetailsAccessType,
+        AppState.getCustomerDetailsAccessType(),
         editButton,
         idBanner,
         new TextField[] {customerNameField, customerOccupationField},
@@ -185,7 +185,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML
   private void handleEditButtonAction() throws IOException {
     System.out.println("Edit button clicked");
-    if (AppState.customerDetailsAccessType.equals("CREATE")
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle create customer logic
       // Save customer to database or perform necessary actions
@@ -197,23 +197,23 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
         editButton.setStyle("-fx-border-color: red");
         return;
       }
-      AppState.customerDetailsAccessType = "VIEW";
+      AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       CustomerCreationHelper.createCustomer(customer, false);
 
-    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
+    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
       // Switch to edit mode
-      AppState.customerDetailsAccessType = "EDIT";
+      AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle confirm changes logic
       // Save changes to database or perform necessary actions
-      AppState.customerDetailsAccessType = "VIEW";
+      AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       setCustomerDetails();
       CustomerCreationHelper.createCustomer(customer, true);
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && !AccessTypeNotifier.validateCustomerObservers()) {
       System.out.println("Invalid data");
     }
@@ -245,8 +245,8 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
-    if (AppState.isAccessingFromSearch) {
-      AppState.isAccessingFromSearch = false;
+    if (AppState.getIsAccessingFromSearch()) {
+      AppState.setIsAccessingFromLoanSearch(false);
       Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);

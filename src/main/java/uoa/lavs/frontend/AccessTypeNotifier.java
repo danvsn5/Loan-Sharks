@@ -5,52 +5,41 @@ import java.util.List;
 
 public class AccessTypeNotifier {
   private static List<AccessTypeObserver> customerObservers = new ArrayList<>();
-  private static List<AccessTypeObserverLoan> loanObservers = new ArrayList<>();
+  private static List<AccessTypeObserver> loanObservers = new ArrayList<>();
 
   public static void registerCustomerObserver(AccessTypeObserver observer) {
     customerObservers.add(observer);
   }
 
-  public static void registerLoanObserver(AccessTypeObserverLoan observer) {
+  public static void registerLoanObserver(AccessTypeObserver observer) {
     loanObservers.add(observer);
   }
 
-  public static boolean validateCustomerObservers() {
+  private static boolean validateObservers(List<AccessTypeObserver> observers) {
     boolean isValid = true;
-    for (AccessTypeObserver observer : customerObservers) {
+    for (AccessTypeObserver observer : observers) {
       if (!observer.validateData()) {
         AppState.setCurrentButton(observer.getButton());
-        for (AccessTypeObserver disableObserer : customerObservers) {
-          disableObserer.setInvalidButton("-fx-border-color: red;");
+        for (AccessTypeObserver disableObserver : observers) {
+          disableObserver.setInvalidButton("-fx-border-color: red;");
         }
         isValid = false;
       } else {
         AppState.setCurrentButton(observer.getButton());
-        for (AccessTypeObserver disableObserer : customerObservers) {
-          disableObserer.setInvalidButton("");
+        for (AccessTypeObserver disableObserver : observers) {
+          disableObserver.setInvalidButton("");
         }
       }
     }
     return isValid;
   }
 
+  public static boolean validateCustomerObservers() {
+    return validateObservers(customerObservers);
+  }
+
   public static boolean validateLoanObservers() {
-    boolean isValid = true;
-    for (AccessTypeObserverLoan observer : loanObservers) {
-      if (!observer.validateData()) {
-        AppState.setCurrentButton(observer.getButton());
-        for (AccessTypeObserverLoan disableObserer : loanObservers) {
-          disableObserer.setInvalidButton("-fx-border-color: red;");
-        }
-        isValid = false;
-      } else {
-        AppState.setCurrentButton(observer.getButton());
-        for (AccessTypeObserverLoan disableObserer : loanObservers) {
-          disableObserer.setInvalidButton("");
-        }
-      }
-    }
-    return isValid;
+    return validateObservers(loanObservers);
   }
 
   public static void notifyCustomerObservers() {
@@ -60,7 +49,7 @@ public class AccessTypeNotifier {
   }
 
   public static void notifyLoanObservers() {
-    for (AccessTypeObserverLoan observer : loanObservers) {
+    for (AccessTypeObserver observer : loanObservers) {
       observer.updateUIBasedOnAccessType();
     }
   }

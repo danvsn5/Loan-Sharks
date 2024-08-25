@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-
 import uoa.lavs.backend.oop.loan.LoanDuration;
 import uoa.lavs.backend.oop.loan.LoanPayment;
 import uoa.lavs.backend.oop.loan.PersonalLoan;
@@ -118,7 +117,7 @@ public class LoanCreationHelper {
 
     if (status.getErrorCode() == 0) {
       System.out.println("Successfully received loan summary");
-      AppState.isOnLoanSummary = true;
+      AppState.setIsOnLoanSummary(true);
       return loadLoanSummary;
     } else {
       System.out.println("Loan summary failed");

@@ -2,51 +2,40 @@ package uoa.lavs.frontend.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.backend.sql.sql_to_mainframe.SyncManager;
 import uoa.lavs.frontend.AppState;
-import uoa.lavs.frontend.SceneManager;
 import uoa.lavs.frontend.SceneManager.AppUI;
-import uoa.lavs.legacy.mainframe.Connection;
-import uoa.lavs.legacy.mainframe.Instance;
-import uoa.lavs.legacy.mainframe.Request;
-import uoa.lavs.legacy.mainframe.Response;
 import uoa.lavs.legacy.mainframe.Status;
 
 public class MainMenuController {
-  @FXML
-  private Button customerButton;
+  @FXML private Button customerButton;
+
+  @FXML private Button loanButton;
+
+  @FXML private Button logOutButton;
+
+  @FXML private Button instructionsButton;
+
+  @FXML private Label welcomeLabel;
+
+  @FXML private ImageView staticReturnImageView;
+
+  @FXML private Button syncButton;
+
+  @FXML private Label syncLabel;
 
   @FXML
-  private Button loanButton;
-
-  @FXML
-  private Button logOutButton;
-
-  @FXML
-  private Button instructionsButton;
-
-  @FXML
-  private Label welcomeLabel;
-
-  @FXML
-  private ImageView staticReturnImageView;
-
-  @FXML
-  private Button syncButton;
-
-  @FXML
-  private Label syncLabel;
-
-  @FXML
-  private void initialize() {
+  private void initialize() throws SQLException {
+    if (SyncManager.checkIfNeedsSyncing()) {
+      syncLabel.setText("Sync needed");
+    } else {
+      syncLabel.setText("No need to sync");
+    }
     welcomeLabel.setText("Welcome!");
     staticReturnImageView.setDisable(true);
     staticReturnImageView.setVisible(false);
@@ -77,7 +66,6 @@ public class MainMenuController {
       System.out.println("No need to sync");
       syncLabel.setText("No need to sync");
     }
-
   }
 
   @FXML

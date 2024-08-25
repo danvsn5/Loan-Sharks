@@ -14,13 +14,13 @@ import uoa.lavs.backend.oop.loan.PersonalLoan;
 import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
 import uoa.lavs.backend.sql.sql_to_mainframe.LoanCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
-import uoa.lavs.frontend.AccessTypeObserverLoan;
+import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
 import uoa.lavs.frontend.SceneManager.AppUI;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
-public class LoanFinanceDetails implements AccessTypeObserverLoan {
+public class LoanFinanceDetails implements AccessTypeObserver {
   @FXML private ComboBox<String> compoundingBox;
   @FXML private ComboBox<String> paymentFrequencyBox;
   @FXML private TextField paymentValueField;
@@ -48,7 +48,7 @@ public class LoanFinanceDetails implements AccessTypeObserverLoan {
     personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
 
     // Set dummy values
-    if (AppState.loanDetailsAccessType.equals("CREATE")) {
+    if (AppState.getLoanDetailsAccessType().equals("CREATE")) {
       compoundingBox.setValue("Monthly");
       paymentFrequencyBox.setValue("Monthly");
       paymentValueField.setText("10");
@@ -59,7 +59,7 @@ public class LoanFinanceDetails implements AccessTypeObserverLoan {
   @Override
   public void updateUIBasedOnAccessType() {
     ControllerHelper.updateUIBasedOnAccessTypeLoan(
-        AppState.loanDetailsAccessType,
+        AppState.getLoanDetailsAccessType(),
         editButton,
         new TextField[] {paymentValueField},
         new ComboBox<?>[] {
@@ -101,12 +101,12 @@ public class LoanFinanceDetails implements AccessTypeObserverLoan {
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.loanDetailsAccessType.equals("CREATE")) {
-      AppState.loanDetailsAccessType = "VIEW";
-    } else if (AppState.loanDetailsAccessType.equals("VIEW")) {
-      AppState.loanDetailsAccessType = "EDIT";
-    } else if (AppState.loanDetailsAccessType.equals("EDIT")) {
-      AppState.loanDetailsAccessType = "VIEW";
+    if (AppState.getLoanDetailsAccessType().equals("CREATE")) {
+      AppState.setLoanDetailsAccessType("VIEW");
+    } else if (AppState.getLoanDetailsAccessType().equals("VIEW")) {
+      AppState.setLoanDetailsAccessType("EDIT");
+    } else if (AppState.getLoanDetailsAccessType().equals("EDIT")) {
+      AppState.setLoanDetailsAccessType("VIEW");
     }
     AccessTypeNotifier.notifyLoanObservers();
     updateUIBasedOnAccessType();
@@ -160,16 +160,13 @@ public class LoanFinanceDetails implements AccessTypeObserverLoan {
       LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
       AppState.setCurrentLoanSummary(loadLoanSummary);
 
-      AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+      AppState.loadLoanSummary(AppState.getLoanDetailsAccessType());
     }
   }
 
   @FXML
   private void handleBackButtonAction() {
-    if (AppState.isAccessingFromLoanSearch) {
-      AppState.isAccessingFromLoanSearch = false;
-      Main.setUi(AppUI.LOAN_RESULTS);
-    } else if (AppState.isCreatingLoan) {
+    if (AppState.getIsCreatingLoan()) {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
     } else {
       Main.setUi(AppUI.LC_SUMMARY);

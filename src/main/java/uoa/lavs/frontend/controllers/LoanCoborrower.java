@@ -15,7 +15,7 @@ import uoa.lavs.backend.oop.loan.PersonalLoan;
 import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
 import uoa.lavs.backend.sql.sql_to_mainframe.LoanCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
-import uoa.lavs.frontend.AccessTypeObserverLoan;
+import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
 import uoa.lavs.frontend.SceneManager.AppUI;
@@ -23,7 +23,7 @@ import uoa.lavs.legacy.mainframe.Connection;
 import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
-public class LoanCoborrower implements AccessTypeObserverLoan {
+public class LoanCoborrower implements AccessTypeObserver {
   @FXML private TextField coborrowerIDField1;
   @FXML private TextField coborrowerIDField2;
   @FXML private TextField coborrowerIDField3;
@@ -52,7 +52,7 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
   @Override
   public void updateUIBasedOnAccessType() {
     ControllerHelper.updateUIBasedOnAccessTypeLoan(
-        AppState.loanDetailsAccessType,
+        AppState.getLoanDetailsAccessType(),
         editButton,
         new TextField[] {coborrowerIDField1, coborrowerIDField2, coborrowerIDField3},
         new ComboBox<?>[] {},
@@ -103,16 +103,16 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.loanDetailsAccessType.equals("CREATE")
+    if (AppState.getLoanDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateLoanObservers()) {
-      AppState.loanDetailsAccessType = "VIEW";
+      AppState.setLoanDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyLoanObservers();
-    } else if (AppState.loanDetailsAccessType.equals("VIEW")) {
-      AppState.loanDetailsAccessType = "EDIT";
+    } else if (AppState.getLoanDetailsAccessType().equals("VIEW")) {
+      AppState.setLoanDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyLoanObservers();
-    } else if (AppState.loanDetailsAccessType.equals("EDIT")
+    } else if (AppState.getLoanDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateLoanObservers()) {
-      AppState.loanDetailsAccessType = "VIEW";
+      AppState.setLoanDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyLoanObservers();
     }
   }
@@ -177,16 +177,13 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
       LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
       AppState.setCurrentLoanSummary(loadLoanSummary);
 
-      AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+      AppState.loadLoanSummary(AppState.getLoanDetailsAccessType());
     }
   }
 
   @FXML
   private void handleBackButtonAction() {
-    if (AppState.isAccessingFromLoanSearch) {
-      AppState.isAccessingFromLoanSearch = false;
-      Main.setUi(AppUI.LOAN_RESULTS);
-    } else if (AppState.isCreatingLoan) {
+    if (AppState.getIsCreatingLoan()) {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
     } else {
       Main.setUi(AppUI.LC_SUMMARY);
