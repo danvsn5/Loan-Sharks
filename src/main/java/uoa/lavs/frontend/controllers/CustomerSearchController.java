@@ -108,7 +108,7 @@ public class CustomerSearchController {
       idField.setText("");
     } catch (Exception e) {
       idField.setStyle("-fx-border-color: red;");
-      e.printStackTrace();
+      System.out.println("No customers found with ID: " + searchString);
     }
   }
 
@@ -141,7 +141,7 @@ public class CustomerSearchController {
       usernameField.setText("");
     } catch (Exception e) {
       usernameField.setStyle("-fx-border-color: red;");
-      e.printStackTrace();
+      System.out.println("No customers found with name: " + searchString);
     }
   }
 
