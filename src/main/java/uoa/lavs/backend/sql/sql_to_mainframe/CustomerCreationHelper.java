@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-
 import uoa.lavs.backend.oop.customer.Address;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
 import uoa.lavs.backend.oop.customer.Email;
@@ -94,8 +93,7 @@ public class CustomerCreationHelper {
         || !phones.get(0).getPrefix().matches("[0-9\\+]+")
         || phones.get(0).getPhoneNumber().equals("")
         || phones.get(0).getPhoneNumber().length() > 20
-        || !phones.get(0).getPhoneNumber().matches("[0-9\\-]+")
-        || phones.get(0).getType().equals("")) {
+        || !phones.get(0).getPhoneNumber().matches("[0-9\\-]+")) {
       return false;
     }
     boolean primaryPhoneSet = false;
@@ -208,7 +206,6 @@ public class CustomerCreationHelper {
         } else {
 
           phonedao.updatePhone(phone);
-
         }
       }
     }
@@ -229,9 +226,7 @@ public class CustomerCreationHelper {
         // then create an email instead of adding one
         if (email.getEmailId() > numberOfDatabaseEmails) {
           emaildao.addEmail(email);
-        } else
-          emaildao.updateEmail(email);
-
+        } else emaildao.updateEmail(email);
       }
     }
 
@@ -256,8 +251,9 @@ public class CustomerCreationHelper {
       lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
     }
 
-    SyncManager syncManager = new SyncManager(
-        List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
+    SyncManager syncManager =
+        new SyncManager(
+            List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
 
     syncManager.syncAll(lastSyncTime);
   }

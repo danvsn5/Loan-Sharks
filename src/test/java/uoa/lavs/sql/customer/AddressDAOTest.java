@@ -1,8 +1,5 @@
 package uoa.lavs.sql.customer;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +10,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import uoa.lavs.backend.oop.customer.Address;
 import uoa.lavs.backend.sql.DatabaseConnection;
 import uoa.lavs.backend.sql.DatabaseState;
 import uoa.lavs.backend.sql.InitialiseDatabase;
-import uoa.lavs.backend.sql.ResetDatabase;
 import uoa.lavs.backend.sql.oop_to_sql.customer.AddressDAO;
 
 public class AddressDAOTest {
@@ -77,7 +72,6 @@ public class AddressDAOTest {
       DatabaseConnection.close(null);
     }
   }
-
 
   @Test
   public void testUpdateAddress() {
