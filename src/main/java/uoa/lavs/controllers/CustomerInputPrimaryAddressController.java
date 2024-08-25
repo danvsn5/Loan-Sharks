@@ -195,16 +195,18 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     // Primary and mailing address check, only one address can have primary and
     // mailing
 
-    if (!isPrimarySelected) {
-      primaryAddressRadio.setStyle(
-          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
-      isValid = false;
-    }
+    if (!AppState.customerDetailsAccessType.equals("CREATE")) {
+      if (!isPrimarySelected) {
+        primaryAddressRadio.setStyle(
+            "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+        isValid = false;
+      }
 
-    if (!isMailingSelected) {
-      mailingAddressRadio.setStyle(
-          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
-      isValid = false;
+      if (!isMailingSelected) {
+        mailingAddressRadio.setStyle(
+            "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+        isValid = false;
+      }
     }
 
     if (!isValid) {
@@ -242,7 +244,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     }
 
     for (int i = 0; i < existingCustomerAddresses.size(); i++) {
-      existingCustomerAddresses.get(i).setAddressId(i+1);
+      existingCustomerAddresses.get(i).setAddressId(i + 1);
     }
 
     customer.setAddresses(existingCustomerAddresses);
@@ -278,6 +280,19 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     if (AppState.customerDetailsAccessType.equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       setAddressDetails("edit");
+
+      // check if primary and mailing address are set
+      if (!isPrimarySelected) {
+        primaryAddressRadio.setStyle(
+            "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+        return;
+      }
+
+      if (!isMailingSelected) {
+        mailingAddressRadio.setStyle(
+            "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+        return;
+      }
 
       boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
       if (!customerIsValid) {
