@@ -78,14 +78,6 @@ public class LoanRepaymentsController {
       System.out.println("Failed to receive loan payments");
       System.out.println("Error code: " + status.getErrorCode());
       System.out.println("Error message: " + status.getErrorMessage());
-      while (status.getErrorCode() == 1020) {
-        System.out.println("retrying connection for loan repayments");
-        status = loadLoanPayments.send(connection);
-        if (status.getErrorCode() == 0) {
-          System.out.println("Successfully received loan payments");
-          break;
-        }
-      }
     }
     // set payment number as parameter in each method call.
     for (int i = 1; i < loadLoanPayments.getPaymentCountFromServer() + 1; i++) {

@@ -164,6 +164,12 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
 
     setCoborrowerDetails();
     if (AccessTypeNotifier.validateLoanObservers()) {
+      boolean loanIsValid = LoanCreationHelper.validateLoan(personalLoan);
+      if (!loanIsValid) {
+        System.out.println("Loan is not valid and thus will not be created");
+        summaryButton.setStyle("-fx-border-color: red");
+        return;
+      }
       LoanCreationHelper.createLoan(personalLoan);
       LoanCreationHelper.getLoanSummary(personalLoan);
       LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);

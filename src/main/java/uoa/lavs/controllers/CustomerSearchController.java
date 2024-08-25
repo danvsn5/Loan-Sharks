@@ -22,35 +22,26 @@ import uoa.lavs.mainframe.Request;
 import uoa.lavs.mainframe.Response;
 
 public class CustomerSearchController {
-  @FXML
-  private Label searchWithCustomerIDLabel; // When click label, reveal text box.
+  @FXML private Label searchWithCustomerIDLabel; // When click label, reveal text box.
 
-  @FXML
-  private Label searchWithNameLabel; // When click label, reveal text box.
+  @FXML private Label searchWithNameLabel; // When click label, reveal text box.
 
-  @FXML
-  private ImageView staticReturnImageView;
+  @FXML private ImageView staticReturnImageView;
 
-  @FXML
-  private TextField usernameField;
+  @FXML private TextField usernameField;
 
-  @FXML
-  private TextField idField;
+  @FXML private TextField idField;
 
-  @FXML
-  private Button searchButton;
+  @FXML private Button searchButton;
 
-  @FXML
-  private ImageView connectionSymbol;
+  @FXML private ImageView connectionSymbol;
 
-  @FXML
-  private Label connectionLabel;
+  @FXML private Label connectionLabel;
 
   String state;
 
   @FXML
-  private void initialize() {
-  }
+  private void initialize() {}
 
   // When enter key is pressed, perform search.
   @FXML
@@ -166,7 +157,7 @@ public class CustomerSearchController {
 
     Connection connection = Instance.getConnection();
 
-    Request request = new Request(1);
+    Request request = new Request(1001);
 
     Response response = (connection.send(request));
     uoa.lavs.mainframe.Status status = response.getStatus();
@@ -184,7 +175,7 @@ public class CustomerSearchController {
       // catch all for other messages
     } else {
       setOrangeSymbol();
-      connectionLabel.setText("Unidentified error. Please try again.");
+      // connectionLabel.setText("Unidentified error. Please try again.");
     }
   }
 
@@ -210,5 +201,4 @@ public class CustomerSearchController {
     orange.setHue(0.16);
     connectionSymbol.setEffect(orange);
   }
-
 }

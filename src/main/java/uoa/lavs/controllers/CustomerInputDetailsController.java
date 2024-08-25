@@ -189,8 +189,15 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
         && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle create customer logic
       // Save customer to database or perform necessary actions
-      AppState.customerDetailsAccessType = "VIEW";
       setCustomerDetails();
+
+      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
+      if (!customerIsValid) {
+        System.out.println("Customer is not valid and thus will not be created");
+        editButton.setStyle("-fx-border-color: red");
+        return;
+      }
+      AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
       CustomerCreationHelper.createCustomer(customer, false);
 

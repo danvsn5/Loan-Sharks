@@ -6,6 +6,8 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import uoa.lavs.AppState;
+import uoa.lavs.loan.LoanDuration;
+import uoa.lavs.loan.LoanPayment;
 import uoa.lavs.loan.PersonalLoan;
 import uoa.lavs.mainframe.Instance;
 import uoa.lavs.mainframe.Status;
@@ -16,6 +18,39 @@ import uoa.lavs.sql.oop_to_sql.loan.LoanDurationDAO;
 import uoa.lavs.sql.oop_to_sql.loan.LoanPaymentDAO;
 
 public class LoanCreationHelper {
+  public static boolean validateLoan(PersonalLoan loan) {
+    LoanDuration loanDuration = loan.getDuration();
+    LoanPayment loanPayment = loan.getPayment();
+
+    if (loan.getPrincipal() == 0
+        || !Double.toString(loan.getPrincipal()).matches("^\\d+(\\.\\d+)?$")
+        || Double.toString(loan.getPrincipal()).length() > 15
+        || loan.getRate() == 0
+        || !Double.toString(loan.getRate()).matches("^\\d+(\\.\\d+)?$")
+        || Double.toString(loan.getRate()).length() > 5
+        || loan.getRateType() == null
+        || loan.getRateType().equals("")) {
+      return false;
+    }
+
+    if (loanDuration.getStartDate() == null
+        || loanDuration.getPeriod() == 0
+        || !Integer.toString(loanDuration.getPeriod()).matches("[0-9]+")
+        || Integer.toString(loanDuration.getPeriod()).length() > 5
+        || loanDuration.getLoanTerm() == 0) {
+      return false;
+    }
+
+    if (loanPayment.getCompounding().equals("")
+        || loanPayment.getPaymentFrequency().equals("")
+        || loanPayment.getPaymentAmount().equals("")
+        || !loanPayment.getPaymentAmount().matches("^\\d+(\\.\\d+)?$")) {
+      return false;
+    }
+
+    return true;
+  }
+
   public static void createLoan(PersonalLoan loan) throws IOException {
     LoanDAO loanDAO = new LoanDAO();
     LoanDurationDAO loanDurationDAO = new LoanDurationDAO();
@@ -25,6 +60,7 @@ public class LoanCreationHelper {
     // Creates if loanid not in mainframe and updates if it is
     if (loanDAO.getLoan(loan.getLoanId()) == null) {
       loanDAO.addLoan(loan);
+      System.out.println("loan duration start date: " + loan.getDuration().getStartDate());
       loanDurationDAO.addLoanDuration(loan.getDuration());
       loanPaymentDAO.addLoanPayment(loan.getPayment());
 

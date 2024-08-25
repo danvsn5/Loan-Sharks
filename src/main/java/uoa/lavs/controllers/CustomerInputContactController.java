@@ -97,6 +97,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       existingCustomerPhones = customer.getPhones();
       existingCustomerEmails = customer.getEmails();
+
       if (existingCustomerPhones.size() > 0) {
 
         customerPhoneTypeBox.setValue(existingCustomerPhones.get(0).getType());
@@ -158,11 +159,20 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void handleEditButtonAction() throws IOException {
+    System.out.println("Edit button clicked");
     if (AppState.customerDetailsAccessType.equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
+      setContactDetails();
+
+      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
+      if (!customerIsValid) {
+        System.out.println("Customer is not valid and thus will not be created");
+        editButton.setStyle("-fx-border-color: red");
+        return;
+      }
+
       AppState.customerDetailsAccessType = "VIEW";
 
-      setContactDetails();
       CustomerCreationHelper.createCustomer(customer, false);
 
       AccessTypeNotifier.notifyCustomerObservers();
@@ -171,10 +181,15 @@ public class CustomerInputContactController implements AccessTypeObserver {
       AccessTypeNotifier.notifyCustomerObservers();
     } else if (AppState.customerDetailsAccessType.equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
+
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
-      setContactDetails();
+
+      setEmailDetails("confirm");
+      setPhoneDetails("confirm");
+
       CustomerCreationHelper.createCustomer(customer, true);
+
     }
   }
 
@@ -202,10 +217,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     isPhoneValid = validatePhone();
     isEmailValid = validateEmail();
 
-    if (!isPhoneValid || !isEmailValid) {
-      System.out.println("Phone or email is invalid");
-      return false;
-    }
+    if (!isPhoneValid || !isEmailValid) return false;
 
     System.out.println("Phone and email are valid");
     return true;
@@ -320,15 +332,19 @@ public class CustomerInputContactController implements AccessTypeObserver {
             phonePrimaryRadio.isSelected(),
             sendTextRadio.isSelected());
 
-    // sets the details for the current number page for the existing phones;
-    if (location != "decEdit" && location != "incEdit") {
-      existingCustomerPhones.set(currentNumberPage, newPhone);
-    } else {
-      if (currentNumberPage == existingCustomerPhones.size() && validatePhone()) {
+    if (currentNumberPage == existingCustomerPhones.size()) {
+      if (validatePhone()) {
+        
         existingCustomerPhones.add(newPhone);
-        System.out.println("Added new phone number");
       }
+    } else {
+      existingCustomerPhones.set(currentNumberPage, newPhone);
     }
+
+    for (int i = 0; i < existingCustomerPhones.size(); i++) {
+      existingCustomerPhones.get(i).setPhoneId(i + 1);
+    }
+
     customer.setPhones(existingCustomerPhones);
 
     return true;
@@ -350,20 +366,19 @@ public class CustomerInputContactController implements AccessTypeObserver {
             emailPrimaryRadio.isSelected());
 
     // sets the details for the current email page for the existing emails;
-    if (location != "decEdit" && location != "incEdit") {
-      existingCustomerEmails.set(currentEmailPage, newEmail);
-    } else {
-      // only add a new email if the current page is the same as the amount of valid
-      // emails
-      if (currentEmailPage == existingCustomerEmails.size()) {
-
-        if (validateEmail()) {
-          existingCustomerEmails.add(newEmail);
-        }
+    if (currentEmailPage == existingCustomerEmails.size()) {
+      if (validateEmail()) {
+        existingCustomerEmails.add(newEmail);
       }
+    } else {
+      existingCustomerEmails.set(currentEmailPage, newEmail);
     }
-    customer.setEmails(existingCustomerEmails);
 
+    for (int i = 0; i < existingCustomerEmails.size(); i++) {
+      existingCustomerEmails.get(i).setEmailId(i + 1);
+    }
+
+    customer.setEmails(existingCustomerEmails);
     return true;
   }
 
