@@ -97,7 +97,6 @@ public class CustomerSearchController {
     try {
       Connection connection = Instance.getConnection();
       Customer customer = searchCustomer.searchCustomerById(searchString, connection);
-      searchCustomer.getStatusInstance().getErrorCode();
 
       if (searchCustomer.getStatusInstance().getErrorCode() == 1000
           || searchCustomer.getStatusInstance().getErrorCode() == 1010
@@ -109,17 +108,27 @@ public class CustomerSearchController {
       } else {
         setOrangeSymbol();
       }
-      connectionLabel.setText(searchCustomer.getStatusInstance().getErrorMessage());
 
       List<Customer> listOfCustomers = new ArrayList<>();
       listOfCustomers.add(customer);
+      if (listOfCustomers.size() > 0) {
+        connectionLabel.setText("Search successful.");
+        setGreenSymbol();
+      } else if (!connectionLabel.getText().equals("Remote host is not available.")) {
+        // mainframe is available but no customers found
+        connectionLabel.setText("No customers found in mainframe or local system.");
+        setOrangeSymbol();
+      }
+
       AppState.loadCustomerSearchResults(listOfCustomers);
       idField.setStyle("");
       idField.setText("");
     } catch (Exception e) {
+      // connection somehow failed and errors are shown
       idField.setStyle("-fx-border-color: red;");
       System.out.println("No customers found with ID: " + searchString);
-      connectionLabel.setText("Remost host is not available. No customers found in local system.");
+      connectionLabel.setText("Remote host is not available. No customers found in local system.");
+      setRedSymbol();
     }
   }
 
@@ -149,7 +158,11 @@ public class CustomerSearchController {
         setOrangeSymbol();
       }
 
-      AppState.loadCustomerSearchResults(listOfCustomers);
+      if (listOfCustomers != null) {
+        AppState.loadCustomerSearchResults(listOfCustomers);
+        setGreenSymbol();
+        connectionLabel.setText("Search successful.");
+      }
       usernameField.setStyle("");
       usernameField.setText("");
     } catch (Exception e) {
