@@ -59,7 +59,9 @@ public class LoanMenuController {
 
   @FXML
   private void handleFindLoanButtonAction() {
-    Main.setUi(AppUI.LOAN_SEARCH);
+    // Make it so this does tells the user this is not implemented
+    setRedSymbol();
+    connectionLabel.setText("This feature is not implemented yet.");
   }
 
   @FXML
