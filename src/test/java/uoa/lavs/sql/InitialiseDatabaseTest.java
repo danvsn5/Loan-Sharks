@@ -24,6 +24,12 @@ public class InitialiseDatabaseTest {
   }
 
   @Test
+  public void testInit() {
+    InitialiseDatabase init = new InitialiseDatabase();
+    Assertions.assertNotNull(init);
+  }
+
+  @Test
   public void testCreateDatabase() {
     try (Connection conn = DatabaseConnection.connect()) {
       DatabaseMetaData metaData = conn.getMetaData();
