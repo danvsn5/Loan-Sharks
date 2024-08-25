@@ -123,9 +123,12 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     }
 
     if (!isValid) {
+
+      System.out.println("Invalid Employer Address data");
       return false;
     }
 
+    System.out.println("Valid Employer Address data");
     return true;
   }
 

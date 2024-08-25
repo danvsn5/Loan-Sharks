@@ -116,9 +116,11 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     }
 
     if (!isValid) {
+      System.out.println("Employer details are invalid");
       return false;
     }
 
+    System.out.println("Employer details are valid");
     return true;
   }
 

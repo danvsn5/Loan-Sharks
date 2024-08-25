@@ -158,9 +158,11 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     }
 
     if (!isValid) {
+      System.out.println("Invalid Details Data");
       return false;
     }
 
+    System.out.println("Valid Details Data");
     return true;
   }
 
@@ -182,6 +184,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
 
   @FXML
   private void handleEditButtonAction() throws IOException {
+    System.out.println("Edit button clicked");
     if (AppState.customerDetailsAccessType.equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle create customer logic
@@ -203,6 +206,9 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       AccessTypeNotifier.notifyCustomerObservers();
       setCustomerDetails();
       CustomerCreationHelper.createCustomer(customer, true);
+    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+        && !AccessTypeNotifier.validateCustomerObservers()) {
+      System.out.println("Invalid data");
     }
   }
 

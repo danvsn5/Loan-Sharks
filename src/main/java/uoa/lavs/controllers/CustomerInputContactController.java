@@ -202,8 +202,12 @@ public class CustomerInputContactController implements AccessTypeObserver {
     isPhoneValid = validatePhone();
     isEmailValid = validateEmail();
 
-    if (!isPhoneValid || !isEmailValid) return false;
+    if (!isPhoneValid || !isEmailValid) {
+      System.out.println("Phone or email is invalid");
+      return false;
+    }
 
+    System.out.println("Phone and email are valid");
     return true;
   }
 
