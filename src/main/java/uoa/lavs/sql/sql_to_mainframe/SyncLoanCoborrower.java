@@ -19,16 +19,18 @@ public class SyncLoanCoborrower extends Sync {
     loadLoanCoborrowers.setNumber(resultSet.getInt("number"));
     Status coborrowerLoadStatus = loadLoanCoborrowers.send(connection);
 
-    System.out.println(
-        "Coborrower load status: "
-            + coborrowerLoadStatus.getErrorCode()
-            + " "
-            + coborrowerLoadStatus.getErrorMessage());
-
     Integer coborrowerNumber;
+
     if (coborrowerLoadStatus.getErrorCode() != 0) {
+      System.out.println("Coborrower loaded successfully.");
       coborrowerNumber = resultSet.getInt("number");
+
     } else {
+      System.out.println(
+          "Error loading coborrower: "
+              + coborrowerLoadStatus.getErrorCode()
+              + " "
+              + coborrowerLoadStatus.getErrorMessage());
       coborrowerNumber = null;
     }
 

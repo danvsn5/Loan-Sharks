@@ -17,6 +17,7 @@ import uoa.lavs.customer.Customer;
 import uoa.lavs.customer.CustomerEmployer;
 import uoa.lavs.customer.Email;
 import uoa.lavs.customer.Phone;
+import uoa.lavs.loan.PersonalLoanSingleton;
 
 public class CustomerResultsController {
   // make labels for name and ID, 6 each
@@ -184,6 +185,7 @@ public class CustomerResultsController {
     if (AppState.isCreatingLoan && validateCustomerForLoan(customer)) {
       if (validateCustomerForLoan(customer)) {
         AppState.selectedCustomer = customer;
+        PersonalLoanSingleton.resetInstance();
         AppState.loadLoans("CREATE");
         Main.setUi(AppUI.LC_PRIMARY);
       } else {
