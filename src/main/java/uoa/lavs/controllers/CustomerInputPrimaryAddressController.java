@@ -85,13 +85,16 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
         customerSuburbField.setText(customer.getAddresses().get(0).getSuburb());
         customerCityField.setText(customer.getAddresses().get(0).getCity());
         customerPostcodeField.setText(addresses.get(0).getPostCode());
-        mailingAddressRadio.setSelected(addresses.get(0).getIsMailing());
-        primaryAddressRadio.setSelected(addresses.get(0).getIsPrimary());
-        if (mailingAddressRadio.isSelected()) {
-          isMailingSelected = true;
-        }
-        if (primaryAddressRadio.isSelected()) {
-          isPrimarySelected = true;
+
+        for (int i = 0; i < addresses.size(); i++) {
+          if (addresses.get(i).getIsPrimary()) {
+            primaryAddressRadio.setSelected(true);
+            isPrimarySelected = true;
+          }
+          if (addresses.get(i).getIsMailing()) {
+            mailingAddressRadio.setSelected(true);
+            isMailingSelected = true;
+          }
         }
       }
     }
@@ -175,21 +178,25 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     // mailing
 
     if (!isPrimarySelected) {
+      System.out.println("Primary Address not selected");
       primaryAddressRadio.setStyle(
           "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
       isValid = false;
     }
 
     if (!isMailingSelected) {
+      System.out.println("Mailing Address not selected");
       mailingAddressRadio.setStyle(
           "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
       isValid = false;
     }
 
     if (!isValid) {
+      System.out.println("Invalid Address Data");
       return false;
     }
 
+    System.out.println("Valid Address Data");
     return true;
   }
 
@@ -263,7 +270,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   private void handleBackButtonAction() {
     if (AppState.isAccessingFromSearch) {
       AppState.isAccessingFromSearch = false;
-      Main.setUi(AppUI.CUSTOMER_RESULTS);
+      Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
     }
