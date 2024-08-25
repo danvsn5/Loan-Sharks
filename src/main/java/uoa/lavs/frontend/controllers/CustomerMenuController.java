@@ -71,11 +71,6 @@ public class CustomerMenuController {
   }
 
   @FXML
-  private void handleBackButtonAction() throws IOException {
-    AppState.loadMainMenu();
-  }
-
-  @FXML
   private void onClickReturnButton() throws IOException {
     AppState.loadMainMenu();
   }
