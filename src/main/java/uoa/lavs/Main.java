@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import uoa.lavs.backend.sql.InitialiseDatabase;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager;
 import uoa.lavs.frontend.SceneManager.AppUI;
@@ -83,6 +84,9 @@ public class Main extends Application {
 
   @Override
   public void start(final Stage stage) throws IOException {
+    // initialises database
+    InitialiseDatabase.createDatabase();
+
     // activates antialiasing for text in application !IMPORTANT
     System.setProperty("prism.lcdtext", "false");
 
