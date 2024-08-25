@@ -13,13 +13,13 @@ import uoa.lavs.backend.oop.loan.PersonalLoan;
 import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
 import uoa.lavs.backend.sql.sql_to_mainframe.LoanCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
-import uoa.lavs.frontend.AccessTypeObserverLoan;
+import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
 import uoa.lavs.frontend.SceneManager.AppUI;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
-public class LoanPrimaryDetails implements AccessTypeObserverLoan {
+public class LoanPrimaryDetails implements AccessTypeObserver {
   @FXML private TextField borrowerIDField;
   @FXML private TextField principalField;
   @FXML private TextField interestRateField;

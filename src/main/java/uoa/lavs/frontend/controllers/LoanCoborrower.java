@@ -15,7 +15,7 @@ import uoa.lavs.backend.oop.loan.PersonalLoan;
 import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
 import uoa.lavs.backend.sql.sql_to_mainframe.LoanCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
-import uoa.lavs.frontend.AccessTypeObserverLoan;
+import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
 import uoa.lavs.frontend.SceneManager.AppUI;
@@ -23,7 +23,7 @@ import uoa.lavs.legacy.mainframe.Connection;
 import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
-public class LoanCoborrower implements AccessTypeObserverLoan {
+public class LoanCoborrower implements AccessTypeObserver {
   @FXML private TextField coborrowerIDField1;
   @FXML private TextField coborrowerIDField2;
   @FXML private TextField coborrowerIDField3;

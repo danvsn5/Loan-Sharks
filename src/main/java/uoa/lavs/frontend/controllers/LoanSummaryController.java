@@ -10,7 +10,7 @@ import uoa.lavs.Main;
 import uoa.lavs.backend.oop.loan.PersonalLoan;
 import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
 import uoa.lavs.frontend.AccessTypeNotifier;
-import uoa.lavs.frontend.AccessTypeObserverLoan;
+import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
 import uoa.lavs.legacy.mainframe.Instance;
@@ -19,7 +19,7 @@ import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 import uoa.lavs.legacy.mainframe.messages.loan.UpdateLoanStatus;
 
-public class LoanSummaryController implements AccessTypeObserverLoan {
+public class LoanSummaryController implements AccessTypeObserver {
   @FXML private TextField principalfField;
   @FXML private TextField annualRateField;
   @FXML private TextField termField;

@@ -232,12 +232,6 @@ public class AppState {
     Main.setUi(AppUI.CUSTOMER_RESULTS);
   }
 
-  public static void loadLoanSearchResults(String searchString) throws IOException {
-    // Actual search logic needed here
-    SceneManager.addScene(AppUI.LOAN_RESULTS, loadFxml("loan/loan_search_results"));
-    Main.setUi(AppUI.LOAN_RESULTS);
-  }
-
   public static void loanLoanRepayments() throws IOException {
     SceneManager.addScene(AppUI.PAYMENT_MENU, loadFxml("loan/loan_repayments"));
     Main.setUi(AppUI.PAYMENT_MENU);
