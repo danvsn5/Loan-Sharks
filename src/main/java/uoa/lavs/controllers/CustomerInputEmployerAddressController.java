@@ -123,9 +123,12 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     }
 
     if (!isValid) {
+
+      System.out.println("Invalid Employer Address data");
       return false;
     }
 
+    System.out.println("Valid Employer Address data");
     return true;
   }
 
@@ -227,7 +230,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
   private void handleBackButtonAction() {
     if (AppState.isAccessingFromSearch) {
       AppState.isAccessingFromSearch = false;
-      Main.setUi(AppUI.CUSTOMER_RESULTS);
+      Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
     }

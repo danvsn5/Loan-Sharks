@@ -116,9 +116,11 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     }
 
     if (!isValid) {
+      System.out.println("Employer details are invalid");
       return false;
     }
 
+    System.out.println("Employer details are valid");
     return true;
   }
 
@@ -212,7 +214,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
   private void handleBackButtonAction() {
     if (AppState.isAccessingFromSearch) {
       AppState.isAccessingFromSearch = false;
-      Main.setUi(AppUI.CUSTOMER_RESULTS);
+      Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
     }

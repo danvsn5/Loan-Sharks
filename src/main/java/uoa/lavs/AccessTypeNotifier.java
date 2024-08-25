@@ -64,4 +64,9 @@ public class AccessTypeNotifier {
       observer.updateUIBasedOnAccessType();
     }
   }
+
+  public static void clearObservers() {
+    customerObservers.clear();
+    loanObservers.clear();
+  }
 }

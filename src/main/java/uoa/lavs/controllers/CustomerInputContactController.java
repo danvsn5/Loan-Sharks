@@ -219,6 +219,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
     if (!isPhoneValid || !isEmailValid) return false;
 
+    System.out.println("Phone and email are valid");
     return true;
   }
 
@@ -333,6 +334,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
     if (currentNumberPage == existingCustomerPhones.size()) {
       if (validatePhone()) {
+        
         existingCustomerPhones.add(newPhone);
       }
     } else {
@@ -364,7 +366,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
             emailPrimaryRadio.isSelected());
 
     // sets the details for the current email page for the existing emails;
-
     if (currentEmailPage == existingCustomerEmails.size()) {
       if (validateEmail()) {
         existingCustomerEmails.add(newEmail);
@@ -440,7 +441,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   private void handleBackButtonAction() {
     if (AppState.isAccessingFromSearch) {
       AppState.isAccessingFromSearch = false;
-      Main.setUi(AppUI.CUSTOMER_RESULTS);
+      Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
     }
