@@ -57,6 +57,7 @@ public class LoanPaymentDAOTest {
     }
   }
 
+
   @Test
   public void testUpdateLoanPayment() {
     loanPaymentDAO.addLoanPayment(loanPayment);
@@ -94,6 +95,13 @@ public class LoanPaymentDAOTest {
     Assertions.assertEquals("weekly", retrievedLoanPayment.getPaymentFrequency());
     Assertions.assertEquals("1000", retrievedLoanPayment.getPaymentAmount());
     Assertions.assertEquals(false, retrievedLoanPayment.getInterestOnly());
+  }
+
+  @Test 
+  public void testGetLoanPaymentInvalidId() {
+    LoanPayment retrievedLoanPayment = loanPaymentDAO.getLoanPayment("-1321");
+
+    Assertions.assertNull(retrievedLoanPayment);
   }
 
   @AfterEach

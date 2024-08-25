@@ -12,24 +12,13 @@ public class LoanCoborrowersDAO {
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      conn.setAutoCommit(false);
-
       for (String coborrowerId : coborrowerIds) {
         pstmt.setString(1, loanId);
         pstmt.setString(2, coborrowerId);
-        pstmt.addBatch();
+        pstmt.executeUpdate();
       }
-
-      pstmt.executeBatch();
-      conn.commit();
-
     } catch (SQLException e) {
       System.out.println(e.getMessage());
-      try (Connection conn = DatabaseConnection.connect()) {
-        conn.rollback();
-      } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
-      }
     }
   }
 

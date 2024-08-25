@@ -1,5 +1,8 @@
 package uoa.lavs.sql.customer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +17,7 @@ import uoa.lavs.customer.Address;
 import uoa.lavs.sql.DatabaseConnection;
 import uoa.lavs.sql.DatabaseState;
 import uoa.lavs.sql.InitialiseDatabase;
+import uoa.lavs.sql.ResetDatabase;
 import uoa.lavs.sql.oop_to_sql.customer.AddressDAO;
 
 public class AddressDAOTest {
@@ -73,6 +77,7 @@ public class AddressDAOTest {
     }
   }
 
+
   @Test
   public void testUpdateAddress() {
     Address address =
@@ -117,6 +122,52 @@ public class AddressDAOTest {
         Assertions.assertEquals("NTG", rs.getString("country"));
         Assertions.assertTrue(rs.getBoolean("isPrimary"));
         Assertions.assertFalse(rs.getBoolean("isMailing"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      Assertions.fail("Database query failed");
+    } finally {
+      DatabaseConnection.close(null);
+    }
+  }
+
+  @Test
+  public void testGetAddress() {
+    Address address =
+        new Address(
+            "000001",
+            "Commercial",
+            "123 Guy St",
+            "Apt 1",
+            "Muntown",
+            "12345",
+            "Tingcity",
+            "TMG",
+            true,
+            false);
+    addressDAO.addAddress(address);
+    int addressId = address.getAddressId();
+
+    Address retrievedAddress = addressDAO.getAddress("000001", addressId);
+
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement stmt =
+            conn.prepareStatement("SELECT * FROM customer_address WHERE addressId = ?")) {
+      stmt.setInt(1, addressId);
+
+      try (ResultSet rs = stmt.executeQuery()) {
+        Assertions.assertTrue(rs.next(), "Address should be updated in the database");
+        Assertions.assertEquals(retrievedAddress.getAddressType(), rs.getString("addressType"));
+        Assertions.assertEquals(
+            retrievedAddress.getAddressLineOne(), rs.getString("addressLineOne"));
+        Assertions.assertEquals(
+            retrievedAddress.getAddressLineTwo(), rs.getString("addressLineTwo"));
+        Assertions.assertEquals(retrievedAddress.getSuburb(), rs.getString("suburb"));
+        Assertions.assertEquals(retrievedAddress.getPostCode(), rs.getString("postCode"));
+        Assertions.assertEquals(retrievedAddress.getCity(), rs.getString("city"));
+        Assertions.assertEquals(retrievedAddress.getCountry(), rs.getString("country"));
+        Assertions.assertEquals(retrievedAddress.getIsPrimary(), rs.getBoolean("isPrimary"));
+        Assertions.assertEquals(retrievedAddress.getIsMailing(), rs.getBoolean("isMailing"));
       }
     } catch (SQLException e) {
       e.printStackTrace();

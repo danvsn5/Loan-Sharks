@@ -235,6 +235,14 @@ public class LoanDAOTest {
     Assertions.assertEquals(false, retrievedLoan.getPayment().getInterestOnly());
   }
 
+  @Test 
+  public void testGetLoanNotFound() {
+
+    Loan retrievedLoan = loanDAO.getLoan("-2");
+
+    Assertions.assertNull(retrievedLoan);
+  }
+
   @Test
   public void testGetLoansFromCustomerId() {
     loanDAO.addLoan(loan);
@@ -275,6 +283,15 @@ public class LoanDAOTest {
     Assertions.assertEquals("weekly", retrievedLoan.getPayment().getPaymentFrequency());
     Assertions.assertEquals("1000", retrievedLoan.getPayment().getPaymentAmount());
     Assertions.assertEquals(false, retrievedLoan.getPayment().getInterestOnly());
+  }
+
+  @Test
+  public void testGetLoansFromCustomerNameNotFound() {
+    loanDAO.addLoan(loan);
+
+    ArrayList<Loan> loans = loanDAO.getLoansFromCustomerName("Ting Mun Guyy");
+
+    Assertions.assertEquals(0, loans.size());
   }
 
   @AfterEach

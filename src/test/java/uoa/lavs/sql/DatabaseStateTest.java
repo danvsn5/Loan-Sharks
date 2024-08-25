@@ -4,6 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DatabaseStateTest {
+  @Test 
+  public void testDatabaseState() {
+    DatabaseState dbState = new DatabaseState();
+    Assertions.assertNotNull(dbState);
+  }
+
   @Test
   public void testGetActiveDB() {
     String expected = DatabaseState.active_db;

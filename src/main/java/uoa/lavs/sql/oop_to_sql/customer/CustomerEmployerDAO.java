@@ -115,28 +115,4 @@ public class CustomerEmployerDAO {
     return null;
   }
 
-  public static void main(String[] args) {
-    CustomerEmployerDAO employerDAO = new CustomerEmployerDAO();
-
-    // Test saving a new employer
-    CustomerEmployer newEmployer =
-        new CustomerEmployer(
-            "000001",
-            "Tech Corp",
-            "123 Tech Street",
-            "Suite 100",
-            "Techville",
-            "12345",
-            "Metropolis",
-            "Countryland",
-            "contact@techcorp.com",
-            "www.techcorp.com",
-            "123-456-7890",
-            true);
-    employerDAO.addCustomerEmployer(newEmployer);
-
-    // Test updating the existing employer
-    newEmployer.setEmployerName("New Tech Corp");
-    employerDAO.updateCustomerEmployer(newEmployer);
-  }
 }

@@ -94,7 +94,6 @@ public class CustomerDAO {
 
       if (rs.next()) {
         String title = rs.getString("title");
-        System.out.println("TITLETITLETIEL: " + title);
         String name = rs.getString("name");
         LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
         String occupation = rs.getString("occupation");
@@ -117,7 +116,6 @@ public class CustomerDAO {
 
         CustomerEmployer employer = employerdao.getCustomerEmployer(customerId);
 
-        System.out.println("looksings good");
         return new IndividualCustomer(
             customerId,
             title,
@@ -252,7 +250,7 @@ public class CustomerDAO {
     return null;
   }
 
-  // add customer test
+  /*  add customer test
   public static void addCustomerTest() {
     Customer customer;
     LocalDate dateOfBirth;
@@ -423,7 +421,5 @@ public class CustomerDAO {
     dao.updateCustomer(customer);
   }
 
-  public static void main(String[] args) {
-    addCustomerTest();
-  }
+  */
 }

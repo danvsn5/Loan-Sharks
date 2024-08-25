@@ -42,7 +42,7 @@ public class PhoneDAO {
 
     for (int i = 0; i < phones.size(); i++) {
       String sql =
-          "INSERT INTO customer_phones (customerId, phoneId, type, prefix, phoneNumber, isPrimary,"
+          "INSERT INTO customer_phone (customerId, phoneId, type, prefix, phoneNumber, isPrimary,"
               + " canSendText) VALUES (?, ?, ?, ?, ?, ?, ?)";
       try (Connection conn = DatabaseConnection.connect();
           PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -67,7 +67,7 @@ public class PhoneDAO {
     }
   }
 
-  private int getNextPhoneIdForCustomer(String customerId) {
+  public int getNextPhoneIdForCustomer(String customerId) {
     String sql = "SELECT MAX(phoneId) FROM customer_phone WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -166,12 +166,5 @@ public class PhoneDAO {
       System.out.println(e.getMessage());
     }
     return null;
-  }
-
-  public static void main(String[] args) {
-    PhoneDAO phoneDAO = new PhoneDAO();
-    Phone phone = phoneDAO.getPhone("000001", 1);
-    phone.setType("Mobile");
-    phoneDAO.updatePhone(phone);
   }
 }

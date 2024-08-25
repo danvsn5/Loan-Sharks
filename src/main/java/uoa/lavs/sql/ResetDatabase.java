@@ -10,7 +10,7 @@ public class ResetDatabase {
     resetDatabase();
   }
 
-  private void resetDatabase() {
+  public void resetDatabase() {
     try (Connection conn = DatabaseConnection.connect();
         Statement stmt = conn.createStatement()) {
       dropLoanCoborrowerEntity(stmt);

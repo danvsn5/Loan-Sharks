@@ -147,6 +147,13 @@ public class NotesDAOTest {
     Assertions.assertArrayEquals(notes.get(0).getLines(), retrievedNotes.get(0).getLines());
   }
 
+  @Test
+  public void testGetNotesInvalidId() {
+    ArrayList<Note> retrievedNotes = notesDAO.getNotes("002301");
+
+    Assertions.assertEquals(0, retrievedNotes.size());
+  }
+
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);

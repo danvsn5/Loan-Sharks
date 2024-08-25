@@ -14,6 +14,28 @@ public class LoanPaymentTest {
   }
 
   @Test
+  public void testGetLoanId() {
+    assertEquals("-1", loanPayment.getLoanId());
+  }
+
+  @Test
+  public void testSetLoanId() {
+    loanPayment.setLoanId("-2");
+    assertEquals("-2", loanPayment.getLoanId());
+  }
+
+  @Test
+  public void testGetPaymentId() {
+    assertEquals(0, loanPayment.getPaymentId());
+  }
+
+  @Test 
+  public void testSetPaymentId() {
+    loanPayment.setPaymentId(1);
+    assertEquals(1, loanPayment.getPaymentId());
+  }
+
+  @Test
   public void testGetCompounding() {
     assertEquals("monthly", loanPayment.getCompounding());
   }
