@@ -88,13 +88,15 @@ public class EmailDAOTest {
   public void testGetEmail() {
     Email email = new Email("000001", "oldemail@example.com", false);
     emailDAO.addEmail(email);
+    System.out.println(email.getEmailId());
 
     Email retrievedEmail = emailDAO.getEmail("000001", email.getEmailId());
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
-            conn.prepareStatement("SELECT * FROM customer_email WHERE emailId = ?")) {
-      stmt.setInt(1, email.getEmailId());
+            conn.prepareStatement("SELECT * FROM customer_email WHERE customerId = ? AND emailId = ?")) {
+      stmt.setString(1, email.getCustomerId());
+      stmt.setInt(2, email.getEmailId());
 
       try (ResultSet rs = stmt.executeQuery()) {
         Assertions.assertTrue(rs.next(), "Email should be retrieved from the database");
@@ -107,6 +109,21 @@ public class EmailDAOTest {
     } finally {
       DatabaseConnection.close(null);
     }
+  }
+
+  @Test
+  public void testGetEmailInvalidCustomerId() {
+    Email retrievedEmail = emailDAO.getEmail("000001", 1);
+    Assertions.assertNull(retrievedEmail, "Email should not be retrieved from the database");
+  }
+
+  @Test 
+  public void testGetEmailInvalidEmailId() {
+    Email email = new Email("000001", "oldemail@example.com", false);
+    emailDAO.addEmail(email);
+
+    Email retrievedEmail = emailDAO.getEmail("000001", 2);
+    Assertions.assertNull(retrievedEmail, "Email should not be retrieved from the database");
   }
 
   @Test
