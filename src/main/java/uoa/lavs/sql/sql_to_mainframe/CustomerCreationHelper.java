@@ -61,6 +61,7 @@ public class CustomerCreationHelper {
 
     PhoneDAO phonedao = new PhoneDAO();
     ArrayList<Phone> phones = customer.getPhones();
+    int numberOfDatabasePhones = phonedao.getPhones(customer.getCustomerId()).size();
     for (Phone phone : phones) {
       if (phone.getType() == null || phone.getPrefix() == "" || phone.getPhoneNumber() == "") {
         continue;
@@ -70,15 +71,21 @@ public class CustomerCreationHelper {
       if (!currentlyExists) {
         phonedao.addPhone(phone);
       } else {
-        phonedao.updatePhone(phone);
+        // if the customer currently exists, but does not have a phone with that ID,
+        // then create a phone instead of adding one
+        if (phone.getPhoneId() > numberOfDatabasePhones) {
+          phonedao.addPhone(phone);
+        } else {
+
+          phonedao.updatePhone(phone);
+
+        }
       }
     }
 
     EmailDAO emaildao = new EmailDAO();
     ArrayList<Email> emails = customer.getEmails();
     int numberOfDatabaseEmails = emaildao.getEmails(customer.getCustomerId()).size();
-    System.out.println("Email database size: " + numberOfDatabaseEmails);
-    System.out.println(emails.size());
     for (Email email : emails) {
       if (email.getEmailAddress() == "") {
         continue;
@@ -87,20 +94,14 @@ public class CustomerCreationHelper {
       email.setCustomerId(customer.getCustomerId());
       if (!currentlyExists) {
         emaildao.addEmail(email);
-        System.out
-            .println("Adding email with address: " + email.getEmailAddress() + " and ID: " + email.getEmailId());
       } else {
-
         // if the customer currently exists, but does not have an email with that ID,
         // then create an email instead of adding one
         if (email.getEmailId() > numberOfDatabaseEmails) {
           emaildao.addEmail(email);
-          System.out
-              .println("Adding email with address: " + email.getEmailAddress() + " and ID: " + email.getEmailId());
         } else
           emaildao.updateEmail(email);
-        System.out
-            .println("Updating email with address: " + email.getEmailAddress() + " and ID: " + email.getEmailId());
+
       }
     }
 

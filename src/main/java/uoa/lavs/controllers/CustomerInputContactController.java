@@ -199,6 +199,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
       AppState.customerDetailsAccessType = "VIEW";
       AccessTypeNotifier.notifyCustomerObservers();
+
       setEmailDetails("confirm");
       setPhoneDetails("confirm");
 
@@ -343,15 +344,18 @@ public class CustomerInputContactController implements AccessTypeObserver {
         phonePrimaryRadio.isSelected(),
         sendTextRadio.isSelected());
 
-    // sets the details for the current number page for the existing phones;
-    if (location != "decEdit" && location != "incEdit") {
-      existingCustomerPhones.set(currentNumberPage, newPhone);
-    } else {
-      if (currentNumberPage == existingCustomerPhones.size() && validatePhone()) {
+    if (currentNumberPage == existingCustomerPhones.size()) {
+      if (validatePhone()) {
         existingCustomerPhones.add(newPhone);
-        System.out.println("Added new phone number");
       }
+    } else {
+      existingCustomerPhones.set(currentNumberPage, newPhone);
     }
+
+    for (int i = 0; i < existingCustomerPhones.size(); i++) {
+      existingCustomerPhones.get(i).setPhoneId(i + 1);
+    }
+
     customer.setPhones(existingCustomerPhones);
 
     return true;
