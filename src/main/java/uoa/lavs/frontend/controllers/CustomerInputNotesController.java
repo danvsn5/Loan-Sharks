@@ -56,6 +56,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
 
   @FXML
   private void initialize() {
+    limitTextFieldLength();
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
     // Initialize notes with 100 notes, with all lines empty
@@ -94,6 +95,39 @@ public class CustomerInputNotesController implements AccessTypeObserver {
       // For all notes, set it based on the index of the page notes and also the line number
       loadPageNotes(currentPage);
     }
+  }
+
+  private void limitTextFieldLength() {
+    addTextLimiter(noteField1, 70);
+    addTextLimiter(noteField2, 70);
+    addTextLimiter(noteField3, 70);
+    addTextLimiter(noteField4, 70);
+    addTextLimiter(noteField5, 70);
+    addTextLimiter(noteField6, 70);
+    addTextLimiter(noteField7, 70);
+    addTextLimiter(noteField8, 70);
+    addTextLimiter(noteField9, 70);
+    addTextLimiter(noteField10, 70);
+    addTextLimiter(noteField11, 70);
+    addTextLimiter(noteField12, 70);
+    addTextLimiter(noteField13, 70);
+    addTextLimiter(noteField14, 70);
+    addTextLimiter(noteField15, 70);
+    addTextLimiter(noteField16, 70);
+    addTextLimiter(noteField17, 70);
+    addTextLimiter(noteField18, 70);
+    addTextLimiter(noteField19, 70);
+  }
+
+  private void addTextLimiter(TextField textField, int maxLength) {
+    textField
+        .textProperty()
+        .addListener(
+            (observable, oldValue, newValue) -> {
+              if (newValue.length() > maxLength) {
+                textField.setText(newValue.substring(0, maxLength));
+              }
+            });
   }
 
   @FXML
