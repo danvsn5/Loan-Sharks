@@ -3,7 +3,10 @@ package uoa.lavs.mainframe.messages.customer;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.*;
+
+import uoa.lavs.legacy.mainframe.*;
+import uoa.lavs.legacy.mainframe.messages.customer.FindCustomer;
+import uoa.lavs.mainframe.MockConnection;
 
 import java.time.LocalDate;
 

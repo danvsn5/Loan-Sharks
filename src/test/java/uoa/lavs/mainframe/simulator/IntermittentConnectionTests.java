@@ -1,9 +1,13 @@
 package uoa.lavs.mainframe.simulator;
 
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.*;
-import uoa.lavs.mainframe.messages.customer.FindCustomer;
-import uoa.lavs.mainframe.simulator.failures.NFailsPerMRequestsPolicy;
+
+import uoa.lavs.legacy.mainframe.*;
+import uoa.lavs.legacy.mainframe.messages.customer.FindCustomer;
+import uoa.lavs.legacy.mainframe.simulator.InMemoryConnection;
+import uoa.lavs.legacy.mainframe.simulator.IntermittentConnection;
+import uoa.lavs.legacy.mainframe.simulator.failures.NFailsPerMRequestsPolicy;
+import uoa.lavs.mainframe.MockConnection;
 
 import java.io.IOException;
 import java.util.HashMap;

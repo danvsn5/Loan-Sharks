@@ -10,11 +10,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uoa.lavs.customer.Email;
-import uoa.lavs.sql.DatabaseConnection;
-import uoa.lavs.sql.DatabaseState;
-import uoa.lavs.sql.InitialiseDatabase;
-import uoa.lavs.sql.oop_to_sql.customer.EmailDAO;
+
+import uoa.lavs.backend.oop.customer.Email;
+import uoa.lavs.backend.sql.DatabaseConnection;
+import uoa.lavs.backend.sql.DatabaseState;
+import uoa.lavs.backend.sql.InitialiseDatabase;
+import uoa.lavs.backend.sql.oop_to_sql.customer.EmailDAO;
 
 public class EmailDAOTest {
   EmailDAO emailDAO;
@@ -74,6 +75,31 @@ public class EmailDAOTest {
         Assertions.assertTrue(rs.next(), "Email should be updated in the database");
         Assertions.assertEquals("newemail@example.com", rs.getString("emailAddress"));
         Assertions.assertTrue(rs.getBoolean("isPrimary"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      Assertions.fail("Database query failed");
+    } finally {
+      DatabaseConnection.close(null);
+    }
+  }
+
+  @Test
+  public void testGetEmail() {
+    Email email = new Email("000001", "oldemail@example.com", false);
+    emailDAO.addEmail(email);
+
+    Email retrievedEmail = emailDAO.getEmail("000001", email.getEmailId());
+
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement stmt =
+            conn.prepareStatement("SELECT * FROM customer_email WHERE emailId = ?")) {
+      stmt.setInt(1, email.getEmailId());
+
+      try (ResultSet rs = stmt.executeQuery()) {
+        Assertions.assertTrue(rs.next(), "Email should be retrieved from the database");
+        Assertions.assertEquals(retrievedEmail.getEmailAddress(), rs.getString("emailAddress"));
+        Assertions.assertEquals(retrievedEmail.getIsPrimary(), rs.getBoolean("isPrimary"));
       }
     } catch (SQLException e) {
       e.printStackTrace();

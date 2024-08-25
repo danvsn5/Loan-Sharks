@@ -4,17 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
-import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Request;
-import uoa.lavs.mainframe.Response;
-import uoa.lavs.mainframe.Status;
-import uoa.lavs.mainframe.messages.customer.FindCustomer;
-import uoa.lavs.mainframe.simulator.NitriteConnection;
+
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Request;
+import uoa.lavs.legacy.mainframe.Response;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.messages.customer.FindCustomer;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static uoa.lavs.mainframe.MessageErrorStatus.INVALID_REQUEST_CUSTOMER_ID;
+import static uoa.lavs.legacy.mainframe.MessageErrorStatus.INVALID_REQUEST_CUSTOMER_ID;
 
 class FindCustomerTests {
     @Test

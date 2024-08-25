@@ -9,11 +9,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uoa.lavs.loan.LoanPayment;
-import uoa.lavs.sql.DatabaseConnection;
-import uoa.lavs.sql.DatabaseState;
-import uoa.lavs.sql.InitialiseDatabase;
-import uoa.lavs.sql.oop_to_sql.loan.LoanPaymentDAO;
+
+import uoa.lavs.backend.oop.loan.LoanPayment;
+import uoa.lavs.backend.sql.DatabaseConnection;
+import uoa.lavs.backend.sql.DatabaseState;
+import uoa.lavs.backend.sql.InitialiseDatabase;
+import uoa.lavs.backend.sql.oop_to_sql.loan.LoanPaymentDAO;
 
 public class LoanPaymentDAOTest {
   DatabaseConnection conn;
@@ -57,6 +58,7 @@ public class LoanPaymentDAOTest {
     }
   }
 
+
   @Test
   public void testUpdateLoanPayment() {
     loanPaymentDAO.addLoanPayment(loanPayment);
@@ -94,6 +96,13 @@ public class LoanPaymentDAOTest {
     Assertions.assertEquals("weekly", retrievedLoanPayment.getPaymentFrequency());
     Assertions.assertEquals("1000", retrievedLoanPayment.getPaymentAmount());
     Assertions.assertEquals(false, retrievedLoanPayment.getInterestOnly());
+  }
+
+  @Test 
+  public void testGetLoanPaymentInvalidId() {
+    LoanPayment retrievedLoanPayment = loanPaymentDAO.getLoanPayment("-1321");
+
+    Assertions.assertNull(retrievedLoanPayment);
   }
 
   @AfterEach

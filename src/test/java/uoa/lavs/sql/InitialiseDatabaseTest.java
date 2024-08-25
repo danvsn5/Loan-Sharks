@@ -12,6 +12,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import uoa.lavs.backend.sql.DatabaseConnection;
+import uoa.lavs.backend.sql.DatabaseState;
+import uoa.lavs.backend.sql.InitialiseDatabase;
+
 public class InitialiseDatabaseTest {
   DatabaseConnection conn;
   static File dbFile;
@@ -21,6 +25,12 @@ public class InitialiseDatabaseTest {
     DatabaseState.setActiveDB(true);
     InitialiseDatabase.createDatabase();
     dbFile = DatabaseState.DB_TEST_FILE;
+  }
+
+  @Test
+  public void testInit() {
+    InitialiseDatabase init = new InitialiseDatabase();
+    Assertions.assertNotNull(init);
   }
 
   @Test

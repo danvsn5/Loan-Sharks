@@ -1,12 +1,13 @@
 package uoa.lavs.mainframe.simulator.nitrite;
 
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.*;
-import uoa.lavs.mainframe.messages.loan.UpdateLoanStatus;
-import uoa.lavs.mainframe.simulator.NitriteConnection;
+
+import uoa.lavs.legacy.mainframe.*;
+import uoa.lavs.legacy.mainframe.messages.loan.UpdateLoanStatus;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static uoa.lavs.mainframe.MessageErrorStatus.LOAN_NOT_FOUND;
+import static uoa.lavs.legacy.mainframe.MessageErrorStatus.LOAN_NOT_FOUND;
 
 class UpdateLoanStatusTests {
     @Test
