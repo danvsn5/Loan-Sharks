@@ -23,6 +23,12 @@ public class DatabaseConnectionTest {
   }
 
   @Test
+  public void testDatabaseConnection() {
+    conn = new DatabaseConnection();
+    Assertions.assertNotNull(conn);
+  }
+
+  @Test
   public void testConnect() {
     Connection connection = DatabaseConnection.connect();
     Assertions.assertNotNull(connection);
