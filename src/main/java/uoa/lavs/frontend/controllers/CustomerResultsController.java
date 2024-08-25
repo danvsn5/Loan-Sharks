@@ -15,6 +15,7 @@ import uoa.lavs.backend.oop.customer.Customer;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
 import uoa.lavs.backend.oop.customer.Email;
 import uoa.lavs.backend.oop.customer.Phone;
+import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
 
@@ -184,6 +185,7 @@ public class CustomerResultsController {
     if (AppState.isCreatingLoan && validateCustomerForLoan(customer)) {
       if (validateCustomerForLoan(customer)) {
         AppState.selectedCustomer = customer;
+        PersonalLoanSingleton.resetInstance();
         AppState.loadLoans("CREATE");
         Main.setUi(AppUI.LC_PRIMARY);
       } else {

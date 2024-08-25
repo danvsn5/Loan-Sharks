@@ -50,6 +50,7 @@ public class SyncLoan extends Sync {
       if (newLoanId != null) {
         updateLoanIdInLocalDB(resultSet.getString("loanId"), newLoanId, localConn);
         personalLoan.setLoanId(newLoanId);
+        loanId = newLoanId;
       }
 
       if (status.getErrorCode() == 0) {
@@ -60,7 +61,9 @@ public class SyncLoan extends Sync {
       }
     }
 
-    System.out.println("loan id is INSIDE: " + loanId);
+    System.out.println("Loan id ting is: " + loanId);
+    loadLoan.setLoanId(loanId);
+    loadStatus = loadLoan.send(connection);
     return loadStatus;
   }
 
