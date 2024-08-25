@@ -9,6 +9,10 @@ import uoa.lavs.AppState;
 import uoa.lavs.Main;
 import uoa.lavs.SceneManager.AppUI;
 import uoa.lavs.loan.PersonalLoanSingleton;
+import uoa.lavs.mainframe.Connection;
+import uoa.lavs.mainframe.Instance;
+import uoa.lavs.mainframe.Request;
+import uoa.lavs.mainframe.Response;
 
 public class LoanMenuController {
   @FXML private Button createNewLoanButton;
@@ -29,32 +33,28 @@ public class LoanMenuController {
   @FXML
   private void handleCreateNewLoanButtonAction() {
 
-    // BYPASSING THE CONNECTION TO THE DATABASE
+    Connection connection = Instance.getConnection();
 
-    // Connection connection = Instance.getConnection();
+    Request request = new Request(1001);
 
-    //  Request request = new Request(1);
-
-    //   Response response = (connection.send(request));
-    //   uoa.lavs.mainframe.Status status = response.getStatus();
+    Response response = (connection.send(request));
+    uoa.lavs.mainframe.Status status = response.getStatus();
 
     // there was an issue connecting to the database
-    //   if (status.getErrorCode() == 1000
-    //       || status.getErrorCode() == 1010
-    //       || status.getErrorCode() == 1020) {
-    //     setRedSymbol();
-    //    connectionLabel.setText(status.getErrorMessage());
-    // if the 'unknown' message got a response, it's online
-    //   } else if (status.getErrorCode() == 100) {
-    //     setGreenSymbol();
-    //     connectionLabel.setText("");
+    if (status.getErrorCode() == 1000
+        || status.getErrorCode() == 1010
+        || status.getErrorCode() == 1020) {
+      setRedSymbol();
+      connectionLabel.setText(status.getErrorMessage());
+      return;
+    } else {
+      // catch all for other messages
+      setGreenSymbol();
+      // connectionLabel.setText(status.getErrorMessage());
+    }
     PersonalLoanSingleton.resetInstance();
     AppState.isCreatingLoan = true;
     Main.setUi(AppUI.CUSTOMER_SEARCH);
-    // catch all for other messages
-    //   } else {
-    //     setOrangeSymbol();
-    //     connectionLabel.setText("Unidentified error. Please try again.");
   }
 
   @FXML
