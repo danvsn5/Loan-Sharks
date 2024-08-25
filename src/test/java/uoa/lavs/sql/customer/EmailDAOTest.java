@@ -84,6 +84,31 @@ public class EmailDAOTest {
   }
 
   @Test
+  public void testGetEmail() {
+    Email email = new Email("000001", "oldemail@example.com", false);
+    emailDAO.addEmail(email);
+
+    Email retrievedEmail = emailDAO.getEmail("000001", email.getEmailId());
+
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement stmt =
+            conn.prepareStatement("SELECT * FROM customer_email WHERE emailId = ?")) {
+      stmt.setInt(1, email.getEmailId());
+
+      try (ResultSet rs = stmt.executeQuery()) {
+        Assertions.assertTrue(rs.next(), "Email should be retrieved from the database");
+        Assertions.assertEquals(retrievedEmail.getEmailAddress(), rs.getString("emailAddress"));
+        Assertions.assertEquals(retrievedEmail.getIsPrimary(), rs.getBoolean("isPrimary"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      Assertions.fail("Database query failed");
+    } finally {
+      DatabaseConnection.close(null);
+    }
+  }
+
+  @Test
   public void testGetEmails() {
     Email email = new Email("000001", "test@example.com", true);
     emailDAO.addEmail(email);

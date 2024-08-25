@@ -33,7 +33,7 @@ public class EmailDAO {
     }
   }
 
-  private int getNextEmailIdForCustomer(String customerId) {
+  public int getNextEmailIdForCustomer(String customerId) {
     String sql = "SELECT MAX(emailId) FROM customer_email WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -119,13 +119,6 @@ public class EmailDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-    return null;
-  }
-
-  public static void main(String[] args) {
-    EmailDAO emailDAO = new EmailDAO();
-    Email email = emailDAO.getEmail("000001", 1);
-    email.setEmailAddress("newemail@example.com");
-    emailDAO.updateEmail(email);
+    return emails;
   }
 }

@@ -177,10 +177,4 @@ public class AddressDAO {
     return null;
   }
 
-  public static void main(String[] args) {
-    AddressDAO addressDAO = new AddressDAO();
-    Address address = addressDAO.getAddress("000001", 1);
-    address.setAddressType("Commerical");
-    addressDAO.updateAddress(address);
-  }
 }

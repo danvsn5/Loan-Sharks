@@ -100,6 +100,13 @@ public class LoanDurationDAOTest {
     Assertions.assertEquals(12, retrievedLoanDuration.getLoanTerm());
   }
 
+  @Test
+  public void testGetLoanDurationNonExistent() {
+    LoanDuration retrievedLoanDuration = loanDurationDAO.getLoanDuration("-1");
+
+    Assertions.assertNull(retrievedLoanDuration);
+  }
+
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);
