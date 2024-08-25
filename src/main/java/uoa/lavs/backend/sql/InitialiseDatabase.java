@@ -220,13 +220,13 @@ public class InitialiseDatabase {
         "CREATE TABLE IF NOT EXISTS sync_info (\n"
             + "id INTEGER PRIMARY KEY, "
             + "lastSyncTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-            + "needsSyncing BOOLEAN DEFAULT 1);";
+            + "needsSyncing BOOLEAN DEFAULT 0);";
 
     return sql;
   }
 
   private static String getInitialiseSyncInfoQuery() {
-    String insert = "INSERT INTO sync_info (id, needsSyncing) VALUES (1, 1);";
+    String insert = "INSERT INTO sync_info (id, needsSyncing) VALUES (1, 0);";
     return insert;
   }
 

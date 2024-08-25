@@ -38,7 +38,8 @@ public class SyncManager {
         if (status.getErrorCode() != 0) {
           System.out.println(
               "Error syncing " + sync.getClass().getSimpleName() + ": " + status.getErrorMessage());
-          System.out.println("Please try again.");
+          System.out.println("Changes saved to local database. Need to sync to remote mainframe.");
+          setNeedsSyncing(true);
           return status;
         }
       }
