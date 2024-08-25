@@ -98,22 +98,25 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
 
-      if (customer.getAddresses().size() > 0) {
-        addresses = customer.getAddresses();
-        customerAddressTypeComboBox.setValue(customer.getAddresses().get(0).getAddressType());
-        customerAddressLine1Field.setText(customer.getAddresses().get(0).getAddressLineOne());
-        customerAddressLine2Field.setText(customer.getAddresses().get(0).getAddressLineTwo());
-        customerSuburbField.setText(customer.getAddresses().get(0).getSuburb());
-        customerCityField.setText(customer.getAddresses().get(0).getCity());
-        customerPostcodeField.setText(addresses.get(0).getPostCode());
-        mailingAddressRadio.setSelected(addresses.get(0).getIsMailing());
-        primaryAddressRadio.setSelected(addresses.get(0).getIsPrimary());
-        if (mailingAddressRadio.isSelected()) {
-          isMailingSelected = true;
+      if (existingCustomerAddresses.size() > 0) {
+        customerAddressTypeComboBox.setValue(existingCustomerAddresses.get(0).getAddressType());
+        customerAddressLine1Field.setText(existingCustomerAddresses.get(0).getAddressLineOne());
+        customerAddressLine2Field.setText(existingCustomerAddresses.get(0).getAddressLineTwo());
+        customerSuburbField.setText(existingCustomerAddresses.get(0).getSuburb());
+        customerCityField.setText(existingCustomerAddresses.get(0).getCity());
+        customerPostcodeField.setText(existingCustomerAddresses.get(0).getPostCode());
+        mailingAddressRadio.setSelected(existingCustomerAddresses.get(0).getIsMailing());
+        primaryAddressRadio.setSelected(existingCustomerAddresses.get(0).getIsPrimary());
+
+        for (Address address : existingCustomerAddresses) {
+          if (address.getIsPrimary()) {
+            isPrimarySelected = true;
+          }
+          if (address.getIsMailing()) {
+            isMailingSelected = true;
+          }
         }
-        if (primaryAddressRadio.isSelected()) {
-          isPrimarySelected = true;
-        }
+
       }
     }
   }
