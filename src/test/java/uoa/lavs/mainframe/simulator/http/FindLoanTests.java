@@ -2,13 +2,14 @@ package uoa.lavs.mainframe.simulator.http;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
-import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Status;
-import uoa.lavs.mainframe.messages.loan.FindLoan;
-import uoa.lavs.mainframe.simulator.HttpConnection;
+
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.messages.loan.FindLoan;
+import uoa.lavs.legacy.mainframe.simulator.HttpConnection;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static uoa.lavs.mainframe.MessageErrorStatus.CUSTOMER_NOT_FOUND;
+import static uoa.lavs.legacy.mainframe.MessageErrorStatus.CUSTOMER_NOT_FOUND;
 
 @EnabledIfEnvironmentVariable(named = "LAVS_ENVIRONMENT", matches = "http_test")
 class FindLoanTests {

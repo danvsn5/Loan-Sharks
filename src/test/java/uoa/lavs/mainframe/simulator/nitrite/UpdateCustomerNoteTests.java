@@ -1,13 +1,14 @@
 package uoa.lavs.mainframe.simulator.nitrite;
 
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Status;
-import uoa.lavs.mainframe.messages.customer.UpdateCustomerNote;
-import uoa.lavs.mainframe.simulator.NitriteConnection;
+
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerNote;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static uoa.lavs.mainframe.MessageErrorStatus.CUSTOMER_NOT_FOUND;
+import static uoa.lavs.legacy.mainframe.MessageErrorStatus.CUSTOMER_NOT_FOUND;
 
 class UpdateCustomerNoteTests {
     private static void assertExpectedProperties(Status status, UpdateCustomerNote message, Integer pageCount) {

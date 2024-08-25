@@ -3,6 +3,11 @@ package uoa.lavs.mainframe;
 import java.io.IOException;
 import java.util.HashMap;
 
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Request;
+import uoa.lavs.legacy.mainframe.Response;
+import uoa.lavs.legacy.mainframe.Status;
+
 public class MockConnection implements Connection {
     private Request request;
     private Response response;

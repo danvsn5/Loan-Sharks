@@ -6,6 +6,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import uoa.lavs.backend.sql.DatabaseConnection;
+import uoa.lavs.backend.sql.DatabaseState;
+import uoa.lavs.backend.sql.InitialiseDatabase;
+import uoa.lavs.backend.sql.ResetDatabase;
+
 public class ResetDatabaseTest {
   DatabaseConnection conn;
   static File dbFile;

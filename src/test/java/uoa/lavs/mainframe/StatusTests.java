@@ -3,6 +3,8 @@ package uoa.lavs.mainframe;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import uoa.lavs.legacy.mainframe.Status;
+
 class StatusTests {
 
     @Test

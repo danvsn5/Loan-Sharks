@@ -1,15 +1,17 @@
 package uoa.lavs.mainframe.simulator;
 
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Request;
-import uoa.lavs.mainframe.Response;
-import uoa.lavs.mainframe.Status;
+
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Request;
+import uoa.lavs.legacy.mainframe.Response;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static uoa.lavs.mainframe.MessageErrorStatus.UNKNOWN_MESSAGE;
+import static uoa.lavs.legacy.mainframe.MessageErrorStatus.UNKNOWN_MESSAGE;
 
 class NitrateConnectionTests {
 
