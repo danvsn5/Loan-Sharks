@@ -22,26 +22,35 @@ import uoa.lavs.legacy.mainframe.Request;
 import uoa.lavs.legacy.mainframe.Response;
 
 public class CustomerSearchController {
-  @FXML private Label searchWithCustomerIDLabel; // When click label, reveal text box.
+  @FXML
+  private Label searchWithCustomerIDLabel; // When click label, reveal text box.
 
-  @FXML private Label searchWithNameLabel; // When click label, reveal text box.
+  @FXML
+  private Label searchWithNameLabel; // When click label, reveal text box.
 
-  @FXML private ImageView staticReturnImageView;
+  @FXML
+  private ImageView staticReturnImageView;
 
-  @FXML private TextField usernameField;
+  @FXML
+  private TextField usernameField;
 
-  @FXML private TextField idField;
+  @FXML
+  private TextField idField;
 
-  @FXML private Button searchButton;
+  @FXML
+  private Button searchButton;
 
-  @FXML private ImageView connectionSymbol;
+  @FXML
+  private ImageView connectionSymbol;
 
-  @FXML private Label connectionLabel;
+  @FXML
+  private Label connectionLabel;
 
   String state;
 
   @FXML
-  private void initialize() {}
+  private void initialize() {
+  }
 
   // When enter key is pressed, perform search.
   @FXML
@@ -94,6 +103,7 @@ public class CustomerSearchController {
           || searchCustomer.getStatusInstance().getErrorCode() == 1010
           || searchCustomer.getStatusInstance().getErrorCode() == 1020) {
         setRedSymbol();
+        connectionLabel.setText("Remote host is not available.");
       } else if (searchCustomer.getStatusInstance().getErrorCode() == 0) {
         setGreenSymbol();
       } else {
@@ -109,6 +119,7 @@ public class CustomerSearchController {
     } catch (Exception e) {
       idField.setStyle("-fx-border-color: red;");
       System.out.println("No customers found with ID: " + searchString);
+      connectionLabel.setText("Remost host is not available. No customers found in local system.");
     }
   }
 
@@ -118,24 +129,26 @@ public class CustomerSearchController {
     SearchCustomer searchCustomer = new SearchCustomer();
     try {
       Connection connection = Instance.getConnection();
-      List<Customer> listOfCustomers =
-          searchCustomer.searchCustomerByName(searchString, connection);
-      searchCustomer.getStatusInstance().getErrorCode();
+      List<Customer> listOfCustomers = searchCustomer.searchCustomerByName(searchString, connection);
 
       if (searchCustomer.getStatusInstance().getErrorCode() == 1000
           || searchCustomer.getStatusInstance().getErrorCode() == 1010
           || searchCustomer.getStatusInstance().getErrorCode() == 1020) {
+        if (listOfCustomers == null) {
+          connectionLabel.setText("Remote host is not available. No customers found in local system.");
+        }
         setRedSymbol();
       } else if (searchCustomer.getStatusInstance().getErrorCode() == 0) {
         setGreenSymbol();
       } else {
+        if (listOfCustomers == null) {
+          connectionLabel.setText("No customers found in mainframe or local system.");
+        } else {
+          connectionLabel.setText(searchCustomer.getStatusInstance().getErrorMessage());
+        }
         setOrangeSymbol();
       }
-      connectionLabel.setText(searchCustomer.getStatusInstance().getErrorMessage());
-      if (listOfCustomers == null) {
-        connectionLabel.setText("No customers found");
-        setOrangeSymbol();
-      }
+
       AppState.loadCustomerSearchResults(listOfCustomers);
       usernameField.setStyle("");
       usernameField.setText("");
