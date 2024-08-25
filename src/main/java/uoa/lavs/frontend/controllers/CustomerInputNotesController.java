@@ -136,7 +136,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
       setTextFieldsEditable(true);
       editButton.setText("Create Customer");
-      setNotes();
+      setDetails();
     }
     if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
       setTextFieldsEditable(false);
@@ -145,7 +145,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     if (AppState.getCustomerDetailsAccessType().equals("EDIT")) {
       setTextFieldsEditable(false);
       editButton.setText("Confirm Changes");
-      setNotes();
+      setDetails();
     }
   }
 
@@ -171,7 +171,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     noteField19.setEditable(editable);
   }
 
-  private void setNotes() {
+  private void setDetails() {
     ArrayList<Note> notes = new ArrayList<>();
     for (int page = 1; page <= 100; page++) {
       String[] pageNotes = new String[19];
@@ -204,13 +204,13 @@ public class CustomerInputNotesController implements AccessTypeObserver {
   private void handleEditButtonAction() {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
-      setNotes();
+      setDetails();
       AppState.setCustomerDetailsAccessType("VIEW");
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
       AppState.setCustomerDetailsAccessType("EDIT");
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
-      setNotes();
+      setDetails();
       AppState.setCustomerDetailsAccessType("VIEW");
     }
     AccessTypeNotifier.notifyCustomerObservers();
@@ -219,7 +219,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
-    setNotes();
+    setDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 

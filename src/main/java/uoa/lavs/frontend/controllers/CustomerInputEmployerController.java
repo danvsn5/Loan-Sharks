@@ -139,7 +139,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
         new RadioButton[] {customerIsEmployerCheckbox});
   }
 
-  private boolean setEmployerDetails() {
+  private boolean setDetails() {
 
     if (!validateData()) {
       return false;
@@ -157,25 +157,25 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
 
   @FXML
   private void handleDetailsButtonAction() {
-    setEmployerDetails();
+    setDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setEmployerDetails();
+    setDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setEmployerDetails();
+    setDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerAddressButtonAction() {
-    setEmployerDetails();
+    setDetails();
     Main.setUi(AppUI.CI_EMPLOYER_ADDRESS);
   }
 
@@ -183,7 +183,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
   private void handleEditButtonAction() throws IOException {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
-      setEmployerDetails();
+      setDetails();
 
       boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
       if (!customerIsValid) {
@@ -205,7 +205,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-      setEmployerDetails();
+      setDetails();
       CustomerCreationHelper.createCustomer(customer, true);
     }
   }

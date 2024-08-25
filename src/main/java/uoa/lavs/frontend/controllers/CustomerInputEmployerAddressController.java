@@ -153,7 +153,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
         new RadioButton[] {});
   }
 
-  private boolean setAddressDetails() {
+  private boolean setDetails() {
 
     if (!validateData()) {
       return false;
@@ -173,25 +173,25 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML
   private void handleDetailsButtonAction() {
-    setAddressDetails();
+    setDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setAddressDetails();
+    setDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setAddressDetails();
+    setDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setAddressDetails();
+    setDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
@@ -199,7 +199,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
   private void handleEditButtonAction() throws IOException {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
-      setAddressDetails();
+      setDetails();
 
       boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
       if (!customerIsValid) {
@@ -221,7 +221,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-      setAddressDetails();
+      setDetails();
       CustomerCreationHelper.createCustomer(customer, true);
     }
   }

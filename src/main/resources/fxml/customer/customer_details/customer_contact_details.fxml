@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.frontend.controllers.CustomerInputContactController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.frontend.controllers.CustomerInputContactController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -66,7 +66,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="621.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button fx:id="customerEmployerButton" graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleCustomerEmployerButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Employer Details">
+      <Button fx:id="customerEmployerButton" graphicTextGap="0.0" layoutX="897.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleEmployerButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Employer Details">
          <font>
             <Font size="27.0" />
          </font>
@@ -75,7 +75,7 @@
          </cursor>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="873.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button fx:id="customerAddressButton" graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleCustomerAddressButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Addresses">
+      <Button fx:id="customerAddressButton" graphicTextGap="0.0" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleAddressButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Addresses">
          <font>
             <Font size="27.0" />
          </font>
@@ -85,7 +85,7 @@
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="372.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="7.0" layoutX="379.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="293.0" />
-      <Button fx:id="customerDetailsButton" graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleCustomerDetailsButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Customer Details">
+      <Button fx:id="customerDetailsButton" graphicTextGap="0.0" layoutX="139.5" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#handleDetailsButtonAction" prefHeight="70.0" prefWidth="243.0" styleClass="tab-button" stylesheets="@../../../css/index.css" text="Customer Details">
          <font>
             <Font size="27.0" />
          </font>

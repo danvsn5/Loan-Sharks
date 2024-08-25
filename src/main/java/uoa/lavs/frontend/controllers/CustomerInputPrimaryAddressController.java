@@ -214,7 +214,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     return isValid;
   }
 
-  private boolean setAddressDetails(String location) {
+  private boolean setDetails(String location) {
 
     if (location != "dec") {
       if (!checkFields()) return false;
@@ -250,25 +250,25 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
   @FXML
   private void handleDetailsButtonAction() {
-    setAddressDetails("edit");
+    setDetails("edit");
     Main.setUi(AppUI.CI_DETAILS);
   }
 
   @FXML
   private void handleMailingAddressButtonAction() {
-    setAddressDetails("edit");
+    setDetails("edit");
     Main.setUi(AppUI.CI_MAILING_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setAddressDetails("edit");
+    setDetails("edit");
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setAddressDetails("edit");
+    setDetails("edit");
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
@@ -276,7 +276,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   private void handleEditButtonAction() throws IOException {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
-      setAddressDetails("edit");
+      setDetails("edit");
 
       // check if primary and mailing address are set
       if (!isPrimarySelected) {
@@ -312,7 +312,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-      setAddressDetails("edit");
+      setDetails("edit");
       CustomerCreationHelper.createCustomer(customer, true);
     }
   }
@@ -358,7 +358,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     if (AppState.getCustomerDetailsAccessType() == "CREATE") {
 
       // cannot increment without having filled in the current address
-      if (!setAddressDetails("inc")) {
+      if (!setDetails("inc")) {
         System.out.println("data is invalid and cannot increment");
         return;
       }
@@ -387,7 +387,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
     if (AppState.getCustomerDetailsAccessType() == "EDIT") {
 
-      if (!setAddressDetails("incEdit")) {
+      if (!setDetails("incEdit")) {
         // if a field is invalid, then do not increment and return
         return;
       }
@@ -408,7 +408,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   private void handleDecAddress() {
     if (AppState.getCustomerDetailsAccessType() == "CREATE") {
 
-      setAddressDetails("dec");
+      setDetails("dec");
 
       if (currentAddress != 0) {
         currentAddress--;
@@ -437,7 +437,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
     if (AppState.getCustomerDetailsAccessType() == "EDIT") {
 
-      setAddressDetails("dec");
+      setDetails("dec");
       if (currentAddress != 0) {
         currentAddress--;
         addressPageLabel.setText("Address: " + (currentAddress + 1));

@@ -166,7 +166,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     return true;
   }
 
-  private boolean setCustomerDetails() {
+  private boolean setDetails() {
 
     if (!validateData()) {
       return false;
@@ -189,7 +189,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
         && AccessTypeNotifier.validateCustomerObservers()) {
       // Handle create customer logic
       // Save customer to database or perform necessary actions
-      setCustomerDetails();
+      setDetails();
 
       boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
       if (!customerIsValid) {
@@ -211,7 +211,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
       // Save changes to database or perform necessary actions
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
-      setCustomerDetails();
+      setDetails();
       CustomerCreationHelper.createCustomer(customer, true);
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && !AccessTypeNotifier.validateCustomerObservers()) {
@@ -221,25 +221,25 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
 
   @FXML
   private void handleNotesButtonAction() {
-    setCustomerDetails();
+    setDetails();
     Main.setUi(AppUI.CI_NOTES);
   }
 
   @FXML
   private void handleAddressButtonAction() {
-    setCustomerDetails();
+    setDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
   @FXML
   private void handleContactButtonAction() {
-    setCustomerDetails();
+    setDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
   @FXML
   private void handleEmployerButtonAction() {
-    setCustomerDetails();
+    setDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
