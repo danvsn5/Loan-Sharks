@@ -241,6 +241,10 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       existingCustomerAddresses.set(currentAddress, address);
     }
 
+    for (int i = 0; i < existingCustomerAddresses.size(); i++) {
+      existingCustomerAddresses.get(i).setAddressId(i+1);
+    }
+
     customer.setAddresses(existingCustomerAddresses);
     return true;
   }
