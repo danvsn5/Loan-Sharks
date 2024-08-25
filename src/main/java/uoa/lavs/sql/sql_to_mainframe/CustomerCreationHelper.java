@@ -182,6 +182,7 @@ public class CustomerCreationHelper {
 
     PhoneDAO phonedao = new PhoneDAO();
     ArrayList<Phone> phones = customer.getPhones();
+    int numberOfDatabasePhones = phonedao.getPhones(customer.getCustomerId()).size();
     for (Phone phone : phones) {
       if (phone.getType() == null || phone.getPrefix() == "" || phone.getPhoneNumber() == "") {
         continue;
@@ -191,12 +192,21 @@ public class CustomerCreationHelper {
       if (!currentlyExists) {
         phonedao.addPhone(phone);
       } else {
-        phonedao.updatePhone(phone);
+        // if the customer currently exists, but does not have a phone with that ID,
+        // then create a phone instead of adding one
+        if (phone.getPhoneId() > numberOfDatabasePhones) {
+          phonedao.addPhone(phone);
+        } else {
+
+          phonedao.updatePhone(phone);
+
+        }
       }
     }
 
     EmailDAO emaildao = new EmailDAO();
     ArrayList<Email> emails = customer.getEmails();
+    int numberOfDatabaseEmails = emaildao.getEmails(customer.getCustomerId()).size();
     for (Email email : emails) {
       if (email.getEmailAddress() == "") {
         continue;
@@ -206,7 +216,13 @@ public class CustomerCreationHelper {
       if (!currentlyExists) {
         emaildao.addEmail(email);
       } else {
-        emaildao.updateEmail(email);
+        // if the customer currently exists, but does not have an email with that ID,
+        // then create an email instead of adding one
+        if (email.getEmailId() > numberOfDatabaseEmails) {
+          emaildao.addEmail(email);
+        } else
+          emaildao.updateEmail(email);
+
       }
     }
 
@@ -231,9 +247,8 @@ public class CustomerCreationHelper {
       lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
     }
 
-    SyncManager syncManager =
-        new SyncManager(
-            List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
+    SyncManager syncManager = new SyncManager(
+        List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
 
     syncManager.syncAll(lastSyncTime);
   }
