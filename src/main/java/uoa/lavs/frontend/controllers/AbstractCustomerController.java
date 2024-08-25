@@ -47,6 +47,22 @@ public abstract class AbstractCustomerController {
   }
 
   @FXML
+  protected void handleNotesButtonAction() {
+    setDetails();
+    Main.setUi(AppUI.CI_NOTES);
+  }
+
+  @FXML
+  protected void handleBackButtonAction() {
+    if (AppState.getIsAccessingFromSearch()) {
+      AppState.setIsAccessingFromLoanSearch(false);
+      Main.setUi(AppUI.CUSTOMER_SEARCH);
+    } else {
+      Main.setUi(AppUI.CUSTOMER_MENU);
+    }
+  }
+
+  @FXML
   public void setInvalidButton(String style) {
     Button currentButton = AppState.getCurrentButton();
 

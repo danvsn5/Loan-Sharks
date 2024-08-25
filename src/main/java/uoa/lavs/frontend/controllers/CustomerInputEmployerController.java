@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
@@ -18,9 +17,9 @@ import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
-import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputEmployerController implements AccessTypeObserver {
+public class CustomerInputEmployerController extends AbstractCustomerController
+    implements AccessTypeObserver {
   @FXML private TextField employerNameField;
   @FXML private TextField employerEmailField;
   @FXML private TextField employerWebsiteField;
@@ -58,14 +57,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      employerNameField.setText(customer.getEmployer().getEmployerName());
-      employerEmailField.setText(customer.getEmployer().getEmployerEmail());
-      employerWebsiteField.setText(customer.getEmployer().getEmployerWebsite());
-      employerPhoneField.setText(customer.getEmployer().getEmployerPhone());
-      customerIsEmployerCheckbox.setSelected(customer.getEmployer().getOwnerOfCompany());
+      startWithCustomerID();
     }
   }
 
@@ -139,10 +131,11 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
         new RadioButton[] {customerIsEmployerCheckbox});
   }
 
-  private boolean setDetails() {
+  @Override
+  protected void setDetails() {
 
     if (!validateData()) {
-      return false;
+      return;
     }
 
     CustomerEmployer employer = customer.getEmployer();
@@ -151,32 +144,6 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     employer.setEmployerWebsite(employerWebsiteField.getText());
     employer.setEmployerPhone(employerPhoneField.getText());
     employer.setOwnerOfCompany(customerIsEmployerCheckbox.isSelected());
-
-    return true;
-  }
-
-  @FXML
-  private void handleDetailsButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_DETAILS);
-  }
-
-  @FXML
-  private void handleAddressButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
-  }
-
-  @FXML
-  private void handleContactButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_CONTACT);
-  }
-
-  @FXML
-  private void handleEmployerAddressButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_EMPLOYER_ADDRESS);
   }
 
   @FXML
@@ -210,22 +177,25 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     }
   }
 
-  @FXML
-  private void handleBackButtonAction() {
-    if (AppState.getIsAccessingFromSearch()) {
-      AppState.setIsAccessingFromSearch(false);
-      Main.setUi(AppUI.CUSTOMER_SEARCH);
-    } else {
-      Main.setUi(AppUI.CUSTOMER_MENU);
-    }
-  }
-
   @Override
   public Button getButton() {
     return customerEmployerButton;
   }
 
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
+
+    employerNameField.setText(customer.getEmployer().getEmployerName());
+    employerEmailField.setText(customer.getEmployer().getEmployerEmail());
+    employerWebsiteField.setText(customer.getEmployer().getEmployerWebsite());
+    employerPhoneField.setText(customer.getEmployer().getEmployerPhone());
+    customerIsEmployerCheckbox.setSelected(customer.getEmployer().getOwnerOfCompany());
+  }
+
   @FXML
+  @Override
   public void setInvalidButton(String style) {
     Button currentButton = AppState.getCurrentButton();
 

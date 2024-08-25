@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.Address;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
@@ -19,9 +18,9 @@ import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
-import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputPrimaryAddressController implements AccessTypeObserver {
+public class CustomerInputPrimaryAddressController extends AbstractCustomerController
+    implements AccessTypeObserver {
   @FXML private ComboBox<String> customerAddressTypeComboBox;
   @FXML private TextField customerAddressLine1Field;
   @FXML private TextField customerAddressLine2Field;
@@ -77,28 +76,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      if (existingCustomerAddresses.size() > 0) {
-        customerAddressTypeComboBox.setValue(existingCustomerAddresses.get(0).getAddressType());
-        customerAddressLine1Field.setText(existingCustomerAddresses.get(0).getAddressLineOne());
-        customerAddressLine2Field.setText(existingCustomerAddresses.get(0).getAddressLineTwo());
-        customerSuburbField.setText(existingCustomerAddresses.get(0).getSuburb());
-        customerCityField.setText(existingCustomerAddresses.get(0).getCity());
-        customerPostcodeField.setText(existingCustomerAddresses.get(0).getPostCode());
-        mailingAddressRadio.setSelected(existingCustomerAddresses.get(0).getIsMailing());
-        primaryAddressRadio.setSelected(existingCustomerAddresses.get(0).getIsPrimary());
-
-        for (Address address : existingCustomerAddresses) {
-          if (address.getIsPrimary()) {
-            isPrimarySelected = true;
-          }
-          if (address.getIsMailing()) {
-            isMailingSelected = true;
-          }
-        }
-      }
+      startWithCustomerID();
     }
   }
 
@@ -214,7 +192,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     return isValid;
   }
 
-  private boolean setDetails(String location) {
+  private boolean setAddressDetails(String location) {
 
     if (location != "dec") {
       if (!checkFields()) return false;
@@ -249,34 +227,10 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   }
 
   @FXML
-  private void handleDetailsButtonAction() {
-    setDetails("edit");
-    Main.setUi(AppUI.CI_DETAILS);
-  }
-
-  @FXML
-  private void handleMailingAddressButtonAction() {
-    setDetails("edit");
-    Main.setUi(AppUI.CI_MAILING_ADDRESS);
-  }
-
-  @FXML
-  private void handleContactButtonAction() {
-    setDetails("edit");
-    Main.setUi(AppUI.CI_CONTACT);
-  }
-
-  @FXML
-  private void handleEmployerButtonAction() {
-    setDetails("edit");
-    Main.setUi(AppUI.CI_EMPLOYER);
-  }
-
-  @FXML
   private void handleEditButtonAction() throws IOException {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
-      setDetails("edit");
+      setAddressDetails("edit");
 
       // check if primary and mailing address are set
       if (!isPrimarySelected) {
@@ -312,18 +266,8 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-      setDetails("edit");
+      setAddressDetails("edit");
       CustomerCreationHelper.createCustomer(customer, true);
-    }
-  }
-
-  @FXML
-  private void handleBackButtonAction() {
-    if (AppState.getIsAccessingFromSearch()) {
-      AppState.setIsAccessingFromSearch(false);
-      Main.setUi(AppUI.CUSTOMER_SEARCH);
-    } else {
-      Main.setUi(AppUI.CUSTOMER_MENU);
     }
   }
 
@@ -358,7 +302,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     if (AppState.getCustomerDetailsAccessType() == "CREATE") {
 
       // cannot increment without having filled in the current address
-      if (!setDetails("inc")) {
+      if (!setAddressDetails("inc")) {
         System.out.println("data is invalid and cannot increment");
         return;
       }
@@ -387,7 +331,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
     if (AppState.getCustomerDetailsAccessType() == "EDIT") {
 
-      if (!setDetails("incEdit")) {
+      if (!setAddressDetails("incEdit")) {
         // if a field is invalid, then do not increment and return
         return;
       }
@@ -408,7 +352,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   private void handleDecAddress() {
     if (AppState.getCustomerDetailsAccessType() == "CREATE") {
 
-      setDetails("dec");
+      setAddressDetails("dec");
 
       if (currentAddress != 0) {
         currentAddress--;
@@ -437,7 +381,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
 
     if (AppState.getCustomerDetailsAccessType() == "EDIT") {
 
-      setDetails("dec");
+      setAddressDetails("dec");
       if (currentAddress != 0) {
         currentAddress--;
         addressPageLabel.setText("Address: " + (currentAddress + 1));
@@ -461,25 +405,6 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
   @Override
   public Button getButton() {
     return customerAddressButton;
-  }
-
-  @FXML
-  public void setInvalidButton(String style) {
-    Button currentButton = AppState.getCurrentButton();
-
-    String buttonId = currentButton.getId();
-
-    if (buttonId != null) {
-      if (buttonId.equals("customerDetailsButton")) {
-        customerDetailsButton.setStyle(style);
-      } else if (buttonId.equals("customerAddressButton")) {
-        customerAddressButton.setStyle(style);
-      } else if (buttonId.equals("customerContactButton")) {
-        customerContactButton.setStyle(style);
-      } else if (buttonId.equals("customerEmployerButton")) {
-        customerEmployerButton.setStyle(style);
-      }
-    }
   }
 
   public void setAddressDetailsUI(String setting) {
@@ -516,5 +441,36 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     customerPostcodeField.setStyle("");
     mailingAddressRadio.setStyle("");
     primaryAddressRadio.setStyle("");
+  }
+
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
+
+    if (existingCustomerAddresses.size() > 0) {
+      customerAddressTypeComboBox.setValue(existingCustomerAddresses.get(0).getAddressType());
+      customerAddressLine1Field.setText(existingCustomerAddresses.get(0).getAddressLineOne());
+      customerAddressLine2Field.setText(existingCustomerAddresses.get(0).getAddressLineTwo());
+      customerSuburbField.setText(existingCustomerAddresses.get(0).getSuburb());
+      customerCityField.setText(existingCustomerAddresses.get(0).getCity());
+      customerPostcodeField.setText(existingCustomerAddresses.get(0).getPostCode());
+      mailingAddressRadio.setSelected(existingCustomerAddresses.get(0).getIsMailing());
+      primaryAddressRadio.setSelected(existingCustomerAddresses.get(0).getIsPrimary());
+
+      for (Address address : existingCustomerAddresses) {
+        if (address.getIsPrimary()) {
+          isPrimarySelected = true;
+        }
+        if (address.getIsMailing()) {
+          isMailingSelected = true;
+        }
+      }
+    }
+  }
+
+  @Override
+  protected void setDetails() {
+    // Overriden by setAddressDetails
   }
 }

@@ -13,7 +13,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
-import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
@@ -21,9 +20,9 @@ import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
-import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputDetailsController implements AccessTypeObserver {
+public class CustomerInputDetailsController extends AbstractCustomerController
+    implements AccessTypeObserver {
   @FXML private Label idBanner;
 
   @FXML private ComboBox<String> customerTitleComboBox;
@@ -92,15 +91,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      customerNameField.setText(customer.getName());
-      customerDOBPicker.setValue(customer.getDateOfBirth());
-      customerOccupationField.setText(customer.getOccupation());
-      customerVisaBox.setValue(customer.getVisa());
-      customerTitleComboBox.setValue(customer.getTitle());
-      customerCitizenshipBox.setValue(customer.getCitizenship());
+      startWithCustomerID();
     }
   }
 
@@ -166,10 +157,11 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     return true;
   }
 
-  private boolean setDetails() {
+  @Override
+  protected void setDetails() {
 
     if (!validateData()) {
-      return false;
+      return;
     }
 
     // Set customer details
@@ -179,7 +171,6 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     customer.setOccupation(customerOccupationField.getText());
     customer.setVisa(customerVisaBox.getValue());
     customer.setCitizenship(customerCitizenshipBox.getValue());
-    return true;
   }
 
   @FXML
@@ -219,61 +210,22 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     }
   }
 
-  @FXML
-  private void handleNotesButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_NOTES);
-  }
-
-  @FXML
-  private void handleAddressButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
-  }
-
-  @FXML
-  private void handleContactButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_CONTACT);
-  }
-
-  @FXML
-  private void handleEmployerButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_EMPLOYER);
-  }
-
-  @FXML
-  private void handleBackButtonAction() {
-    if (AppState.getIsAccessingFromSearch()) {
-      AppState.setIsAccessingFromLoanSearch(false);
-      Main.setUi(AppUI.CUSTOMER_SEARCH);
-    } else {
-      Main.setUi(AppUI.CUSTOMER_MENU);
-    }
-  }
-
   @Override
   public Button getButton() {
     return customerDetailsButton;
   }
 
   @FXML
-  public void setInvalidButton(String style) {
-    Button currentButton = AppState.getCurrentButton();
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
 
-    String buttonId = currentButton.getId();
-
-    if (buttonId != null) {
-      if (buttonId.equals("customerDetailsButton")) {
-        customerDetailsButton.setStyle(style);
-      } else if (buttonId.equals("customerAddressButton")) {
-        customerAddressButton.setStyle(style);
-      } else if (buttonId.equals("customerContactButton")) {
-        customerContactButton.setStyle(style);
-      } else if (buttonId.equals("customerEmployerButton")) {
-        customerEmployerButton.setStyle(style);
-      }
-    }
+    customerNameField.setText(customer.getName());
+    customerDOBPicker.setValue(customer.getDateOfBirth());
+    customerOccupationField.setText(customer.getOccupation());
+    customerVisaBox.setValue(customer.getVisa());
+    customerTitleComboBox.setValue(customer.getTitle());
+    customerCitizenshipBox.setValue(customer.getCitizenship());
   }
 }

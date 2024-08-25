@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
@@ -18,9 +17,9 @@ import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
-import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputEmployerAddressController implements AccessTypeObserver {
+public class CustomerInputEmployerAddressController extends AbstractCustomerController
+    implements AccessTypeObserver {
   @FXML private TextField employerAddressLine1Field;
   @FXML private TextField employerAddressLine2Field;
   @FXML private TextField employerSuburbField;
@@ -61,15 +60,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      employerAddressLine1Field.setText(customer.getEmployer().getLineOne());
-      employerAddressLine2Field.setText(customer.getEmployer().getLineTwo());
-      employerSuburbField.setText(customer.getEmployer().getSuburb());
-      employerCityField.setText(customer.getEmployer().getCity());
-      employerPostcodeField.setText(customer.getEmployer().getPostCode());
-      employerCountryBox.setValue(customer.getEmployer().getCountry());
+      startWithCustomerID();
     }
   }
 
@@ -153,10 +144,11 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
         new RadioButton[] {});
   }
 
-  private boolean setDetails() {
+  @Override
+  protected void setDetails() {
 
     if (!validateData()) {
-      return false;
+      return;
     }
 
     CustomerEmployer employer = customer.getEmployer();
@@ -167,32 +159,6 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     employer.setPostCode(employerPostcodeField.getText());
 
     employer.setCountry(employerCountryBox.getValue());
-
-    return true;
-  }
-
-  @FXML
-  private void handleDetailsButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_DETAILS);
-  }
-
-  @FXML
-  private void handleAddressButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
-  }
-
-  @FXML
-  private void handleContactButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_CONTACT);
-  }
-
-  @FXML
-  private void handleEmployerButtonAction() {
-    setDetails();
-    Main.setUi(AppUI.CI_EMPLOYER);
   }
 
   @FXML
@@ -226,22 +192,26 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     }
   }
 
-  @FXML
-  private void handleBackButtonAction() {
-    if (AppState.getIsAccessingFromSearch()) {
-      AppState.setIsAccessingFromSearch(false);
-      Main.setUi(AppUI.CUSTOMER_SEARCH);
-    } else {
-      Main.setUi(AppUI.CUSTOMER_MENU);
-    }
-  }
-
   @Override
   public Button getButton() {
     return employerAddressButton;
   }
 
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
+
+    employerAddressLine1Field.setText(customer.getEmployer().getLineOne());
+    employerAddressLine2Field.setText(customer.getEmployer().getLineTwo());
+    employerSuburbField.setText(customer.getEmployer().getSuburb());
+    employerCityField.setText(customer.getEmployer().getCity());
+    employerPostcodeField.setText(customer.getEmployer().getPostCode());
+    employerCountryBox.setValue(customer.getEmployer().getCountry());
+  }
+
   @FXML
+  @Override
   public void setInvalidButton(String style) {
     Button currentButton = AppState.getCurrentButton();
 
