@@ -20,7 +20,7 @@ The project specification is available [here](https://canvas.auckland.ac.nz/cour
 
 ## Notes From Contributors
 
-- To run application, type `./mvnw javafx:run`
+- To run application, type `./mvnw javafx:run` into terminal after cloning
 - Login on main page is Moana and Password
 
 ## Initial Repository Code
