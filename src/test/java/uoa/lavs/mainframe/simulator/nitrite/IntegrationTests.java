@@ -1,14 +1,15 @@
 package uoa.lavs.mainframe.simulator.nitrite;
 
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Frequency;
-import uoa.lavs.mainframe.RateType;
-import uoa.lavs.mainframe.Status;
-import uoa.lavs.mainframe.messages.customer.*;
-import uoa.lavs.mainframe.messages.loan.LoadLoanPayments;
-import uoa.lavs.mainframe.messages.loan.UpdateLoan;
-import uoa.lavs.mainframe.simulator.NitriteConnection;
+
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Frequency;
+import uoa.lavs.legacy.mainframe.RateType;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.messages.customer.*;
+import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanPayments;
+import uoa.lavs.legacy.mainframe.messages.loan.UpdateLoan;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
 
 import java.io.IOException;
 import java.time.LocalDate;

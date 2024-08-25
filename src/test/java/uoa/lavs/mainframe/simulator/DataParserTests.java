@@ -2,9 +2,11 @@ package uoa.lavs.mainframe.simulator;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.Request;
-import uoa.lavs.mainframe.Response;
-import uoa.lavs.mainframe.messages.All;
+
+import uoa.lavs.legacy.mainframe.Request;
+import uoa.lavs.legacy.mainframe.Response;
+import uoa.lavs.legacy.mainframe.messages.All;
+import uoa.lavs.legacy.mainframe.simulator.DataParser;
 
 import static org.junit.jupiter.api.Assertions.*;
 

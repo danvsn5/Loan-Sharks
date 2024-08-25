@@ -2,9 +2,10 @@ package uoa.lavs.mainframe.simulator.nitrite;
 
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.collection.Document;
-import uoa.lavs.mainframe.messages.customer.*;
-import uoa.lavs.mainframe.messages.loan.LoadLoan;
-import uoa.lavs.mainframe.simulator.NitriteConnection;
+
+import uoa.lavs.legacy.mainframe.messages.customer.*;
+import uoa.lavs.legacy.mainframe.messages.loan.LoadLoan;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
