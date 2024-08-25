@@ -1,9 +1,11 @@
 package uoa.lavs.mainframe.simulator;
 
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.Status;
-import uoa.lavs.mainframe.messages.customer.FindCustomer;
-import uoa.lavs.mainframe.messages.customer.LoadCustomer;
+
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.messages.customer.FindCustomer;
+import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomer;
+import uoa.lavs.legacy.mainframe.simulator.SimpleReplayConnection;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -9,12 +9,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uoa.lavs.customer.CustomerEmployer;
-import uoa.lavs.sql.DatabaseConnection;
-import uoa.lavs.sql.DatabaseState;
-import uoa.lavs.sql.InitialiseDatabase;
-import uoa.lavs.sql.oop_to_sql.customer.AddressDAO;
-import uoa.lavs.sql.oop_to_sql.customer.CustomerEmployerDAO;
+
+import uoa.lavs.backend.oop.customer.CustomerEmployer;
+import uoa.lavs.backend.sql.DatabaseConnection;
+import uoa.lavs.backend.sql.DatabaseState;
+import uoa.lavs.backend.sql.InitialiseDatabase;
+import uoa.lavs.backend.sql.oop_to_sql.customer.AddressDAO;
+import uoa.lavs.backend.sql.oop_to_sql.customer.CustomerEmployerDAO;
 
 public class CustomerEmployerDAOTest {
   DatabaseConnection conn;

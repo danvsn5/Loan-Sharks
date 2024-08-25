@@ -9,10 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import uoa.lavs.SceneManager.AppUI;
-import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Status;
-import uoa.lavs.mainframe.messages.customer.LoadCustomer;
+import uoa.lavs.frontend.AppState;
+import uoa.lavs.frontend.SceneManager;
+import uoa.lavs.frontend.SceneManager.AppUI;
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomer;
 
 public class Main extends Application {
   public static Scene scene;

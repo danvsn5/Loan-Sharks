@@ -3,9 +3,10 @@ package uoa.lavs.mainframe.simulator.nitrite;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.collection.Document;
 import org.dizitart.no2.collection.DocumentCursor;
-import uoa.lavs.mainframe.messages.customer.LoadCustomer;
-import uoa.lavs.mainframe.messages.loan.LoadLoan;
-import uoa.lavs.mainframe.simulator.NitriteConnection;
+
+import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomer;
+import uoa.lavs.legacy.mainframe.messages.loan.LoadLoan;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
 
 import static org.dizitart.no2.filters.FluentFilter.where;
 

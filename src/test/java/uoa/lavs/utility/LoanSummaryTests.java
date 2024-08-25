@@ -2,6 +2,9 @@ package uoa.lavs.utility;
 
 import org.junit.jupiter.api.Test;
 
+import uoa.lavs.legacy.utility.LoanRepayment;
+import uoa.lavs.legacy.utility.LoanSummary;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 

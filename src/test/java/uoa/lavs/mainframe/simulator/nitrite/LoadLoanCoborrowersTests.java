@@ -1,13 +1,14 @@
 package uoa.lavs.mainframe.simulator.nitrite;
 
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Status;
-import uoa.lavs.mainframe.messages.loan.LoadLoanCoborrowers;
-import uoa.lavs.mainframe.simulator.NitriteConnection;
+
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanCoborrowers;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static uoa.lavs.mainframe.MessageErrorStatus.LOAN_NOT_FOUND;
+import static uoa.lavs.legacy.mainframe.MessageErrorStatus.LOAN_NOT_FOUND;
 
 class LoadLoanCoborrowersTests {
     @Test

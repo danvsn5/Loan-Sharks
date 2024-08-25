@@ -1,10 +1,12 @@
 package uoa.lavs.mainframe.simulator;
 
 import org.junit.jupiter.api.Test;
-import uoa.lavs.mainframe.Connection;
-import uoa.lavs.mainframe.Request;
-import uoa.lavs.mainframe.Response;
-import uoa.lavs.mainframe.Status;
+
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Request;
+import uoa.lavs.legacy.mainframe.Response;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.simulator.InMemoryConnection;
 
 import java.util.HashMap;
 
