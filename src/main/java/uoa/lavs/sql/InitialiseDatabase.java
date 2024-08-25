@@ -223,6 +223,7 @@ public class InitialiseDatabase {
         "CREATE TABLE IF NOT EXISTS loan_coborrower (\n"
             + "loanId VARCHAR(50), "
             + "coborrowerId VARCHAR(50), "
+            + "number INTEGER, "
             + "lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + "PRIMARY KEY (loanId, coborrowerId), "
             + "FOREIGN KEY (loanId) REFERENCES Loan(loanId), "
@@ -241,9 +242,9 @@ public class InitialiseDatabase {
         "CREATE TABLE IF NOT EXISTS sync_info (\n"
             + "id INTEGER PRIMARY KEY, "
             + "lastSyncTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-            + "needsSyncing BOOLEAN DEFAULT 1);"; 
+            + "needsSyncing BOOLEAN DEFAULT 1);";
 
-    String insert = "INSERT INTO sync_info (id, needsSyncing) VALUES (1, 1);"; 
+    String insert = "INSERT INTO sync_info (id, needsSyncing) VALUES (1, 1);";
 
     try (Statement stmt = conn.createStatement()) {
       stmt.execute(sql);
@@ -251,7 +252,7 @@ public class InitialiseDatabase {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-}
+  }
 
   public static void main(String[] args) {
     createDatabase();

@@ -56,8 +56,6 @@ public class LoanCoborrower implements AccessTypeObserverLoan {
         new ComboBox<?>[] {},
         new DatePicker[] {},
         new RadioButton[] {});
-    // TODO set coborrower details onto the screen if not create type.
-    // setCoborrowerDetails();
   }
 
   // Add methods for all buttons

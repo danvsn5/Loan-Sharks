@@ -105,6 +105,7 @@ public class SyncManager {
     SyncEmployer syncEmployer = new SyncEmployer();
     SyncNotes syncNotes = new SyncNotes();
     SyncLoan syncLoan = new SyncLoan();
+    SyncLoanCoborrower syncLoanCoborrower = new SyncLoanCoborrower();
     SyncPhone syncPhone = new SyncPhone();
     SyncEmail syncEmail = new SyncEmail();
     LocalDateTime lastSyncTime = syncCustomer.getLastSyncTimeFromDB();
@@ -121,6 +122,7 @@ public class SyncManager {
                 syncAddress,
                 syncEmployer,
                 syncLoan,
+                syncLoanCoborrower,
                 syncPhone,
                 syncEmail,
                 syncNotes));

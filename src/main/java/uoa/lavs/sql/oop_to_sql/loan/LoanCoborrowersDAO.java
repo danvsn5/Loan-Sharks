@@ -8,28 +8,18 @@ import uoa.lavs.sql.DatabaseConnection;
 
 public class LoanCoborrowersDAO {
   public void addCoborrowers(String loanId, ArrayList<String> coborrowerIds) {
-    String sql = "INSERT INTO loan_coborrower (loanId, coborrowerId) VALUES (?, ?)";
+    String sql = "INSERT INTO loan_coborrower (loanId, coborrowerId, number) VALUES (?, ?, ?)";
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      conn.setAutoCommit(false);
-
       for (String coborrowerId : coborrowerIds) {
         pstmt.setString(1, loanId);
         pstmt.setString(2, coborrowerId);
-        pstmt.addBatch();
+        pstmt.setInt(3, coborrowerIds.indexOf(coborrowerId) + 1);
+        pstmt.executeUpdate();
       }
-
-      pstmt.executeBatch();
-      conn.commit();
-
     } catch (SQLException e) {
       System.out.println(e.getMessage());
-      try (Connection conn = DatabaseConnection.connect()) {
-        conn.rollback();
-      } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
-      }
     }
   }
 

@@ -59,20 +59,35 @@ public class SyncLoan extends Sync {
       }
     }
 
+    System.out.println("loan id is INSIDE: " + loanId);
     return loadStatus;
   }
 
   @Override
   protected String getSqlQuery() {
-    return "SELECT l.loanId, l.customerId, l.principal, l.rate, l.rateType, l.lastModified AS"
-        + " loanLastModified, ld.durationId, ld.startDate, ld.period, ld.loanTerm,"
-        + " ld.lastModified AS durationLastModified, lp.paymentId, lp.compounding,"
-        + " lp.paymentFrequency, lp.paymentAmount, lp.interestOnly, lp.lastModified AS"
-        + " paymentLastModified, lc.coborrowerId, lc.lastModified AS coborrowerLastModified"
-        + " FROM loan l LEFT JOIN loan_duration ld ON l.loanId = ld.loanId LEFT JOIN"
-        + " loan_payment lp ON l.loanId = lp.loanId LEFT JOIN loan_coborrower lc ON l.loanId"
-        + " = lc.loanId WHERE l.lastModified > ? OR ld.lastModified > ? OR lp.lastModified >"
-        + " ? OR lc.lastModified > ?";
+    return "SELECT l.loanId, "
+        + "l.customerId, "
+        + "l.principal, "
+        + "l.rate, "
+        + "l.rateType, "
+        + "l.lastModified AS loanLastModified, "
+        + "ld.durationId, "
+        + "ld.startDate, "
+        + "ld.period, "
+        + "ld.loanTerm, "
+        + "ld.lastModified AS durationLastModified, "
+        + "lp.paymentId, "
+        + "lp.compounding, "
+        + "lp.paymentFrequency, "
+        + "lp.paymentAmount, "
+        + "lp.interestOnly, "
+        + "lp.lastModified AS paymentLastModified "
+        + "FROM loan l "
+        + "LEFT JOIN loan_duration ld ON l.loanId = ld.loanId "
+        + "LEFT JOIN loan_payment lp ON l.loanId = lp.loanId "
+        + "WHERE l.lastModified > ? "
+        + "OR ld.lastModified > ? "
+        + "OR lp.lastModified > ?";
   }
 
   private UpdateLoan updateLoan(ResultSet resultSet, String loanId) throws SQLException {

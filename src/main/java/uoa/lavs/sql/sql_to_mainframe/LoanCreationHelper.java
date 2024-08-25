@@ -94,6 +94,7 @@ public class LoanCreationHelper {
     }
 
     SyncLoan syncLoan = new SyncLoan();
+    SyncLoanCoborrower syncLoanCoborrower = new SyncLoanCoborrower();
     LocalDateTime lastSyncTime = syncLoan.getLastSyncTimeFromDB();
 
     if (lastSyncTime == null) {
@@ -101,7 +102,7 @@ public class LoanCreationHelper {
       lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
     }
 
-    SyncManager syncManager = new SyncManager(List.of(syncLoan));
+    SyncManager syncManager = new SyncManager(List.of(syncLoan, syncLoanCoborrower));
 
     syncManager.syncAll(lastSyncTime);
   }
