@@ -162,6 +162,22 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
     mailingAddressRadio.setStyle("");
     primaryAddressRadio.setStyle("");
 
+    checkFields();
+
+    // Primary and mailing address check, only one address can have primary and
+    // mailing
+
+    if (!checkFields() || !checkIfPrimaryAndMailingSelected()) {
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  private boolean checkFields() {
+
+    boolean isValid = true;
+
     if (customerAddressTypeComboBox.getValue() == null) {
       customerAddressTypeComboBox.setStyle("-fx-border-color: red;");
       isValid = false;
@@ -195,36 +211,32 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       isValid = false;
     }
 
-    // Primary and mailing address check, only one address can have primary and
-    // mailing
+    return isValid;
+  }
 
-    if (!AppState.customerDetailsAccessType.equals("CREATE")) {
-      if (!isPrimarySelected) {
-        primaryAddressRadio.setStyle(
-            "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
-        isValid = false;
-      }
+  private boolean checkIfPrimaryAndMailingSelected() {
 
-      if (!isMailingSelected) {
-        mailingAddressRadio.setStyle(
-            "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
-        isValid = false;
-      }
+    boolean isValid = true;
 
-      if (!isValid) {
-        System.out.println("Invalid Address Data");
-        return false;
-      }
+    if (!isPrimarySelected) {
+      primaryAddressRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
     }
 
-    System.out.println("Valid Address Data");
-    return true;
+    if (!isMailingSelected) {
+      mailingAddressRadio.setStyle(
+          "-fx-border-color: red; -fx-border-radius: 20px; -fx-border-width: 3px;");
+      isValid = false;
+    }
+
+    return isValid;
   }
 
   private boolean setAddressDetails(String location) {
 
     if (location != "dec") {
-      if (!validateData())
+      if (!checkFields())
         return false;
     }
 
@@ -505,6 +517,7 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       customerPostcodeField.setText("");
       mailingAddressRadio.setSelected(false);
       primaryAddressRadio.setSelected(false);
+
     } else {
       customerAddressTypeComboBox.setValue(existingCustomerAddresses.get(currentAddress).getAddressType());
       customerAddressLine1Field.setText(existingCustomerAddresses.get(currentAddress).getAddressLineOne());
@@ -515,6 +528,14 @@ public class CustomerInputPrimaryAddressController implements AccessTypeObserver
       mailingAddressRadio.setSelected(existingCustomerAddresses.get(currentAddress).getIsMailing());
       primaryAddressRadio.setSelected(existingCustomerAddresses.get(currentAddress).getIsPrimary());
     }
-
+    // set styles to empty
+    customerAddressTypeComboBox.setStyle("");
+    customerAddressLine1Field.setStyle("");
+    customerAddressLine2Field.setStyle("");
+    customerSuburbField.setStyle("");
+    customerCityField.setStyle("");
+    customerPostcodeField.setStyle("");
+    mailingAddressRadio.setStyle("");
+    primaryAddressRadio.setStyle("");
   }
 }
