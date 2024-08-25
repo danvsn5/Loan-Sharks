@@ -71,13 +71,13 @@ public class CustomerMenuController {
   }
 
   @FXML
-  private void handleBackButtonAction() {
-    Main.setUi(AppUI.MAIN_MENU);
+  private void handleBackButtonAction() throws IOException {
+    AppState.loadMainMenu();
   }
 
   @FXML
-  private void onClickReturnButton() {
-    Main.setUi(AppUI.MAIN_MENU);
+  private void onClickReturnButton() throws IOException {
+    AppState.loadMainMenu();
   }
 
   private void setRedSymbol() {

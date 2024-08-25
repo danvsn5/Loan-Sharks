@@ -40,6 +40,11 @@ public class AppState {
     return new FXMLLoader(Main.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
+  public static void loadMainMenu() throws IOException {
+    SceneManager.addScene(AppUI.MAIN_MENU, loadFxml("admin/welcome"));
+    Main.setUi(AppUI.MAIN_MENU);
+  }
+
   public static Pair<Parent, Object> loadFxmlDynamic(final String fxml) throws IOException {
     FXMLLoader loader = new FXMLLoader(Main.class.getResource("/fxml/" + fxml + ".fxml"));
     Parent parent = loader.load();

@@ -1,5 +1,6 @@
 package uoa.lavs.frontend.controllers;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -65,10 +66,10 @@ public class LoanMenuController {
   }
 
   @FXML
-  private void handleBackButtonAction() {
+  private void handleBackButtonAction() throws IOException {
     // Add back button action code here
     AppState.isCreatingLoan = false;
-    Main.setUi(AppUI.MAIN_MENU);
+    AppState.loadMainMenu();
   }
 
   private void setRedSymbol() {
