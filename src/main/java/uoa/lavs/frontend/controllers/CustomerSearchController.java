@@ -147,8 +147,8 @@ public class CustomerSearchController {
 
   @FXML
   private void handleBackButtonAction() {
-    if (AppState.isCreatingLoan) {
-      AppState.isCreatingLoan = false;
+    if (AppState.getIsCreatingLoan()) {
+      AppState.setIsCreatingLoan(false);
       Main.setUi(AppUI.LOAN_MENU);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);

@@ -74,7 +74,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     emailPageLabel.setText("Email: " + (currentEmailPage + 1));
 
     // Set dummy data
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
 
       customerPhoneTypeBox.setValue("Mobile");
       customerPhonePrefixField.setText("+1");
@@ -91,7 +91,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       customerAltContactBox.setText("Alternate Contact");
     }
 
-    if (AppState.isAccessingFromSearch) {
+    if (AppState.getIsAccessingFromSearch()) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
 
@@ -142,7 +142,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @Override
   public void updateUIBasedOnAccessType() {
     ControllerHelper.updateUIBasedOnAccessType(
-        AppState.customerDetailsAccessType,
+        AppState.getCustomerDetailsAccessType(),
         editButton,
         idBanner,
         new TextField[] {
@@ -160,7 +160,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML
   private void handleEditButtonAction() throws IOException {
     System.out.println("Edit button clicked");
-    if (AppState.customerDetailsAccessType.equals("CREATE")
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       setContactDetails();
 
@@ -171,25 +171,24 @@ public class CustomerInputContactController implements AccessTypeObserver {
         return;
       }
 
-      AppState.customerDetailsAccessType = "VIEW";
+      AppState.setCustomerDetailsAccessType("VIEW");
 
       CustomerCreationHelper.createCustomer(customer, false);
 
       AccessTypeNotifier.notifyCustomerObservers();
-    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
-      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
+      AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
 
-      AppState.customerDetailsAccessType = "VIEW";
+      AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
 
       setEmailDetails("confirm");
       setPhoneDetails("confirm");
 
       CustomerCreationHelper.createCustomer(customer, true);
-
     }
   }
 
@@ -334,7 +333,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
     if (currentNumberPage == existingCustomerPhones.size()) {
       if (validatePhone()) {
-        
+
         existingCustomerPhones.add(newPhone);
       }
     } else {
@@ -439,8 +438,8 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML
   private void handleBackButtonAction() {
-    if (AppState.isAccessingFromSearch) {
-      AppState.isAccessingFromSearch = false;
+    if (AppState.getIsAccessingFromSearch()) {
+      AppState.setIsAccessingFromSearch(false);
       Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
@@ -450,7 +449,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML
   private void handleIncPhone() {
 
-    if (AppState.customerDetailsAccessType == "VIEW") {
+    if (AppState.getCustomerDetailsAccessType() == "VIEW") {
 
       if (currentNumberPage < existingCustomerPhones.size() - 1) {
 
@@ -461,7 +460,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
     }
 
-    if (AppState.customerDetailsAccessType == "CREATE") {
+    if (AppState.getCustomerDetailsAccessType() == "CREATE") {
 
       if (!setPhoneDetails("inc")) {
         // if a field is invalid, return
@@ -480,7 +479,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
     }
 
-    if (AppState.customerDetailsAccessType == "EDIT") {
+    if (AppState.getCustomerDetailsAccessType() == "EDIT") {
 
       if (!setPhoneDetails("incEdit")) {
         // if a field is invalid, return
@@ -503,13 +502,13 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML
   private void handleDecPhone() {
 
-    if (AppState.customerDetailsAccessType == "VIEW" && currentNumberPage != 0) {
+    if (AppState.getCustomerDetailsAccessType() == "VIEW" && currentNumberPage != 0) {
       currentNumberPage--;
       phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
       setPhoneDetailsUI("value");
     }
 
-    if (AppState.customerDetailsAccessType == "CREATE") {
+    if (AppState.getCustomerDetailsAccessType() == "CREATE") {
 
       // if page is decrementing, skip validation but continue to add the fields
       setPhoneDetails("dec");
@@ -530,7 +529,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
     }
 
-    if (AppState.customerDetailsAccessType == "EDIT") {
+    if (AppState.getCustomerDetailsAccessType() == "EDIT") {
 
       // if page is decrementing, skip validation but continue to add the fields
       setPhoneDetails("decEdit");
@@ -554,7 +553,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML
   private void handleIncEmail() {
 
-    if (AppState.customerDetailsAccessType == "VIEW") {
+    if (AppState.getCustomerDetailsAccessType() == "VIEW") {
 
       if (currentEmailPage < existingCustomerEmails.size() - 1) {
         currentEmailPage++;
@@ -563,7 +562,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
     }
 
-    if (AppState.customerDetailsAccessType == "CREATE") {
+    if (AppState.getCustomerDetailsAccessType() == "CREATE") {
 
       if (!setEmailDetails("inc")) {
         // if a field is invalid, return; suggesting to the user that the first email
@@ -581,7 +580,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
     }
 
-    if (AppState.customerDetailsAccessType == "EDIT") {
+    if (AppState.getCustomerDetailsAccessType() == "EDIT") {
 
       if (!setEmailDetails("incEdit")) {
         // if a field is invalid, return
@@ -602,13 +601,13 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @FXML
   private void handleDecEmail() {
 
-    if (AppState.customerDetailsAccessType == "VIEW" && currentEmailPage != 0) {
+    if (AppState.getCustomerDetailsAccessType() == "VIEW" && currentEmailPage != 0) {
       currentEmailPage--;
       emailPageLabel.setText("Email: " + (currentEmailPage + 1));
       setEmailDetailsUI("value");
     }
 
-    if (AppState.customerDetailsAccessType == "CREATE") {
+    if (AppState.getCustomerDetailsAccessType() == "CREATE") {
 
       // if page is decrementing, skip validation but continue to add the fields
       setEmailDetails("dec");
@@ -627,7 +626,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
     }
 
-    if (AppState.customerDetailsAccessType == "EDIT") {
+    if (AppState.getCustomerDetailsAccessType() == "EDIT") {
 
       // if page is decrementing, skip validation but continue to add the fields
       setEmailDetails("decEdit");

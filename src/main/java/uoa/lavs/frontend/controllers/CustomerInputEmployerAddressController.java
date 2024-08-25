@@ -51,7 +51,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     updateUIBasedOnAccessType();
 
     // Set Dummy data
-    if (AppState.customerDetailsAccessType == "CREATE") {
+    if (AppState.getCustomerDetailsAccessType() == "CREATE") {
       employerAddressLine1Field.setText("123 Fake Street");
       employerAddressLine2Field.setText("Apt 1");
       employerSuburbField.setText("Fake Suburb");
@@ -60,7 +60,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
       employerCountryBox.setValue("New Zealand");
     }
 
-    if (AppState.isAccessingFromSearch) {
+    if (AppState.getIsAccessingFromSearch()) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
 
@@ -136,7 +136,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
   @Override
   public void updateUIBasedOnAccessType() {
     ControllerHelper.updateUIBasedOnAccessType(
-        AppState.customerDetailsAccessType,
+        AppState.getCustomerDetailsAccessType(),
         editButton,
         idBanner,
         new TextField[] {
@@ -197,7 +197,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML
   private void handleEditButtonAction() throws IOException {
-    if (AppState.customerDetailsAccessType.equals("CREATE")
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       setAddressDetails();
 
@@ -208,17 +208,17 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
         return;
       }
 
-      AppState.customerDetailsAccessType = "VIEW";
+      AppState.setCustomerDetailsAccessType("VIEW");
       CustomerCreationHelper.createCustomer(customer, false);
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
-      AppState.customerDetailsAccessType = "EDIT";
+    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
+      AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
-      AppState.customerDetailsAccessType = "VIEW";
+      AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
       updateUIBasedOnAccessType();
       setAddressDetails();
@@ -228,8 +228,8 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML
   private void handleBackButtonAction() {
-    if (AppState.isAccessingFromSearch) {
-      AppState.isAccessingFromSearch = false;
+    if (AppState.getIsAccessingFromSearch()) {
+      AppState.setIsAccessingFromSearch(false);
       Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);

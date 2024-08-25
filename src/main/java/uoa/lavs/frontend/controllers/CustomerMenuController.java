@@ -52,7 +52,7 @@ public class CustomerMenuController {
     // } else if (status.getErrorCode() == 100) {
     //  setGreenSymbol();
     //   connectionLabel.setText("");
-    AppState.customerDetailsAccessType = null;
+    AppState.setCustomerDetailsAccessType(null);
     IndividualCustomerSingleton.resetInstance();
     AppState.loadAllCustomerDetails("CREATE");
     Main.setUi(AppUI.CI_DETAILS);
@@ -64,7 +64,7 @@ public class CustomerMenuController {
 
   @FXML
   private void handleFindCustomerButtonAction() {
-    AppState.customerDetailsAccessType = null;
+    AppState.setCustomerDetailsAccessType(null);
     Main.setUi(AppUI.CUSTOMER_SEARCH);
     AppState.setCurrentUiName(AppUI.CUSTOMER_SEARCH);
     AppState.setPreviousUi(AppUI.CUSTOMER_MENU);

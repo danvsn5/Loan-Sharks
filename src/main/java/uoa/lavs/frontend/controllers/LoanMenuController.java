@@ -54,7 +54,7 @@ public class LoanMenuController {
       // connectionLabel.setText(status.getErrorMessage());
     }
     PersonalLoanSingleton.resetInstance();
-    AppState.isCreatingLoan = true;
+    AppState.setIsCreatingLoan(true);
     Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 
@@ -68,7 +68,7 @@ public class LoanMenuController {
   @FXML
   private void handleBackButtonAction() throws IOException {
     // Add back button action code here
-    AppState.isCreatingLoan = false;
+    AppState.setIsCreatingLoan(false);
     AppState.loadMainMenu();
   }
 

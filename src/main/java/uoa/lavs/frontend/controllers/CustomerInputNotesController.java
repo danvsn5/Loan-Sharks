@@ -65,7 +65,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     }
 
     // Set dummy values
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
       noteField1.setText("Note 1");
       noteField2.setText("Note 2");
       noteField3.setText("Note 3");
@@ -87,7 +87,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
       noteField19.setText("Note 19");
     }
 
-    if (AppState.isAccessingFromSearch) {
+    if (AppState.getIsAccessingFromSearch()) {
       IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
       customer = IndividualCustomerSingleton.getInstance();
 
@@ -133,16 +133,16 @@ public class CustomerInputNotesController implements AccessTypeObserver {
   @FXML
   @Override
   public void updateUIBasedOnAccessType() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")) {
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
       setTextFieldsEditable(true);
       editButton.setText("Create Customer");
       setNotes();
     }
-    if (AppState.customerDetailsAccessType.equals("VIEW")) {
+    if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
       setTextFieldsEditable(false);
       editButton.setText("Edit Details");
     }
-    if (AppState.customerDetailsAccessType.equals("EDIT")) {
+    if (AppState.getCustomerDetailsAccessType().equals("EDIT")) {
       setTextFieldsEditable(false);
       editButton.setText("Confirm Changes");
       setNotes();
@@ -202,16 +202,16 @@ public class CustomerInputNotesController implements AccessTypeObserver {
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.customerDetailsAccessType.equals("CREATE")
+    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       setNotes();
-      AppState.customerDetailsAccessType = "VIEW";
-    } else if (AppState.customerDetailsAccessType.equals("VIEW")) {
-      AppState.customerDetailsAccessType = "EDIT";
-    } else if (AppState.customerDetailsAccessType.equals("EDIT")
+      AppState.setCustomerDetailsAccessType("VIEW");
+    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
+      AppState.setCustomerDetailsAccessType("EDIT");
+    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
       setNotes();
-      AppState.customerDetailsAccessType = "VIEW";
+      AppState.setCustomerDetailsAccessType("VIEW");
     }
     AccessTypeNotifier.notifyCustomerObservers();
     updateUIBasedOnAccessType();

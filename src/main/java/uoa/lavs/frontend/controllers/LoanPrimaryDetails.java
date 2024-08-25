@@ -49,7 +49,7 @@ public class LoanPrimaryDetails implements AccessTypeObserverLoan {
     borrowerIDField.setText(personalLoan.getCustomerId());
 
     // Set dummy values
-    if (AppState.loanDetailsAccessType.equals("CREATE")) {
+    if (AppState.getLoanDetailsAccessType().equals("CREATE")) {
       principalField.setText("100");
       interestRateField.setText("10");
       rateTypeBox.setValue("Floating");
@@ -60,7 +60,7 @@ public class LoanPrimaryDetails implements AccessTypeObserverLoan {
   @Override
   public void updateUIBasedOnAccessType() {
     ControllerHelper.updateUIBasedOnAccessTypeLoan(
-        AppState.loanDetailsAccessType,
+        AppState.getLoanDetailsAccessType(),
         editButton,
         new TextField[] {borrowerIDField, principalField, interestRateField},
         new ComboBox<?>[] {
@@ -106,12 +106,12 @@ public class LoanPrimaryDetails implements AccessTypeObserverLoan {
 
   @FXML
   private void handleEditButtonAction() {
-    if (AppState.loanDetailsAccessType.equals("CREATE")) {
-      AppState.loanDetailsAccessType = "VIEW";
-    } else if (AppState.loanDetailsAccessType.equals("VIEW")) {
-      AppState.loanDetailsAccessType = "EDIT";
-    } else if (AppState.loanDetailsAccessType.equals("EDIT")) {
-      AppState.loanDetailsAccessType = "VIEW";
+    if (AppState.getLoanDetailsAccessType().equals("CREATE")) {
+      AppState.setLoanDetailsAccessType("VIEW");
+    } else if (AppState.getLoanDetailsAccessType().equals("VIEW")) {
+      AppState.setLoanDetailsAccessType("EDIT");
+    } else if (AppState.getLoanDetailsAccessType().equals("EDIT")) {
+      AppState.setLoanDetailsAccessType("VIEW");
     }
     AccessTypeNotifier.notifyLoanObservers();
     updateUIBasedOnAccessType();
@@ -163,16 +163,13 @@ public class LoanPrimaryDetails implements AccessTypeObserverLoan {
       LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
       AppState.setCurrentLoanSummary(loadLoanSummary);
 
-      AppState.loadLoanSummary(AppState.loanDetailsAccessType);
+      AppState.loadLoanSummary(AppState.getLoanDetailsAccessType());
     }
   }
 
   @FXML
   private void handleBackButtonAction() {
-    if (AppState.isAccessingFromLoanSearch) {
-      AppState.isAccessingFromLoanSearch = false;
-      Main.setUi(AppUI.LOAN_RESULTS);
-    } else if (AppState.isCreatingLoan) {
+    if (AppState.getIsCreatingLoan()) {
       Main.setUi(AppUI.CUSTOMER_RESULTS);
     } else {
       Main.setUi(AppUI.LC_SUMMARY);

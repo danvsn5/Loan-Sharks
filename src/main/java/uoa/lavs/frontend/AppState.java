@@ -1,6 +1,9 @@
 package uoa.lavs.frontend;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,26 +20,137 @@ public class AppState {
   // persisting the current
   // state of the application
 
-  public static String userName;
-  public static String customerDetailsAccessType; // CREATE, EDIT, VIEW
-  public static Boolean isCreatingLoan = false;
-  public static String loanDetailsAccessType; // CREATE, EDIT, VIEW
-  public static Boolean isAccessingFromSearch = false;
-  public static Boolean isAccessingFromLoanSearch = false;
-  public static List<Customer> searchResultList;
-  public static List<Loan> loanSearchResultList;
-  public static Customer selectedCustomer;
-  public static boolean isOnLoanSummary = false;
-  public static LoadLoanSummary currentLoanSummary;
-  public static Button currentButton;
+  private static String userName;
+  private static String customerDetailsAccessType; // CREATE, EDIT, VIEW
+  private static Boolean isCreatingLoan = false;
+  private static String loanDetailsAccessType; // CREATE, EDIT, VIEW
+  private static Boolean isAccessingFromSearch = false;
+  private static Boolean isAccessingFromLoanSearch = false;
+  private static List<Customer> searchResultList;
+  private static List<Loan> loanSearchResultList;
+  private static Customer selectedCustomer;
+  private static boolean isOnLoanSummary = false;
+  private static LoadLoanSummary currentLoanSummary;
+  private static Button currentButton;
 
   // Previous and current UI screens for return functionality
-  public static AppUI previousUi;
-  public static AppUI currentUiName;
+  private static AppUI previousUi;
+  private static AppUI currentUiName;
+
+  // Getters and Setters
+  public static String getUserName() {
+    return userName;
+  }
+
+  public static void setUserName(String userName) {
+    AppState.userName = userName;
+  }
+
+  public static String getCustomerDetailsAccessType() {
+    return customerDetailsAccessType;
+  }
+
+  public static void setCustomerDetailsAccessType(String customerDetailsAccessType) {
+    AppState.customerDetailsAccessType = customerDetailsAccessType;
+  }
+
+  public static Boolean getIsCreatingLoan() {
+    return isCreatingLoan;
+  }
+
+  public static void setIsCreatingLoan(Boolean isCreatingLoan) {
+    AppState.isCreatingLoan = isCreatingLoan;
+  }
+
+  public static String getLoanDetailsAccessType() {
+    return loanDetailsAccessType;
+  }
+
+  public static void setLoanDetailsAccessType(String loanDetailsAccessType) {
+    AppState.loanDetailsAccessType = loanDetailsAccessType;
+  }
+
+  public static Boolean getIsAccessingFromSearch() {
+    return isAccessingFromSearch;
+  }
+
+  public static void setIsAccessingFromSearch(Boolean isAccessingFromSearch) {
+    AppState.isAccessingFromSearch = isAccessingFromSearch;
+  }
+
+  public static Boolean getIsAccessingFromLoanSearch() {
+    return isAccessingFromLoanSearch;
+  }
+
+  public static void setIsAccessingFromLoanSearch(Boolean isAccessingFromLoanSearch) {
+    AppState.isAccessingFromLoanSearch = isAccessingFromLoanSearch;
+  }
+
+  public static List<Customer> getSearchResultList() {
+    return searchResultList;
+  }
+
+  public static void setSearchResultList(List<Customer> searchResultList) {
+    AppState.searchResultList = searchResultList;
+  }
+
+  public static List<Loan> getLoanSearchResultList() {
+    return loanSearchResultList;
+  }
+
+  public static void setLoanSearchResultList(List<Loan> loanSearchResultList) {
+    AppState.loanSearchResultList = loanSearchResultList;
+  }
+
+  public static Customer getSelectedCustomer() {
+    return selectedCustomer;
+  }
+
+  public static void setSelectedCustomer(Customer selectedCustomer) {
+    AppState.selectedCustomer = selectedCustomer;
+  }
+
+  public static boolean getIsOnLoanSummary() {
+    return isOnLoanSummary;
+  }
+
+  public static void setIsOnLoanSummary(boolean isOnLoanSummary) {
+    AppState.isOnLoanSummary = isOnLoanSummary;
+  }
+
+  public static LoadLoanSummary getCurrentLoanSummary() {
+    return currentLoanSummary;
+  }
+
+  public static void setCurrentLoanSummary(LoadLoanSummary currentLoanSummary) {
+    AppState.currentLoanSummary = currentLoanSummary;
+  }
+
+  public static Button getCurrentButton() {
+    return currentButton;
+  }
+
+  public static void setCurrentButton(Button currentButton) {
+    AppState.currentButton = currentButton;
+  }
+
+  public static AppUI getPreviousUi() {
+    return previousUi;
+  }
+
+  public static void setPreviousUi(AppUI previousUi) {
+    AppState.previousUi = previousUi;
+  }
+
+  public static AppUI getCurrentUiName() {
+    return currentUiName;
+  }
+
+  public static void setCurrentUiName(AppUI currentUiName) {
+    AppState.currentUiName = currentUiName;
+  }
 
   public static Parent loadFxml(final String fxml) throws IOException {
-    // String fxmlPath = "/fxml/" + fxml + ".fxml";
-    // System.out.println("Loading FXML from path: " + fxmlPath);
     return new FXMLLoader(Main.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
@@ -129,294 +243,19 @@ public class AppState {
     Main.setUi(AppUI.PAYMENT_MENU);
   }
 
-  public static AppUI getCurrentUiName() {
-    return currentUiName;
-  }
-
-  public static void setCurrentButton(Button button) {
-    currentButton = button;
-  }
-
-  public static Button getCurrentButton() {
-    return currentButton;
-  }
-
-  public static List<Customer> getSearchResultList() {
-    return searchResultList;
-  }
-
-  public static void setSelectedCustomer(Customer customer) {
-    selectedCustomer = customer;
-  }
-
-  public static Customer getSelectedCustomer() {
-    return selectedCustomer;
-  }
-
-  public static void setCurrentLoanSummary(LoadLoanSummary loadLoanSummary) {
-    currentLoanSummary = loadLoanSummary;
-  }
-
-  public static LoadLoanSummary getCurrentLoanSummary() {
-    return currentLoanSummary;
-  }
-
+  // Credit for country list: https://gist.github.com/rogargon/5534902
   public static String[] getAllCountries() {
-    String[] countries = {
-      "New Zealand",
-      "Australia",
-      "Afghanistan",
-      "Albania",
-      "Algeria",
-      "American Samoa",
-      "Andorra",
-      "Angola",
-      "Anguilla",
-      "Antarctica",
-      "Antigua and/or Barbuda",
-      "Argentina",
-      "Armenia",
-      "Aruba",
-      "Austria",
-      "Azerbaijan",
-      "Bahamas",
-      "Bahrain",
-      "Bangladesh",
-      "Barbados",
-      "Belarus",
-      "Belgium",
-      "Belize",
-      "Benin",
-      "Bermuda",
-      "Bhutan",
-      "Bolivia",
-      "Bosnia and Herzegovina",
-      "Botswana",
-      "Bouvet Island",
-      "Brazil",
-      "British Indian Ocean Territory",
-      "Brunei Darussalam",
-      "Bulgaria",
-      "Burkina Faso",
-      "Burundi",
-      "Cambodia",
-      "Cameroon",
-      "Canada",
-      "Cape Verde",
-      "Cayman Islands",
-      "Central African Republic",
-      "Chad",
-      "Chile",
-      "China",
-      "Christmas Island",
-      "Cocos (Keeling) Islands",
-      "Colombia",
-      "Comoros",
-      "Congo",
-      "Cook Islands",
-      "Costa Rica",
-      "Croatia (Hrvatska)",
-      "Cuba",
-      "Cyprus",
-      "Czech Republic",
-      "Denmark",
-      "Djibouti",
-      "Dominica",
-      "Dominican Republic",
-      "East Timor",
-      "Ecudaor",
-      "Egypt",
-      "El Salvador",
-      "Equatorial Guinea",
-      "Eritrea",
-      "Estonia",
-      "Ethiopia",
-      "Falkland Islands (Malvinas)",
-      "Faroe Islands",
-      "Fiji",
-      "Finland",
-      "France",
-      "France, Metropolitan",
-      "French Guiana",
-      "French Polynesia",
-      "French Southern Territories",
-      "Gabon",
-      "Gambia",
-      "Georgia",
-      "Germany",
-      "Ghana",
-      "Gibraltar",
-      "Greece",
-      "Greenland",
-      "Grenada",
-      "Guadeloupe",
-      "Guam",
-      "Guatemala",
-      "Guinea",
-      "Guinea-Bissau",
-      "Guyana",
-      "Haiti",
-      "Heard and Mc Donald Islands",
-      "Honduras",
-      "Hong Kong",
-      "Hungary",
-      "Iceland",
-      "India",
-      "Indonesia",
-      "Iran (Islamic Republic of)",
-      "Iraq",
-      "Ireland",
-      "Israel",
-      "Italy",
-      "Ivory Coast",
-      "Jamaica",
-      "Japan",
-      "Jordan",
-      "Kazakhstan",
-      "Kenya",
-      "Kiribati",
-      "Korea, Democratic People's Republic of",
-      "Korea, Republic of",
-      "Kosovo",
-      "Kuwait",
-      "Kyrgyzstan",
-      "Lao People's Democratic Republic",
-      "Latvia",
-      "Lebanon",
-      "Lesotho",
-      "Liberia",
-      "Libyan Arab Jamahiriya",
-      "Liechtenstein",
-      "Lithuania",
-      "Luxembourg",
-      "Macau",
-      "Macedonia",
-      "Madagascar",
-      "Malawi",
-      "Malaysia",
-      "Maldives",
-      "Mali",
-      "Malta",
-      "Marshall Islands",
-      "Martinique",
-      "Mauritania",
-      "Mauritius",
-      "Mayotte",
-      "Mexico",
-      "Micronesia, Federated States of",
-      "Moldova, Republic of",
-      "Monaco",
-      "Mongolia",
-      "Montserrat",
-      "Morocco",
-      "Mozambique",
-      "Myanmar",
-      "Namibia",
-      "Nauru",
-      "Nepal",
-      "Netherlands",
-      "Netherlands Antilles",
-      "New Caledonia",
-      "Nicaragua",
-      "Niger",
-      "Nigeria",
-      "Niue",
-      "Norfork Island",
-      "Northern Mariana Islands",
-      "Norway",
-      "Oman",
-      "Pakistan",
-      "Palau",
-      "Panama",
-      "Papua New Guinea",
-      "Paraguay",
-      "Peru",
-      "Philippines",
-      "Pitcairn",
-      "Poland",
-      "Portugal",
-      "Puerto Rico",
-      "Qatar",
-      "Reunion",
-      "Romania",
-      "Russian Federation",
-      "Rwanda",
-      "Saint Kitts and Nevis",
-      "Saint Lucia",
-      "Saint Vincent and the Grenadines",
-      "Samoa",
-      "San Marino",
-      "Sao Tome and Principe",
-      "Saudi Arabia",
-      "Senegal",
-      "Seychelles",
-      "Sierra Leone",
-      "Singapore",
-      "Slovakia",
-      "Slovenia",
-      "Solomon Islands",
-      "Somalia",
-      "South Africa",
-      "South Georgia South Sandwich Islands",
-      "South Sudan",
-      "Spain",
-      "Sri Lanka",
-      "St. Helena",
-      "St. Pierre and Miquelon",
-      "Sudan",
-      "Suriname",
-      "Svalbarn and Jan Mayen Islands",
-      "Swaziland",
-      "Sweden",
-      "Switzerland",
-      "Syrian Arab Republic",
-      "Taiwan",
-      "Tajikistan",
-      "Tanzania, United Republic of",
-      "Thailand",
-      "Togo",
-      "Tokelau",
-      "Tonga",
-      "Trinidad and Tobago",
-      "Tunisia",
-      "Turkey",
-      "Turkmenistan",
-      "Turks and Caicos Islands",
-      "Tuvalu",
-      "Uganda",
-      "Ukraine",
-      "United Arab Emirates",
-      "United Kingdom",
-      "United States",
-      "United States minor outlying islands",
-      "Uruguay",
-      "Uzbekistan",
-      "Vanuatu",
-      "Vatican City State",
-      "Venezuela",
-      "Vietnam",
-      "Virigan Islands (British)",
-      "Virgin Islands (U.S.)",
-      "Wallis and Futuna Islands",
-      "Western Sahara",
-      "Yemen",
-      "Yugoslavia",
-      "Zaire",
-      "Zambia",
-      "Zimbabwe"
-    };
-    return countries;
-  }
-
-  public static void setCurrentUiName(AppUI currentUi) {
-    AppState.currentUiName = currentUi;
-  }
-
-  public static AppUI getPreviousUi() {
-    return previousUi;
-  }
-
-  public static void setPreviousUi(AppUI previousUi) {
-    AppState.previousUi = previousUi;
+    List<String> countries = new ArrayList<>();
+    try (BufferedReader br =
+        new BufferedReader(
+            new InputStreamReader(AppState.class.getResourceAsStream("/country.txt")))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        countries.add(line);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return countries.toArray(new String[0]);
   }
 }

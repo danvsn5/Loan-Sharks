@@ -31,7 +31,7 @@ public class LoginController {
     // with the proper name and clear all fields
     if (usernameField.getText().equals("Moana") && passwordField.getText().equals("Password")) {
       System.out.println("Login successful");
-      AppState.userName = usernameField.getText();
+      AppState.setUserName(usernameField.getText());
       SceneManager.addScene(
           AppUI.MAIN_MENU,
           new FXMLLoader(Main.class.getResource("/fxml/admin/welcome.fxml")).load());

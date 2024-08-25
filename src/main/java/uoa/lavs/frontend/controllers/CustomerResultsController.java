@@ -144,7 +144,7 @@ public class CustomerResultsController {
 
   @FXML
   private void handleBackButtonAction() {
-    AppState.isAccessingFromSearch = false;
+    AppState.setIsAccessingFromSearch(false);
     Main.setUi(AppUI.CUSTOMER_SEARCH);
   }
 
@@ -199,9 +199,9 @@ public class CustomerResultsController {
 
   private void loadCustomer(int index) throws IOException {
     Customer customer = searchResultList.get((currentPage - 1) * 6 + index - 1);
-    if (AppState.isCreatingLoan && validateCustomerForLoan(customer)) {
+    if (AppState.getIsCreatingLoan() && validateCustomerForLoan(customer)) {
       if (validateCustomerForLoan(customer)) {
-        AppState.selectedCustomer = customer;
+        AppState.setSelectedCustomer(customer);
         PersonalLoanSingleton.resetInstance();
         AppState.loadLoans("CREATE");
         Main.setUi(AppUI.LC_PRIMARY);
@@ -211,8 +211,8 @@ public class CustomerResultsController {
       }
     } else {
       nullFields(customer);
-      AppState.selectedCustomer = customer;
-      AppState.isAccessingFromSearch = true;
+      AppState.setSelectedCustomer(customer);
+      AppState.setIsAccessingFromSearch(true);
       AppState.loadAllCustomerDetails("VIEW");
       Main.setUi(AppUI.CI_DETAILS);
     }
