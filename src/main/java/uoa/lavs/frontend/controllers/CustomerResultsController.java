@@ -79,11 +79,13 @@ public class CustomerResultsController {
         getLabelByIndex(i + 1, "id").setText(customer.getCustomerId());
         // Enable the rectangle
         getRectangleByIndex(i + 1).setDisable(false);
+        getRectangleByIndex(i+1).setCursor(javafx.scene.Cursor.HAND);
       } else {
         getLabelByIndex(i + 1, "name").setText("");
         getLabelByIndex(i + 1, "id").setText("");
         // Disable the rectangle too
         getRectangleByIndex(i + 1).setDisable(true);
+        getRectangleByIndex(i+1).setCursor(javafx.scene.Cursor.DEFAULT);
       }
     }
   }
