@@ -67,6 +67,7 @@ public class CustomerCreationHelper {
             || address.getCity().equals("")
             || address.getCity().length() > 30
             || address.getCountry().equals("")) {
+          System.out.println("Address: " + address.getAddressId() + " is invalid. Please fill in details correctly.");
           return false;
         }
 
@@ -105,6 +106,7 @@ public class CustomerCreationHelper {
         if (email.getEmailAddress().equals("")
             || email.getEmailAddress().length() > 60
             || !email.getEmailAddress().matches("^[^@]+@[^@]+\\.[^@]+$")) {
+          System.out.println("Email: " + email.getEmailId() + " is invalid. Please fill in details correctly.");
           return false;
         }
       }
@@ -143,6 +145,7 @@ public class CustomerCreationHelper {
             || phone.getPhoneNumber().equals("")
             || phone.getPhoneNumber().length() > 20
             || !phone.getPhoneNumber().matches("[0-9\\-]+")) {
+          System.out.println("Phone: " + phone.getPhoneId() + " is invalid. Please fill in details correctly.");
           return false;
         }
       }
