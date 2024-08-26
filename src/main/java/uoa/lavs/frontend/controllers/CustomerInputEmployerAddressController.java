@@ -15,17 +15,22 @@ import uoa.lavs.frontend.ControllerHelper;
 
 public class CustomerInputEmployerAddressController extends AbstractCustomerController
     implements AccessTypeObserver {
-  @FXML private TextField employerAddressLine1Field;
-  @FXML private TextField employerAddressLine2Field;
-  @FXML private TextField employerSuburbField;
-  @FXML private TextField employerCityField;
-  @FXML private TextField employerPostcodeField;
+  @FXML
+  private TextField employerAddressLine1Field;
+  @FXML
+  private TextField employerAddressLine2Field;
+  @FXML
+  private TextField employerSuburbField;
+  @FXML
+  private TextField employerCityField;
+  @FXML
+  private TextField employerPostcodeField;
 
-  @FXML private ComboBox<String> employerCountryBox;
+  @FXML
+  private ComboBox<String> employerCountryBox;
 
-  // TODO: THIS IS AN EXCEPTION, THIS NEEDS TO SHOWN AS RED ONLY TO THE EMPLOYER DETAILS SCREEN AND
-  // ITSELF
-  @FXML private Button employerAddressButton;
+  @FXML
+  private Button employerAddressButton;
 
   @FXML
   private void initialize() {
@@ -115,14 +120,14 @@ public class CustomerInputEmployerAddressController extends AbstractCustomerCont
         editButton,
         idBanner,
         new TextField[] {
-          employerAddressLine1Field,
-          employerAddressLine2Field,
-          employerSuburbField,
-          employerCityField,
-          employerPostcodeField
+            employerAddressLine1Field,
+            employerAddressLine2Field,
+            employerSuburbField,
+            employerCityField,
+            employerPostcodeField
         },
         new ComboBox<?>[] {
-          employerCountryBox,
+            employerCountryBox,
         },
         new DatePicker[] {},
         new RadioButton[] {});

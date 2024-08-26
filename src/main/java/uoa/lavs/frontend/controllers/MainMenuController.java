@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.backend.sql.sql_to_mainframe.SyncManager;
 import uoa.lavs.frontend.AppState;
@@ -29,9 +28,6 @@ public class MainMenuController {
   private Label welcomeLabel;
 
   @FXML
-  private ImageView staticReturnImageView;
-
-  @FXML
   private Button syncButton;
 
   @FXML
@@ -45,10 +41,9 @@ public class MainMenuController {
       syncLabel.setText("No local changes detected. Sync is not required.");
     }
     welcomeLabel.setText("Welcome!");
-    staticReturnImageView.setDisable(true);
-    staticReturnImageView.setVisible(false);
   }
 
+  // navigates to customer menu
   @FXML
   private void onClickCustomerButton() {
     Main.setUi(AppUI.CUSTOMER_MENU);
@@ -56,6 +51,8 @@ public class MainMenuController {
     AppState.setPreviousUi(AppUI.MAIN_MENU);
   }
 
+  // activates syncing; if local data has not been pushed to the mainframe,
+  // syncing is required. Syncing result is displayed in the GUI
   @FXML
   private void onClickSyncButton() throws SQLException, IOException {
     System.out.println("Sync button clicked");
@@ -76,6 +73,7 @@ public class MainMenuController {
     }
   }
 
+  // navigates to loan menu
   @FXML
   private void handleLoanButtonAction() {
     Main.setUi(AppUI.LOAN_MENU);
@@ -83,6 +81,7 @@ public class MainMenuController {
     AppState.setPreviousUi(AppUI.MAIN_MENU);
   }
 
+  // logs out and returns to the sign in menu
   @FXML
   private void handleLogOutButtonAction() {
     Main.setUi(AppUI.LOGIN);
@@ -91,12 +90,7 @@ public class MainMenuController {
 
   @FXML
   private void handleinstructionsButtonAction() {
-    // There is no instruction page, so we will just print a message
     Main.setUi(AppUI.INFORMATION);
   }
 
-  @FXML
-  private void onClickReturnButton() {
-    // There is no return button, so we will just print a message
-  }
 }

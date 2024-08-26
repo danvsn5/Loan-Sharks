@@ -31,11 +31,8 @@ public class LoanMenuController {
   @FXML
   private Label connectionLabel;
 
-  @FXML
-  private void initialize() {
-    // Add initialization code here
-  }
-
+  // if connection is not established, then display error in the GUI, otherwise
+  // set to loan creation interface
   @FXML
   private void handleCreateNewLoanButtonAction() {
 
@@ -71,7 +68,6 @@ public class LoanMenuController {
 
   @FXML
   private void handleBackButtonAction() throws IOException {
-    // Add back button action code here
     AppState.setIsCreatingLoan(false);
     AppState.loadMainMenu();
   }
@@ -89,13 +85,5 @@ public class LoanMenuController {
     green.setSaturation(1);
     green.setHue(0.82);
     connectionSymbol.setEffect(green);
-  }
-
-  private void setOrangeSymbol() {
-    ColorAdjust orange = new ColorAdjust();
-    orange.setBrightness(0.0);
-    orange.setSaturation(1);
-    orange.setHue(0.16);
-    connectionSymbol.setEffect(orange);
   }
 }

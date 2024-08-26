@@ -3,6 +3,7 @@ package uoa.lavs.backend.oop.customer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+// ICustomer interface sets object types for each customer details
 public interface ICustomer {
   public String getCustomerId();
 

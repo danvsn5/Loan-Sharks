@@ -76,6 +76,8 @@ public class CustomerSearchController {
     }
   }
 
+  // sets which search bar is currently active, which is used when choosing which
+  // method to employ for customer searching
   @FXML
   private void enableIDSearch() {
     usernameField.setText("");
@@ -90,6 +92,7 @@ public class CustomerSearchController {
     state = "name";
   }
 
+  // handles search with ID; follows same logic as below method
   @FXML
   private void handleSearchWithCustomerIDLabelAction() throws IOException {
     String searchString = idField.getText();
@@ -114,21 +117,6 @@ public class CustomerSearchController {
         return;
       }
 
-      // I am quite sure this code is unreachable, but I will leave it here for now;
-
-      // // if search was unsuccessful, check if mainframe was the cause; if mainframe
-      // // was cause, the no customers are in local system
-      // if (searchCustomer.getStatusInstance().getErrorCode() == 1000
-      //     || searchCustomer.getStatusInstance().getErrorCode() == 1010
-      //     || searchCustomer.getStatusInstance().getErrorCode() == 1020) {
-      //   setRedSymbol();
-      //   connectionLabel.setText("Remote host is not available. No customers found in local system.");
-      // } else {
-      //   // search was unsuccessful and mainframe was not the cause, so no customers are
-      //   // found in entire system
-      //   setOrangeSymbol();
-      //   connectionLabel.setText("No customers found in mainframe or local system.");
-      // }
     } catch (Exception e) {
       // connection somehow failed and errors are shown
       System.out.println("----------");
@@ -151,6 +139,9 @@ public class CustomerSearchController {
     }
   }
 
+  // handles the search while using name as the input string; if search was
+  // successful, move to next page, otherwise change the wifi symbol visual and
+  // display message in GUI
   @FXML
   private void handleSearchWithNameLabelAction() throws IOException {
     String searchString = usernameField.getText();
@@ -190,6 +181,7 @@ public class CustomerSearchController {
     }
   }
 
+  // returns based on the how the scene was entered
   @FXML
   private void handleBackButtonAction() {
     if (AppState.getIsCreatingLoan()) {
@@ -200,6 +192,7 @@ public class CustomerSearchController {
     }
   }
 
+  // sends a sample connection to test whether or not the mainframe is connected
   @FXML
   private void getConnectionSample() {
 
@@ -223,10 +216,10 @@ public class CustomerSearchController {
       // catch all for other messages
     } else {
       setOrangeSymbol();
-      // connectionLabel.setText("Unidentified error. Please try again.");
     }
   }
 
+  // sets wifi symbols based on the success of the search query
   private void setRedSymbol() {
     ColorAdjust red = new ColorAdjust();
     red.setBrightness(0);

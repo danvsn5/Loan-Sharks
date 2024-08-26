@@ -2,10 +2,12 @@ package uoa.lavs.backend.oop.customer;
 
 import java.util.ArrayList;
 
+// individual customer singleton object which is used to create and modify locally stored customers in the heap
 public class IndividualCustomerSingleton {
   private static IndividualCustomer instance;
 
-  private IndividualCustomerSingleton() {}
+  private IndividualCustomerSingleton() {
+  }
 
   public static IndividualCustomer getInstance() {
     if (instance == null) {
@@ -32,12 +34,10 @@ public class IndividualCustomerSingleton {
         emails.add(email);
       }
 
-      CustomerEmployer employer =
-          new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false);
+      CustomerEmployer employer = new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false);
 
-      instance =
-          new IndividualCustomer(
-              "", "", "", null, "", "", "", notes, addresses, phones, emails, employer);
+      instance = new IndividualCustomer(
+          "", "", "", null, "", "", "", notes, addresses, phones, emails, employer);
     }
     return instance;
   }
@@ -57,19 +57,18 @@ public class IndividualCustomerSingleton {
     ArrayList<Email> emails = selectedCustomer.getEmails();
     CustomerEmployer employer = selectedCustomer.getEmployer();
 
-    instance =
-        new IndividualCustomer(
-            selectedCustomer.getCustomerId(),
-            selectedCustomer.getTitle(),
-            selectedCustomer.getName(),
-            selectedCustomer.getDateOfBirth(),
-            selectedCustomer.getOccupation(),
-            selectedCustomer.getVisa(),
-            selectedCustomer.getCitizenship(),
-            notes,
-            addresses,
-            phones,
-            emails,
-            employer);
+    instance = new IndividualCustomer(
+        selectedCustomer.getCustomerId(),
+        selectedCustomer.getTitle(),
+        selectedCustomer.getName(),
+        selectedCustomer.getDateOfBirth(),
+        selectedCustomer.getOccupation(),
+        selectedCustomer.getVisa(),
+        selectedCustomer.getCitizenship(),
+        notes,
+        addresses,
+        phones,
+        emails,
+        employer);
   }
 }

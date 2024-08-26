@@ -1,7 +1,7 @@
 package uoa.lavs.backend.oop.loan;
 
 import java.util.ArrayList;
-
+// personal loan singleton that is used when creating a loan to store and modify input details
 public class PersonalLoanSingleton {
   private static PersonalLoan instance;
 

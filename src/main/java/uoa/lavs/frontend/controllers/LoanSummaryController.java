@@ -19,23 +19,38 @@ import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 import uoa.lavs.legacy.mainframe.messages.loan.UpdateLoanStatus;
 
 public class LoanSummaryController implements AccessTypeObserver {
-  @FXML private TextField principalfField;
-  @FXML private TextField annualRateField;
-  @FXML private TextField termField;
-  @FXML private TextField paymentFrequencyField;
-  @FXML private TextField paymentValueField;
-  @FXML private TextField culmuativeInterestField;
-  @FXML private TextField culumutiveLoanCostField;
-  @FXML private TextField payOffDateField;
+  @FXML
+  private TextField principalfField;
+  @FXML
+  private TextField annualRateField;
+  @FXML
+  private TextField termField;
+  @FXML
+  private TextField paymentFrequencyField;
+  @FXML
+  private TextField paymentValueField;
+  @FXML
+  private TextField culmuativeInterestField;
+  @FXML
+  private TextField culumutiveLoanCostField;
+  @FXML
+  private TextField payOffDateField;
 
-  @FXML private Button confirmLoanButton;
-  @FXML private Button viewPaymentsButton;
+  @FXML
+  private Button confirmLoanButton;
+  @FXML
+  private Button viewPaymentsButton;
 
-  @FXML private Button primaryButton;
-  @FXML private Button coborrowerButton;
-  @FXML private Button durationButton;
-  @FXML private Button financeButton;
-  @FXML private ImageView staticReturnImageView;
+  @FXML
+  private Button primaryButton;
+  @FXML
+  private Button coborrowerButton;
+  @FXML
+  private Button durationButton;
+  @FXML
+  private Button financeButton;
+  @FXML
+  private ImageView staticReturnImageView;
 
   PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
@@ -60,6 +75,8 @@ public class LoanSummaryController implements AccessTypeObserver {
     }
   }
 
+  // checks if the loan details are valid and confirms the loan based on what mode
+  // is set
   @FXML
   private void handleConfirmLoanButtonAction() throws IOException {
     confirmLoanButton.setStyle("");
@@ -75,6 +92,7 @@ public class LoanSummaryController implements AccessTypeObserver {
     }
   }
 
+  // creates the loan summary and sets all the details in the GUI fields
   private boolean isCreatingLoan() {
     return AccessTypeNotifier.validateLoanObservers()
         && AppState.getLoanDetailsAccessType().equals("CREATE");
@@ -129,6 +147,8 @@ public class LoanSummaryController implements AccessTypeObserver {
     payOffDateField.setText((summary.getPayoffDateFromServer()).toString());
   }
 
+  // creates a connection to the mainframe to help convert the summary details
+  // into payment details and sets the UI to loan repayments
   @FXML
   private void handleViewPaymentsButtonAction() throws IOException {
     uoa.lavs.legacy.mainframe.Connection connection = Instance.getConnection();
@@ -200,7 +220,7 @@ public class LoanSummaryController implements AccessTypeObserver {
 
   @Override
   public Button getButton() {
-    // Fake Button
+    // Do nothing
     Button button = new Button();
     return button;
   }

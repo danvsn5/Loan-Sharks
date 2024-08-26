@@ -159,6 +159,8 @@ public class AppState {
     Main.setUi(AppUI.MAIN_MENU);
   }
 
+  // dynamic fxml loading to ensure that the controller is associated a scene
+  // instance
   public static Pair<Parent, Object> loadFxmlDynamic(final String fxml) throws IOException {
     FXMLLoader loader = new FXMLLoader(Main.class.getResource("/fxml/" + fxml + ".fxml"));
     Parent parent = loader.load();
@@ -167,6 +169,7 @@ public class AppState {
     return new Pair<>(parent, controller);
   }
 
+  // loads all fxml files with dynamic loader
   public static void loadAllCustomerDetails(String accessType) throws IOException {
     customerDetailsAccessType = accessType;
     currentButton = null;
@@ -196,6 +199,7 @@ public class AppState {
     SceneManager.addSceneWithController(AppUI.CI_EMPLOYER_ADDRESS, pair.getKey(), pair.getValue());
   }
 
+  // loads loans with dynamic loader
   public static void loadLoans(String accessType) throws IOException {
     loanDetailsAccessType = accessType;
     currentButton = null;
@@ -240,9 +244,8 @@ public class AppState {
   // Credit for country list: https://gist.github.com/rogargon/5534902
   public static String[] getAllCountries() {
     List<String> countries = new ArrayList<>();
-    try (BufferedReader br =
-        new BufferedReader(
-            new InputStreamReader(AppState.class.getResourceAsStream("/country.txt")))) {
+    try (BufferedReader br = new BufferedReader(
+        new InputStreamReader(AppState.class.getResourceAsStream("/country.txt")))) {
       String line;
       while ((line = br.readLine()) != null) {
         countries.add(line);

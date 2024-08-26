@@ -14,21 +14,31 @@ import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
 
 public abstract class AbstractCustomerController {
-  @FXML protected Button customerDetailsButton;
-  @FXML protected Button customerAddressButton;
-  @FXML protected Button customerContactButton;
-  @FXML protected Button customerEmployerButton;
+  @FXML
+  protected Button customerDetailsButton;
+  @FXML
+  protected Button customerAddressButton;
+  @FXML
+  protected Button customerContactButton;
+  @FXML
+  protected Button customerEmployerButton;
 
-  @FXML protected Button editButton;
-  @FXML protected ImageView staticReturnImageView;
-  @FXML protected Label idBanner;
+  @FXML
+  protected Button editButton;
+  @FXML
+  protected ImageView staticReturnImageView;
+  @FXML
+  protected Label idBanner;
 
   protected IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
+  // sets the initial values for the customer
   protected abstract void startWithCustomerID();
 
+  // sets the details for each tab
   protected abstract void setDetails();
 
+  // handles the clicking of the edit button based on the mode the user is in
   @FXML
   protected void handleEditButtonAction() throws IOException {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
@@ -62,42 +72,49 @@ public abstract class AbstractCustomerController {
     }
   }
 
+  // sets the tab to customer details
   @FXML
   protected void handleDetailsButtonAction() {
     setDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
+  // sets the tab to address details
   @FXML
   protected void handleAddressButtonAction() {
     setDetails();
     Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
   }
 
+  // sets the tab to contact details
   @FXML
   protected void handleContactButtonAction() {
     setDetails();
     Main.setUi(AppUI.CI_CONTACT);
   }
 
+  // sets the tab to employer details
   @FXML
   protected void handleEmployerButtonAction() {
     setDetails();
     Main.setUi(AppUI.CI_EMPLOYER);
   }
 
+  // sets the tab for employer address details
   @FXML
   protected void handleEmployerAddressButtonAction() {
     setDetails();
     Main.setUi(AppUI.CI_EMPLOYER_ADDRESS);
   }
 
+  // sets the tab to notes details
   @FXML
   protected void handleNotesButtonAction() {
     setDetails();
     Main.setUi(AppUI.CI_NOTES);
   }
 
+  // returns based on how the user accessed the customer details tab
   @FXML
   protected void handleBackButtonAction() {
     if (AppState.getIsAccessingFromSearch()) {
@@ -108,6 +125,7 @@ public abstract class AbstractCustomerController {
     }
   }
 
+  // sets invalid buttons
   @FXML
   public void setInvalidButton(String style) {
     Button currentButton = AppState.getCurrentButton();

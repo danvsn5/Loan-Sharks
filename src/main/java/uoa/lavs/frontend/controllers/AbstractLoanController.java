@@ -15,22 +15,32 @@ import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
 public abstract class AbstractLoanController {
 
-  @FXML protected Button coborrowerButton;
-  @FXML protected Button durationButton;
-  @FXML protected Button financeButton;
-  @FXML protected Button primaryButton;
+  @FXML
+  protected Button coborrowerButton;
+  @FXML
+  protected Button durationButton;
+  @FXML
+  protected Button financeButton;
+  @FXML
+  protected Button primaryButton;
 
-  @FXML protected Button summaryButton;
-  @FXML protected ImageView staticReturnImageView;
+  @FXML
+  protected Button summaryButton;
+  @FXML
+  protected ImageView staticReturnImageView;
 
-  @FXML protected Button editButton;
+  @FXML
+  protected Button editButton;
 
   protected PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
+  // sets the details for each tab
   protected abstract void setLoanDetails();
 
+  // validates the data for each tab
   protected abstract boolean validateData();
 
+  // sets the tab to primary
   @FXML
   private void handlePrimaryButtonAction() {
     if (!validateData()) {
@@ -40,6 +50,7 @@ public abstract class AbstractLoanController {
     Main.setUi(AppUI.LC_PRIMARY);
   }
 
+  // sets the tab to duration
   @FXML
   private void handleDurationButtonAction() {
     if (!validateData()) {
@@ -49,6 +60,7 @@ public abstract class AbstractLoanController {
     Main.setUi(AppUI.LC_DURATION);
   }
 
+  // sets the tab to finance
   @FXML
   private void handleFinanceButtonAction() {
     if (!validateData()) {
@@ -58,12 +70,15 @@ public abstract class AbstractLoanController {
     Main.setUi(AppUI.LC_FINANCE);
   }
 
+  // sets the tab to coborrower
   @FXML
   private void handleCoborrowerButtonAction() {
     setLoanDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
+  // determines functionality based on the current mode the user is in while in
+  // the loan screen
   @FXML
   private void handleEditButtonAction() {
     if (AppState.getLoanDetailsAccessType().equals("CREATE")
@@ -80,6 +95,8 @@ public abstract class AbstractLoanController {
     }
   }
 
+  // if the details are valid, enter the view summary page, otherwise display red
+  // for tabs and fields that are invalid
   @FXML
   private void handleSummaryButtonAction() throws IOException {
 
@@ -100,6 +117,7 @@ public abstract class AbstractLoanController {
     }
   }
 
+  // returns to the previous page based on where the user has entered the scene
   @FXML
   private void handleBackButtonAction() {
     if (AppState.getIsCreatingLoan()) {
@@ -109,6 +127,7 @@ public abstract class AbstractLoanController {
     }
   }
 
+  // sets the style for each button
   @FXML
   public void setInvalidButton(String style) {
     Button currentButton = AppState.getCurrentButton();

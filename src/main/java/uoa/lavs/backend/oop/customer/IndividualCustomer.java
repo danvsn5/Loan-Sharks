@@ -3,6 +3,7 @@ package uoa.lavs.backend.oop.customer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+// individual customer instance used inside customer singleton with constructor
 public class IndividualCustomer extends Customer {
   public IndividualCustomer(
       String customerId,

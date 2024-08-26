@@ -1,5 +1,6 @@
 package uoa.lavs.backend.oop.loan;
 
+// loan payment object that is created after each loan summary and is used inside the view loan repayments page
 public class LoanPayment {
   private String loanId;
   private int paymentId;
