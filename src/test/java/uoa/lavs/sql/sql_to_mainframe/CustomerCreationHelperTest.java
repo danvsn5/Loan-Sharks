@@ -50,7 +50,7 @@ public class CustomerCreationHelperTest {
 
     dateOfBirth = LocalDate.of(2024, 8, 6);
     notes = new ArrayList<>();
-    note = new Note("-1", new String[] {"Allergic to peanuts"});
+    note = new Note("-1", new String[19]);
     notes.add(note);
     addresses = new ArrayList<>();
     address =
@@ -538,9 +538,5 @@ public class CustomerCreationHelperTest {
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);
-    if (!dbFile.delete()) {
-      throw new RuntimeException(
-          "Failed to delete test database file: " + dbFile.getAbsolutePath());
-    }
   }
 }
