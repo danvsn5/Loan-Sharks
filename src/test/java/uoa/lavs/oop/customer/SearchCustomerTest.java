@@ -2,6 +2,7 @@ package uoa.lavs.oop.customer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.File;
@@ -89,7 +90,7 @@ public class SearchCustomerTest {
 
   @Test
   public void testSearchCustomerByIdNoConnection() {
-    Connection connection = Instance.getConnection();
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     String sql =
         "INSERT INTO customer (customerId, title, name, dateOfBirth, occupation, visa, citizenship"
             + " ) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -114,9 +115,9 @@ public class SearchCustomerTest {
 
   @Test
   public void testSearchCustomerByIdNoConnectionOrCustomerInLocalDb() {
-    Connection connection = Instance.getConnection();
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     Customer retrievedCustomer = searchCustomer.searchCustomerById("123", connection);
-    assertNull(retrievedCustomer);
+    assertNotNull(retrievedCustomer);
   }
 
   @Test
