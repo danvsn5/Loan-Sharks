@@ -22,7 +22,7 @@ The project specification is available [here](https://canvas.auckland.ac.nz/cour
 
 - To run application, type `./mvnw javafx:run` into terminal after cloning
 - Login on main page is Moana and Password
-- To run unit tests in VSCode, navigate to Testing Tab and run all LAVS tests. NOTE: an HTTP connection to the mainframe is not required for the tests to succeed.
+- To run unit tests in VSCode, navigate to Testing Tab and run all LAVS tests. For minimal test errors, run each test class individually instead of running the entire LAVS folder. NOTE: an HTTP connection to the mainframe is not required for the tests to succeed.
 - Ensure there is a lavs.db file within the folder [\src\main\resources\db](\src\main\resources\db). In the event it is not there, create a file called lavs.db
 - Assumes that first phone number, email and address are primary
 - If loan creation does not work, reset the lavs.db by running ResetDatabase.java [\src\main\java\uoa\lavs\backend\sql](\src\main\java\uoa\lavs\backend\sql)
