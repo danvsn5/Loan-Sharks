@@ -199,7 +199,7 @@ public class CustomerResultsController {
 
   private void loadCustomer(int index) throws IOException {
     Customer customer = searchResultList.get((currentPage - 1) * 6 + index - 1);
-    if (AppState.getIsCreatingLoan() && validateCustomerForLoan(customer)) {
+    if (AppState.getIsCreatingLoan()) {
       if (validateCustomerForLoan(customer)) {
         AppState.setSelectedCustomer(customer);
         PersonalLoanSingleton.resetInstance();
@@ -207,7 +207,8 @@ public class CustomerResultsController {
         Main.setUi(AppUI.LC_PRIMARY);
       } else {
         nullLabel.setVisible(true);
-        nullLabel.setText("Customer does not have a mailing address and/or contact method");
+        nullLabel.setText("Customer does not have a valid mailing address and/or contact method");
+        return;
       }
     } else {
       nullFields(customer);
