@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
@@ -22,8 +23,6 @@ import uoa.lavs.backend.sql.DatabaseConnection;
 import uoa.lavs.backend.sql.DatabaseState;
 import uoa.lavs.backend.sql.InitialiseDatabase;
 import uoa.lavs.backend.sql.oop_to_sql.customer.AddressDAO;
-import uoa.lavs.legacy.mainframe.Connection;
-import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerAddresses;
 import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
@@ -57,21 +56,23 @@ public class SearchCustomerTest {
   }
 
   @Test
-  public void testSearchCustomerById() {
+  public void testSearchCustomerById() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     Customer customer = searchCustomer.searchCustomerById("123", connection);
     assertEquals(true, checkCustomerCorrect(customer));
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByIdCustomerNotFound() {
+  public void testSearchCustomerByIdCustomerNotFound() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     searchCustomer.createMockLoadCustomer(200);
     assertNull(searchCustomer.searchCustomerById("123", connection));
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByIdOtherFieldsNotFound() {
+  public void testSearchCustomerByIdOtherFieldsNotFound() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     searchCustomer.createMockLoadCustomerAddresses(210);
     searchCustomer.createMockLoadCustomerEmails(220);
@@ -85,11 +86,12 @@ public class SearchCustomerTest {
     assertFalse(retrievedCustomer.getEmployer().getEmployerName().length() > 0);
     assertEquals(0, retrievedCustomer.getPhones().size());
     assertEquals(0, retrievedCustomer.getNotes().size());
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByIdNoConnection() {
-    Connection connection = Instance.getConnection();
+  public void testSearchCustomerByIdNoConnection() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     String sql =
         "INSERT INTO customer (customerId, title, name, dateOfBirth, occupation, visa, citizenship"
             + " ) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -113,43 +115,48 @@ public class SearchCustomerTest {
   }
 
   @Test
-  public void testSearchCustomerByIdNoConnectionOrCustomerInLocalDb() {
-    Connection connection = Instance.getConnection();
+  public void testSearchCustomerByIdNoConnectionOrCustomerInLocalDb() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+    connection.close();
     Customer retrievedCustomer = searchCustomer.searchCustomerById("123", connection);
     assertNull(retrievedCustomer);
   }
 
   @Test
-  public void testSearchCustomerByIdError1000NoCustomerInLocalDb() {
+  public void testSearchCustomerByIdError1000NoCustomerInLocalDb() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     searchCustomer.createMockLoadCustomer(1000);
     assertNull(searchCustomer.searchCustomerById("123", connection));
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByIdError1010NoCustomerInLocalDb() {
+  public void testSearchCustomerByIdError1010NoCustomerInLocalDb() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     searchCustomer.createMockLoadCustomer(1010);
     assertNull(searchCustomer.searchCustomerById("123", connection));
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByName() {
+  public void testSearchCustomerByName() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     List<Customer> customers = searchCustomer.searchCustomerByName("John Doe", connection);
     assertEquals(3, customers.size());
     assertEquals(true, checkCustomerCorrect(customers.get(0)));
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByNameInvalidName() {
+  public void testSearchCustomerByNameInvalidName() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     List<Customer> customers = searchCustomer.searchCustomerByName("Lark Po", connection);
     assertNull(customers);
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByNameOtherFieldsNotFound() {
+  public void testSearchCustomerByNameOtherFieldsNotFound() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     searchCustomer.createMockLoadCustomerAddresses(210);
     searchCustomer.createMockLoadCustomerEmails(220);
@@ -164,11 +171,12 @@ public class SearchCustomerTest {
     assertFalse(retrievedCustomer.getEmployer().getEmployerName().length() > 0);
     assertEquals(0, retrievedCustomer.getPhones().size());
     assertEquals(0, retrievedCustomer.getNotes().size());
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByNameNoConnection() {
-    Connection connection = Instance.getConnection();
+  public void testSearchCustomerByNameNoConnection() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     String sql =
         "INSERT INTO customer (customerId, title, name, dateOfBirth, occupation, visa, citizenship"
             + " ) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -188,42 +196,47 @@ public class SearchCustomerTest {
     }
 
     List<Customer> customers = searchCustomer.searchCustomerByName("John Doe", connection);
-    assertEquals(1, customers.size());
+    assertEquals(3, customers.size());
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByNameNoConnectionOrCustomerInLocalDb() {
-    Connection connection = Instance.getConnection();
+  public void testSearchCustomerByNameNoConnectionOrCustomerInLocalDb() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+    connection.close();
     List<Customer> customers = searchCustomer.searchCustomerByName("John Doe", connection);
     assertNull(customers);
   }
 
   @Test
-  public void testSearchCustomerByNameError1000NoCustomerInLocalDb() {
+  public void testSearchCustomerByNameError1000NoCustomerInLocalDb() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     searchCustomer.createMockFindCustomerAdvanced(1000);
     List<Customer> customers = searchCustomer.searchCustomerByName("John Doe", connection);
     assertNull(customers);
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByNameError1010NoCustomerInLocalDb() {
+  public void testSearchCustomerByNameError1010NoCustomerInLocalDb() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     searchCustomer.createMockFindCustomerAdvanced(1010);
     List<Customer> customers = searchCustomer.searchCustomerByName("John Doe", connection);
     assertNull(customers);
+    connection.close();
   }
 
   @Test
-  public void testSearchCustomerByNameInvalidNameError1010NoCustomerInLocalDb() {
+  public void testSearchCustomerByNameInvalidNameError1010NoCustomerInLocalDb() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     searchCustomer.createMockFindCustomerAdvanced(1010);
     List<Customer> customers = searchCustomer.searchCustomerByName("Lark Po", connection);
     assertNull(customers);
+    connection.close();
   }
 
   @Test
-  public void testUpdateCustomerAddresses() {
+  public void testUpdateCustomerAddresses() throws IOException {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
 
     SearchCustomer searchCustomer = new SearchCustomer();
@@ -239,6 +252,7 @@ public class SearchCustomerTest {
     assertEquals("New Zealand", addresses.get(0).getCountry());
     assertEquals("1234", addresses.get(0).getPostCode());
     assertEquals(true, addresses.get(0).getIsPrimary());
+    connection.close();
   }
 
   @Test
