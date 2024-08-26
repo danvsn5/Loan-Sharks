@@ -1,7 +1,7 @@
 package uoa.lavs.backend.oop.loan;
 
 import java.util.ArrayList;
-
+// interface for individual loan instance used inside loan object
 public interface ILoan {
   public String getLoanId();
 

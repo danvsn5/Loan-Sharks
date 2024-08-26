@@ -2,6 +2,7 @@ package uoa.lavs.backend.oop.loan;
 
 import java.util.ArrayList;
 
+// personal loan class that is associated with each customer
 public class PersonalLoan extends Loan {
   public PersonalLoan(
       String loanId,

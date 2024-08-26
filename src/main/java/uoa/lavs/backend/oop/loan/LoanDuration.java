@@ -2,6 +2,7 @@ package uoa.lavs.backend.oop.loan;
 
 import java.time.LocalDate;
 
+// loan duration object associated with each loan instance and each loan ID
 public class LoanDuration {
   private String loanId;
   private int durationId;
