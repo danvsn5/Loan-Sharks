@@ -9,29 +9,27 @@ import uoa.lavs.Main;
 import uoa.lavs.backend.sql.sql_to_mainframe.SyncManager;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.Status;
 
 public class MainMenuController {
-  @FXML
-  private Button customerButton;
+  @FXML private Button customerButton;
 
-  @FXML
-  private Button loanButton;
+  @FXML private Button loanButton;
 
-  @FXML
-  private Button logOutButton;
+  @FXML private Button logOutButton;
 
-  @FXML
-  private Button instructionsButton;
+  @FXML private Button instructionsButton;
 
-  @FXML
-  private Label welcomeLabel;
+  @FXML private Label welcomeLabel;
 
+  @FXML private Button syncButton;
+  
   @FXML
   private Button syncButton;
 
-  @FXML
-  private Label syncLabel;
+  @FXML private Label syncLabel;
 
   @FXML
   private void initialize() throws SQLException {
@@ -59,13 +57,16 @@ public class MainMenuController {
     // check if needs syncing
     if (SyncManager.checkIfNeedsSyncing()) {
       System.out.println("Needs to sync");
-      Status status = SyncManager.masterSync();
+
+      Connection connection = Instance.getConnection();
+      Status status = SyncManager.masterSync(connection);
       if (status.getErrorCode() == 0) {
         System.out.println("Sync successful");
         syncLabel.setText("Sync successful");
       } else {
         System.out.println("Sync failed: " + status.getErrorMessage());
-        syncLabel.setText("Sync failed: Could not connect to mainframe. Local changes were not saved.");
+        syncLabel.setText(
+            "Sync failed: Could not connect to mainframe. Local changes were not saved.");
       }
     } else {
       System.out.println("No need to sync");

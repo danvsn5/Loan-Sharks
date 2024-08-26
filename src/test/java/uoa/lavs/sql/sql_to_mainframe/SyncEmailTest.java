@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uoa.lavs.backend.oop.customer.Address;
@@ -20,18 +19,13 @@ import uoa.lavs.backend.sql.DatabaseConnection;
 import uoa.lavs.backend.sql.DatabaseState;
 import uoa.lavs.backend.sql.InitialiseDatabase;
 import uoa.lavs.backend.sql.oop_to_sql.customer.AddressDAO;
-import uoa.lavs.backend.sql.oop_to_sql.customer.CustomerDAO;
-import uoa.lavs.backend.sql.oop_to_sql.customer.CustomerEmployerDAO;
-import uoa.lavs.backend.sql.oop_to_sql.customer.EmailDAO;
-import uoa.lavs.backend.sql.oop_to_sql.customer.NotesDAO;
-import uoa.lavs.backend.sql.oop_to_sql.customer.PhoneDAO;
+import uoa.lavs.backend.sql.sql_to_mainframe.SyncEmail;
 import uoa.lavs.backend.sql.sql_to_mainframe.SyncManager;
-import uoa.lavs.backend.sql.sql_to_mainframe.SyncNotes;
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
 import uoa.lavs.mainframe.simulator.nitrite.DatabaseHelper;
 
-public class SyncNotesTest {
+public class SyncEmailTest {
   DatabaseConnection conn;
   AddressDAO addressDAO;
   static File dbFile;
@@ -45,7 +39,11 @@ public class SyncNotesTest {
   }
 
   @Test
-  public void testSync() throws IOException {
+  public void testSync_ValidEmail() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+    SyncEmail syncEmail = new SyncEmail();
+    SyncManager syncManager = new SyncManager(List.of(syncEmail));
+
     CustomerEmployer employer;
     ArrayList<Note> notes;
     Note note;
@@ -59,13 +57,13 @@ public class SyncNotesTest {
     LocalDate dateOfBirth;
     dateOfBirth = LocalDate.of(2024, 8, 6);
     notes = new ArrayList<>();
-    note = new Note("-1", new String[19]);
+    note = new Note("-12929292", new String[19]);
     note.getLines()[0] = "This is a note";
     notes.add(note);
     addresses = new ArrayList<>();
     address =
         new Address(
-            "-1",
+            "-12929292",
             "Rural",
             "304 Rose St",
             "46",
@@ -78,15 +76,15 @@ public class SyncNotesTest {
     addresses.add(address);
 
     phones = new ArrayList<>();
-    phone = new Phone("-1", "mobile", "027", "1234567890", true, true);
+    phone = new Phone("-12929292", "mobile", "027", "1234567890", true, true);
     phones.add(phone);
     emails = new ArrayList<>();
-    email = new Email("-1", "abc@gmail.com", true);
+    email = new Email("-12929292", "abc@gmail.com", true);
     emails.add(email);
 
     employer =
         new CustomerEmployer(
-            "-1",
+            "-12929292",
             "Countdown",
             "123 Stonesuckle Ct",
             "",
@@ -101,7 +99,7 @@ public class SyncNotesTest {
 
     customer =
         new IndividualCustomer(
-            "-1",
+            "-12929292",
             "Mr",
             "Ting Mun Guy",
             dateOfBirth,
@@ -114,46 +112,10 @@ public class SyncNotesTest {
             emails,
             employer);
 
-    CustomerEmployerDAO employerDAO;
-    AddressDAO addressDAO;
-    PhoneDAO phoneDAO;
-    EmailDAO emailDAO;
-    NotesDAO notesDAO;
-    CustomerDAO customerDAO;
-    employerDAO = new CustomerEmployerDAO();
-    addressDAO = new AddressDAO();
-    phoneDAO = new PhoneDAO();
-    emailDAO = new EmailDAO();
-    notesDAO = new NotesDAO();
-    customerDAO = new CustomerDAO();
-
-    employerDAO.addCustomerEmployer(employer);
-    for (Address a : addresses) {
-      addressDAO.addAddress(a);
-    }
-    for (Phone a : phones) {
-      phoneDAO.addPhone(a);
-    }
-    for (Email a : emails) {
-      emailDAO.addEmail(a);
-    }
-    for (Note a : notes) {
-      notesDAO.addNote(a);
-    }
-    customerDAO.addCustomer(customer);
-
-    SyncNotes syncNotes = new SyncNotes();
-    SyncManager syncManager = new SyncManager(List.of(syncNotes));
-    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
-
     Status status = syncManager.syncAll(LocalDateTime.now(ZoneOffset.UTC).minusDays(1), connection);
+
     connection.close();
 
     assert (status.getErrorCode() != 0);
-  }
-
-  @AfterEach
-  public void tearDown() {
-    DatabaseState.setActiveDB(false);
   }
 }

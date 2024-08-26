@@ -9,7 +9,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import uoa.lavs.backend.sql.DatabaseConnection;
-import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.Status;
 
 public class SyncManager {
@@ -22,14 +21,13 @@ public class SyncManager {
     this.syncs = syncs;
   }
 
-  // Sync all data to the mainframe
-  public Status syncAll(LocalDateTime lastSyncTime) throws IOException {
-    uoa.lavs.legacy.mainframe.Connection mainframeConnection = null;
+  public Status syncAll(
+      LocalDateTime lastSyncTime, uoa.lavs.legacy.mainframe.Connection mainframeConnection)
+      throws IOException {
     Connection localConnection = null;
 
     try {
       // Establish the connection to the mainframe and local database
-      mainframeConnection = Instance.getConnection();
       localConnection = DatabaseConnection.connect();
 
       // Iterate through each sync and perform the sync operation
@@ -103,8 +101,8 @@ public class SyncManager {
     }
   }
 
-  // Creates all sync objects and syncs all data to the mainframe
-  public static Status masterSync() throws IOException {
+  public static Status masterSync(uoa.lavs.legacy.mainframe.Connection connection)
+      throws IOException {
     SyncCustomer syncCustomer = new SyncCustomer();
     SyncAddress syncAddress = new SyncAddress();
     SyncEmployer syncEmployer = new SyncEmployer();
@@ -132,7 +130,7 @@ public class SyncManager {
                 syncEmail,
                 syncNotes));
 
-    Status status = syncManager.syncAll(lastSyncTime);
+    Status status = syncManager.syncAll(lastSyncTime, connection);
 
     return status;
   }

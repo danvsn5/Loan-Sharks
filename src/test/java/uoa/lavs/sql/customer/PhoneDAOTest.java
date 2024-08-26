@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import uoa.lavs.backend.oop.customer.Phone;
 import uoa.lavs.backend.sql.DatabaseConnection;
 import uoa.lavs.backend.sql.DatabaseState;
@@ -90,47 +89,8 @@ public class PhoneDAOTest {
   }
 
   @Test
-  public void testAddPhones() {
-    ArrayList<Phone> phones = new ArrayList<>();
-    phones.add(new Phone("000001", "Mobile", "027", "1234567890", true, true));
-    phones.add(new Phone("000001", "Home", "09", "0987654321", false, false));
-    phoneDAO.addPhones(phones);
-
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement stmt =
-            conn.prepareStatement("SELECT * FROM customer_phone WHERE phoneNumber = ?")) {
-      stmt.setString(1, "1234567890");
-
-      try (ResultSet rs = stmt.executeQuery()) {
-        Assertions.assertTrue(rs.next(), "First phone should be added to the database");
-        Assertions.assertEquals("Mobile", rs.getString("type"));
-        Assertions.assertEquals("027", rs.getString("prefix"));
-        Assertions.assertEquals("1234567890", rs.getString("phoneNumber"));
-        Assertions.assertTrue(rs.getBoolean("isPrimary"));
-        Assertions.assertTrue(rs.getBoolean("canSendText"));
-      }
-
-      stmt.setString(1, "0987654321");
-
-      try (ResultSet rs = stmt.executeQuery()) {
-        Assertions.assertTrue(rs.next(), "Second phone should be added to the database");
-        Assertions.assertEquals("Home", rs.getString("type"));
-        Assertions.assertEquals("09", rs.getString("prefix"));
-        Assertions.assertEquals("0987654321", rs.getString("phoneNumber"));
-        Assertions.assertFalse(rs.getBoolean("isPrimary"));
-        Assertions.assertFalse(rs.getBoolean("canSendText"));
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      Assertions.fail("Database query failed");
-    } finally {
-      DatabaseConnection.close(null);
-    }
-  }
-
-  @Test 
   public void testGetPhone() {
-    Phone phone = new Phone("000001", "Mobile", "027", "1234567890", true, true);
+    Phone phone = new Phone("000001", "mobile", "027", "1234567890", true, true);
     phoneDAO.addPhone(phone);
     int phoneId = phone.getPhoneId();
 

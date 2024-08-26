@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import uoa.lavs.backend.oop.loan.LoanDuration;
 
 public class LoanDurationTest {
@@ -47,5 +46,11 @@ public class LoanDurationTest {
   public void testSetLoanTerm() {
     loanDuration.setLoanTerm(24);
     assertEquals(24, loanDuration.getLoanTerm());
+  }
+
+  @Test
+  public void testSetLoadId() {
+    loanDuration.setLoanId("-99");
+    assertEquals("-99", loanDuration.getLoanId());
   }
 }

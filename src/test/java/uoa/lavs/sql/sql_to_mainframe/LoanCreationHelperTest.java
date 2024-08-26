@@ -1,5 +1,9 @@
 package uoa.lavs.sql.sql_to_mainframe;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -13,6 +17,7 @@ import uoa.lavs.backend.oop.customer.Email;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.Note;
 import uoa.lavs.backend.oop.customer.Phone;
+import uoa.lavs.backend.oop.loan.Loan;
 import uoa.lavs.backend.oop.loan.LoanDuration;
 import uoa.lavs.backend.oop.loan.LoanPayment;
 import uoa.lavs.backend.oop.loan.PersonalLoan;
@@ -30,6 +35,11 @@ import uoa.lavs.backend.sql.oop_to_sql.loan.LoanDAO;
 import uoa.lavs.backend.sql.oop_to_sql.loan.LoanDurationDAO;
 import uoa.lavs.backend.sql.oop_to_sql.loan.LoanPaymentDAO;
 import uoa.lavs.backend.sql.sql_to_mainframe.LoanCreationHelper;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.messages.loan.LoadLoan;
+import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
+import uoa.lavs.mainframe.simulator.nitrite.DatabaseHelper;
 
 public class LoanCreationHelperTest {
   DatabaseConnection conn;
@@ -218,11 +228,6 @@ public class LoanCreationHelperTest {
     assert !LoanCreationHelper.validateLoan(loan);
   }
 
-  // @Test
-  // public void testCreateLoan() throws IOException {
-  //   LoanCreationHelper.createLoan(loan);
-  // }
-
   @Test
   public void testCreateLoan_ExistingLoan() throws IOException {
     addressDAO.addAddress(primaryAddress);
@@ -244,8 +249,13 @@ public class LoanCreationHelperTest {
 
     loanDAO = new LoanDAO();
     loanDAO.addLoan(loan);
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
 
-    LoanCreationHelper.createLoan(loan);
+    LoanCreationHelper.createLoan(loan, connection);
+    connection.close();
+
+    Loan retrievedLoan = loanDAO.getLoan(loan.getLoanId());
+    assertEquals(loan.getLoanId(), retrievedLoan.getLoanId());
   }
 
   @Test
@@ -255,12 +265,35 @@ public class LoanCreationHelperTest {
       newCoborrowers.add("");
     }
     loan.setCoborrowerIds(newCoborrowers);
-    LoanCreationHelper.createLoan(loan);
+
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+
+    LoanCreationHelper.createLoan(loan, connection);
+
+    LoadLoan loadLoan = new LoadLoan();
+    loadLoan.setLoanId(loan.getLoanId());
+
+    Status loadStatus = loadLoan.send(connection);
+    connection.close();
+    assert (loadStatus.getErrorCode() != 0);
   }
 
   @Test
-  public void testGetLoanSummary() {
-    LoanCreationHelper.getLoanSummary(loan);
+  public void testGetLoanSummary() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+    loan.setLoanId("123-09");
+    LoadLoanSummary loanSummary = LoanCreationHelper.getLoanSummary(loan, connection);
+    connection.close();
+    assertNotNull(loanSummary);
+  }
+
+  @Test
+  public void testGetLoanSummary_StatusError() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+    connection.close();
+
+    LoadLoanSummary loanSummary = LoanCreationHelper.getLoanSummary(loan, connection);
+    assertNull(loanSummary);
   }
 
   @AfterEach

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import uoa.lavs.backend.oop.loan.LoanPayment;
 import uoa.lavs.backend.sql.DatabaseConnection;
 import uoa.lavs.backend.sql.DatabaseState;
@@ -58,7 +57,6 @@ public class LoanPaymentDAOTest {
     }
   }
 
-
   @Test
   public void testUpdateLoanPayment() {
     loanPaymentDAO.addLoanPayment(loanPayment);
@@ -98,7 +96,7 @@ public class LoanPaymentDAOTest {
     Assertions.assertEquals(false, retrievedLoanPayment.getInterestOnly());
   }
 
-  @Test 
+  @Test
   public void testGetLoanPaymentInvalidId() {
     LoanPayment retrievedLoanPayment = loanPaymentDAO.getLoanPayment("-1321");
 

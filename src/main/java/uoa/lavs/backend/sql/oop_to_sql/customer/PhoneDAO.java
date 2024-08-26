@@ -38,38 +38,6 @@ public class PhoneDAO {
     }
   }
 
-  // Adds multiple phone numbers to the database for a customer
-  public void addPhones(ArrayList<Phone> phones) {
-    String customerId = phones.get(0).getCustomerId();
-
-    for (int i = 0; i < phones.size(); i++) {
-      String sql =
-          "INSERT INTO customer_phone (customerId, phoneId, type, prefix, phoneNumber, isPrimary,"
-              + " canSendText) VALUES (?, ?, ?, ?, ?, ?, ?)";
-      try (Connection conn = DatabaseConnection.connect();
-          PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        int phoneId = getNextPhoneIdForCustomer(customerId);
-
-        pstmt.setString(1, customerId);
-        pstmt.setInt(2, phoneId);
-        pstmt.setString(3, phones.get(i).getType());
-        pstmt.setString(4, phones.get(i).getPrefix());
-        pstmt.setString(5, phones.get(i).getPhoneNumber());
-        pstmt.setBoolean(6, phones.get(i).getIsPrimary());
-        pstmt.setBoolean(7, phones.get(i).getCanSendText());
-
-        pstmt.executeUpdate();
-
-        phones.get(i).setPhoneId(phoneId);
-        phones.get(i).setCustomerId(customerId);
-      } catch (SQLException e) {
-        System.out.println(e.getMessage());
-      }
-    }
-  }
-
-  // Finds the next phoneId for a customer to use when adding a new phone
   public int getNextPhoneIdForCustomer(String customerId) {
     String sql = "SELECT MAX(phoneId) FROM customer_phone WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
