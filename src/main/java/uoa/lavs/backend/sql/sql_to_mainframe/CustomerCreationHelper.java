@@ -49,11 +49,6 @@ public class CustomerCreationHelper {
       }
     }
 
-    System.out.println("There are " + addresses.size() + " unculled addresses");
-    for (Address address : addresses) {
-      System.out.println(address.getAddressId());
-    }
-
     // ADDRESS VALIDATION
     if (addresses.size() == 0) {
       return false;
@@ -93,12 +88,28 @@ public class CustomerCreationHelper {
       return false;
     }
 
+    // cull empty emails
+    for (int i = emails.size(); i > 0; i--) {
+      Email email = emails.get(i - 1);
+      if (email.getEmailAddress() == "" && email.getIsPrimary() == false) {
+        emails.remove(email);
+      }
+    }
+
     // EMAIL VALIDATION
     if (emails.size() == 0) {
       return false;
-    } else if (emails.get(0).getEmailAddress().equals("")) {
-      return false;
+    } else {
+
+      for (Email email : emails) {
+        if (email.getEmailAddress().equals("")
+            || email.getEmailAddress().length() > 60
+            || !email.getEmailAddress().matches("^[^@]+@[^@]+\\.[^@]+$")) {
+          return false;
+        }
+      }
     }
+
     boolean primaryEmailSet = false;
     for (Email email : emails) {
       if (email.getIsPrimary()) {
@@ -110,17 +121,31 @@ public class CustomerCreationHelper {
       return false;
     }
 
+    // cull empty phones
+    for (int i = phones.size(); i > 0; i--) {
+      Phone phone = phones.get(i - 1);
+      if (phone.getType() == "" && phone.getPrefix() == "" && phone.getPhoneNumber() == ""
+          && phone.getIsPrimary() == false) {
+        phones.remove(phone);
+      }
+    }
+
     // PHONE VALIDATION
     if (phones.size() == 0) {
       return false;
-    } else if (phones.get(0).getType().equals("")
-        || phones.get(0).getPrefix().equals("")
-        || phones.get(0).getPrefix().length() > 10
-        || !phones.get(0).getPrefix().matches("[0-9\\+]+")
-        || phones.get(0).getPhoneNumber().equals("")
-        || phones.get(0).getPhoneNumber().length() > 20
-        || !phones.get(0).getPhoneNumber().matches("[0-9\\-]+")) {
-      return false;
+    } else {
+
+      for (Phone phone : phones) {
+        if (phone.getType().equals("")
+            || phone.getPrefix().equals("")
+            || phone.getPrefix().length() > 10
+            || !phone.getPrefix().matches("[0-9\\+]+")
+            || phone.getPhoneNumber().equals("")
+            || phone.getPhoneNumber().length() > 20
+            || !phone.getPhoneNumber().matches("[0-9\\-]+")) {
+          return false;
+        }
+      }
     }
 
     // CHECK IF PRIMARY PHONE IS SET IN ALL PHONES
