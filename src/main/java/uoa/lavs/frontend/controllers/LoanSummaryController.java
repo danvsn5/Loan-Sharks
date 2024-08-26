@@ -57,9 +57,19 @@ public class LoanSummaryController implements AccessTypeObserver {
   @FXML
   private void initialize() {
     System.out.println("Loan Summary Controller Initialized");
-    // Add initialization code here
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
+
+    // Set all fields disabled
+    principalfField.setDisable(true);
+    annualRateField.setDisable(true);
+    termField.setDisable(true);
+    paymentFrequencyField.setDisable(true);
+    paymentValueField.setDisable(true);
+    culmuativeInterestField.setDisable(true);
+    culumutiveLoanCostField.setDisable(true);
+    payOffDateField.setDisable(true);
+
     if (AppState.getIsOnLoanSummary()) {
       setSummaryDetails();
     }
@@ -68,26 +78,60 @@ public class LoanSummaryController implements AccessTypeObserver {
   // checks if the loan details are valid and confirms the loan based on what mode
   // is set
   @FXML
-  private void handleConfirmLoanButtonAction() {
+  private void handleConfirmLoanButtonAction() throws IOException {
     confirmLoanButton.setStyle("");
-    if (AccessTypeNotifier.validateLoanObservers()
-        && !AppState.getLoanDetailsAccessType().equals("VIEW")) {
-      AppState.setIsCreatingLoan(false);
-      AppState.setLoanDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyLoanObservers();
-      confirmLoanButton.setText("Edit Details");
 
-    } else if (!AppState.getLoanDetailsAccessType().equals("VIEW")) {
-      confirmLoanButton.setStyle("-fx-border-color: red");
-    } else if (AppState.getLoanDetailsAccessType().equals("VIEW")) {
-      AppState.setIsCreatingLoan(false);
-      AppState.setLoanDetailsAccessType("EDIT");
-      confirmLoanButton.setText("Confirm Loan");
-      AccessTypeNotifier.notifyLoanObservers();
+    if (isCreatingLoan()) {
+      handleCreatingLoan();
+    } else if (isViewingLoan()) {
+      handleViewingLoan();
+    } else if (isEditingLoan()) {
+      handleEditingLoan();
+    } else {
+      handleInvalidState();
     }
   }
 
   // creates the loan summary and sets all the details in the GUI fields
+  private boolean isCreatingLoan() {
+    return AccessTypeNotifier.validateLoanObservers()
+        && AppState.getLoanDetailsAccessType().equals("CREATE");
+  }
+
+  private boolean isViewingLoan() {
+    return AppState.getLoanDetailsAccessType().equals("VIEW");
+  }
+
+  private boolean isEditingLoan() {
+    return AppState.getLoanDetailsAccessType().equals("EDIT")
+        && AccessTypeNotifier.validateLoanObservers();
+  }
+
+  private void handleCreatingLoan() throws IOException {
+    AppState.setIsCreatingLoan(false);
+    AppState.setLoanDetailsAccessType("VIEW");
+    AccessTypeNotifier.notifyLoanObservers();
+    confirmLoanButton.setText("Edit Details");
+    handleViewPaymentsButtonAction();
+  }
+
+  private void handleViewingLoan() {
+    AppState.setIsCreatingLoan(false);
+    AppState.setLoanDetailsAccessType("EDIT");
+    confirmLoanButton.setText("Confirm Loan");
+    AccessTypeNotifier.notifyLoanObservers();
+  }
+
+  private void handleEditingLoan() {
+    confirmLoanButton.setText("Edit Details");
+    AppState.setLoanDetailsAccessType("VIEW");
+    AccessTypeNotifier.notifyLoanObservers();
+  }
+
+  private void handleInvalidState() {
+    confirmLoanButton.setStyle("-fx-border-color: red");
+  }
+
   private void setSummaryDetails() {
     LoadLoanSummary summary = AppState.getCurrentLoanSummary();
     System.out.println("summar is null: " + (summary == null));

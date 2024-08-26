@@ -3,7 +3,6 @@ package uoa.lavs.backend.sql.sql_to_mainframe;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.customer.FindCustomerPhoneNumber;
 import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerPhoneNumber;
@@ -11,7 +10,9 @@ import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerPhoneNumber;
 public class SyncPhone extends Sync {
   @Override
   protected Status syncMainframeData(
-      ResultSet resultSet, uoa.lavs.legacy.mainframe.Connection connection, java.sql.Connection localConn)
+      ResultSet resultSet,
+      uoa.lavs.legacy.mainframe.Connection connection,
+      java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
     Integer phone_id = resultSet.getInt("phoneId");
