@@ -39,23 +39,38 @@ public class CustomerCreationHelper {
       return false;
     }
 
+    for (int i = addresses.size(); i > 0; i--) {
+      // cull empty addresses
+      Address address = addresses.get(i - 1);
+      if (address.getAddressType() == "" && address.getAddressLineOne() == "" && address.getAddressLineTwo() == ""
+          && address.getSuburb() == "" && address.getPostCode() == "" && address.getCity() == ""
+          && (address.getCountry() == "" || address.getCountry() == "New Zealand") && address.getIsPrimary() == false && address.getIsMailing() == false) {
+        addresses.remove(address);
+      }
+    }
+
     // ADDRESS VALIDATION
     if (addresses.size() == 0) {
       return false;
-    } else if (addresses.get(0).getAddressType().equals("")
-        || addresses.get(0).getAddressLineOne().equals("")
-        || addresses.get(0).getAddressLineOne().length() > 60
-        || (addresses.get(0).getAddressLineTwo().length() > 60
-            && !(addresses.get(0).getAddressLineTwo() == null))
-        || addresses.get(0).getSuburb().equals("")
-        || addresses.get(0).getSuburb().length() > 30
-        || addresses.get(0).getPostCode().equals("")
-        || addresses.get(0).getPostCode().length() > 10
-        || !addresses.get(0).getPostCode().matches("[0-9]+")
-        || addresses.get(0).getCity().equals("")
-        || addresses.get(0).getCity().length() > 30
-        || addresses.get(0).getCountry().equals("")) {
-      return false;
+    } else {
+
+      for (Address address : addresses) {
+        if (address.getAddressType().equals("")
+            || address.getAddressLineOne().equals("")
+            || address.getAddressLineOne().length() > 60
+            || (address.getAddressLineTwo().length() > 60 && !(address.getAddressLineTwo() == null))
+            || address.getSuburb().equals("")
+            || address.getSuburb().length() > 30
+            || address.getPostCode().equals("")
+            || address.getPostCode().length() > 10
+            || !address.getPostCode().matches("[0-9]+")
+            || address.getCity().equals("")
+            || address.getCity().length() > 30) {
+          System.out.println("Address: " + address.getAddressId() + " is invalid. Please fill in details correctly.");
+          return false;
+        }
+
+      }
     }
 
     // CHECK IF PRIMARY AND MAILING ADDRESS ARE SET IN ALL ADDRESSES
@@ -73,12 +88,29 @@ public class CustomerCreationHelper {
       return false;
     }
 
+    // cull empty emails
+    for (int i = emails.size(); i > 0; i--) {
+      Email email = emails.get(i - 1);
+      if (email.getEmailAddress() == "" && email.getIsPrimary() == false) {
+        emails.remove(email);
+      }
+    }
+
     // EMAIL VALIDATION
     if (emails.size() == 0) {
       return false;
-    } else if (emails.get(0).getEmailAddress().equals("")) {
-      return false;
+    } else {
+
+      for (Email email : emails) {
+        if (email.getEmailAddress().equals("")
+            || email.getEmailAddress().length() > 60
+            || !email.getEmailAddress().matches("^[^@]+@[^@]+\\.[^@]+$")) {
+          System.out.println("Email: " + email.getEmailId() + " is invalid. Please fill in details correctly.");
+          return false;
+        }
+      }
     }
+
     boolean primaryEmailSet = false;
     for (Email email : emails) {
       if (email.getIsPrimary()) {
@@ -90,17 +122,32 @@ public class CustomerCreationHelper {
       return false;
     }
 
+    // cull empty phones
+    for (int i = phones.size(); i > 0; i--) {
+      Phone phone = phones.get(i - 1);
+      if (phone.getType() == "" && phone.getPrefix() == "" && phone.getPhoneNumber() == ""
+          && phone.getIsPrimary() == false) {
+        phones.remove(phone);
+      }
+    }
+
     // PHONE VALIDATION
     if (phones.size() == 0) {
       return false;
-    } else if (phones.get(0).getType().equals("")
-        || phones.get(0).getPrefix().equals("")
-        || phones.get(0).getPrefix().length() > 10
-        || !phones.get(0).getPrefix().matches("[0-9\\+]+")
-        || phones.get(0).getPhoneNumber().equals("")
-        || phones.get(0).getPhoneNumber().length() > 20
-        || !phones.get(0).getPhoneNumber().matches("[0-9\\-]+")) {
-      return false;
+    } else {
+
+      for (Phone phone : phones) {
+        if (phone.getType().equals("")
+            || phone.getPrefix().equals("")
+            || phone.getPrefix().length() > 10
+            || !phone.getPrefix().matches("[0-9\\+]+")
+            || phone.getPhoneNumber().equals("")
+            || phone.getPhoneNumber().length() > 20
+            || !phone.getPhoneNumber().matches("[0-9\\-]+")) {
+          System.out.println("Phone: " + phone.getPhoneId() + " is invalid. Please fill in details correctly.");
+          return false;
+        }
+      }
     }
 
     // CHECK IF PRIMARY PHONE IS SET IN ALL PHONES
@@ -152,7 +199,8 @@ public class CustomerCreationHelper {
 
     CustomerDAO customerdao = new CustomerDAO();
 
-    // if the customer does not currently exist, add the customer to the database, otherwise update
+    // if the customer does not currently exist, add the customer to the database,
+    // otherwise update
     if (!currentlyExists) {
       customerdao.addCustomer(customer);
     } else if (customerdao.getCustomer(customer.getCustomerId()) == null) {
@@ -257,7 +305,8 @@ public class CustomerCreationHelper {
         // then create an email instead of adding one
         if (email.getEmailId() > numberOfDatabaseEmails) {
           emaildao.addEmail(email);
-        } else emaildao.updateEmail(email);
+        } else
+          emaildao.updateEmail(email);
       }
     }
 
@@ -286,9 +335,8 @@ public class CustomerCreationHelper {
       lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
     }
 
-    SyncManager syncManager =
-        new SyncManager(
-            List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
+    SyncManager syncManager = new SyncManager(
+        List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
 
     syncManager.syncAll(lastSyncTime, connection);
   }
