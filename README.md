@@ -13,15 +13,16 @@ The project specification is available [here](https://canvas.auckland.ac.nz/cour
 
 ## Contributors
 
-- Daniil Vasan - danvsn5
+- Allan Xu - axu732
 - Jamie Lee - JamieLeeNZ
 - Chulshin Kim - ckim349
-- Allan Xu - axu732
+- Daniil Vasan - danvsn5
 
 ## Notes From Contributors
 
 - To run application, type `./mvnw javafx:run` into terminal after cloning
 - Login on main page is Moana and Password
+- To run unit tests in VSCode, navigate to Testing Tab and run all LAVS tests. NOTE: an HTTP connection to the mainframe is not required for the tests to succeed.
 
 ## Initial Repository Code
 
