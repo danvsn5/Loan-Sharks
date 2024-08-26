@@ -1,5 +1,7 @@
 package uoa.lavs.sql.sql_to_mainframe;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -15,6 +17,7 @@ import uoa.lavs.backend.oop.customer.Email;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.Note;
 import uoa.lavs.backend.oop.customer.Phone;
+import uoa.lavs.backend.oop.loan.Loan;
 import uoa.lavs.backend.oop.loan.LoanDuration;
 import uoa.lavs.backend.oop.loan.LoanPayment;
 import uoa.lavs.backend.oop.loan.PersonalLoan;
@@ -33,6 +36,8 @@ import uoa.lavs.backend.sql.oop_to_sql.loan.LoanDurationDAO;
 import uoa.lavs.backend.sql.oop_to_sql.loan.LoanPaymentDAO;
 import uoa.lavs.backend.sql.sql_to_mainframe.SyncLoan;
 import uoa.lavs.backend.sql.sql_to_mainframe.SyncManager;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
+import uoa.lavs.mainframe.simulator.nitrite.DatabaseHelper;
 
 public class SyncLoanTest {
   DatabaseConnection conn;
@@ -174,13 +179,19 @@ public class SyncLoanTest {
     SyncLoan syncLoan = new SyncLoan();
     SyncManager syncManager = new SyncManager(List.of(syncLoan));
 
-    syncManager.syncAll(LocalDateTime.now());
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+
+    syncManager.syncAll(LocalDateTime.now(), connection);
 
     PersonalLoan updatedLoan =
         new PersonalLoan("-1", "-1", coborrowers, 10, 10, "fixed", loanDuration, loanPayment);
     loanDAO.updateLoan(updatedLoan);
 
-    syncManager.syncAll(LocalDateTime.now());
+    syncManager.syncAll(LocalDateTime.now(), connection);
+    connection.close();
+
+    Loan retrievedLoan = loanDAO.getLoan("-1");
+    assertEquals(updatedLoan.getLoanId(), retrievedLoan.getLoanId());
   }
 
   @AfterEach

@@ -1,15 +1,16 @@
 package uoa.lavs.sql.sql_to_mainframe;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uoa.lavs.backend.oop.customer.Address;
+import uoa.lavs.backend.oop.customer.Customer;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
 import uoa.lavs.backend.oop.customer.Email;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
@@ -25,6 +26,10 @@ import uoa.lavs.backend.sql.oop_to_sql.customer.EmailDAO;
 import uoa.lavs.backend.sql.oop_to_sql.customer.NotesDAO;
 import uoa.lavs.backend.sql.oop_to_sql.customer.PhoneDAO;
 import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
+import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.messages.customer.FindCustomer;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
+import uoa.lavs.mainframe.simulator.nitrite.DatabaseHelper;
 
 public class CustomerCreationHelperTest {
   DatabaseConnection conn;
@@ -439,67 +444,152 @@ public class CustomerCreationHelperTest {
 
   @Test
   public void testCreateCustomer() throws IOException {
-    CustomerCreationHelper.createCustomer(customer, false);
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
+  }
+
+  @Test
+  public void testCreateCustomer_ValidNotes() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+    ArrayList<Note> notes = new ArrayList<>();
+    Note note = new Note("-1", new String[19]);
+    for (int i = 0; i < 19; i++) {
+      note.setLine(i, "This is a note");
+    }
+    notes.add(note);
+    customer.setNotes(notes);
+
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_AddressTypeNull() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     address.setAddressType(null);
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_AddressLineOneEmpty() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     address.setAddressLineOne("");
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_SuburbEmpty() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     address.setSuburb("");
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_PostCodeEmpty() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     address.setPostCode("");
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_CityEmpty() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     address.setCity("");
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_CountryEmpty() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     address.setCountry("");
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_PhoneTypeEmpty() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     phone.setType(null);
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_PhonePrefixEmpty() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     phone.setPrefix("");
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_PhoneNumberEmpty() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     phone.setPhoneNumber("");
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCreateCustomer_EmailAddressEmpty() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     email.setEmailAddress("");
-    CustomerCreationHelper.createCustomer(customer, false);
+    CustomerCreationHelper.createCustomer(customer, false, connection);
+    FindCustomer findCustomer = new FindCustomer();
+    findCustomer.setCustomerId(customer.getCustomerId());
+    Status status = findCustomer.send(connection);
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
@@ -532,11 +622,11 @@ public class CustomerCreationHelperTest {
     }
     customerDAO.addCustomer(customer);
 
-    CustomerCreationHelper.createCustomer(customer, true);
-  }
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+    CustomerCreationHelper.createCustomer(customer, true, connection);
+    connection.close();
 
-  @AfterEach
-  public void tearDown() {
-    DatabaseState.setActiveDB(false);
+    Customer retrievedCustomer = customerDAO.getCustomer(customer.getCustomerId());
+    assertEquals(customer.getCustomerId(), retrievedCustomer.getCustomerId());
   }
 }

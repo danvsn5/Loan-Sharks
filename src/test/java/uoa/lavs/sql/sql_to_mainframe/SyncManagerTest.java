@@ -1,5 +1,7 @@
 package uoa.lavs.sql.sql_to_mainframe;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -12,16 +14,10 @@ import uoa.lavs.backend.sql.DatabaseConnection;
 import uoa.lavs.backend.sql.DatabaseState;
 import uoa.lavs.backend.sql.InitialiseDatabase;
 import uoa.lavs.backend.sql.oop_to_sql.customer.AddressDAO;
-import uoa.lavs.backend.sql.sql_to_mainframe.SyncAddress;
-import uoa.lavs.backend.sql.sql_to_mainframe.SyncCustomer;
-import uoa.lavs.backend.sql.sql_to_mainframe.SyncEmail;
-import uoa.lavs.backend.sql.sql_to_mainframe.SyncEmployer;
-import uoa.lavs.backend.sql.sql_to_mainframe.SyncLoan;
-import uoa.lavs.backend.sql.sql_to_mainframe.SyncLoanCoborrower;
 import uoa.lavs.backend.sql.sql_to_mainframe.SyncManager;
-import uoa.lavs.backend.sql.sql_to_mainframe.SyncNotes;
-import uoa.lavs.backend.sql.sql_to_mainframe.SyncPhone;
 import uoa.lavs.legacy.mainframe.Status;
+import uoa.lavs.legacy.mainframe.simulator.NitriteConnection;
+import uoa.lavs.mainframe.simulator.nitrite.DatabaseHelper;
 
 public class SyncManagerTest {
   DatabaseConnection conn;
@@ -37,55 +33,35 @@ public class SyncManagerTest {
   }
 
   @Test
-  public void testSync() throws IOException {
-    SyncCustomer syncCustomer = new SyncCustomer();
-    SyncAddress syncAddress = new SyncAddress();
-    SyncEmployer syncEmployer = new SyncEmployer();
-    SyncNotes syncNotes = new SyncNotes();
-    SyncLoan syncLoan = new SyncLoan();
-    SyncLoanCoborrower syncLoanCoborrower = new SyncLoanCoborrower();
-    SyncPhone syncPhone = new SyncPhone();
-    SyncEmail syncEmail = new SyncEmail();
-
-    LocalDateTime lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
-
-    SyncManager syncManager =
-        new SyncManager(
-            List.of(
-                syncCustomer,
-                syncAddress,
-                syncEmployer,
-                syncLoan,
-                syncLoanCoborrower,
-                syncPhone,
-                syncEmail,
-                syncNotes));
-
-    Status status = syncManager.syncAll(lastSyncTime);
-  }
-
-  @Test
   public void testSyncNothing() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+
     SyncManager syncManager = new SyncManager(List.of());
-    Status status = syncManager.syncAll(LocalDateTime.now(ZoneOffset.UTC).minusDays(1));
+    Status status = syncManager.syncAll(LocalDateTime.now(ZoneOffset.UTC).minusDays(1), connection);
+
+    connection.close();
+
+    assert (status.getErrorCode() == 0);
   }
 
   @Test
   public void testCheckIfNeedSyncing() {
+    boolean syncNeed = false;
     try {
-      SyncManager.checkIfNeedsSyncing();
+      syncNeed = SyncManager.checkIfNeedsSyncing();
     } catch (Exception e) {
       e.printStackTrace();
     }
+    assertFalse(syncNeed);
   }
 
   @Test
-  public void testMasterSync() {
-    try {
-      SyncManager.masterSync();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+  public void testMasterSync() throws IOException {
+    NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
+    Status status = SyncManager.masterSync(connection);
+
+    connection.close();
+    assert (status.getErrorCode() == 0);
   }
 
   @AfterEach

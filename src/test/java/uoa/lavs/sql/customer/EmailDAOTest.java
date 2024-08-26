@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import uoa.lavs.backend.oop.customer.Email;
 import uoa.lavs.backend.sql.DatabaseConnection;
 import uoa.lavs.backend.sql.DatabaseState;
@@ -94,7 +93,8 @@ public class EmailDAOTest {
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement stmt =
-            conn.prepareStatement("SELECT * FROM customer_email WHERE customerId = ? AND emailId = ?")) {
+            conn.prepareStatement(
+                "SELECT * FROM customer_email WHERE customerId = ? AND emailId = ?")) {
       stmt.setString(1, email.getCustomerId());
       stmt.setInt(2, email.getEmailId());
 
@@ -117,7 +117,7 @@ public class EmailDAOTest {
     Assertions.assertNull(retrievedEmail, "Email should not be retrieved from the database");
   }
 
-  @Test 
+  @Test
   public void testGetEmailInvalidEmailId() {
     Email email = new Email("000001", "oldemail@example.com", false);
     emailDAO.addEmail(email);

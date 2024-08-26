@@ -20,6 +20,7 @@ import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
 import uoa.lavs.frontend.SceneManager.AppUI;
+import uoa.lavs.legacy.mainframe.Instance;
 
 public class CustomerInputPrimaryAddressController extends AbstractCustomerController
     implements AccessTypeObserver {
@@ -246,7 +247,7 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
 
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, false);
+      CustomerCreationHelper.createCustomer(customer, false, Instance.getConnection());
 
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
 
@@ -260,7 +261,7 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
 
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, true);
+      CustomerCreationHelper.createCustomer(customer, true, Instance.getConnection());
     }
   }
 

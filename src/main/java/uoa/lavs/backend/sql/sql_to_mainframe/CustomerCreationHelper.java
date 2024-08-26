@@ -17,6 +17,7 @@ import uoa.lavs.backend.sql.oop_to_sql.customer.CustomerEmployerDAO;
 import uoa.lavs.backend.sql.oop_to_sql.customer.EmailDAO;
 import uoa.lavs.backend.sql.oop_to_sql.customer.NotesDAO;
 import uoa.lavs.backend.sql.oop_to_sql.customer.PhoneDAO;
+import uoa.lavs.legacy.mainframe.Connection;
 
 public class CustomerCreationHelper {
   public static boolean validateCustomer(IndividualCustomer customer) {
@@ -138,7 +139,8 @@ public class CustomerCreationHelper {
     return true;
   }
 
-  public static void createCustomer(IndividualCustomer customer, boolean currentlyExists)
+  public static void createCustomer(
+      IndividualCustomer customer, boolean currentlyExists, Connection connection)
       throws IOException {
 
     CustomerDAO customerdao = new CustomerDAO();
@@ -269,6 +271,6 @@ public class CustomerCreationHelper {
         new SyncManager(
             List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
 
-    syncManager.syncAll(lastSyncTime);
+    syncManager.syncAll(lastSyncTime, connection);
   }
 }

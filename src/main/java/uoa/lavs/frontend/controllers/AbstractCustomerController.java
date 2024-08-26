@@ -12,6 +12,7 @@ import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
+import uoa.lavs.legacy.mainframe.Instance;
 
 public abstract class AbstractCustomerController {
   @FXML protected Button customerDetailsButton;
@@ -44,7 +45,7 @@ public abstract class AbstractCustomerController {
 
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, false);
+      CustomerCreationHelper.createCustomer(customer, false, Instance.getConnection());
 
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
 
@@ -58,7 +59,7 @@ public abstract class AbstractCustomerController {
 
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, true);
+      CustomerCreationHelper.createCustomer(customer, true, Instance.getConnection());
     }
   }
 

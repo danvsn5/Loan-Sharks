@@ -3,7 +3,6 @@ package uoa.lavs.sql.sql_to_mainframe;
 import java.io.File;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import uoa.lavs.backend.sql.DatabaseConnection;
 import uoa.lavs.backend.sql.DatabaseState;
 import uoa.lavs.backend.sql.InitialiseDatabase;
@@ -22,7 +21,6 @@ public class SyncPhoneTest {
     dbFile = DatabaseState.DB_TEST_FILE;
   }
 
-  @Test
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);

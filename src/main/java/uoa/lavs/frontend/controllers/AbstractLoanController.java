@@ -11,6 +11,8 @@ import uoa.lavs.backend.sql.sql_to_mainframe.LoanCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
+import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
 public abstract class AbstractLoanController {
@@ -91,9 +93,9 @@ public abstract class AbstractLoanController {
         summaryButton.setStyle("-fx-border-color: red");
         return;
       }
-      LoanCreationHelper.createLoan(personalLoan);
-      LoanCreationHelper.getLoanSummary(personalLoan);
-      LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
+      Connection connection = Instance.getConnection();
+      LoanCreationHelper.createLoan(personalLoan, connection);
+      LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan, connection);
       AppState.setCurrentLoanSummary(loadLoanSummary);
 
       AppState.loadLoanSummary(AppState.getLoanDetailsAccessType());

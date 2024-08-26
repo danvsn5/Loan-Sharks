@@ -13,7 +13,7 @@ import uoa.lavs.backend.sql.oop_to_sql.loan.LoanDAO;
 import uoa.lavs.backend.sql.oop_to_sql.loan.LoanDurationDAO;
 import uoa.lavs.backend.sql.oop_to_sql.loan.LoanPaymentDAO;
 import uoa.lavs.frontend.AppState;
-import uoa.lavs.legacy.mainframe.Instance;
+import uoa.lavs.legacy.mainframe.Connection;
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
@@ -45,7 +45,7 @@ public class LoanCreationHelper {
     return true;
   }
 
-  public static void createLoan(PersonalLoan loan) throws IOException {
+  public static void createLoan(PersonalLoan loan, Connection connection) throws IOException {
     LoanDAO loanDAO = new LoanDAO();
     LoanDurationDAO loanDurationDAO = new LoanDurationDAO();
     LoanPaymentDAO loanPaymentDAO = new LoanPaymentDAO();
@@ -96,11 +96,11 @@ public class LoanCreationHelper {
 
     SyncManager syncManager = new SyncManager(List.of(syncLoan, syncLoanCoborrower));
 
-    syncManager.syncAll(lastSyncTime);
+    syncManager.syncAll(lastSyncTime, connection);
   }
 
-  public static LoadLoanSummary getLoanSummary(PersonalLoan loan) {
-    uoa.lavs.legacy.mainframe.Connection connection = Instance.getConnection();
+  public static LoadLoanSummary getLoanSummary(
+      PersonalLoan loan, uoa.lavs.legacy.mainframe.Connection connection) {
     LoadLoanSummary loadLoanSummary = new LoadLoanSummary();
 
     System.out.println("loan id is: " + loan.getLoanId());
