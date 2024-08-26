@@ -25,6 +25,7 @@ The project specification is available [here](https://canvas.auckland.ac.nz/cour
 - To run unit tests in VSCode, navigate to Testing Tab and run all LAVS tests. NOTE: an HTTP connection to the mainframe is not required for the tests to succeed.
 - Ensure there is a lavs.db file within the folder [\src\main\resources\db]. In the event it is not there, create a file called lavs.db
 - Assumes that first phone number, email and address are primary
+- Read all instructions in the Welcome page for the application process to run as intended
 
 ## Initial Repository Code
 
