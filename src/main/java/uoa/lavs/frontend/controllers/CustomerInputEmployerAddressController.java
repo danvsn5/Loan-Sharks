@@ -5,12 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
-import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
@@ -28,20 +25,9 @@ public class CustomerInputEmployerAddressController extends AbstractCustomerCont
 
   @FXML private ComboBox<String> employerCountryBox;
 
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerContactButton;
-  @FXML private Button customerEmployerButton;
-
   // TODO: THIS IS AN EXCEPTION, THIS NEEDS TO SHOWN AS RED ONLY TO THE EMPLOYER DETAILS SCREEN AND
   // ITSELF
   @FXML private Button employerAddressButton;
-
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
-  @FXML private Label idBanner;
-
-  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   @FXML
   private void initialize() {

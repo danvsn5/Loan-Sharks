@@ -8,12 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
-import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
@@ -23,7 +20,6 @@ import uoa.lavs.frontend.ControllerHelper;
 
 public class CustomerInputDetailsController extends AbstractCustomerController
     implements AccessTypeObserver {
-  @FXML private Label idBanner;
 
   @FXML private ComboBox<String> customerTitleComboBox;
   @FXML private TextField customerNameField;
@@ -32,17 +28,6 @@ public class CustomerInputDetailsController extends AbstractCustomerController
   @FXML private ComboBox<String> customerVisaBox;
 
   @FXML private ComboBox<String> customerCitizenshipBox;
-
-  @FXML private Button notesButton;
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerContactButton;
-  @FXML private Button customerEmployerButton;
-
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
-
-  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   Random random = new Random();
 

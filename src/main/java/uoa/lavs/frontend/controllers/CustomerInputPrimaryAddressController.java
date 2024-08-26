@@ -34,21 +34,11 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
   @FXML private ImageView decAddress;
   @FXML private Label addressPageLabel;
 
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerContactButton;
-  @FXML private Button customerEmployerButton;
-
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
-
-  @FXML private Label idBanner;
-
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   // private ArrayList<uoa.lavs.customer.Address> addresses =
   // customer.getAddresses();
-  private ArrayList<uoa.lavs.backend.oop.customer.Address> addresses = new ArrayList<>();
+
   private int currentAddress = 0;
   private int amountofValidAddresses = 0;
 

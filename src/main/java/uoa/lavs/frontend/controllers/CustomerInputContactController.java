@@ -11,7 +11,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.backend.oop.customer.Email;
-import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.backend.oop.customer.Phone;
 import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
@@ -40,13 +39,6 @@ public class CustomerInputContactController extends AbstractCustomerController
 
   @FXML private TextField customerPreferredContactBox;
   @FXML private TextField customerAltContactBox;
-
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
-
-  @FXML private Label idBanner;
-
-  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   private ArrayList<Phone> existingCustomerPhones = customer.getPhones();
   private int currentNumberPage = 0;

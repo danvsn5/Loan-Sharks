@@ -3,7 +3,11 @@ package uoa.lavs.frontend.controllers;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
+import uoa.lavs.backend.oop.customer.IndividualCustomer;
+import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
 
@@ -12,6 +16,12 @@ public abstract class AbstractCustomerController {
   @FXML protected Button customerAddressButton;
   @FXML protected Button customerContactButton;
   @FXML protected Button customerEmployerButton;
+
+  @FXML protected Button editButton;
+  @FXML protected ImageView staticReturnImageView;
+  @FXML protected Label idBanner;
+
+  protected IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   protected abstract void startWithCustomerID();
 
