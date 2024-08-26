@@ -3,7 +3,6 @@ package uoa.lavs.backend.sql.sql_to_mainframe;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanCoborrowers;
 import uoa.lavs.legacy.mainframe.messages.loan.UpdateLoanCoborrower;
@@ -11,28 +10,41 @@ import uoa.lavs.legacy.mainframe.messages.loan.UpdateLoanCoborrower;
 public class SyncLoanCoborrower extends Sync {
   @Override
   protected Status syncMainframeData(
-      ResultSet resultSet, uoa.lavs.legacy.mainframe.Connection connection, java.sql.Connection localConn)
+      ResultSet resultSet,
+      uoa.lavs.legacy.mainframe.Connection connection,
+      java.sql.Connection localConn)
       throws SQLException, IOException {
     String loanId = resultSet.getString("loanId");
 
     LoadLoanCoborrowers loadLoanCoborrowers = new LoadLoanCoborrowers();
     loadLoanCoborrowers.setLoanId(loanId);
-    loadLoanCoborrowers.setNumber(resultSet.getInt("number"));
+    loadLoanCoborrowers.setNumber(1);
+    System.out.println("Coborrower number: " + resultSet.getInt("number"));
     Status coborrowerLoadStatus = loadLoanCoborrowers.send(connection);
 
     Integer coborrowerNumber;
 
-    if (coborrowerLoadStatus.getErrorCode() != 0) {
+    if (coborrowerLoadStatus.getErrorCode() == 0) {
       System.out.println("Coborrower loaded successfully.");
-      coborrowerNumber = resultSet.getInt("number");
-
     } else {
       System.out.println(
           "Error loading coborrower: "
               + coborrowerLoadStatus.getErrorCode()
               + " "
               + coborrowerLoadStatus.getErrorMessage());
+    }
+
+    if (loadLoanCoborrowers.getCoborrowerIdFromServer(resultSet.getInt("number")) == null
+        || loadLoanCoborrowers.getCoborrowerIdFromServer(resultSet.getInt("number")).equals("")) {
+      System.out.println("No coborrower ID found.");
       coborrowerNumber = null;
+    } else if (!loadLoanCoborrowers
+        .getCoborrowerIdFromServer(resultSet.getInt("number"))
+        .equals(resultSet.getString("coborrowerId"))) {
+      System.out.println("Coborrower ID found but mismatching ID.");
+      coborrowerNumber = resultSet.getInt("number");
+    } else {
+      coborrowerNumber = resultSet.getInt("number");
     }
 
     UpdateLoanCoborrower updateLoanCoborrower =

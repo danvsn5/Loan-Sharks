@@ -88,15 +88,9 @@ public class LoanCoborrower extends AbstractLoanController implements AccessType
     }
 
     ArrayList<String> ids = personalLoan.getCoborrowerIds();
-    if (!coborrowerIDField1.getText().isEmpty()) {
-      ids.set(0, coborrowerIDField1.getText());
-    }
-    if (!coborrowerIDField2.getText().isEmpty()) {
-      ids.set(1, coborrowerIDField2.getText());
-    }
-    if (!coborrowerIDField3.getText().isEmpty()) {
-      ids.set(2, coborrowerIDField3.getText());
-    }
+    ids.set(0, coborrowerIDField1.getText());
+    ids.set(1, coborrowerIDField2.getText());
+    ids.set(2, coborrowerIDField3.getText());
   }
 
   @Override

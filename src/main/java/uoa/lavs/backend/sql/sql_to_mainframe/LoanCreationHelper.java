@@ -81,16 +81,14 @@ public class LoanCreationHelper {
       loanDurationDAO.updateLoanDuration(loan.getDuration());
       loanPaymentDAO.updateLoanPayment(loan.getPayment());
       ArrayList<String> coborrowerIds = new ArrayList<>();
-      boolean coborrowerExists = false;
+      System.out.println("printing coborrower ids from creation hel[er]");
       for (int i = 0; i < 3; i++) {
-        if (loan.getCoborrowerIds().get(i) != "") {
+        if (!loan.getCoborrowerIds().get(i).equals("") && loan.getCoborrowerIds().get(i) != null) {
           coborrowerIds.add(loan.getCoborrowerIds().get(i));
-          coborrowerExists = true;
+          System.out.println("coborrower id: " + loan.getCoborrowerIds().get(i));
         }
       }
-      if (coborrowerExists) {
-        loanCoborrowersDAO.updateCoborrowers(loan.getLoanId(), coborrowerIds);
-      }
+      loanCoborrowersDAO.updateCoborrowers(loan.getLoanId(), coborrowerIds);
     }
 
     SyncLoan syncLoan = new SyncLoan();
