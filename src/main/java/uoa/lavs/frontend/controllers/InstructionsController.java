@@ -27,6 +27,7 @@ public class InstructionsController {
           + "Welcome to Lone Sharks LAVS. Here, you will see a list of instructions and some"
           + " information as to how the application is to be used. \n"
           + " \n"
+          + " * It is intended that the first address, email and phone number that are inputted are primary\n"
           + " * Customers are created first, where their details are inputted into the system"
           + " and stored in the local database, to be synced to the mainframe \n"
           + " * Customers can be searched for by their name or ID, and their details can be"
