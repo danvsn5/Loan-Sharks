@@ -44,7 +44,7 @@ public class CustomerCreationHelper {
       Address address = addresses.get(i - 1);
       if (address.getAddressType() == "" && address.getAddressLineOne() == "" && address.getAddressLineTwo() == ""
           && address.getSuburb() == "" && address.getPostCode() == "" && address.getCity() == ""
-          && address.getCountry() == "" && address.getIsPrimary() == false && address.getIsMailing() == false) {
+          && (address.getCountry() == "" || address.getCountry() == "New Zealand") && address.getIsPrimary() == false && address.getIsMailing() == false) {
         addresses.remove(address);
       }
     }
@@ -67,6 +67,16 @@ public class CustomerCreationHelper {
             || address.getCity().equals("")
             || address.getCity().length() > 30) {
           System.out.println("Address: " + address.getAddressId() + " is invalid. Please fill in details correctly.");
+          // print out all address details 
+          System.out.println("Address Type: " + address.getAddressType());
+          System.out.println("Address Line One: " + address.getAddressLineOne());
+          System.out.println("Address Line Two: " + address.getAddressLineTwo());
+          System.out.println("Suburb: " + address.getSuburb());
+          System.out.println("Post Code: " + address.getPostCode());
+          System.out.println("City: " + address.getCity());
+          System.out.println("Country: " + address.getCountry());
+          System.out.println("Is Primary: " + address.getIsPrimary());
+          System.out.println("Is Mailing: " + address.getIsMailing());
           return false;
         }
 
