@@ -205,9 +205,9 @@ public class CustomerInputDetailsController extends AbstractCustomerController
 
       // Handle confirm changes logic
       // Save changes to database or perform necessary actions
+      setDetails();
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
-      setDetails();
       CustomerCreationHelper.createCustomer(customer, true);
 
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")

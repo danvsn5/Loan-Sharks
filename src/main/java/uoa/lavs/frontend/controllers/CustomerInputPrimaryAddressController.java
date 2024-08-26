@@ -256,22 +256,20 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
 
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
       CustomerCreationHelper.createCustomer(customer, false);
 
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
 
       AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
 
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
 
+      setAddressDetails("edit");
+
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-      setAddressDetails("edit");
       CustomerCreationHelper.createCustomer(customer, true);
     }
   }

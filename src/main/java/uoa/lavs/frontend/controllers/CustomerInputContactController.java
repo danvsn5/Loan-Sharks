@@ -173,8 +173,8 @@ public class CustomerInputContactController extends AbstractCustomerController
       }
 
       AppState.setCustomerDetailsAccessType("VIEW");
-      CustomerCreationHelper.createCustomer(customer, false);
       AccessTypeNotifier.notifyCustomerObservers();
+      CustomerCreationHelper.createCustomer(customer, false);
 
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
 
@@ -184,12 +184,11 @@ public class CustomerInputContactController extends AbstractCustomerController
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
 
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-
       setEmailDetails("confirm");
       setPhoneDetails("confirm");
 
+      AppState.setCustomerDetailsAccessType("VIEW");
+      AccessTypeNotifier.notifyCustomerObservers();
       CustomerCreationHelper.createCustomer(customer, true);
     }
   }

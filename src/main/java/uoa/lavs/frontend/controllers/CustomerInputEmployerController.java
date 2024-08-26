@@ -162,23 +162,21 @@ public class CustomerInputEmployerController extends AbstractCustomerController
       }
 
       AppState.setCustomerDetailsAccessType("VIEW");
-      CustomerCreationHelper.createCustomer(customer, false);
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
+      CustomerCreationHelper.createCustomer(customer, false);
 
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
 
       AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
 
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
 
+      setDetails();
+
       AppState.setCustomerDetailsAccessType("VIEW");
       AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-      setDetails();
       CustomerCreationHelper.createCustomer(customer, true);
     }
   }
