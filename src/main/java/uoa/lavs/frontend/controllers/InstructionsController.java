@@ -21,6 +21,7 @@ public class InstructionsController {
         info.setText(text);
     }
 
+    // returns to main menu
     @FXML
     private void handleBackButtonAction() {
         Main.setUi(AppUI.MAIN_MENU);

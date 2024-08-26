@@ -1,6 +1,5 @@
 package uoa.lavs.frontend.controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +11,6 @@ import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.backend.oop.customer.Note;
-import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
@@ -21,35 +19,61 @@ import uoa.lavs.frontend.SceneManager.AppUI;
 public class CustomerInputNotesController extends AbstractCustomerController
     implements AccessTypeObserver {
 
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
-  @FXML private Label notesPageNumber;
-  @FXML private ImageView incNotes;
-  @FXML private ImageView decNotes;
+  @FXML
+  private Button editButton;
+  @FXML
+  private ImageView staticReturnImageView;
+  @FXML
+  private Label notesPageNumber;
+  @FXML
+  private ImageView incNotes;
+  @FXML
+  private ImageView decNotes;
 
-  @FXML private Pane notesPane;
+  @FXML
+  private Pane notesPane;
 
-  @FXML private TextField noteField1;
-  @FXML private TextField noteField2;
-  @FXML private TextField noteField3;
-  @FXML private TextField noteField4;
-  @FXML private TextField noteField5;
-  @FXML private TextField noteField6;
-  @FXML private TextField noteField7;
-  @FXML private TextField noteField8;
-  @FXML private TextField noteField9;
-  @FXML private TextField noteField10;
-  @FXML private TextField noteField11;
-  @FXML private TextField noteField12;
-  @FXML private TextField noteField13;
-  @FXML private TextField noteField14;
-  @FXML private TextField noteField15;
-  @FXML private TextField noteField16;
-  @FXML private TextField noteField17;
-  @FXML private TextField noteField18;
-  @FXML private TextField noteField19;
+  @FXML
+  private TextField noteField1;
+  @FXML
+  private TextField noteField2;
+  @FXML
+  private TextField noteField3;
+  @FXML
+  private TextField noteField4;
+  @FXML
+  private TextField noteField5;
+  @FXML
+  private TextField noteField6;
+  @FXML
+  private TextField noteField7;
+  @FXML
+  private TextField noteField8;
+  @FXML
+  private TextField noteField9;
+  @FXML
+  private TextField noteField10;
+  @FXML
+  private TextField noteField11;
+  @FXML
+  private TextField noteField12;
+  @FXML
+  private TextField noteField13;
+  @FXML
+  private TextField noteField14;
+  @FXML
+  private TextField noteField15;
+  @FXML
+  private TextField noteField16;
+  @FXML
+  private TextField noteField17;
+  @FXML
+  private TextField noteField18;
+  @FXML
+  private TextField noteField19;
 
-  @FXML private Button fakeButton;
+  @FXML
+  private Button fakeButton;
 
   private ArrayList<Note> notes = new ArrayList<>();
 
@@ -171,7 +195,6 @@ public class CustomerInputNotesController extends AbstractCustomerController
     noteField19.setEditable(editable);
   }
 
-
   protected void setDetails() {
     saveCurrentPageNotes(currentPage);
 
@@ -205,6 +228,7 @@ public class CustomerInputNotesController extends AbstractCustomerController
     }
   }
 
+  // saves notes to customer
   private void saveCurrentPageNotes(int page) {
     String[] pageNotes = new String[19];
     pageNotes[0] = noteField1.getText();
@@ -235,6 +259,7 @@ public class CustomerInputNotesController extends AbstractCustomerController
     customer.setNotes(notes);
   }
 
+  // load page notes from retrieved customer
   private void loadPageNotes(int page) {
     if (notes.size() >= page) {
       Note note = notes.get(page - 1);
@@ -289,6 +314,7 @@ public class CustomerInputNotesController extends AbstractCustomerController
 
   @Override
   public Button getButton() {
+    // Do nothing
     return fakeButton = new Button();
   }
 
@@ -303,7 +329,8 @@ public class CustomerInputNotesController extends AbstractCustomerController
     customer = IndividualCustomerSingleton.getInstance();
 
     notes = customer.getNotes();
-    // For all notes, set it based on the index of the page notes and also the line number
+    // For all notes, set it based on the index of the page notes and also the line
+    // number
     loadPageNotes(currentPage);
   }
 }

@@ -35,6 +35,7 @@ public class LoanFinanceDetails extends AbstractLoanController implements Access
     }
   }
 
+  // updates the UI 
   @FXML
   @Override
   public void updateUIBasedOnAccessType() {
@@ -47,10 +48,9 @@ public class LoanFinanceDetails extends AbstractLoanController implements Access
         },
         new DatePicker[] {},
         new RadioButton[] {interestOnlyButton});
-    // TODO set finance details onto the screen if not create type.
-    // setLoanDetails();
   }
 
+  // checks if all the inputs are valid
   @Override
   public boolean validateData() {
     // Add validation code here
@@ -79,6 +79,7 @@ public class LoanFinanceDetails extends AbstractLoanController implements Access
     return isValid;
   }
 
+  // if the details are valid, then set the details
   @Override
   protected void setLoanDetails() {
     if (!validateData()) {

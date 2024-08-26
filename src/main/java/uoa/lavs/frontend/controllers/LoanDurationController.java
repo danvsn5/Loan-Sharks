@@ -62,8 +62,6 @@ public class LoanDurationController extends AbstractLoanController implements Ac
     }
   }
 
-  // Add methods for all buttons
-
   @FXML
   @Override
   public void updateUIBasedOnAccessType() {
@@ -74,8 +72,6 @@ public class LoanDurationController extends AbstractLoanController implements Ac
         new ComboBox<?>[] {},
         new DatePicker[] {startDatePicker},
         new RadioButton[] {});
-    // TODO set dration details onto the screen if not create type.
-    // setLoanDetails();
   }
 
   @Override

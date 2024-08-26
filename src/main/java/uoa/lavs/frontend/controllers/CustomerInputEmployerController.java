@@ -16,15 +16,19 @@ import uoa.lavs.frontend.ControllerHelper;
 
 public class CustomerInputEmployerController extends AbstractCustomerController
     implements AccessTypeObserver {
-  @FXML private TextField employerNameField;
-  @FXML private TextField employerEmailField;
-  @FXML private TextField employerWebsiteField;
-  @FXML private TextField employerPhoneField;
-  @FXML private RadioButton customerIsEmployerCheckbox;
+  @FXML
+  private TextField employerNameField;
+  @FXML
+  private TextField employerEmailField;
+  @FXML
+  private TextField employerWebsiteField;
+  @FXML
+  private TextField employerPhoneField;
+  @FXML
+  private RadioButton customerIsEmployerCheckbox;
 
-  // TODO: THIS IS AN EXCEPTION, THIS NEEDS TO SHOWN AS RED ONLY TO THE EMPLOYER DETAILS SCREEN AND
-  // ITSELF
-  @FXML private Button employerAddressButton;
+  @FXML
+  private Button employerAddressButton;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -52,7 +56,8 @@ public class CustomerInputEmployerController extends AbstractCustomerController
     // employer name is 60 characters
     // email is 60 characters and must be email format
     // website is 60 characters and must be a valid URL
-    // phone is 30 characters, numbers and dash only, and potentially could start with +
+    // phone is 30 characters, numbers and dash only, and potentially could start
+    // with +
     // Country has to be not null
 
     boolean isValid = true;
@@ -66,7 +71,8 @@ public class CustomerInputEmployerController extends AbstractCustomerController
       isValid = false;
     }
 
-    // Regex taken from https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
+    // Regex taken from
+    // https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
     if (employerEmailField.getText().isEmpty()
         || employerEmailField.getText().length() > 60
         || !employerEmailField.getText().matches("^[^@]+@[^@]+\\.[^@]+$")) {
@@ -110,11 +116,11 @@ public class CustomerInputEmployerController extends AbstractCustomerController
         editButton,
         idBanner,
         new TextField[] {
-          employerNameField, employerEmailField, employerWebsiteField, employerPhoneField
+            employerNameField, employerEmailField, employerWebsiteField, employerPhoneField
         },
         new ComboBox<?>[] {},
         new DatePicker[] {},
-        new RadioButton[] {customerIsEmployerCheckbox});
+        new RadioButton[] { customerIsEmployerCheckbox });
   }
 
   @Override
