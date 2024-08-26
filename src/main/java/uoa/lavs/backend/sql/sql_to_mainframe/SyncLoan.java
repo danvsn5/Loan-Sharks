@@ -49,11 +49,9 @@ public class SyncLoan extends Sync {
 
       String newLoanId = updateLoan.getLoanIdFromServer();
 
-      if (newLoanId != null) {
-        updateLoanIdInLocalDB(resultSet.getString("loanId"), newLoanId, localConn);
-        personalLoan.setLoanId(newLoanId);
-        loanId = newLoanId;
-      }
+      updateLoanIdInLocalDB(resultSet.getString("loanId"), newLoanId, localConn);
+      personalLoan.setLoanId(newLoanId);
+      loanId = newLoanId;
 
       if (status.getErrorCode() == 0) {
         System.out.println("Loan updated successfully.");
