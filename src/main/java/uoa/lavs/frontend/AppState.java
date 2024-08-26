@@ -28,7 +28,6 @@ public class AppState {
   private static Boolean isCreatingLoan = false;
   private static String loanDetailsAccessType; // CREATE, EDIT, VIEW
   private static Boolean isAccessingFromSearch = false;
-  private static Boolean isAccessingFromLoanSearch = false;
   private static List<Customer> searchResultList;
   private static List<Loan> loanSearchResultList;
   private static Customer selectedCustomer;
@@ -79,14 +78,6 @@ public class AppState {
 
   public static void setIsAccessingFromSearch(Boolean isAccessingFromSearch) {
     AppState.isAccessingFromSearch = isAccessingFromSearch;
-  }
-
-  public static Boolean getIsAccessingFromLoanSearch() {
-    return isAccessingFromLoanSearch;
-  }
-
-  public static void setIsAccessingFromLoanSearch(Boolean isAccessingFromLoanSearch) {
-    AppState.isAccessingFromLoanSearch = isAccessingFromLoanSearch;
   }
 
   public static List<Customer> getSearchResultList() {

@@ -111,7 +111,7 @@ public abstract class AbstractCustomerController {
   @FXML
   protected void handleBackButtonAction() {
     if (AppState.getIsAccessingFromSearch()) {
-      AppState.setIsAccessingFromLoanSearch(false);
+      AppState.setIsAccessingFromSearch(false);
       Main.setUi(AppUI.CUSTOMER_SEARCH);
     } else {
       Main.setUi(AppUI.CUSTOMER_MENU);
