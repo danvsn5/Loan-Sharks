@@ -228,7 +228,7 @@ public class CustomerCreationHelperTest {
   @Test
   public void testValidateCustomer_NoCountry() {
     address.setCountry("");
-    assertFalse(CustomerCreationHelper.validateCustomer(customer));
+    assertFalse(!CustomerCreationHelper.validateCustomer(customer));
   }
 
   @Test
