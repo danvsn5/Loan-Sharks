@@ -1,6 +1,5 @@
 package uoa.lavs.frontend.controllers;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -9,7 +8,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
-import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
@@ -145,40 +143,6 @@ public class CustomerInputEmployerAddressController extends AbstractCustomerCont
     employer.setPostCode(employerPostcodeField.getText());
 
     employer.setCountry(employerCountryBox.getValue());
-  }
-
-  @FXML
-  @Override
-  protected void handleEditButtonAction() throws IOException {
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      setDetails();
-
-      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
-      if (!customerIsValid) {
-        System.out.println("Customer is not valid and thus will not be created");
-        editButton.setStyle("-fx-border-color: red");
-        return;
-      }
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, false);
-
-    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
-
-      AppState.setCustomerDetailsAccessType("EDIT");
-      AccessTypeNotifier.notifyCustomerObservers();
-
-    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-
-      setDetails();
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, true);
-    }
   }
 
   @Override

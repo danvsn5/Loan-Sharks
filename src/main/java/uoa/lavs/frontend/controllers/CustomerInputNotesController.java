@@ -1,6 +1,5 @@
 package uoa.lavs.frontend.controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,13 +11,13 @@ import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.backend.oop.customer.Note;
-import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputNotesController implements AccessTypeObserver {
+public class CustomerInputNotesController extends AbstractCustomerController
+    implements AccessTypeObserver {
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
@@ -90,12 +89,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      notes = customer.getNotes();
-      // For all notes, set it based on the index of the page notes and also the line number
-      loadPageNotes(currentPage);
+      startWithCustomerID();
     }
   }
 
@@ -173,7 +167,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     noteField19.setEditable(editable);
   }
 
-  private void setDetails() {
+  protected void setDetails() {
     ArrayList<Note> notes = new ArrayList<>();
     for (int page = 1; page <= 100; page++) {
       String[] pageNotes = new String[19];
@@ -203,40 +197,8 @@ public class CustomerInputNotesController implements AccessTypeObserver {
   }
 
   @FXML
-  private void handleEditButtonAction() throws IOException {
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      setDetails();
-
-      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
-      if (!customerIsValid) {
-        System.out.println("Customer is not valid and thus will not be created");
-        editButton.setStyle("-fx-border-color: red");
-        return;
-      }
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, false);
-
-    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
-
-      AppState.setCustomerDetailsAccessType("EDIT");
-      AccessTypeNotifier.notifyCustomerObservers();
-
-    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-
-      setDetails();
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, true);
-    }
-  }
-
-  @FXML
-  private void handleBackButtonAction() {
+  @Override
+  protected void handleBackButtonAction() {
     setDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
@@ -351,5 +313,15 @@ public class CustomerInputNotesController implements AccessTypeObserver {
   @Override
   public void setInvalidButton(String style) {
     // Do nothing
+  }
+
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
+
+    notes = customer.getNotes();
+    // For all notes, set it based on the index of the page notes and also the line number
+    loadPageNotes(currentPage);
   }
 }

@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.Address;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
@@ -18,6 +19,7 @@ import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
+import uoa.lavs.frontend.SceneManager.AppUI;
 
 public class CustomerInputPrimaryAddressController extends AbstractCustomerController
     implements AccessTypeObserver {
@@ -35,9 +37,6 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
   @FXML private Label addressPageLabel;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
-
-  // private ArrayList<uoa.lavs.customer.Address> addresses =
-  // customer.getAddresses();
 
   private int currentAddress = 0;
   private int amountofValidAddresses = 0;
@@ -139,7 +138,8 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
       isValid = false;
     }
 
-    if (customerAddressLine2Field.getText().length() > 60) {
+    if (!(customerAddressLine2Field.getText() == null)
+        && customerAddressLine2Field.getText().length() > 60) {
       customerAddressLine2Field.setStyle("-fx-border-color: red;");
       isValid = false;
     }
@@ -460,6 +460,43 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
         }
       }
     }
+  }
+
+  @FXML
+  @Override
+  protected void handleDetailsButtonAction() {
+    setAddressDetails("edit");
+    Main.setUi(AppUI.CI_DETAILS);
+  }
+
+  @FXML
+  protected void handleAddressButtonAction() {
+    setAddressDetails("edit");
+    Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
+  }
+
+  @FXML
+  protected void handleContactButtonAction() {
+    setAddressDetails("edit");
+    Main.setUi(AppUI.CI_CONTACT);
+  }
+
+  @FXML
+  protected void handleEmployerButtonAction() {
+    setAddressDetails("edit");
+    Main.setUi(AppUI.CI_EMPLOYER);
+  }
+
+  @FXML
+  protected void handleEmployerAddressButtonAction() {
+    setAddressDetails("edit");
+    Main.setUi(AppUI.CI_EMPLOYER_ADDRESS);
+  }
+
+  @FXML
+  protected void handleNotesButtonAction() {
+    setAddressDetails("edit");
+    Main.setUi(AppUI.CI_NOTES);
   }
 
   @Override

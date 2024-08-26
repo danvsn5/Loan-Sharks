@@ -1,6 +1,5 @@
 package uoa.lavs.frontend.controllers;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -12,7 +11,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
-import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
@@ -156,49 +154,6 @@ public class CustomerInputDetailsController extends AbstractCustomerController
     customer.setOccupation(customerOccupationField.getText());
     customer.setVisa(customerVisaBox.getValue());
     customer.setCitizenship(customerCitizenshipBox.getValue());
-  }
-
-  @FXML
-  @Override
-  protected void handleEditButtonAction() throws IOException {
-    System.out.println("Edit button clicked");
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      // Handle create customer logic
-      // Save customer to database or perform necessary actions
-      setDetails();
-
-      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
-      if (!customerIsValid) {
-        System.out.println("Customer is not valid and thus will not be created");
-        editButton.setStyle("-fx-border-color: red");
-        return;
-      }
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, false);
-
-    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
-
-      // Switch to edit mode
-      AppState.setCustomerDetailsAccessType("EDIT");
-      AccessTypeNotifier.notifyCustomerObservers();
-
-    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-
-      // Handle confirm changes logic
-      // Save changes to database or perform necessary actions
-      setDetails();
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, true);
-
-    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
-        && !AccessTypeNotifier.validateCustomerObservers()) {
-      System.out.println("Invalid data");
-    }
   }
 
   @Override

@@ -152,7 +152,6 @@ public class CustomerInputContactController extends AbstractCustomerController
   @FXML
   @Override
   protected void handleEditButtonAction() throws IOException {
-    System.out.println("Edit button clicked");
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
       setDetails();
