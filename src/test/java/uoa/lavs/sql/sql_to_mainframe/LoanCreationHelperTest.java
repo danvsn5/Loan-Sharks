@@ -1,6 +1,7 @@
 package uoa.lavs.sql.sql_to_mainframe;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
@@ -66,8 +67,8 @@ public class LoanCreationHelperTest {
   @BeforeEach
   public void setUp() {
     DatabaseState.setActiveDB(true);
-    dbFile = DatabaseState.DB_TEST_FILE;
     InitialiseDatabase.createDatabase();
+    dbFile = DatabaseState.DB_TEST_FILE;
 
     employerDAO = new CustomerEmployerDAO();
     addressDAO = new AddressDAO();
@@ -132,29 +133,17 @@ public class LoanCreationHelperTest {
             emails,
             employer);
 
-    addressDAO.addAddress(primaryAddress);
-    notesDAO.addNote(note);
-    phoneDAO.addPhone(phone);
-    emailDAO.addEmail(email);
-    employerDAO.addCustomerEmployer(employer);
-
     startDate = LocalDate.now();
     loanDuration = new LoanDuration("-1", startDate, 1, 1);
-    loanDurationDAO = new LoanDurationDAO();
-    loanDurationDAO.addLoanDuration(loanDuration);
 
     loanPayment = new LoanPayment("-1", "daily", "weekly", "1000", false);
-    loanPaymentDAO = new LoanPaymentDAO();
-    loanPaymentDAO.addLoanPayment(loanPayment);
 
     coborrowers = new ArrayList<>();
-    coborrowersDAO = new LoanCoborrowersDAO();
-    coborrowersDAO.addCoborrowers("-1", coborrowers);
-
-    customerDAO.addCustomer(customer);
+    coborrowers.add("-2");
+    coborrowers.add("");
+    coborrowers.add("");
 
     loan = new PersonalLoan("-1", "-1", coborrowers, 1, 1, "fixed", loanDuration, loanPayment);
-    loanDAO = new LoanDAO();
   }
 
   @Test
@@ -229,12 +218,53 @@ public class LoanCreationHelperTest {
     assert !LoanCreationHelper.validateLoan(loan);
   }
 
+  // @Test
+  // public void testCreateLoan() throws IOException {
+  //   LoanCreationHelper.createLoan(loan);
+  // }
+
+  @Test
+  public void testCreateLoan_ExistingLoan() throws IOException {
+    addressDAO.addAddress(primaryAddress);
+    notesDAO.addNote(note);
+    phoneDAO.addPhone(phone);
+    emailDAO.addEmail(email);
+    employerDAO.addCustomerEmployer(employer);
+
+    loanDurationDAO = new LoanDurationDAO();
+    loanDurationDAO.addLoanDuration(loanDuration);
+
+    loanPaymentDAO = new LoanPaymentDAO();
+    loanPaymentDAO.addLoanPayment(loanPayment);
+
+    coborrowersDAO = new LoanCoborrowersDAO();
+    coborrowersDAO.addCoborrowers("-1", coborrowers);
+
+    customerDAO.addCustomer(customer);
+
+    loanDAO = new LoanDAO();
+    loanDAO.addLoan(loan);
+
+    LoanCreationHelper.createLoan(loan);
+  }
+
+  @Test
+  public void testCreateLoan_NoCoborrowers() throws IOException {
+    ArrayList<String> newCoborrowers = new ArrayList<>();
+    for (int i = 0; i < 3; i++) {
+      newCoborrowers.add("");
+    }
+    loan.setCoborrowerIds(newCoborrowers);
+    LoanCreationHelper.createLoan(loan);
+  }
+
+  @Test
+  public void testGetLoanSummary() {
+    LoanCreationHelper.getLoanSummary(loan);
+  }
+
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);
-    if (!dbFile.delete()) {
-      throw new RuntimeException(
-          "Failed to delete test database file: " + dbFile.getAbsolutePath());
-    }
   }
 }
