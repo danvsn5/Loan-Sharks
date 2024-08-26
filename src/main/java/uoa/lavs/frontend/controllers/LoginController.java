@@ -14,24 +14,23 @@ import uoa.lavs.frontend.SceneManager;
 import uoa.lavs.frontend.SceneManager.AppUI;
 
 public class LoginController {
-  @FXML private Button loginButton;
-
-  @FXML private TextField usernameField;
-
-  @FXML private PasswordField passwordField;
+  @FXML
+  private Button loginButton;
 
   @FXML
-  private void initialize() {
-    // Add initialization code here
-  }
+  private TextField usernameField;
+
+  @FXML
+  private PasswordField passwordField;
 
   @FXML
   private void handleLoginButtonAction() throws Exception {
-    // This logic checks if the username and password are Moana. If so, we intilaise the main menu
-    // with the proper name and clear all fields
+    // This logic checks if the username and password are Moana. If so, we intilaise
+    // the main menu with the proper name and clear all fields
     if (usernameField.getText().equals("Moana") && passwordField.getText().equals("Password")) {
       System.out.println("Login successful");
       AppState.setUserName(usernameField.getText());
+      // adds the welcome main menu scene the map and sets the UI to the main menu
       SceneManager.addScene(
           AppUI.MAIN_MENU,
           new FXMLLoader(Main.class.getResource("/fxml/admin/welcome.fxml")).load());
@@ -46,6 +45,8 @@ public class LoginController {
     }
   }
 
+  // activates log in procedure with enter key press instead of button click for
+  // improved UX
   @FXML
   private void onEnterPressed(KeyEvent event) {
     if (event.getCode() == KeyCode.ENTER) {

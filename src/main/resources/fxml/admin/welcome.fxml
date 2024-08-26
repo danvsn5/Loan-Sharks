@@ -3,14 +3,13 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.frontend.controllers.MainMenuController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uoa.lavs.frontend.controllers.MainMenuController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -61,17 +60,6 @@
             <Font size="41.0" />
          </font>
       </Label>
-      <ImageView fx:id="staticReturnImageView" fitHeight="55.0" fitWidth="51.0" layoutX="20.0" layoutY="24.0" onMouseClicked="#onClickReturnButton" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/static-return.png" />
-         </image>
-         <effect>
-            <ColorAdjust brightness="0.2" />
-         </effect>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="126.0" layoutX="66.0" layoutY="294.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="367.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a2fdff" height="126.0" layoutX="865.0" layoutY="295.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="407.0" />
       <Button fx:id="syncButton" layoutX="564.0" layoutY="612.0" mnemonicParsing="false" onMouseClicked="#onClickSyncButton" prefHeight="51.0" prefWidth="149.0" styleClass="regular-button" stylesheets="@../../css/index.css" text="Sync">

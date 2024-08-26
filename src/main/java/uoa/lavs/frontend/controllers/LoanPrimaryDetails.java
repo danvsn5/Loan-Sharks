@@ -12,14 +12,17 @@ import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
 
 public class LoanPrimaryDetails extends AbstractLoanController implements AccessTypeObserver {
-  @FXML private TextField borrowerIDField;
-  @FXML private TextField principalField;
-  @FXML private TextField interestRateField;
-  @FXML private ComboBox<String> rateTypeBox;
+  @FXML
+  private TextField borrowerIDField;
+  @FXML
+  private TextField principalField;
+  @FXML
+  private TextField interestRateField;
+  @FXML
+  private ComboBox<String> rateTypeBox;
 
   @FXML
   private void initialize() {
-    // TODO intialise the borrowerIDField
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
     rateTypeBox.getItems().addAll("Floating", "Fixed");
@@ -42,17 +45,15 @@ public class LoanPrimaryDetails extends AbstractLoanController implements Access
     ControllerHelper.updateUIBasedOnAccessTypeLoan(
         AppState.getLoanDetailsAccessType(),
         editButton,
-        new TextField[] {principalField, interestRateField},
+        new TextField[] { principalField, interestRateField },
         new ComboBox<?>[] {
-          rateTypeBox,
+            rateTypeBox,
         },
         new DatePicker[] {},
         new RadioButton[] {});
-    // TODO set primary details onto the screen if not create type.
-    // setLoanDetails();
-
   }
 
+  // validates data for primary loan details
   @Override
   public boolean validateData() {
     // Add validation code here
@@ -84,13 +85,12 @@ public class LoanPrimaryDetails extends AbstractLoanController implements Access
     return isValid;
   }
 
+  // if the data is valid, set the details
   @Override
   protected void setLoanDetails() {
     if (!validateData()) {
       return;
     }
-    // need to set the text field of primary borrower id in the gui
-
     personalLoan.setPrincipal(Double.parseDouble(principalField.getText()));
     personalLoan.setRate(Double.parseDouble(interestRateField.getText()));
     personalLoan.setRateType(rateTypeBox.getValue());
