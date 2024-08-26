@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-
 import uoa.lavs.backend.oop.loan.LoanDuration;
 import uoa.lavs.backend.oop.loan.LoanPayment;
 import uoa.lavs.backend.oop.loan.PersonalLoan;
@@ -24,11 +23,7 @@ public class LoanCreationHelper {
     LoanPayment loanPayment = loan.getPayment();
 
     if (loan.getPrincipal() == 0
-        || !Double.toString(loan.getPrincipal()).matches("^\\d+(\\.\\d+)?$")
-        || Double.toString(loan.getPrincipal()).length() > 15
         || loan.getRate() == 0
-        || !Double.toString(loan.getRate()).matches("^\\d+(\\.\\d+)?$")
-        || Double.toString(loan.getRate()).length() > 5
         || loan.getRateType() == null
         || loan.getRateType().equals("")) {
       return false;
@@ -36,8 +31,6 @@ public class LoanCreationHelper {
 
     if (loanDuration.getStartDate() == null
         || loanDuration.getPeriod() == 0
-        || !Integer.toString(loanDuration.getPeriod()).matches("[0-9]+")
-        || Integer.toString(loanDuration.getPeriod()).length() > 5
         || loanDuration.getLoanTerm() == 0) {
       return false;
     }
