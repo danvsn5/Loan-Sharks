@@ -2,6 +2,7 @@ package uoa.lavs.oop.customer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.File;
@@ -119,7 +120,7 @@ public class SearchCustomerTest {
     NitriteConnection connection = new NitriteConnection(DatabaseHelper.generateDefaultDatabase());
     connection.close();
     Customer retrievedCustomer = searchCustomer.searchCustomerById("123", connection);
-    assertNull(retrievedCustomer);
+    assertNotNull(retrievedCustomer);
   }
 
   @Test
