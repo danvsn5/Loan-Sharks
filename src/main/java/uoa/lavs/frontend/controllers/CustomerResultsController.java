@@ -227,27 +227,103 @@ public class CustomerResultsController {
     // This method checks for any null / empty fields in the customer object. If any are found, it
     // will set the values within as empty strings.
     System.out.println("Checking for null fields");
-    if (customer.getCustomerId() == null) {
+    if (customer.getCustomerId() == null || customer.getCustomerId().isEmpty()) {
       System.out.println("Customer ID is null");
       customer.setCustomerId("");
     }
+
     if (customer.getAddresses() == null) {
       System.out.println("Customer addresses is null");
       ArrayList<Address> addresses = new ArrayList<>();
       addresses.add(new Address("", "", "", "", "", "", "", "", false, false));
       customer.setAddresses(addresses);
+    } else {
+      for (Address address : customer.getAddresses()) {
+        if (address.getAddressLineOne() == null) {
+          System.out.println("Customer address street is null");
+          address.setAddressLineOne("");
+        }
+        if (address.getCity() == null) {
+          System.out.println("Customer address city is null");
+          address.setCity("");
+        }
+        if (address.getPostCode() == null) {
+          System.out.println("Customer address state is null");
+          address.setPostCode("");
+        }
+        if (address.getSuburb() == null) {
+          System.out.println("Customer address zip is null");
+          address.setSuburb("");
+        }
+        if (address.getCountry() == null) {
+          System.out.println("Customer address country is null");
+          address.setCountry("");
+        }
+        if (address.getAddressType() == null) {
+          System.out.println("Customer address type is null");
+          address.setAddressType("");
+        }
+      }
     }
+
     if (customer.getEmails() == null) {
       System.out.println("Customer emails is null");
       ArrayList<Email> emails = new ArrayList<>();
       emails.add(new Email("", "", false));
       customer.setEmails(emails);
+    } else {
+      for (Email email : customer.getEmails()) {
+        if (email.getEmailAddress() == null) {
+          System.out.println("Customer email is null");
+          email.setEmailAddress("");
+        }
+      }
     }
+
     if (customer.getEmployer() == null) {
       System.out.println("Customer employer is null");
       CustomerEmployer employer =
           new CustomerEmployer("", "", "", "", "", "", "", "", "", "", "", false);
       customer.setEmployer(employer);
+    } else {
+      CustomerEmployer employer = customer.getEmployer();
+      if (employer.getCity() == null) {
+        System.out.println("Customer employer city is null");
+        employer.setCity("");
+      }
+      if (employer.getCountry() == null) {
+        System.out.println("Customer employer country is null");
+        employer.setCountry("");
+      }
+      if (employer.getEmployerEmail() == null) {
+        System.out.println("Customer employer state is null");
+        employer.setEmployerEmail("");
+      }
+      if (employer.getLineOne() == null) {
+        System.out.println("Customer employer address line one is null");
+        employer.setLineOne("");
+      }
+      if (employer.getEmployerName() == null) {
+        System.out.println("Customer employer name is null");
+        employer.setEmployerName("");
+      }
+      if (employer.getEmployerPhone() == null) {
+        System.out.println("Customer employer phone is null");
+        employer.setEmployerPhone("");
+      }
+      if (employer.getPostCode() == null) {
+        System.out.println("Customer employer post code is null");
+        employer.setPostCode("");
+      }
+
+      if (employer.getEmployerWebsite() == null) {
+        System.out.println("Customer employer street is null");
+        employer.setEmployerWebsite("");
+      }
+      if (employer.getSuburb() == null) {
+        System.out.println("Customer employer suburb is null");
+        employer.setSuburb("");
+      }
     }
 
     if (customer.getName() == null) {
@@ -260,32 +336,47 @@ public class CustomerResultsController {
       ArrayList<Phone> phones = new ArrayList<>();
       phones.add(new Phone("", "", "", "", false, false));
       customer.setPhones(phones);
-    }
+    } else {
+      for (Phone phone : customer.getPhones()) {
+        if (phone.getPhoneNumber() == null) {
+          System.out.println("Customer phone number is null");
+          phone.setPhoneNumber("");
+        }
+        if (phone.getType() == null) {
+          System.out.println("Customer phone type is null");
+          phone.setType("");
+        }
+        if (phone.getPrefix() == null) {
+          System.out.println("Customer phone prefix is null");
+          phone.setPrefix("");
+        }
+      }
 
-    if (customer.getNotes() == null) {
-      System.out.println("Customer notes is null");
-      customer.setNotes(new ArrayList<>());
-    }
+      if (customer.getNotes() == null) {
+        System.out.println("Customer notes is null");
+        customer.setNotes(new ArrayList<>());
+      }
 
-    if (customer.getOccupation() == null) {
-      System.out.println("Customer occupation is null");
-      customer.setOccupation("");
-    }
-    if (customer.getVisa() == null) {
-      System.out.println("Customer visa is null");
-      customer.setVisa("");
-    }
-    if (customer.getCitizenship() == null) {
-      System.out.println("Customer citizenship is null");
-      customer.setCitizenship("");
-    }
-    if (customer.getDateOfBirth() == null) {
-      System.out.println("Customer date of birth is null");
-      customer.setDateOfBirth(null);
-    }
-    if (customer.getTitle() == null) {
-      System.out.println("Customer title is null");
-      customer.setTitle("");
+      if (customer.getOccupation() == null) {
+        System.out.println("Customer occupation is null");
+        customer.setOccupation("");
+      }
+      if (customer.getVisa() == null) {
+        System.out.println("Customer visa is null");
+        customer.setVisa("");
+      }
+      if (customer.getCitizenship() == null) {
+        System.out.println("Customer citizenship is null");
+        customer.setCitizenship("");
+      }
+      if (customer.getDateOfBirth() == null) {
+        System.out.println("Customer date of birth is null");
+        customer.setDateOfBirth(null);
+      }
+      if (customer.getTitle() == null) {
+        System.out.println("Customer title is null");
+        customer.setTitle("");
+      }
     }
   }
 }

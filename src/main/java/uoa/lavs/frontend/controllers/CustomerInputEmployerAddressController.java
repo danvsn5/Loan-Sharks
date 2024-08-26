@@ -59,7 +59,9 @@ public class CustomerInputEmployerAddressController extends AbstractCustomerCont
       isValid = false;
     }
 
-    if (employerAddressLine2Field.getText().length() > 60) {
+    if (!(employerAddressLine2Field.getText() == null)
+        && !employerAddressLine2Field.getText().isEmpty()
+        && employerAddressLine2Field.getText().length() > 60) {
       employerAddressLine2Field.setStyle("-fx-border-color: red;");
       isValid = false;
     }
