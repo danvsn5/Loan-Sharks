@@ -8,6 +8,8 @@ import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanCoborrowers;
 import uoa.lavs.legacy.mainframe.messages.loan.UpdateLoanCoborrower;
 
 public class SyncLoanCoborrower extends Sync {
+
+  // Syncs the loan coborrower data from the local database to the mainframe
   @Override
   protected Status syncMainframeData(
       ResultSet resultSet,
@@ -59,11 +61,13 @@ public class SyncLoanCoborrower extends Sync {
     return coborrowerLoadStatus;
   }
 
+  // Override the SQL query to retrieve loan coborrower data from the local database
   @Override
   protected String getSqlQuery() {
     return "SELECT * FROM loan_coborrower WHERE lastModified > ?";
   }
 
+  // Update the loan coborrower data from the local database to the mainframe
   private UpdateLoanCoborrower updateLoanCoborrower(
       ResultSet resultSet, String loanId, Integer coborrowerNumber) throws SQLException {
     UpdateLoanCoborrower updateLoanCoborrower = new UpdateLoanCoborrower();

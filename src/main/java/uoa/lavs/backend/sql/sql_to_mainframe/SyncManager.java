@@ -22,6 +22,7 @@ public class SyncManager {
     this.syncs = syncs;
   }
 
+  // Sync all data to the mainframe
   public Status syncAll(LocalDateTime lastSyncTime) throws IOException {
     uoa.lavs.legacy.mainframe.Connection mainframeConnection = null;
     Connection localConnection = null;
@@ -83,6 +84,7 @@ public class SyncManager {
     }
   }
 
+  // Check if the local database needs syncing with the mainframe
   public static boolean checkIfNeedsSyncing() throws SQLException {
     Connection localConnection = DatabaseConnection.connect();
     String sql = "SELECT needsSyncing FROM sync_info WHERE id = 1";
@@ -91,6 +93,7 @@ public class SyncManager {
     }
   }
 
+  // Set the needsSyncing flag in the local database
   public static void setNeedsSyncing(boolean needsSyncing) throws SQLException {
     Connection localConnection = DatabaseConnection.connect();
     String sql = "UPDATE sync_info SET needsSyncing = ? WHERE id = 1";
@@ -100,6 +103,7 @@ public class SyncManager {
     }
   }
 
+  // Creates all sync objects and syncs all data to the mainframe
   public static Status masterSync() throws IOException {
     SyncCustomer syncCustomer = new SyncCustomer();
     SyncAddress syncAddress = new SyncAddress();
@@ -132,9 +136,4 @@ public class SyncManager {
 
     return status;
   }
-
-  // public static void main(String[] args) throws IOException {
-  //   Status status = masterSync();
-  //   System.out.println(status.getErrorMessage());
-  // }
 }

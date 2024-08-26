@@ -8,6 +8,7 @@ import uoa.lavs.legacy.mainframe.messages.customer.FindCustomerAddress;
 import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerAddress;
 
 public class SyncAddress extends Sync {
+  // Syncs the address data from the local database to the mainframe
   @Override
   protected Status syncMainframeData(
       ResultSet resultSet,
@@ -44,12 +45,13 @@ public class SyncAddress extends Sync {
     return status;
   }
 
+  // Override the SQL query to retrieve address data from the local database
   @Override
   protected String getSqlQuery() {
     return "SELECT * FROM customer_address WHERE lastModified > ?";
   }
 
-  // update address
+  // Update the address data from the local database to the mainframe
   private UpdateCustomerAddress updateCustomerAddress(ResultSet resultSet, String customerId) {
     UpdateCustomerAddress updateCustomerAddress = new UpdateCustomerAddress();
     try {

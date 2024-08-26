@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.backend.oop.loan.PersonalLoan;
 import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
 import uoa.lavs.legacy.mainframe.Frequency;
@@ -18,9 +17,12 @@ public class SyncLoan extends Sync {
 
   PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
+  // Syncs the loan data from the local database to the mainframe
   @Override
   protected Status syncMainframeData(
-      ResultSet resultSet, uoa.lavs.legacy.mainframe.Connection connection, java.sql.Connection localConn)
+      ResultSet resultSet,
+      uoa.lavs.legacy.mainframe.Connection connection,
+      java.sql.Connection localConn)
       throws SQLException, IOException {
     String loanId = resultSet.getString("loanId");
     LoadLoan loadLoan = new LoadLoan();
@@ -67,6 +69,7 @@ public class SyncLoan extends Sync {
     return loadStatus;
   }
 
+  // Override the SQL query to retrieve loan data from the local database
   @Override
   protected String getSqlQuery() {
     return "SELECT l.loanId, "
@@ -94,6 +97,7 @@ public class SyncLoan extends Sync {
         + "OR lp.lastModified > ?";
   }
 
+  // Update the loan data from the local database to the mainframe
   private UpdateLoan updateLoan(ResultSet resultSet, String loanId) throws SQLException {
     UpdateLoan updateLoan = new UpdateLoan();
     updateLoan.setLoanId(loanId);
@@ -142,6 +146,8 @@ public class SyncLoan extends Sync {
     return updateLoan;
   }
 
+  // Update the loan ID in the local database. This ensures that the ID for the loan in the local DB
+  // is the same as the one used by the mainframe.
   private void updateLoanIdInLocalDB(String oldLoanId, String newLoanId, Connection conn)
       throws SQLException {
 

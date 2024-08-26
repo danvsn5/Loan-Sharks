@@ -3,15 +3,17 @@ package uoa.lavs.backend.sql.sql_to_mainframe;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerEmployers;
 import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerEmployer;
 
 public class SyncEmployer extends Sync {
+  // Syncs the employer data from the local database to the mainframe
   @Override
   protected Status syncMainframeData(
-      ResultSet resultSet, uoa.lavs.legacy.mainframe.Connection connection, java.sql.Connection localConn)
+      ResultSet resultSet,
+      uoa.lavs.legacy.mainframe.Connection connection,
+      java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
     LoadCustomerEmployers loadCustomerEmployers = new LoadCustomerEmployers();
@@ -39,6 +41,7 @@ public class SyncEmployer extends Sync {
     return status;
   }
 
+  // Update the employer data from the local database to the mainframe
   private UpdateCustomerEmployer updateCustomerEmployer(ResultSet resultSet, String customer_id) {
     UpdateCustomerEmployer updateCustomerEmployer = new UpdateCustomerEmployer();
     try {
@@ -60,6 +63,7 @@ public class SyncEmployer extends Sync {
     return updateCustomerEmployer;
   }
 
+  // Override the SQL query to retrieve employer data from the local database
   @Override
   protected String getSqlQuery() {
     return "SELECT * FROM customer_employer WHERE lastModified > ?";

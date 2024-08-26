@@ -8,6 +8,7 @@ import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerNote;
 import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerNote;
 
 public class SyncNotes extends Sync {
+  // Syncs the notes data from the local database to the mainframe
   @Override
   protected Status syncMainframeData(
       ResultSet resultSet,
@@ -43,6 +44,7 @@ public class SyncNotes extends Sync {
     return status;
   }
 
+  // Update the notes data from the local database to the mainframe
   private UpdateCustomerNote updateCustomerNote(ResultSet resultSet, String customerId) {
     UpdateCustomerNote updateCustomerNote = new UpdateCustomerNote();
     try {
@@ -64,6 +66,7 @@ public class SyncNotes extends Sync {
     return updateCustomerNote;
   }
 
+  // Override the SQL query to retrieve notes data from the local database
   @Override
   protected String getSqlQuery() {
     return "SELECT * FROM customer_notes WHERE lastModified > ?";

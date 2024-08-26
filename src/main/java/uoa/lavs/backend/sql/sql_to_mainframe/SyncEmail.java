@@ -3,15 +3,17 @@ package uoa.lavs.backend.sql.sql_to_mainframe;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.customer.FindCustomerEmail;
 import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerEmail;
 
 public class SyncEmail extends Sync {
+  // Syncs the email data from the local database to the mainframe
   @Override
   protected Status syncMainframeData(
-      ResultSet resultSet, uoa.lavs.legacy.mainframe.Connection connection, java.sql.Connection localConn)
+      ResultSet resultSet,
+      uoa.lavs.legacy.mainframe.Connection connection,
+      java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
     Integer email_id = resultSet.getInt("emailId");
@@ -41,12 +43,13 @@ public class SyncEmail extends Sync {
     return status;
   }
 
+  // Override the SQL query to retrieve email data from the local database
   @Override
   protected String getSqlQuery() {
     return "SELECT * FROM customer_email WHERE lastModified > ?";
   }
 
-  // update email
+  // Update the email data from the local database to the mainframe
   private UpdateCustomerEmail updateCustomerEmail(ResultSet resultSet, String customerId) {
     UpdateCustomerEmail updateCustomerEmail = new UpdateCustomerEmail();
     try {
