@@ -60,6 +60,8 @@ public class LoanSummaryController implements AccessTypeObserver {
     }
   }
 
+  // checks if the loan details are valid and confirms the loan based on what mode
+  // is set
   @FXML
   private void handleConfirmLoanButtonAction() throws IOException {
     confirmLoanButton.setStyle("");
@@ -75,20 +77,24 @@ public class LoanSummaryController implements AccessTypeObserver {
     }
   }
 
+  // creates the loan summary and sets all the details in the GUI fields
   private boolean isCreatingLoan() {
     return AccessTypeNotifier.validateLoanObservers()
         && AppState.getLoanDetailsAccessType().equals("CREATE");
   }
 
+  // checks if the user is viewing the loan
   private boolean isViewingLoan() {
     return AppState.getLoanDetailsAccessType().equals("VIEW");
   }
 
+  // checks if the user is editing the loan
   private boolean isEditingLoan() {
     return AppState.getLoanDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateLoanObservers();
   }
 
+  // Occurs when the user has finished creating a loan
   private void handleCreatingLoan() throws IOException {
     AppState.setIsCreatingLoan(false);
     AppState.setLoanDetailsAccessType("VIEW");
@@ -97,6 +103,7 @@ public class LoanSummaryController implements AccessTypeObserver {
     handleViewPaymentsButtonAction();
   }
 
+  // Occurs when the user is viewing the loan, transitions to editing the loan
   private void handleViewingLoan() {
     AppState.setIsCreatingLoan(false);
     AppState.setLoanDetailsAccessType("EDIT");
@@ -104,16 +111,19 @@ public class LoanSummaryController implements AccessTypeObserver {
     AccessTypeNotifier.notifyLoanObservers();
   }
 
+  // Occurs when the user is editing the loan, transitions to viewing the loan
   private void handleEditingLoan() {
     confirmLoanButton.setText("Edit Details");
     AppState.setLoanDetailsAccessType("VIEW");
     AccessTypeNotifier.notifyLoanObservers();
   }
 
+  // Occurs when the user is in an invalid state
   private void handleInvalidState() {
     confirmLoanButton.setStyle("-fx-border-color: red");
   }
 
+  // sets each field in the GUI to the loan summary details
   private void setSummaryDetails() {
     LoadLoanSummary summary = AppState.getCurrentLoanSummary();
     System.out.println("summar is null: " + (summary == null));
@@ -129,6 +139,8 @@ public class LoanSummaryController implements AccessTypeObserver {
     payOffDateField.setText((summary.getPayoffDateFromServer()).toString());
   }
 
+  // creates a connection to the mainframe to help convert the summary details
+  // into payment details and sets the UI to loan repayments
   @FXML
   private void handleViewPaymentsButtonAction() throws IOException {
     uoa.lavs.legacy.mainframe.Connection connection = Instance.getConnection();
@@ -145,30 +157,36 @@ public class LoanSummaryController implements AccessTypeObserver {
     AppState.loanLoanRepayments();
   }
 
+  // Sets the UI to the primary loan details
   @FXML
   private void handlePrimaryButtonAction() {
     AppState.setIsOnLoanSummary(false);
     Main.setUi(AppUI.LC_PRIMARY);
   }
 
+  // Sets the UI to the coborrower loan details
   @FXML
   private void handleCoborrowerButtonAction() {
     AppState.setIsOnLoanSummary(false);
     Main.setUi(AppUI.LC_COBORROWER);
   }
 
+  // Sets the UI to the duration loan details
   @FXML
   private void handleDurationButtonAction() {
     AppState.setIsOnLoanSummary(false);
     Main.setUi(AppUI.LC_DURATION);
   }
 
+  // Sets the UI to the finance loan details
   @FXML
   private void handleFinanceButtonAction() {
     AppState.setIsOnLoanSummary(false);
     Main.setUi(AppUI.LC_FINANCE);
   }
 
+  // Sets the UI to the loan menu if the user is creating a loan, otherwise sets to the customer
+  // results
   @FXML
   private void handleBackButtonAction() {
     // Need to add logic if they got here from loan search
@@ -180,6 +198,7 @@ public class LoanSummaryController implements AccessTypeObserver {
     }
   }
 
+  // Updates the UI based on the access type
   @Override
   public void updateUIBasedOnAccessType() {
     // Add logic to update UI based on access type
@@ -192,6 +211,7 @@ public class LoanSummaryController implements AccessTypeObserver {
     }
   }
 
+  // THESE ARE ALL INHERITED FROM AccessTypeObserver, BUT THEY ARE NOT USED IN THIS CLASS
   @Override
   public boolean validateData() {
     // No Data to validate
@@ -200,7 +220,7 @@ public class LoanSummaryController implements AccessTypeObserver {
 
   @Override
   public Button getButton() {
-    // Fake Button
+    // Do nothing
     Button button = new Button();
     return button;
   }

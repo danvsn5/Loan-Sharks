@@ -23,8 +23,6 @@ public class CustomerInputEmployerAddressController extends AbstractCustomerCont
 
   @FXML private ComboBox<String> employerCountryBox;
 
-  // TODO: THIS IS AN EXCEPTION, THIS NEEDS TO SHOWN AS RED ONLY TO THE EMPLOYER DETAILS SCREEN AND
-  // ITSELF
   @FXML private Button employerAddressButton;
 
   @FXML
@@ -32,16 +30,6 @@ public class CustomerInputEmployerAddressController extends AbstractCustomerCont
     employerCountryBox.getItems().addAll(AppState.getAllCountries());
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
-
-    // Set Dummy data
-    if (AppState.getCustomerDetailsAccessType() == "CREATE") {
-      employerAddressLine1Field.setText("123 Fake Street");
-      employerAddressLine2Field.setText("Apt 1");
-      employerSuburbField.setText("Fake Suburb");
-      employerCityField.setText("Fake City");
-      employerPostcodeField.setText("123456");
-      employerCountryBox.setValue("New Zealand");
-    }
 
     if (AppState.getIsAccessingFromSearch()) {
       startWithCustomerID();

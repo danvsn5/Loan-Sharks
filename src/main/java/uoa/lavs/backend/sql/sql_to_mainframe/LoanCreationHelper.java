@@ -18,10 +18,12 @@ import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
 public class LoanCreationHelper {
+  // Validates the loan data before creating it
   public static boolean validateLoan(PersonalLoan loan) {
     LoanDuration loanDuration = loan.getDuration();
     LoanPayment loanPayment = loan.getPayment();
 
+    // CHECK PRIMARY DETAILS
     if (loan.getPrincipal() == 0
         || loan.getRate() == 0
         || loan.getRateType() == null
@@ -29,12 +31,14 @@ public class LoanCreationHelper {
       return false;
     }
 
+    // CHECK DURATION DETAILS
     if (loanDuration.getStartDate() == null
         || loanDuration.getPeriod() == 0
         || loanDuration.getLoanTerm() == 0) {
       return false;
     }
 
+    // CHECK PAYMENT DETAILS
     if (loanPayment.getCompounding().equals("")
         || loanPayment.getPaymentFrequency().equals("")
         || loanPayment.getPaymentAmount().equals("")
@@ -60,6 +64,7 @@ public class LoanCreationHelper {
 
       ArrayList<String> coborrowerIds = new ArrayList<>();
       boolean coborrowerExists = false;
+      // Add coborrowers if they exist in the database
       for (int i = 0; i < 3; i++) {
         if (loan.getCoborrowerIds().get(i) != "") {
           coborrowerIds.add(loan.getCoborrowerIds().get(i));
@@ -69,7 +74,9 @@ public class LoanCreationHelper {
       if (coborrowerExists) {
         loanCoborrowersDAO.addCoborrowers(loan.getLoanId(), coborrowerIds);
       }
-    } else {
+    }
+    // Update loan if it exists in the mainframe
+    else {
       System.out.println("loan in sql database. updating");
       loanDAO.updateLoan(loan);
       loanDurationDAO.updateLoanDuration(loan.getDuration());
@@ -85,6 +92,7 @@ public class LoanCreationHelper {
       loanCoborrowersDAO.updateCoborrowers(loan.getLoanId(), coborrowerIds);
     }
 
+    // Sync the loan and coborrowers with the mainframe
     SyncLoan syncLoan = new SyncLoan();
     SyncLoanCoborrower syncLoanCoborrower = new SyncLoanCoborrower();
     LocalDateTime lastSyncTime = syncLoan.getLastSyncTimeFromDB();

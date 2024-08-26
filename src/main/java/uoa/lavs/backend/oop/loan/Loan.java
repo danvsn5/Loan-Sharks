@@ -2,6 +2,7 @@ package uoa.lavs.backend.oop.loan;
 
 import java.util.ArrayList;
 
+// abstract class for individual loan object used inside application
 public abstract class Loan implements ILoan {
   private String loanId;
   private String customerId;

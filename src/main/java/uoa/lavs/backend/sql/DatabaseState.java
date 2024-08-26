@@ -9,12 +9,13 @@ public class DatabaseState {
 
   public static String active_db = DB_URL;
 
+  // Get the active database
   public static String getActiveDB() {
     return active_db;
   }
 
+  // Set the active database
   public static void setActiveDB(boolean test) {
     active_db = test ? DB_TEST_URL : DB_URL;
   }
-
 }

@@ -7,6 +7,10 @@ public class AccessTypeNotifier {
   private static List<AccessTypeObserver> customerObservers = new ArrayList<>();
   private static List<AccessTypeObserver> loanObservers = new ArrayList<>();
 
+  // static observer methods run through all controller classes to check if the data
+  // if valid; used during creating/editing customers and loans to change tabs visuals
+  // if invalid data is submitted
+
   public static void registerCustomerObserver(AccessTypeObserver observer) {
     customerObservers.add(observer);
   }

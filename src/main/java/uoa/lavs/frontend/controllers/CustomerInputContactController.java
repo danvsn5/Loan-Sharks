@@ -60,24 +60,6 @@ public class CustomerInputContactController extends AbstractCustomerController
     phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
     emailPageLabel.setText("Email: " + (currentEmailPage + 1));
 
-    // Set dummy data
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
-
-      customerPhoneTypeBox.setValue("Mobile");
-      customerPhonePrefixField.setText("+1");
-      customerPhoneNumberOne.setText("1234567890");
-      sendTextRadio.setSelected(true);
-      phonePrimaryRadio.setSelected(true);
-      isPrimaryPhoneSet = true;
-
-      customerEmailTextField.setText("dummy@example.com");
-      emailPrimaryRadio.setSelected(true);
-      isPrimaryEmailSet = true;
-
-      customerPreferredContactBox.setText("Preferred Contact");
-      customerAltContactBox.setText("Alternate Contact");
-    }
-
     if (AppState.getIsAccessingFromSearch()) {
       startWithCustomerID();
     }
@@ -215,6 +197,8 @@ public class CustomerInputContactController extends AbstractCustomerController
     return true;
   }
 
+  // helper method for validating phone details; used in inc/dec and validating
+  // final inputs
   private boolean validatePhone() {
 
     boolean isValid = true;
@@ -251,6 +235,8 @@ public class CustomerInputContactController extends AbstractCustomerController
     return isValid;
   }
 
+  // helper method for validating email details; used in inc/dec and validating
+  // final inputs
   private boolean validateEmail() {
 
     boolean isValid = true;
@@ -306,6 +292,7 @@ public class CustomerInputContactController extends AbstractCustomerController
     customer.setEmails(existingCustomerEmails);
   }
 
+  // sets the phone details for each user if they are valid
   private boolean setPhoneDetails(String location) {
 
     if (location != "dec") {
@@ -342,6 +329,7 @@ public class CustomerInputContactController extends AbstractCustomerController
     return true;
   }
 
+  // sets the email details for each user if they are valid
   private boolean setEmailDetails(String location) {
 
     if (location != "dec") {
@@ -374,6 +362,8 @@ public class CustomerInputContactController extends AbstractCustomerController
     return true;
   }
 
+  // select radio buttons such that if they were previously selected, their input
+  // is overruled and correctly reassigns the variable
   @FXML
   private void phonePrimaryRadioClick() {
     if (phonePrimaryRadio.isSelected()) {
@@ -409,6 +399,8 @@ public class CustomerInputContactController extends AbstractCustomerController
       sendTextRadio.setDisable(false);
     }
   }
+
+  // below methods handle incrementing and decrementing pages for emails and phones
 
   @FXML
   private void handleIncPhone() {
@@ -614,6 +606,7 @@ public class CustomerInputContactController extends AbstractCustomerController
     return customerContactButton;
   }
 
+  // helper methods to set the UI for filling out fields based on pages
   public void setPhoneDetailsUI(String setting) {
 
     if (setting == "empty") {

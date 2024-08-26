@@ -19,7 +19,6 @@ public class LoanPrimaryDetails extends AbstractLoanController implements Access
 
   @FXML
   private void initialize() {
-    // TODO intialise the borrowerIDField
     AccessTypeNotifier.registerLoanObserver(this);
     updateUIBasedOnAccessType();
     rateTypeBox.getItems().addAll("Floating", "Fixed");
@@ -27,13 +26,6 @@ public class LoanPrimaryDetails extends AbstractLoanController implements Access
 
     personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
     borrowerIDField.setText(personalLoan.getCustomerId());
-
-    // Set dummy values
-    if (AppState.getLoanDetailsAccessType().equals("CREATE")) {
-      principalField.setText("100");
-      interestRateField.setText("10");
-      rateTypeBox.setValue("Floating");
-    }
   }
 
   @FXML
@@ -48,11 +40,9 @@ public class LoanPrimaryDetails extends AbstractLoanController implements Access
         },
         new DatePicker[] {},
         new RadioButton[] {});
-    // TODO set primary details onto the screen if not create type.
-    // setLoanDetails();
-
   }
 
+  // validates data for primary loan details
   @Override
   public boolean validateData() {
     // Add validation code here
@@ -84,13 +74,12 @@ public class LoanPrimaryDetails extends AbstractLoanController implements Access
     return isValid;
   }
 
+  // if the data is valid, set the details
   @Override
   protected void setLoanDetails() {
     if (!validateData()) {
       return;
     }
-    // need to set the text field of primary borrower id in the gui
-
     personalLoan.setPrincipal(Double.parseDouble(principalField.getText()));
     personalLoan.setRate(Double.parseDouble(interestRateField.getText()));
     personalLoan.setRateType(rateTypeBox.getValue());

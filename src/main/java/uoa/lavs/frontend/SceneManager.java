@@ -4,6 +4,7 @@ import java.util.HashMap;
 import javafx.scene.Parent;
 
 public class SceneManager {
+  // enum for the different scenes in the application
   public enum AppUI {
     CI_PRIMARY_ADDRESS,
     CI_MAILING_ADDRESS,
@@ -32,14 +33,19 @@ public class SceneManager {
     INFORMATION
   }
 
+  // maps to store the scenes and controllers for when they are instantiated in
+  // the heap
   private static HashMap<AppUI, Parent> sceneMap = new HashMap<AppUI, Parent>();
 
   private static HashMap<AppUI, Object> controllerMap = new HashMap<>();
 
+  // add a scene to the scene map
   public static void addScene(AppUI scene, Parent parent) {
     sceneMap.put(scene, parent);
   }
 
+  // add a scene with a controller to the scene map; used for tab scenes so that
+  // controller overlapping does not occur
   public static void addSceneWithController(AppUI scene, Parent parent, Object controller) {
     sceneMap.put(scene, parent);
     controllerMap.put(scene, controller);

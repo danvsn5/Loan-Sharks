@@ -103,8 +103,7 @@ public class Main extends Application {
     // Add all static loan screens
     SceneManager.addScene(AppUI.LOAN_MENU, loadFxml("loan/loan_management"));
 
-    // BYPASSING TO CUSTOMER MENU
-    scene = new Scene(SceneManager.getScene(AppUI.MAIN_MENU), 1280, 720);
+    scene = new Scene(SceneManager.getScene(AppUI.LOGIN), 1280, 720);
     // imports main index.css file
     String cssPath = getClass().getResource("/css/index.css").toExternalForm();
     scene.getStylesheets().add(cssPath);

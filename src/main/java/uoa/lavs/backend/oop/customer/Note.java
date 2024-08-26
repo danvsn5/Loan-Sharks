@@ -1,5 +1,6 @@
 package uoa.lavs.backend.oop.customer;
 
+// sets the note object with getters and setters
 public class Note {
   private String customerId;
   private int noteId;

@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 
 public class ControllerHelper {
 
+  // changes the UI based on the access type, either clearing fields or making
+  // them editable/non-editable
   public static void updateUIBasedOnAccessType(
       String accessType,
       Button editButton,
@@ -50,6 +52,7 @@ public class ControllerHelper {
     }
   }
 
+  // following logic from above but with all loan tabs
   public static void updateUIBasedOnAccessTypeLoan(
       String accessType,
       Button editButton,
@@ -88,6 +91,9 @@ public class ControllerHelper {
     }
   }
 
+  // below code is for resetting fields, combo boxes, date pickers, and radio
+  // buttons, as well as setting their opacity and disabling them
+
   public static void resetFields(TextField... textFields) {
     for (TextField textField : textFields) {
       textField.setText("");
@@ -116,24 +122,28 @@ public class ControllerHelper {
     for (TextField textField : textFields) {
       textField.setEditable(true);
       textField.setDisable(false);
+      textField.setOpacity(1);
     }
   }
 
   public static void setComboBoxesEditable(ComboBox<?>... comboBoxes) {
     for (ComboBox<?> comboBox : comboBoxes) {
       comboBox.setDisable(false);
+      comboBox.setOpacity(1);
     }
   }
 
   public static void setDatePickersEditable(DatePicker... datePickers) {
     for (DatePicker datePicker : datePickers) {
       datePicker.setDisable(false);
+      datePicker.setOpacity(1);
     }
   }
 
   public static void setRadioButtonsEditable(RadioButton... radioButtons) {
     for (RadioButton radioButton : radioButtons) {
       radioButton.setDisable(false);
+      radioButton.setOpacity(1);
     }
   }
 

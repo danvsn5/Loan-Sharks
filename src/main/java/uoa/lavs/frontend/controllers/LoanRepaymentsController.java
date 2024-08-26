@@ -13,56 +13,79 @@ import uoa.lavs.frontend.SceneManager.AppUI;
 import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanPayments;
-import uoa.lavs.legacy.utility.AmortizingLoanCalculator;
 import uoa.lavs.legacy.utility.LoanRepayment;
-import uoa.lavs.legacy.utility.PaymentFrequency;
 
 public class LoanRepaymentsController {
 
-  @FXML private Label monthLabel;
-  @FXML private Label monthLabel1;
-  @FXML private Label monthLabel2;
-  @FXML private Label monthLabel3;
-  @FXML private Label monthLabel4;
-  @FXML private Label monthLabel5;
+  @FXML
+  private Label monthLabel;
+  @FXML
+  private Label monthLabel1;
+  @FXML
+  private Label monthLabel2;
+  @FXML
+  private Label monthLabel3;
+  @FXML
+  private Label monthLabel4;
+  @FXML
+  private Label monthLabel5;
 
-  @FXML private Label principalLabel;
-  @FXML private Label principalLabel1;
-  @FXML private Label principalLabel2;
-  @FXML private Label principalLabel3;
-  @FXML private Label principalLabel4;
-  @FXML private Label principalLabel5;
+  @FXML
+  private Label principalLabel;
+  @FXML
+  private Label principalLabel1;
+  @FXML
+  private Label principalLabel2;
+  @FXML
+  private Label principalLabel3;
+  @FXML
+  private Label principalLabel4;
+  @FXML
+  private Label principalLabel5;
 
-  @FXML private Label interestLabel;
-  @FXML private Label interestLabel1;
-  @FXML private Label interestLabel2;
-  @FXML private Label interestLabel3;
-  @FXML private Label interestLabel4;
-  @FXML private Label interestLabel5;
+  @FXML
+  private Label interestLabel;
+  @FXML
+  private Label interestLabel1;
+  @FXML
+  private Label interestLabel2;
+  @FXML
+  private Label interestLabel3;
+  @FXML
+  private Label interestLabel4;
+  @FXML
+  private Label interestLabel5;
 
-  @FXML private Label remLabel;
-  @FXML private Label remLabel1;
-  @FXML private Label remLabel2;
-  @FXML private Label remLabel3;
-  @FXML private Label remLabel4;
-  @FXML private Label remLabel5;
+  @FXML
+  private Label remLabel;
+  @FXML
+  private Label remLabel1;
+  @FXML
+  private Label remLabel2;
+  @FXML
+  private Label remLabel3;
+  @FXML
+  private Label remLabel4;
+  @FXML
+  private Label remLabel5;
 
-  @FXML private Label repaymentsPageLabel;
-  @FXML private ImageView staticReturnImageView;
-  @FXML private ImageView incPage;
-  @FXML private ImageView decPage;
+  @FXML
+  private Label repaymentsPageLabel;
+  @FXML
+  private ImageView staticReturnImageView;
+  @FXML
+  private ImageView incPage;
+  @FXML
+  private ImageView decPage;
 
-  @FXML private TextField loanStatusField;
+  @FXML
+  private TextField loanStatusField;
 
   // create new loan singleton object to access loan data
   private PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
-  // create new amortising loan calculator object
-  private AmortizingLoanCalculator amortizingLoanCalculator = new AmortizingLoanCalculator();
-  private PaymentFrequency paymentFrequency;
   private ArrayList<LoanRepayment> loanRepayments = new ArrayList<LoanRepayment>();
 
-  private int listIndex = 0;
   private int currentPage = 1;
 
   // create new array list to store loan repayments
@@ -96,35 +119,17 @@ public class LoanRepaymentsController {
       System.out.println("Principal Amount: " + principalAmount);
       System.out.println("Interest Amount: " + interestAmount);
       System.out.println("Remaining Amount: " + remainingAmount);
-      LoanRepayment loanRepayment =
-          new LoanRepayment(i, paymentDate, principalAmount, interestAmount, remainingAmount);
+      LoanRepayment loanRepayment = new LoanRepayment(i, paymentDate, principalAmount, interestAmount, remainingAmount);
       loanRepayments.add(loanRepayment);
     }
-
-    // String frequency = loan.getPayment().getPaymentFrequency();
-
-    // if (frequency == "Weekly") {
-    //   PaymentFrequency paymentFrequency = PaymentFrequency.Weekly;
-    // } else if (frequency == "Fortnightly") {
-    //   PaymentFrequency paymentFrequency = PaymentFrequency.Fortnightly;
-    // } else if (frequency == "Monthly") {
-    //   PaymentFrequency paymentFrequency = PaymentFrequency.Monthly;
-    // }
-
-    // loanRepayments =
-    //     amortizingLoanCalculator.generateRepaymentSchedule(
-    //         existingCustomerLoan.getPrincipal(),
-    //         existingCustomerLoan.getRate(),
-    //         // cast payment amount into Double
-    //         Double.parseDouble(existingCustomerLoan.getPayment().getPaymentAmount()),
-    //         paymentFrequency,
-    //         existingCustomerLoan.getDuration().getStartDate());
 
     // set repayment schedule to the first page
     repaymentsPageLabel.setText("Page: " + currentPage);
     setPaymentPage();
   }
 
+  // sets the payment page by iterating through each row element depending on the
+  // page number
   @FXML
   private void setPaymentPage() {
     int startIndex = (currentPage - 1) * 6;
@@ -144,6 +149,8 @@ public class LoanRepaymentsController {
     }
   }
 
+  // sets all the label values depending on which row needs to be set in the
+  // current page of repayments
   @FXML
   private void setLabelValues(
       int index, String month, String principal, String interest, String remaining) {

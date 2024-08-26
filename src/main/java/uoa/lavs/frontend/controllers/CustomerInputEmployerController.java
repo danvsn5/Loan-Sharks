@@ -22,8 +22,6 @@ public class CustomerInputEmployerController extends AbstractCustomerController
   @FXML private TextField employerPhoneField;
   @FXML private RadioButton customerIsEmployerCheckbox;
 
-  // TODO: THIS IS AN EXCEPTION, THIS NEEDS TO SHOWN AS RED ONLY TO THE EMPLOYER DETAILS SCREEN AND
-  // ITSELF
   @FXML private Button employerAddressButton;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
@@ -32,15 +30,6 @@ public class CustomerInputEmployerController extends AbstractCustomerController
   private void initialize() {
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
-
-    // Set dummy values
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
-      employerNameField.setText("Fake Company");
-      employerEmailField.setText("dada@dada.com");
-      employerWebsiteField.setText("www.fake.com");
-      employerPhoneField.setText("1234567890");
-      customerIsEmployerCheckbox.setSelected(true);
-    }
 
     if (AppState.getIsAccessingFromSearch()) {
       startWithCustomerID();
@@ -52,7 +41,8 @@ public class CustomerInputEmployerController extends AbstractCustomerController
     // employer name is 60 characters
     // email is 60 characters and must be email format
     // website is 60 characters and must be a valid URL
-    // phone is 30 characters, numbers and dash only, and potentially could start with +
+    // phone is 30 characters, numbers and dash only, and potentially could start
+    // with +
     // Country has to be not null
 
     boolean isValid = true;
@@ -66,7 +56,8 @@ public class CustomerInputEmployerController extends AbstractCustomerController
       isValid = false;
     }
 
-    // Regex taken from https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
+    // Regex taken from
+    // https://stackoverflow.com/questions/50330109/simple-regex-pattern-for-email
     if (employerEmailField.getText().isEmpty()
         || employerEmailField.getText().length() > 60
         || !employerEmailField.getText().matches("^[^@]+@[^@]+\\.[^@]+$")) {

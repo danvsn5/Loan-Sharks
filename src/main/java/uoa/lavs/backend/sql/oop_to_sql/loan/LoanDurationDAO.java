@@ -11,6 +11,8 @@ import uoa.lavs.backend.oop.loan.LoanDuration;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
 public class LoanDurationDAO {
+
+  // Adds a loan duration to the database
   public void addLoanDuration(LoanDuration duration) {
     String sql =
         "INSERT INTO loan_duration (loanId, durationId, startDate, period, loanTerm) VALUES (?, ?,"
@@ -35,6 +37,7 @@ public class LoanDurationDAO {
     }
   }
 
+  // Get the next durationId for a loan
   private int getNextDurationIdForLoan(String loanId) {
     String sql = "SELECT MAX(durationId) FROM loan_duration WHERE loanId = ?";
     try (Connection conn = DatabaseConnection.connect();
@@ -53,6 +56,7 @@ public class LoanDurationDAO {
     return 1;
   }
 
+  // Updates a loan duration in the database with new details from the duration object
   public void updateLoanDuration(LoanDuration duration) {
     String sql =
         "UPDATE loan_duration SET startDate = ?, period = ?, loanTerm = ?, lastModified ="
@@ -69,6 +73,7 @@ public class LoanDurationDAO {
     }
   }
 
+  // Get a loan duration from the database using the loanId
   public LoanDuration getLoanDuration(String loanId) {
     String sql = "SELECT * FROM loan_duration WHERE loanId = ?";
     LoanDuration duration = null;

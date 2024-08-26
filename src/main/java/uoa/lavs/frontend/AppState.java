@@ -10,7 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.util.Pair;
 import uoa.lavs.Main;
+import uoa.lavs.backend.oop.customer.Address;
 import uoa.lavs.backend.oop.customer.Customer;
+import uoa.lavs.backend.oop.customer.Email;
+import uoa.lavs.backend.oop.customer.Phone;
 import uoa.lavs.backend.oop.loan.Loan;
 import uoa.lavs.frontend.SceneManager.AppUI;
 import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
@@ -25,7 +28,6 @@ public class AppState {
   private static Boolean isCreatingLoan = false;
   private static String loanDetailsAccessType; // CREATE, EDIT, VIEW
   private static Boolean isAccessingFromSearch = false;
-  private static Boolean isAccessingFromLoanSearch = false;
   private static List<Customer> searchResultList;
   private static List<Loan> loanSearchResultList;
   private static Customer selectedCustomer;
@@ -76,14 +78,6 @@ public class AppState {
 
   public static void setIsAccessingFromSearch(Boolean isAccessingFromSearch) {
     AppState.isAccessingFromSearch = isAccessingFromSearch;
-  }
-
-  public static Boolean getIsAccessingFromLoanSearch() {
-    return isAccessingFromLoanSearch;
-  }
-
-  public static void setIsAccessingFromLoanSearch(Boolean isAccessingFromLoanSearch) {
-    AppState.isAccessingFromLoanSearch = isAccessingFromLoanSearch;
   }
 
   public static List<Customer> getSearchResultList() {
@@ -159,6 +153,8 @@ public class AppState {
     Main.setUi(AppUI.MAIN_MENU);
   }
 
+  // dynamic fxml loading to ensure that the controller is associated a scene
+  // instance
   public static Pair<Parent, Object> loadFxmlDynamic(final String fxml) throws IOException {
     FXMLLoader loader = new FXMLLoader(Main.class.getResource("/fxml/" + fxml + ".fxml"));
     Parent parent = loader.load();
@@ -167,6 +163,7 @@ public class AppState {
     return new Pair<>(parent, controller);
   }
 
+  // loads all fxml files with dynamic loader
   public static void loadAllCustomerDetails(String accessType) throws IOException {
     customerDetailsAccessType = accessType;
     currentButton = null;
@@ -196,6 +193,7 @@ public class AppState {
     SceneManager.addSceneWithController(AppUI.CI_EMPLOYER_ADDRESS, pair.getKey(), pair.getValue());
   }
 
+  // loads loans with dynamic loader
   public static void loadLoans(String accessType) throws IOException {
     loanDetailsAccessType = accessType;
     currentButton = null;
@@ -251,5 +249,78 @@ public class AppState {
       e.printStackTrace();
     }
     return countries.toArray(new String[0]);
+  }
+
+  public static boolean validateCustomerForLoan(Customer customer) {
+    /**
+     * Check that the customer has at least one mailing address (see Screen 06: Customer Address.)
+     * If the customer does not have a mailing address, the loan cannot proceed. Check that the
+     * customer has at least one alternate contact method (phone or email.)
+     */
+    System.out.println("Validating customer");
+
+    boolean hasValidAddress = false;
+    boolean hasValidMailingAddress = false;
+    boolean hasValidPrimaryAddress = false;
+    boolean hasValidContact = false;
+
+    for (Address address : customer.getAddresses()) {
+      if (validateAddress(address)) {
+        hasValidAddress = true;
+        if (address.getIsMailing()) {
+          hasValidMailingAddress = true;
+        }
+        if (address.getIsPrimary()) {
+          hasValidPrimaryAddress = true;
+        }
+      }
+    }
+
+    for (Phone phone : customer.getPhones()) {
+      if (validatePhone(phone)) {
+        hasValidContact = true;
+        break;
+      }
+    }
+
+    for (Email email : customer.getEmails()) {
+      if (validateEmail(email)) {
+        hasValidContact = true;
+        break;
+      }
+    }
+
+    return hasValidAddress && hasValidMailingAddress && hasValidPrimaryAddress && hasValidContact;
+  }
+
+  // validate address, phone, email
+  private static boolean validateAddress(Address address) {
+    return address.getCity() != null
+        && !address.getCity().isEmpty()
+        && address.getCountry() != null
+        && !address.getCountry().isEmpty()
+        && address.getAddressLineOne() != null
+        && !address.getAddressLineOne().isEmpty()
+        && address.getPostCode() != null
+        && !address.getPostCode().isEmpty()
+        && address.getSuburb() != null
+        && !address.getSuburb().isEmpty()
+        && address.getAddressType() != null
+        && !address.getAddressType().isEmpty();
+  }
+
+  private static boolean validatePhone(Phone phone) {
+    return phone.getPhoneNumber() != null
+        && !phone.getPhoneNumber().isEmpty()
+        && phone.getPrefix() != null
+        && !phone.getPrefix().isEmpty()
+        && phone.getType() != null
+        && !phone.getType().isEmpty();
+  }
+
+  private static boolean validateEmail(Email email) {
+    return email.getEmailAddress() != null
+        && !email.getEmailAddress().isEmpty()
+        && email.getEmailAddress().matches("^[^@]+@[^@]+\\.[^@]+$");
   }
 }

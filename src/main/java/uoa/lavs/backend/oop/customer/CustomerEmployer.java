@@ -1,5 +1,6 @@
 package uoa.lavs.backend.oop.customer;
 
+// sets the customer details with constructor with getters and setters
 public class CustomerEmployer {
   private String customerId;
   private String employerName;

@@ -20,6 +20,8 @@ import uoa.lavs.backend.sql.oop_to_sql.customer.PhoneDAO;
 import uoa.lavs.legacy.mainframe.Connection;
 
 public class CustomerCreationHelper {
+
+  // Validates the customer details
   public static boolean validateCustomer(IndividualCustomer customer) {
     ArrayList<Address> addresses = customer.getAddresses();
     ArrayList<Phone> phones = customer.getPhones();
@@ -54,6 +56,8 @@ public class CustomerCreationHelper {
         || addresses.get(0).getCountry().equals("")) {
       return false;
     }
+
+    // CHECK IF PRIMARY AND MAILING ADDRESS ARE SET IN ALL ADDRESSES
     boolean primaryAddressSet = false;
     boolean mailingAddressSet = false;
     for (Address address : addresses) {
@@ -97,6 +101,8 @@ public class CustomerCreationHelper {
         || !phones.get(0).getPhoneNumber().matches("[0-9\\-]+")) {
       return false;
     }
+
+    // CHECK IF PRIMARY PHONE IS SET IN ALL PHONES
     boolean primaryPhoneSet = false;
     for (Phone phone : phones) {
       if (phone.getIsPrimary()) {
@@ -145,13 +151,16 @@ public class CustomerCreationHelper {
 
     CustomerDAO customerdao = new CustomerDAO();
 
+    // if the customer does not currently exist, add the customer to the database, otherwise update
     if (!currentlyExists) {
       customerdao.addCustomer(customer);
     } else {
       customerdao.updateCustomer(customer);
     }
+
     String customerId = customer.getCustomerId();
 
+    // SETTING NOTES OF CUSTOMER
     NotesDAO notesdao = new NotesDAO();
     ArrayList<Note> notes = customer.getNotes();
     if (currentlyExists) {
@@ -175,6 +184,7 @@ public class CustomerCreationHelper {
       notesdao.addNote(note);
     }
 
+    // SETTING ADDRESSES OF CUSTOMER
     AddressDAO addressdao = new AddressDAO();
     ArrayList<Address> addresses = customer.getAddresses();
     int numberOfDatabaseAddresses = addressdao.getAddresses(customerId).size();
@@ -203,6 +213,7 @@ public class CustomerCreationHelper {
       }
     }
 
+    // SETTING PHONES OF CUSTOMER
     PhoneDAO phonedao = new PhoneDAO();
     ArrayList<Phone> phones = customer.getPhones();
     int numberOfDatabasePhones = phonedao.getPhones(customerId).size();
@@ -226,6 +237,7 @@ public class CustomerCreationHelper {
       }
     }
 
+    // SETTING EMAILS OF CUSTOMER
     EmailDAO emaildao = new EmailDAO();
     ArrayList<Email> emails = customer.getEmails();
     int numberOfDatabaseEmails = emaildao.getEmails(customerId).size();
@@ -246,6 +258,7 @@ public class CustomerCreationHelper {
       }
     }
 
+    // SETTING EMPLOYER OF CUSTOMER
     CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
     customer.getEmployer().setCustomerId(customerId);
     if (!currentlyExists) {
@@ -254,6 +267,7 @@ public class CustomerCreationHelper {
       employerdao.updateCustomerEmployer(customer.getEmployer());
     }
 
+    // Sync all records to mainframe
     SyncCustomer syncCustomer = new SyncCustomer();
     SyncAddress syncAddress = new SyncAddress();
     SyncEmployer syncEmployer = new SyncEmployer();

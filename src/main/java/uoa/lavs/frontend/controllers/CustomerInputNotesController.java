@@ -1,6 +1,5 @@
 package uoa.lavs.frontend.controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +11,6 @@ import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.backend.oop.customer.Note;
-import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
@@ -65,29 +63,6 @@ public class CustomerInputNotesController extends AbstractCustomerController
     // Initialize notes with 100 notes, with all lines empty
     for (int i = 0; i < 100; i++) {
       notes.add(new Note("", new String[19]));
-    }
-
-    // Set dummy values
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
-      noteField1.setText("Note 1");
-      noteField2.setText("Note 2");
-      noteField3.setText("Note 3");
-      noteField4.setText("Note 4");
-      noteField5.setText("Note 5");
-      noteField6.setText("Note 6");
-      noteField7.setText("Note 7");
-      noteField8.setText("Note 8");
-      noteField9.setText("Note 9");
-      noteField10.setText("Note 10");
-      noteField11.setText("Note 11");
-      noteField12.setText("Note 12");
-      noteField13.setText("Note 13");
-      noteField14.setText("Note 14");
-      noteField15.setText("Note 15");
-      noteField16.setText("Note 16");
-      noteField17.setText("Note 17");
-      noteField18.setText("Note 18");
-      noteField19.setText("Note 19");
     }
 
     if (AppState.getIsAccessingFromSearch()) {
@@ -171,7 +146,6 @@ public class CustomerInputNotesController extends AbstractCustomerController
     noteField19.setEditable(editable);
   }
 
-
   protected void setDetails() {
     saveCurrentPageNotes(currentPage);
 
@@ -205,6 +179,7 @@ public class CustomerInputNotesController extends AbstractCustomerController
     }
   }
 
+  // saves notes to customer
   private void saveCurrentPageNotes(int page) {
     String[] pageNotes = new String[19];
     pageNotes[0] = noteField1.getText();
@@ -235,6 +210,7 @@ public class CustomerInputNotesController extends AbstractCustomerController
     customer.setNotes(notes);
   }
 
+  // load page notes from retrieved customer
   private void loadPageNotes(int page) {
     if (notes.size() >= page) {
       Note note = notes.get(page - 1);
@@ -289,6 +265,7 @@ public class CustomerInputNotesController extends AbstractCustomerController
 
   @Override
   public Button getButton() {
+    // Do nothing
     return fakeButton = new Button();
   }
 
@@ -303,7 +280,8 @@ public class CustomerInputNotesController extends AbstractCustomerController
     customer = IndividualCustomerSingleton.getInstance();
 
     notes = customer.getNotes();
-    // For all notes, set it based on the index of the page notes and also the line number
+    // For all notes, set it based on the index of the page notes and also the line
+    // number
     loadPageNotes(currentPage);
   }
 }

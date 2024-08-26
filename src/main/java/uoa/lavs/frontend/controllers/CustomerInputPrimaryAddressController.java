@@ -54,18 +54,6 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
     updateUIBasedOnAccessType();
     addressPageLabel.setText("Address: " + (currentAddress + 1));
 
-    // Set dummy values
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
-      customerAddressTypeComboBox.setValue("Home");
-      customerAddressLine1Field.setText("123 Fake Street");
-      customerAddressLine2Field.setText("Apt 1");
-      customerSuburbField.setText("Fake Suburb");
-      customerCityField.setText("Fake City");
-      customerPostcodeField.setText("123456");
-      mailingAddressRadio.setSelected(false);
-      primaryAddressRadio.setSelected(false);
-    }
-
     if (AppState.getIsAccessingFromSearch()) {
       startWithCustomerID();
     }
@@ -265,6 +253,7 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
     }
   }
 
+  // handle radio buttons using overrule method
   @FXML
   private void handleMailingAddressRadioAction() {
     if (mailingAddressRadio.isSelected() && existingCustomerAddresses.size() > 0) {
@@ -291,6 +280,7 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
     }
   }
 
+  // pagination for address based on which mode the user is in
   @FXML
   private void handleIncAddress() {
     if (AppState.getCustomerDetailsAccessType() == "CREATE") {
@@ -401,6 +391,7 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
     return customerAddressButton;
   }
 
+  // helper method for setting the fields in the address
   public void setAddressDetailsUI(String setting) {
 
     if (setting == "empty") {
@@ -462,6 +453,8 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
       }
     }
   }
+
+  // sets UI to each of the tabs
 
   @FXML
   @Override

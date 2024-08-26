@@ -15,6 +15,7 @@ public class SyncCustomer extends Sync {
 
   IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
+  // Syncs the customer data from the local database to the mainframe
   @Override
   protected Status syncMainframeData(
       ResultSet resultSet,
@@ -36,10 +37,12 @@ public class SyncCustomer extends Sync {
     UpdateCustomer updateCustomer = updateCustomer(resultSet, customer_id);
     Status status = updateCustomer.send(connection);
 
+    // If the customer ID is null, get the new customer ID from the mainframe
     if (customer_id == null) {
       customer_id = updateCustomer.getCustomerIdFromServer();
       System.out.println("New customer ID from mainframe: " + customer_id);
     }
+    // If the customer ID is not null, update the customer ID in the local database
     if (customer_id != null) {
       System.out.print("Updating customer ID in local database... ");
       String oldCustomerId = resultSet.getString("customerId");
@@ -47,6 +50,7 @@ public class SyncCustomer extends Sync {
     }
 
     customer.setCustomerId(customer_id);
+    // Set the customer ID for all the addresses, emails, phones, notes, and employer
     for (int i = 0; i < customer.getAddresses().size(); i++) {
       customer.getAddresses().get(i).setCustomerId(customer_id);
     }
@@ -61,6 +65,7 @@ public class SyncCustomer extends Sync {
     }
     customer.getEmployer().setCustomerId(customer_id);
 
+    // If the status is successful, print the customer ID. Else, print the error message.
     if (status.getErrorCode() == 0) {
       System.out.println(
           "Successfully sent customer ID: " + updateCustomer.getCustomerIdFromServer());
@@ -71,6 +76,7 @@ public class SyncCustomer extends Sync {
     return status;
   }
 
+  // Override the SQL query to retrieve customer data from the local database
   @Override
   protected String getSqlQuery() {
     return "SELECT * FROM customer WHERE lastModified > ?";
