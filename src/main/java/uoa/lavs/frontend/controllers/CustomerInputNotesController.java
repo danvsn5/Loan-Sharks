@@ -18,7 +18,8 @@ import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputNotesController implements AccessTypeObserver {
+public class CustomerInputNotesController extends AbstractCustomerController
+    implements AccessTypeObserver {
 
   @FXML private Button editButton;
   @FXML private ImageView staticReturnImageView;
@@ -90,12 +91,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      notes = customer.getNotes();
-      // For all notes, set it based on the index of the page notes and also the line number
-      loadPageNotes(currentPage);
+      startWithCustomerID();
     }
   }
 
@@ -141,7 +137,6 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
       setTextFieldsEditable(true);
       editButton.setText("Create Customer");
-      // setNotes();
     }
     if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
       setTextFieldsEditable(false);
@@ -150,7 +145,7 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     if (AppState.getCustomerDetailsAccessType().equals("EDIT")) {
       setTextFieldsEditable(true);
       editButton.setText("Confirm Changes");
-      setNotes();
+      setDetails();
     }
   }
 
@@ -176,54 +171,17 @@ public class CustomerInputNotesController implements AccessTypeObserver {
     noteField19.setEditable(editable);
   }
 
-  private void setNotes() {
+
+  protected void setDetails() {
     saveCurrentPageNotes(currentPage);
 
     customer.setNotes(notes);
   }
 
   @FXML
-  private void handleEditButtonAction() throws IOException {
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      setNotes();
-
-      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
-      if (!customerIsValid) {
-        System.out.println("Customer is not valid and thus will not be created");
-        editButton.setStyle("-fx-border-color: red");
-        return;
-      }
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, false);
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
-      AppState.setCustomerDetailsAccessType("EDIT");
-    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      setNotes();
-
-      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
-      if (!customerIsValid) {
-        System.out.println("Customer is not valid and thus will not be created");
-        editButton.setStyle("-fx-border-color: red");
-        return;
-      }
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, true);
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-    }
-    AccessTypeNotifier.notifyCustomerObservers();
-    updateUIBasedOnAccessType();
-  }
-
-  @FXML
-  private void handleBackButtonAction() {
-    setNotes();
+  @Override
+  protected void handleBackButtonAction() {
+    setDetails();
     Main.setUi(AppUI.CI_DETAILS);
   }
 
@@ -337,5 +295,15 @@ public class CustomerInputNotesController implements AccessTypeObserver {
   @Override
   public void setInvalidButton(String style) {
     // Do nothing
+  }
+
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
+
+    notes = customer.getNotes();
+    // For all notes, set it based on the index of the page notes and also the line number
+    loadPageNotes(currentPage);
   }
 }

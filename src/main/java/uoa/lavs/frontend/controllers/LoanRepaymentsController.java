@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import uoa.lavs.Main;
 import uoa.lavs.backend.oop.loan.PersonalLoan;
@@ -51,6 +52,8 @@ public class LoanRepaymentsController {
   @FXML private ImageView incPage;
   @FXML private ImageView decPage;
 
+  @FXML private TextField loanStatusField;
+
   // create new loan singleton object to access loan data
   private PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
@@ -71,6 +74,8 @@ public class LoanRepaymentsController {
     loadLoanPayments.setLoanId(personalLoan.getLoanId());
     loadLoanPayments.setNumber(1);
     Status status = loadLoanPayments.send(connection);
+
+    loanStatusField.setDisable(true);
 
     if (status.getErrorCode() == 0) {
       System.out.println("Successfully received loan payments");

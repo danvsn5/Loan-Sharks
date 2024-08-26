@@ -1,6 +1,5 @@
 package uoa.lavs.frontend.controllers;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -8,23 +7,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.util.StringConverter;
-import uoa.lavs.Main;
-import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
-import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
-import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputDetailsController implements AccessTypeObserver {
-  @FXML private Label idBanner;
+public class CustomerInputDetailsController extends AbstractCustomerController
+    implements AccessTypeObserver {
 
   @FXML private ComboBox<String> customerTitleComboBox;
   @FXML private TextField customerNameField;
@@ -33,17 +26,6 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   @FXML private ComboBox<String> customerVisaBox;
 
   @FXML private ComboBox<String> customerCitizenshipBox;
-
-  @FXML private Button notesButton;
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerContactButton;
-  @FXML private Button customerEmployerButton;
-
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
-
-  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   Random random = new Random();
 
@@ -92,15 +74,7 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      customerNameField.setText(customer.getName());
-      customerDOBPicker.setValue(customer.getDateOfBirth());
-      customerOccupationField.setText(customer.getOccupation());
-      customerVisaBox.setValue(customer.getVisa());
-      customerTitleComboBox.setValue(customer.getTitle());
-      customerCitizenshipBox.setValue(customer.getCitizenship());
+      startWithCustomerID();
     }
   }
 
@@ -166,10 +140,11 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     return true;
   }
 
-  private boolean setCustomerDetails() {
+  @Override
+  protected void setDetails() {
 
     if (!validateData()) {
-      return false;
+      return;
     }
 
     // Set customer details
@@ -179,78 +154,6 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
     customer.setOccupation(customerOccupationField.getText());
     customer.setVisa(customerVisaBox.getValue());
     customer.setCitizenship(customerCitizenshipBox.getValue());
-    return true;
-  }
-
-  @FXML
-  private void handleEditButtonAction() throws IOException {
-    System.out.println("Edit button clicked");
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      // Handle create customer logic
-      // Save customer to database or perform necessary actions
-      setCustomerDetails();
-
-      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
-      if (!customerIsValid) {
-        System.out.println("Customer is not valid and thus will not be created");
-        editButton.setStyle("-fx-border-color: red");
-        return;
-      }
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      CustomerCreationHelper.createCustomer(customer, false);
-
-    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
-      // Switch to edit mode
-      AppState.setCustomerDetailsAccessType("EDIT");
-      AccessTypeNotifier.notifyCustomerObservers();
-    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      // Handle confirm changes logic
-      // Save changes to database or perform necessary actions
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      setCustomerDetails();
-      CustomerCreationHelper.createCustomer(customer, true);
-    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
-        && !AccessTypeNotifier.validateCustomerObservers()) {
-      System.out.println("Invalid data");
-    }
-  }
-
-  @FXML
-  private void handleNotesButtonAction() {
-    setCustomerDetails();
-    Main.setUi(AppUI.CI_NOTES);
-  }
-
-  @FXML
-  private void handleAddressButtonAction() {
-    setCustomerDetails();
-    Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
-  }
-
-  @FXML
-  private void handleContactButtonAction() {
-    setCustomerDetails();
-    Main.setUi(AppUI.CI_CONTACT);
-  }
-
-  @FXML
-  private void handleEmployerButtonAction() {
-    setCustomerDetails();
-    Main.setUi(AppUI.CI_EMPLOYER);
-  }
-
-  @FXML
-  private void handleBackButtonAction() {
-    if (AppState.getIsAccessingFromSearch()) {
-      AppState.setIsAccessingFromLoanSearch(false);
-      Main.setUi(AppUI.CUSTOMER_SEARCH);
-    } else {
-      Main.setUi(AppUI.CUSTOMER_MENU);
-    }
   }
 
   @Override
@@ -259,21 +162,16 @@ public class CustomerInputDetailsController implements AccessTypeObserver {
   }
 
   @FXML
-  public void setInvalidButton(String style) {
-    Button currentButton = AppState.getCurrentButton();
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
 
-    String buttonId = currentButton.getId();
-
-    if (buttonId != null) {
-      if (buttonId.equals("customerDetailsButton")) {
-        customerDetailsButton.setStyle(style);
-      } else if (buttonId.equals("customerAddressButton")) {
-        customerAddressButton.setStyle(style);
-      } else if (buttonId.equals("customerContactButton")) {
-        customerContactButton.setStyle(style);
-      } else if (buttonId.equals("customerEmployerButton")) {
-        customerEmployerButton.setStyle(style);
-      }
-    }
+    customerNameField.setText(customer.getName());
+    customerDOBPicker.setValue(customer.getDateOfBirth());
+    customerOccupationField.setText(customer.getOccupation());
+    customerVisaBox.setValue(customer.getVisa());
+    customerTitleComboBox.setValue(customer.getTitle());
+    customerCitizenshipBox.setValue(customer.getCitizenship());
   }
 }

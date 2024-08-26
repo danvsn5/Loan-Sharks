@@ -1,26 +1,20 @@
 package uoa.lavs.frontend.controllers;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
-import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
-import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
-import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputEmployerAddressController implements AccessTypeObserver {
+public class CustomerInputEmployerAddressController extends AbstractCustomerController
+    implements AccessTypeObserver {
   @FXML private TextField employerAddressLine1Field;
   @FXML private TextField employerAddressLine2Field;
   @FXML private TextField employerSuburbField;
@@ -29,20 +23,9 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
 
   @FXML private ComboBox<String> employerCountryBox;
 
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerContactButton;
-  @FXML private Button customerEmployerButton;
-
   // TODO: THIS IS AN EXCEPTION, THIS NEEDS TO SHOWN AS RED ONLY TO THE EMPLOYER DETAILS SCREEN AND
   // ITSELF
   @FXML private Button employerAddressButton;
-
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
-  @FXML private Label idBanner;
-
-  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   @FXML
   private void initialize() {
@@ -61,15 +44,7 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      employerAddressLine1Field.setText(customer.getEmployer().getLineOne());
-      employerAddressLine2Field.setText(customer.getEmployer().getLineTwo());
-      employerSuburbField.setText(customer.getEmployer().getSuburb());
-      employerCityField.setText(customer.getEmployer().getCity());
-      employerPostcodeField.setText(customer.getEmployer().getPostCode());
-      employerCountryBox.setValue(customer.getEmployer().getCountry());
+      startWithCustomerID();
     }
   }
 
@@ -153,10 +128,11 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
         new RadioButton[] {});
   }
 
-  private boolean setAddressDetails() {
+  @Override
+  protected void setDetails() {
 
     if (!validateData()) {
-      return false;
+      return;
     }
 
     CustomerEmployer employer = customer.getEmployer();
@@ -167,73 +143,6 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     employer.setPostCode(employerPostcodeField.getText());
 
     employer.setCountry(employerCountryBox.getValue());
-
-    return true;
-  }
-
-  @FXML
-  private void handleDetailsButtonAction() {
-    setAddressDetails();
-    Main.setUi(AppUI.CI_DETAILS);
-  }
-
-  @FXML
-  private void handleAddressButtonAction() {
-    setAddressDetails();
-    Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
-  }
-
-  @FXML
-  private void handleContactButtonAction() {
-    setAddressDetails();
-    Main.setUi(AppUI.CI_CONTACT);
-  }
-
-  @FXML
-  private void handleEmployerButtonAction() {
-    setAddressDetails();
-    Main.setUi(AppUI.CI_EMPLOYER);
-  }
-
-  @FXML
-  private void handleEditButtonAction() throws IOException {
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      setAddressDetails();
-
-      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
-      if (!customerIsValid) {
-        System.out.println("Customer is not valid and thus will not be created");
-        editButton.setStyle("-fx-border-color: red");
-        return;
-      }
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-      CustomerCreationHelper.createCustomer(customer, false);
-      AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
-      AppState.setCustomerDetailsAccessType("EDIT");
-      AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-      setAddressDetails();
-      CustomerCreationHelper.createCustomer(customer, true);
-    }
-  }
-
-  @FXML
-  private void handleBackButtonAction() {
-    if (AppState.getIsAccessingFromSearch()) {
-      AppState.setIsAccessingFromSearch(false);
-      Main.setUi(AppUI.CUSTOMER_SEARCH);
-    } else {
-      Main.setUi(AppUI.CUSTOMER_MENU);
-    }
   }
 
   @Override
@@ -241,7 +150,21 @@ public class CustomerInputEmployerAddressController implements AccessTypeObserve
     return employerAddressButton;
   }
 
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
+
+    employerAddressLine1Field.setText(customer.getEmployer().getLineOne());
+    employerAddressLine2Field.setText(customer.getEmployer().getLineTwo());
+    employerSuburbField.setText(customer.getEmployer().getSuburb());
+    employerCityField.setText(customer.getEmployer().getCity());
+    employerPostcodeField.setText(customer.getEmployer().getPostCode());
+    employerCountryBox.setValue(customer.getEmployer().getCountry());
+  }
+
   @FXML
+  @Override
   public void setInvalidButton(String style) {
     Button currentButton = AppState.getCurrentButton();
 

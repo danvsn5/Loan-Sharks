@@ -1,42 +1,22 @@
 package uoa.lavs.frontend.controllers;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import uoa.lavs.Main;
 import uoa.lavs.backend.oop.loan.LoanPayment;
-import uoa.lavs.backend.oop.loan.PersonalLoan;
-import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
-import uoa.lavs.backend.sql.sql_to_mainframe.LoanCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
-import uoa.lavs.frontend.SceneManager.AppUI;
-import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
-public class LoanFinanceDetails implements AccessTypeObserver {
+public class LoanFinanceDetails extends AbstractLoanController implements AccessTypeObserver {
   @FXML private ComboBox<String> compoundingBox;
   @FXML private ComboBox<String> paymentFrequencyBox;
   @FXML private TextField paymentValueField;
   @FXML private RadioButton interestOnlyButton;
-
-  @FXML private Button coborrowerButton;
-  @FXML private Button durationButton;
-  @FXML private Button financeButton;
-  @FXML private Button primaryButton;
-
-  @FXML private Button summaryButton;
-  @FXML private ImageView staticReturnImageView;
-
-  @FXML private Button editButton;
-
-  PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @FXML
   private void initialize() {
@@ -68,7 +48,7 @@ public class LoanFinanceDetails implements AccessTypeObserver {
         new DatePicker[] {},
         new RadioButton[] {interestOnlyButton});
     // TODO set finance details onto the screen if not create type.
-    // setFinanceDetails();
+    // setLoanDetails();
   }
 
   @Override
@@ -99,20 +79,8 @@ public class LoanFinanceDetails implements AccessTypeObserver {
     return isValid;
   }
 
-  @FXML
-  private void handleEditButtonAction() {
-    if (AppState.getLoanDetailsAccessType().equals("CREATE")) {
-      AppState.setLoanDetailsAccessType("VIEW");
-    } else if (AppState.getLoanDetailsAccessType().equals("VIEW")) {
-      AppState.setLoanDetailsAccessType("EDIT");
-    } else if (AppState.getLoanDetailsAccessType().equals("EDIT")) {
-      AppState.setLoanDetailsAccessType("VIEW");
-    }
-    AccessTypeNotifier.notifyLoanObservers();
-    updateUIBasedOnAccessType();
-  }
-
-  private void setFinanceDetails() {
+  @Override
+  protected void setLoanDetails() {
     if (!validateData()) {
       return;
     }
@@ -127,75 +95,8 @@ public class LoanFinanceDetails implements AccessTypeObserver {
     personalLoan.setPayment(loanPayment);
   }
 
-  @FXML
-  private void handlePrimaryButtonAction() {
-    setFinanceDetails();
-    Main.setUi(AppUI.LC_PRIMARY);
-  }
-
-  @FXML
-  private void handleCoborrowerButtonAction() {
-    setFinanceDetails();
-    Main.setUi(AppUI.LC_COBORROWER);
-  }
-
-  @FXML
-  private void handleDurationButtonAction() {
-    setFinanceDetails();
-    Main.setUi(AppUI.LC_DURATION);
-  }
-
-  @FXML
-  private void handleSummaryButtonAction() throws IOException {
-    setFinanceDetails();
-    if (AccessTypeNotifier.validateLoanObservers()) {
-      boolean loanIsValid = LoanCreationHelper.validateLoan(personalLoan);
-      if (!loanIsValid) {
-        System.out.println("Loan is not valid and thus will not be created");
-        summaryButton.setStyle("-fx-border-color: red");
-        return;
-      }
-      LoanCreationHelper.createLoan(personalLoan);
-      LoanCreationHelper.getLoanSummary(personalLoan);
-      LoadLoanSummary loadLoanSummary = LoanCreationHelper.getLoanSummary(personalLoan);
-      AppState.setCurrentLoanSummary(loadLoanSummary);
-
-      AppState.loadLoanSummary(AppState.getLoanDetailsAccessType());
-    }
-  }
-
-  @FXML
-  private void handleBackButtonAction() {
-    if (AppState.getIsCreatingLoan()) {
-      Main.setUi(AppUI.CUSTOMER_RESULTS);
-    } else {
-      Main.setUi(AppUI.LC_SUMMARY);
-    }
-  }
-
   @Override
   public Button getButton() {
     return financeButton;
-  }
-
-  @FXML
-  public void setInvalidButton(String style) {
-    Button currentButton = AppState.getCurrentButton();
-
-    String buttonId = currentButton.getId();
-
-    if (buttonId != null) {
-      if (buttonId.equals("coborrowerButton")) {
-        coborrowerButton.setStyle(style);
-      } else if (buttonId.equals("durationButton")) {
-        durationButton.setStyle(style);
-      } else if (buttonId.equals("financeButton")) {
-        financeButton.setStyle(style);
-      } else if (buttonId.equals("primaryButton")) {
-        primaryButton.setStyle(style);
-      } else if (buttonId.equals("summaryButton")) {
-        summaryButton.setStyle(style);
-      }
-    }
   }
 }

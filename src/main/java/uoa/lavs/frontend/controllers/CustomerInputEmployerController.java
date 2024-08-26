@@ -1,45 +1,30 @@
 package uoa.lavs.frontend.controllers;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
-import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
-import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputEmployerController implements AccessTypeObserver {
+public class CustomerInputEmployerController extends AbstractCustomerController
+    implements AccessTypeObserver {
   @FXML private TextField employerNameField;
   @FXML private TextField employerEmailField;
   @FXML private TextField employerWebsiteField;
   @FXML private TextField employerPhoneField;
   @FXML private RadioButton customerIsEmployerCheckbox;
 
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerContactButton;
-  @FXML private Button customerEmployerButton;
-
   // TODO: THIS IS AN EXCEPTION, THIS NEEDS TO SHOWN AS RED ONLY TO THE EMPLOYER DETAILS SCREEN AND
   // ITSELF
   @FXML private Button employerAddressButton;
-
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
-
-  @FXML private Label idBanner;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -58,14 +43,7 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      employerNameField.setText(customer.getEmployer().getEmployerName());
-      employerEmailField.setText(customer.getEmployer().getEmployerEmail());
-      employerWebsiteField.setText(customer.getEmployer().getEmployerWebsite());
-      employerPhoneField.setText(customer.getEmployer().getEmployerPhone());
-      customerIsEmployerCheckbox.setSelected(customer.getEmployer().getOwnerOfCompany());
+      startWithCustomerID();
     }
   }
 
@@ -139,10 +117,11 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
         new RadioButton[] {customerIsEmployerCheckbox});
   }
 
-  private boolean setEmployerDetails() {
+  @Override
+  protected void setDetails() {
 
     if (!validateData()) {
-      return false;
+      return;
     }
 
     CustomerEmployer employer = customer.getEmployer();
@@ -151,73 +130,6 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     employer.setEmployerWebsite(employerWebsiteField.getText());
     employer.setEmployerPhone(employerPhoneField.getText());
     employer.setOwnerOfCompany(customerIsEmployerCheckbox.isSelected());
-
-    return true;
-  }
-
-  @FXML
-  private void handleDetailsButtonAction() {
-    setEmployerDetails();
-    Main.setUi(AppUI.CI_DETAILS);
-  }
-
-  @FXML
-  private void handleAddressButtonAction() {
-    setEmployerDetails();
-    Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
-  }
-
-  @FXML
-  private void handleContactButtonAction() {
-    setEmployerDetails();
-    Main.setUi(AppUI.CI_CONTACT);
-  }
-
-  @FXML
-  private void handleEmployerAddressButtonAction() {
-    setEmployerDetails();
-    Main.setUi(AppUI.CI_EMPLOYER_ADDRESS);
-  }
-
-  @FXML
-  private void handleEditButtonAction() throws IOException {
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      setEmployerDetails();
-
-      boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
-      if (!customerIsValid) {
-        System.out.println("Customer is not valid and thus will not be created");
-        editButton.setStyle("-fx-border-color: red");
-        return;
-      }
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-      CustomerCreationHelper.createCustomer(customer, false);
-      AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-    } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
-      AppState.setCustomerDetailsAccessType("EDIT");
-      AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-    } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
-        && AccessTypeNotifier.validateCustomerObservers()) {
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
-      updateUIBasedOnAccessType();
-      setEmployerDetails();
-      CustomerCreationHelper.createCustomer(customer, true);
-    }
-  }
-
-  @FXML
-  private void handleBackButtonAction() {
-    if (AppState.getIsAccessingFromSearch()) {
-      AppState.setIsAccessingFromSearch(false);
-      Main.setUi(AppUI.CUSTOMER_SEARCH);
-    } else {
-      Main.setUi(AppUI.CUSTOMER_MENU);
-    }
   }
 
   @Override
@@ -225,7 +137,20 @@ public class CustomerInputEmployerController implements AccessTypeObserver {
     return customerEmployerButton;
   }
 
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
+
+    employerNameField.setText(customer.getEmployer().getEmployerName());
+    employerEmailField.setText(customer.getEmployer().getEmployerEmail());
+    employerWebsiteField.setText(customer.getEmployer().getEmployerWebsite());
+    employerPhoneField.setText(customer.getEmployer().getEmployerPhone());
+    customerIsEmployerCheckbox.setSelected(customer.getEmployer().getOwnerOfCompany());
+  }
+
   @FXML
+  @Override
   public void setInvalidButton(String style) {
     Button currentButton = AppState.getCurrentButton();
 

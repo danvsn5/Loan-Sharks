@@ -10,9 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.Email;
-import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.backend.oop.customer.Phone;
 import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
@@ -20,9 +18,9 @@ import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
-import uoa.lavs.frontend.SceneManager.AppUI;
 
-public class CustomerInputContactController implements AccessTypeObserver {
+public class CustomerInputContactController extends AbstractCustomerController
+    implements AccessTypeObserver {
   @FXML private TextField customerEmailTextField;
   @FXML private TextField customerPhoneNumberOne;
 
@@ -41,18 +39,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
 
   @FXML private TextField customerPreferredContactBox;
   @FXML private TextField customerAltContactBox;
-
-  @FXML private Button customerDetailsButton;
-  @FXML private Button customerAddressButton;
-  @FXML private Button customerContactButton;
-  @FXML private Button customerEmployerButton;
-
-  @FXML private Button editButton;
-  @FXML private ImageView staticReturnImageView;
-
-  @FXML private Label idBanner;
-
-  private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
   private ArrayList<Phone> existingCustomerPhones = customer.getPhones();
   private int currentNumberPage = 0;
@@ -92,35 +78,7 @@ public class CustomerInputContactController implements AccessTypeObserver {
     }
 
     if (AppState.getIsAccessingFromSearch()) {
-      IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
-      customer = IndividualCustomerSingleton.getInstance();
-
-      existingCustomerPhones = customer.getPhones();
-      existingCustomerEmails = customer.getEmails();
-
-      if (existingCustomerPhones.size() > 0) {
-
-        customerPhoneTypeBox.setValue(existingCustomerPhones.get(0).getType());
-        customerPhonePrefixField.setText(existingCustomerPhones.get(0).getPrefix());
-        customerPhoneNumberOne.setText(existingCustomerPhones.get(0).getPhoneNumber());
-        sendTextRadio.setSelected(existingCustomerPhones.get(0).getCanSendText());
-        phonePrimaryRadio.setSelected(existingCustomerPhones.get(0).getIsPrimary());
-        if (phonePrimaryRadio.isSelected()) {
-          isPrimaryPhoneSet = true;
-        } else {
-          isPrimaryPhoneSet = false;
-        }
-      }
-
-      if (existingCustomerEmails.size() > 0) {
-        customerEmailTextField.setText(existingCustomerEmails.get(0).getEmailAddress());
-        emailPrimaryRadio.setSelected(existingCustomerEmails.get(0).getIsPrimary());
-        if (emailPrimaryRadio.isSelected()) {
-          isPrimaryEmailSet = true;
-        } else {
-          isPrimaryEmailSet = false;
-        }
-      }
+      startWithCustomerID();
     }
 
     // iterate through all existing phone numbers and emails; if ANY of of them have
@@ -134,6 +92,40 @@ public class CustomerInputContactController implements AccessTypeObserver {
     for (Email email : existingCustomerEmails) {
       if (email.getIsPrimary()) {
         isPrimaryEmailSet = true;
+      }
+    }
+  }
+
+  @FXML
+  @Override
+  protected void startWithCustomerID() {
+    IndividualCustomerSingleton.setInstanceCustomer(AppState.getSelectedCustomer());
+    customer = IndividualCustomerSingleton.getInstance();
+
+    existingCustomerPhones = customer.getPhones();
+    existingCustomerEmails = customer.getEmails();
+
+    if (existingCustomerPhones.size() > 0) {
+
+      customerPhoneTypeBox.setValue(existingCustomerPhones.get(0).getType());
+      customerPhonePrefixField.setText(existingCustomerPhones.get(0).getPrefix());
+      customerPhoneNumberOne.setText(existingCustomerPhones.get(0).getPhoneNumber());
+      sendTextRadio.setSelected(existingCustomerPhones.get(0).getCanSendText());
+      phonePrimaryRadio.setSelected(existingCustomerPhones.get(0).getIsPrimary());
+      if (phonePrimaryRadio.isSelected()) {
+        isPrimaryPhoneSet = true;
+      } else {
+        isPrimaryPhoneSet = false;
+      }
+    }
+
+    if (existingCustomerEmails.size() > 0) {
+      customerEmailTextField.setText(existingCustomerEmails.get(0).getEmailAddress());
+      emailPrimaryRadio.setSelected(existingCustomerEmails.get(0).getIsPrimary());
+      if (emailPrimaryRadio.isSelected()) {
+        isPrimaryEmailSet = true;
+      } else {
+        isPrimaryEmailSet = false;
       }
     }
   }
@@ -158,11 +150,11 @@ public class CustomerInputContactController implements AccessTypeObserver {
   }
 
   @FXML
-  private void handleEditButtonAction() throws IOException {
-    System.out.println("Edit button clicked");
+  @Override
+  protected void handleEditButtonAction() throws IOException {
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")
         && AccessTypeNotifier.validateCustomerObservers()) {
-      setContactDetails();
+      setDetails();
 
       boolean customerIsValid = CustomerCreationHelper.validateCustomer(customer);
       if (!customerIsValid) {
@@ -172,22 +164,22 @@ public class CustomerInputContactController implements AccessTypeObserver {
       }
 
       AppState.setCustomerDetailsAccessType("VIEW");
-
+      AccessTypeNotifier.notifyCustomerObservers();
       CustomerCreationHelper.createCustomer(customer, false);
 
-      AccessTypeNotifier.notifyCustomerObservers();
     } else if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
+
       AppState.setCustomerDetailsAccessType("EDIT");
       AccessTypeNotifier.notifyCustomerObservers();
+
     } else if (AppState.getCustomerDetailsAccessType().equals("EDIT")
         && AccessTypeNotifier.validateCustomerObservers()) {
-
-      AppState.setCustomerDetailsAccessType("VIEW");
-      AccessTypeNotifier.notifyCustomerObservers();
 
       setEmailDetails("confirm");
       setPhoneDetails("confirm");
 
+      AppState.setCustomerDetailsAccessType("VIEW");
+      AccessTypeNotifier.notifyCustomerObservers();
       CustomerCreationHelper.createCustomer(customer, true);
     }
   }
@@ -280,11 +272,13 @@ public class CustomerInputContactController implements AccessTypeObserver {
     return isValid;
   }
 
-  private boolean setContactDetails() {
+  @Override
+  protected void setDetails() {
 
     if (!validateData()) {
-      return false;
+      return;
     }
+
     // create a new phone number
     Phone newPhone =
         new Phone(
@@ -309,8 +303,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
     // if the current email page is the same as the amount of valid emails
     existingCustomerEmails.set(currentEmailPage, newEmail);
     customer.setEmails(existingCustomerEmails);
-
-    return true;
   }
 
   private boolean setPhoneDetails(String location) {
@@ -381,25 +373,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
     return true;
   }
 
-  // add handlers for all buttons
-  @FXML
-  private void handleCustomerDetailsButtonAction() {
-    setContactDetails();
-    Main.setUi(AppUI.CI_DETAILS);
-  }
-
-  @FXML
-  private void handleCustomerAddressButtonAction() {
-    setContactDetails();
-    Main.setUi(AppUI.CI_PRIMARY_ADDRESS);
-  }
-
-  @FXML
-  private void handleCustomerEmployerButtonAction() {
-    setContactDetails();
-    Main.setUi(AppUI.CI_EMPLOYER);
-  }
-
   @FXML
   private void phonePrimaryRadioClick() {
     if (phonePrimaryRadio.isSelected()) {
@@ -433,16 +406,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
       sendTextRadio.setDisable(true);
     } else {
       sendTextRadio.setDisable(false);
-    }
-  }
-
-  @FXML
-  private void handleBackButtonAction() {
-    if (AppState.getIsAccessingFromSearch()) {
-      AppState.setIsAccessingFromSearch(false);
-      Main.setUi(AppUI.CUSTOMER_SEARCH);
-    } else {
-      Main.setUi(AppUI.CUSTOMER_MENU);
     }
   }
 
@@ -648,25 +611,6 @@ public class CustomerInputContactController implements AccessTypeObserver {
   @Override
   public Button getButton() {
     return customerContactButton;
-  }
-
-  @FXML
-  public void setInvalidButton(String style) {
-    Button currentButton = AppState.getCurrentButton();
-
-    String buttonId = currentButton.getId();
-
-    if (buttonId != null) {
-      if (buttonId.equals("customerDetailsButton")) {
-        customerDetailsButton.setStyle(style);
-      } else if (buttonId.equals("customerAddressButton")) {
-        customerAddressButton.setStyle(style);
-      } else if (buttonId.equals("customerContactButton")) {
-        customerContactButton.setStyle(style);
-      } else if (buttonId.equals("customerEmployerButton")) {
-        customerEmployerButton.setStyle(style);
-      }
-    }
   }
 
   public void setPhoneDetailsUI(String setting) {
