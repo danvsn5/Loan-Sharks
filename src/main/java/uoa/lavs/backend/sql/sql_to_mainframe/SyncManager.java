@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import uoa.lavs.backend.sql.DatabaseConnection;
 import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.Status;
@@ -134,8 +133,8 @@ public class SyncManager {
     return status;
   }
 
-  public static void main(String[] args) throws IOException {
-    Status status = masterSync();
-    System.out.println(status.getErrorMessage());
-  }
+  // public static void main(String[] args) throws IOException {
+  //   Status status = masterSync();
+  //   System.out.println(status.getErrorMessage());
+  // }
 }

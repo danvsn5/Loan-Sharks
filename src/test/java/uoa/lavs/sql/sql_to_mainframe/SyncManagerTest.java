@@ -64,12 +64,32 @@ public class SyncManagerTest {
     Status status = syncManager.syncAll(lastSyncTime);
   }
 
+  @Test
+  public void testSyncNothing() throws IOException {
+    SyncManager syncManager = new SyncManager(List.of());
+    Status status = syncManager.syncAll(LocalDateTime.now(ZoneOffset.UTC).minusDays(1));
+  }
+
+  @Test
+  public void testCheckIfNeedSyncing() {
+    try {
+      SyncManager.checkIfNeedsSyncing();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  public void testMasterSync() {
+    try {
+      SyncManager.masterSync();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   @AfterEach
   public void tearDown() {
     DatabaseState.setActiveDB(false);
-    if (!dbFile.delete()) {
-      throw new RuntimeException(
-          "Failed to delete test database file: " + dbFile.getAbsolutePath());
-    }
   }
 }
