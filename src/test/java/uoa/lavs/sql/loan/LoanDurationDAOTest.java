@@ -59,6 +59,15 @@ public class LoanDurationDAOTest {
   }
 
   @Test
+  public void testAddLoanDurationSQLException() {
+    String invalidSql =
+        "INSERT INTO non_existent_table (loanId, durationId, startDate, period, loanTerm) VALUES"
+            + " (?, ?, ?, ?, ?)";
+
+    loanDurationDAO.add(loanDuration, invalidSql);
+  }
+
+  @Test
   public void testUpdateLoanDuration() {
     loanDurationDAO.addLoanDuration(loanDuration);
     LocalDate newStartDate = LocalDate.now().minusDays(1);
@@ -89,6 +98,22 @@ public class LoanDurationDAOTest {
   }
 
   @Test
+  public void testUpdateLoanDurationSQLException() {
+    loanDurationDAO.addLoanDuration(loanDuration);
+    LocalDate newStartDate = LocalDate.now().minusDays(1);
+
+    loanDuration.setStartDate(newStartDate);
+    loanDuration.setPeriod(10);
+    loanDuration.setLoanTerm(24);
+
+    String invalidSql =
+        "UPDATE non_existent_table SET startDate = ?, period = ?, loanTerm = ?, lastModified ="
+            + " CURRENT_TIMESTAMP WHERE durationId = ?";
+
+    loanDurationDAO.update(loanDuration, invalidSql);
+  }
+
+  @Test
   public void testGetLoanDuration() {
     loanDurationDAO.addLoanDuration(loanDuration);
 
@@ -98,6 +123,15 @@ public class LoanDurationDAOTest {
     Assertions.assertEquals(startDate, retrievedLoanDuration.getStartDate());
     Assertions.assertEquals(5, retrievedLoanDuration.getPeriod());
     Assertions.assertEquals(12, retrievedLoanDuration.getLoanTerm());
+  }
+
+  @Test
+  public void testGetLoanDurationSQLException() {
+    loanDurationDAO.addLoanDuration(loanDuration);
+
+    String invalidSql = "SELECT * FROM non_existent_table WHERE loanId = ?";
+
+    loanDurationDAO.get("-1", invalidSql);
   }
 
   @Test

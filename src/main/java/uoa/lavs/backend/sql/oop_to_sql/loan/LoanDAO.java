@@ -19,6 +19,11 @@ public class LoanDAO {
   public void addLoan(ILoan loan) {
     String sql =
         "INSERT INTO loan (loanId, customerId, principal, rate, rateType) VALUES (?, ?, ?, ?, ?)";
+    add(loan, sql);
+  }
+
+  // Helper to add a loan to the database
+  public void add(ILoan loan, String sql) {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, loan.getLoanId());
@@ -38,6 +43,11 @@ public class LoanDAO {
     String sql =
         "UPDATE loan SET customerId = ?, principal = ?, rate = ?, rateType = ?, lastModified ="
             + " CURRENT_TIMESTAMP WHERE loanId = ?";
+    update(loan, sql);
+  }
+
+  // Helper to update a loan in the database
+  public void update(ILoan loan, String sql) {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, loan.getCustomerId());
@@ -54,6 +64,12 @@ public class LoanDAO {
   // Get a loan from the database using the loanId
   public Loan getLoan(String loanId) {
     String sql = "SELECT * FROM loan WHERE loanId = ?";
+    return get(loanId, sql);
+  }
+
+  // Helper to get a loan from the database
+  public Loan get(String loanId, String sql) {
+    Loan loan = null;
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -75,13 +91,15 @@ public class LoanDAO {
         LoanCoborrowersDAO coborrowersDAO = new LoanCoborrowersDAO();
         ArrayList<String> coborrowerIds = coborrowersDAO.getCoborrowers(loanId);
 
-        return new PersonalLoan(
-            loanId, customerId, coborrowerIds, principal, rate, rateType, duration, payment);
+        loan =
+            new PersonalLoan(
+                loanId, customerId, coborrowerIds, principal, rate, rateType, duration, payment);
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-    return null;
+
+    return loan;
   }
 
   // Get all loans from the database associated with a customerId

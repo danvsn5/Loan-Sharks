@@ -2,18 +2,23 @@ package uoa.lavs.backend.sql.oop_to_sql.loan;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import uoa.lavs.backend.oop.loan.LoanPayment;
 import uoa.lavs.backend.sql.DatabaseConnection;
+import uoa.lavs.backend.sql.oop_to_sql.AbstractDAO;
 
-public class LoanPaymentDAO {
+public class LoanPaymentDAO extends AbstractDAO {
 
   // Adds a loan payment to the database
   public void addLoanPayment(LoanPayment payment) {
     String sql =
         "INSERT INTO loan_payment (loanId, paymentId, compounding, paymentFrequency, paymentAmount,"
             + " interestOnly) VALUES (?, ?, ?, ?, ?, ?)";
+    add(payment, sql);
+  }
+
+  // Helper to add a loan payment to the database
+  public void add(LoanPayment payment, String sql) {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -38,20 +43,7 @@ public class LoanPaymentDAO {
   // Get the next paymentId for a loan when adding a new payment
   private int getNextPaymentIdForLoan(String loanId) {
     String sql = "SELECT MAX(paymentId) FROM loan_payment WHERE loanId = ?";
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-      pstmt.setString(1, loanId);
-      ResultSet rs = pstmt.executeQuery();
-
-      if (rs.next()) {
-        int maxPaymentId = rs.getInt(1);
-        return maxPaymentId + 1;
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return 1;
+    return getNextId(loanId, sql);
   }
 
   // Updates a loan payment in the database with new details from the payment object
@@ -59,8 +51,14 @@ public class LoanPaymentDAO {
     String sql =
         "UPDATE loan_payment SET compounding = ?, paymentFrequency = ?, paymentAmount = ?,"
             + " interestOnly = ?, lastModified = CURRENT_TIMESTAMP WHERE loanId = ?";
+    update(payment, sql);
+  }
+
+  // Helper to update a loan payment in the database
+  public void update(LoanPayment payment, String sql) {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
       pstmt.setString(1, payment.getCompounding());
       pstmt.setString(2, payment.getPaymentFrequency());
       pstmt.setString(3, payment.getPaymentAmount());
@@ -76,6 +74,11 @@ public class LoanPaymentDAO {
   // Get a loan payment from the database using the loanId
   public LoanPayment getLoanPayment(String loanId) {
     String sql = "SELECT * FROM loan_payment WHERE loanId = ?";
+    return get(loanId, sql);  
+  }
+
+  // Helper to get a loan payment from the database
+  public LoanPayment get(String loanId, String sql) {
     LoanPayment payment = null;
 
     try (Connection conn = DatabaseConnection.connect();
