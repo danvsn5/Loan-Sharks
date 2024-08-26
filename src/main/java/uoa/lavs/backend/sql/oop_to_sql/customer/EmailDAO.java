@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import uoa.lavs.backend.oop.customer.Email;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
-public class EmailDAO {
+public class EmailDAO extends AbstractDAO {
 
   // Adds an email to the database
   public void addEmail(Email email) {
@@ -37,21 +37,8 @@ public class EmailDAO {
 
   // Finds the next emailId for a customer when new email is added
   public int getNextEmailIdForCustomer(String customerId) {
-    int maxEmailId = 0;
     String sql = "SELECT MAX(emailId) FROM customer_email WHERE customerId = ?";
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-      pstmt.setString(1, customerId);
-      ResultSet rs = pstmt.executeQuery();
-
-      if (rs.next()) {
-        maxEmailId = rs.getInt(1);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return maxEmailId + 1;
+    return getNextId(customerId, sql);  
   }
 
   // Updates an email in the database with new details from the email object

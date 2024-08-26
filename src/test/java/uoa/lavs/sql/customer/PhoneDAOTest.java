@@ -117,6 +117,22 @@ public class PhoneDAOTest {
     }
   }
 
+  @Test 
+  public void testGetPhoneNoPhones() {
+    Phone retrievedPhone = phoneDAO.getPhone("000001", 1);
+    Assertions.assertNull(retrievedPhone);
+  }
+
+  @Test
+  public void testGetPhoneNoMatching() {
+    // add a phone
+    Phone phone = new Phone("000001", "Mobile", "027", "1234567890", true, true);
+    phoneDAO.addPhone(phone);
+    
+    Phone retrievedPhone = phoneDAO.getPhone("000001", 4);
+    Assertions.assertNull(retrievedPhone);
+  }
+
   @Test
   public void testGetPhones() {
     Phone phone = new Phone("000001", "Mobile", "027", "1234567890", true, true);
@@ -146,6 +162,18 @@ public class PhoneDAOTest {
     } finally {
       DatabaseConnection.close(null);
     }
+  }
+
+  @Test
+  public void testGetNextPhoneIdSQLException() {
+    int nextId = phoneDAO.getNextId("030001", "SELECT MAX(=stomer_phone WHERE customerId = ?");
+    Assertions.assertEquals(1, nextId);
+  }
+
+  @Test
+  public void testGetNextPhoneIdNoResults() {
+    int nextId = phoneDAO.getNextId("030001", "SELECT phoneId FROM customer_phone WHERE customerId = ?");
+    Assertions.assertEquals(1, nextId);
   }
 
   @AfterEach

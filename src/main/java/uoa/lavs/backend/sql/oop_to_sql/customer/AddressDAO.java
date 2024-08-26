@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import uoa.lavs.backend.oop.customer.Address;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
-public class AddressDAO {
+public class AddressDAO extends AbstractDAO {
 
   // Handles the addition of an address to the database
   public void addAddress(Address address) {
@@ -47,21 +47,7 @@ public class AddressDAO {
   // Finds the next addressId for a customer
   private int getNextAddressIdForCustomer(String customerId) {
     String sql = "SELECT MAX(addressId) FROM customer_address WHERE customerId = ?";
-
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-      pstmt.setString(1, customerId);
-      ResultSet rs = pstmt.executeQuery();
-
-      if (rs.next()) {
-        int maxAddressId = rs.getInt(1);
-        return maxAddressId + 1;
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return 1;
+    return getNextId(customerId, sql);
   }
 
   // Updates the address in the database with the new address paramaters

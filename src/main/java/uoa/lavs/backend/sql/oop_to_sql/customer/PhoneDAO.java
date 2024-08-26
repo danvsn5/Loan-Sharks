@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import uoa.lavs.backend.oop.customer.Phone;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
-public class PhoneDAO {
+public class PhoneDAO extends AbstractDAO{
 
   // Adds a phone to the database
   public void addPhone(Phone phone) {
@@ -40,20 +40,7 @@ public class PhoneDAO {
 
   public int getNextPhoneIdForCustomer(String customerId) {
     String sql = "SELECT MAX(phoneId) FROM customer_phone WHERE customerId = ?";
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-      pstmt.setString(1, customerId);
-      ResultSet rs = pstmt.executeQuery();
-
-      if (rs.next()) {
-        int maxPhoneId = rs.getInt(1);
-        return maxPhoneId + 1;
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return 1;
+    return getNextId(customerId, sql);
   }
 
   // Updates a phone in the database with new details from the phone object
@@ -83,31 +70,15 @@ public class PhoneDAO {
 
   // Retrieves a phone from the database with the given customerId and phoneId
   public Phone getPhone(String customerId, int phoneId) {
-    String sql = "SELECT * FROM customer_phone WHERE customerId = ? AND phoneId = ?";
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-      pstmt.setString(1, customerId);
-      pstmt.setInt(2, phoneId);
-      ResultSet rs = pstmt.executeQuery();
-
-      if (rs.next()) {
-        String type = rs.getString("type");
-        String prefix = rs.getString("prefix");
-        String phoneNumber = rs.getString("phoneNumber");
-        boolean isPrimary = rs.getBoolean("isPrimary");
-        boolean canSendText = rs.getBoolean("canSendText");
-
-        Phone retrievedPhone =
-            new Phone(customerId, type, prefix, phoneNumber, isPrimary, canSendText);
-        retrievedPhone.setPhoneId(phoneId);
-        return retrievedPhone;
+    Phone retrievedPhone = null;
+    ArrayList<Phone> phones = getPhones(customerId);
+    for (Phone phone : phones) {
+      if (phone.getPhoneId() == phoneId) {
+        retrievedPhone = phone;
+        break;
       }
-
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
     }
-    return null;
+    return retrievedPhone;
   }
 
   // Retrieves all phones for a customer from the database
