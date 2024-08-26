@@ -26,8 +26,13 @@ public class CustomerDAO {
             + " ) VALUES (?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      String customerId;
+      if (customer.getCustomerId().equals("") || Integer.parseInt(customer.getCustomerId()) < 0) {
+        customerId = getNextCustomerId();
+      } else {
+        customerId = customer.getCustomerId();
+      }
 
-      String customerId = getNextCustomerId();
       pstmt.setString(1, customerId);
       pstmt.setString(2, customer.getTitle());
       pstmt.setString(3, customer.getName());
@@ -38,28 +43,6 @@ public class CustomerDAO {
       pstmt.executeUpdate();
 
       customer.setCustomerId(customerId);
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-  }
-
-  // Adds a customer to the database
-  public void addCustomerLegacy(ICustomer customer) {
-    String sql =
-        "INSERT INTO customer (customerId, title, name, dateOfBirth, occupation, visa, citizenship"
-            + " ) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    try (Connection conn = DatabaseConnection.connect();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-      String customerId = customer.getCustomerId();
-      pstmt.setString(1, customerId);
-      pstmt.setString(2, customer.getTitle());
-      pstmt.setString(3, customer.getName());
-      pstmt.setDate(4, Date.valueOf(customer.getDateOfBirth()));
-      pstmt.setString(5, customer.getOccupation());
-      pstmt.setString(6, customer.getVisa());
-      pstmt.setString(7, customer.getCitizenship());
-      pstmt.executeUpdate();
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }

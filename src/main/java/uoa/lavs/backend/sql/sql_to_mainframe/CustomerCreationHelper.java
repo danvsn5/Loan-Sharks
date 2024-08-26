@@ -156,7 +156,7 @@ public class CustomerCreationHelper {
     if (!currentlyExists) {
       customerdao.addCustomer(customer);
     } else if (customerdao.getCustomer(customer.getCustomerId()) == null) {
-      customerdao.addCustomerLegacy(customer);
+      customerdao.addCustomer(customer);
     } else {
       customerdao.updateCustomer(customer);
     }
@@ -267,7 +267,7 @@ public class CustomerCreationHelper {
     if (!currentlyExists) {
       employerdao.addCustomerEmployer(customer.getEmployer());
     } else if (employerdao.getCustomerEmployer(customerId) == null) {
-      employerdao.addCustomerEmployerLegacy(customer.getEmployer());
+      employerdao.addCustomerEmployer(customer.getEmployer());
     } else {
       employerdao.updateCustomerEmployer(customer.getEmployer());
     }
