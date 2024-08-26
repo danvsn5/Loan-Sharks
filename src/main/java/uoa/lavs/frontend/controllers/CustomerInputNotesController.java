@@ -1,5 +1,6 @@
 package uoa.lavs.frontend.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import uoa.lavs.Main;
 import uoa.lavs.backend.oop.customer.IndividualCustomer;
 import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.backend.oop.customer.Note;
+import uoa.lavs.backend.sql.sql_to_mainframe.CustomerCreationHelper;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
@@ -120,6 +122,9 @@ public class CustomerInputNotesController extends AbstractCustomerController
         .textProperty()
         .addListener(
             (observable, oldValue, newValue) -> {
+              if (newValue == null) {
+                return;
+              }
               if (newValue.length() > maxLength) {
                 textField.setText(newValue.substring(0, maxLength));
               }
@@ -132,14 +137,13 @@ public class CustomerInputNotesController extends AbstractCustomerController
     if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
       setTextFieldsEditable(true);
       editButton.setText("Create Customer");
-      setDetails();
     }
     if (AppState.getCustomerDetailsAccessType().equals("VIEW")) {
       setTextFieldsEditable(false);
       editButton.setText("Edit Details");
     }
     if (AppState.getCustomerDetailsAccessType().equals("EDIT")) {
-      setTextFieldsEditable(false);
+      setTextFieldsEditable(true);
       editButton.setText("Confirm Changes");
       setDetails();
     }
@@ -167,32 +171,10 @@ public class CustomerInputNotesController extends AbstractCustomerController
     noteField19.setEditable(editable);
   }
 
-  protected void setDetails() {
-    ArrayList<Note> notes = new ArrayList<>();
-    for (int page = 1; page <= 100; page++) {
-      String[] pageNotes = new String[19];
-      pageNotes[0] = noteField1.getText();
-      pageNotes[1] = noteField2.getText();
-      pageNotes[2] = noteField3.getText();
-      pageNotes[3] = noteField4.getText();
-      pageNotes[4] = noteField5.getText();
-      pageNotes[5] = noteField6.getText();
-      pageNotes[6] = noteField7.getText();
-      pageNotes[7] = noteField8.getText();
-      pageNotes[8] = noteField9.getText();
-      pageNotes[9] = noteField10.getText();
-      pageNotes[10] = noteField11.getText();
-      pageNotes[11] = noteField12.getText();
-      pageNotes[12] = noteField13.getText();
-      pageNotes[13] = noteField14.getText();
-      pageNotes[14] = noteField15.getText();
-      pageNotes[15] = noteField16.getText();
-      pageNotes[16] = noteField17.getText();
-      pageNotes[17] = noteField18.getText();
-      pageNotes[18] = noteField19.getText();
 
-      notes.add(new Note("", pageNotes));
-    }
+  protected void setDetails() {
+    saveCurrentPageNotes(currentPage);
+
     customer.setNotes(notes);
   }
 

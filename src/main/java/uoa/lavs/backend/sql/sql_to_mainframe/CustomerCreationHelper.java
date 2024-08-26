@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-
 import uoa.lavs.backend.oop.customer.Address;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
 import uoa.lavs.backend.oop.customer.Email;
@@ -142,6 +141,7 @@ public class CustomerCreationHelper {
 
   public static void createCustomer(IndividualCustomer customer, boolean currentlyExists)
       throws IOException {
+
     CustomerDAO customerdao = new CustomerDAO();
 
     if (!currentlyExists) {
@@ -149,21 +149,34 @@ public class CustomerCreationHelper {
     } else {
       customerdao.updateCustomer(customer);
     }
+    String customerId = customer.getCustomerId();
 
     NotesDAO notesdao = new NotesDAO();
     ArrayList<Note> notes = customer.getNotes();
-    for (Note note : notes) {
-      note.setCustomerId(customer.getCustomerId());
-      if (!currentlyExists) {
-        notesdao.addNote(note);
-      } else {
-        notesdao.updateNote(note);
+    if (currentlyExists) {
+      notesdao.deleteNotes(customerId);
+    }
+
+    for (int j = 0; j < notes.size(); j++) {
+      Note note = notes.get(j);
+      note.setCustomerId(customerId);
+      note.setNoteId(j + 1);
+      int nullCount = 0;
+      for (int i = 0; i < 19; i++) {
+        if (note.getLines()[i] == null || note.getLines()[i].equals("")) {
+          nullCount++;
+          note.getLines()[i] = "";
+        }
       }
+      if (nullCount == 19) {
+        continue;
+      }
+      notesdao.addNote(note);
     }
 
     AddressDAO addressdao = new AddressDAO();
     ArrayList<Address> addresses = customer.getAddresses();
-    int numberOfDatabaseAddresses = addressdao.getAddresses(customer.getCustomerId()).size();
+    int numberOfDatabaseAddresses = addressdao.getAddresses(customerId).size();
     for (Address address : addresses) {
       if (address.getAddressType() == null
           || address.getAddressLineOne() == ""
@@ -174,7 +187,7 @@ public class CustomerCreationHelper {
         continue;
       }
 
-      address.setCustomerId(customer.getCustomerId());
+      address.setCustomerId(customerId);
       if (!currentlyExists) {
         addressdao.addAddress(address);
       } else {
@@ -191,13 +204,13 @@ public class CustomerCreationHelper {
 
     PhoneDAO phonedao = new PhoneDAO();
     ArrayList<Phone> phones = customer.getPhones();
-    int numberOfDatabasePhones = phonedao.getPhones(customer.getCustomerId()).size();
+    int numberOfDatabasePhones = phonedao.getPhones(customerId).size();
     for (Phone phone : phones) {
       if (phone.getType() == null || phone.getPrefix() == "" || phone.getPhoneNumber() == "") {
         continue;
       }
       // System.out.println("not skipping phone");
-      phone.setCustomerId(customer.getCustomerId());
+      phone.setCustomerId(customerId);
       if (!currentlyExists) {
         phonedao.addPhone(phone);
       } else {
@@ -208,20 +221,19 @@ public class CustomerCreationHelper {
         } else {
 
           phonedao.updatePhone(phone);
-
         }
       }
     }
 
     EmailDAO emaildao = new EmailDAO();
     ArrayList<Email> emails = customer.getEmails();
-    int numberOfDatabaseEmails = emaildao.getEmails(customer.getCustomerId()).size();
+    int numberOfDatabaseEmails = emaildao.getEmails(customerId).size();
     for (Email email : emails) {
       if (email.getEmailAddress() == "") {
         continue;
       }
 
-      email.setCustomerId(customer.getCustomerId());
+      email.setCustomerId(customerId);
       if (!currentlyExists) {
         emaildao.addEmail(email);
       } else {
@@ -229,14 +241,12 @@ public class CustomerCreationHelper {
         // then create an email instead of adding one
         if (email.getEmailId() > numberOfDatabaseEmails) {
           emaildao.addEmail(email);
-        } else
-          emaildao.updateEmail(email);
-
+        } else emaildao.updateEmail(email);
       }
     }
 
     CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
-    customer.getEmployer().setCustomerId(customer.getCustomerId());
+    customer.getEmployer().setCustomerId(customerId);
     if (!currentlyExists) {
       employerdao.addCustomerEmployer(customer.getEmployer());
     } else {
@@ -256,8 +266,9 @@ public class CustomerCreationHelper {
       lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
     }
 
-    SyncManager syncManager = new SyncManager(
-        List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
+    SyncManager syncManager =
+        new SyncManager(
+            List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
 
     syncManager.syncAll(lastSyncTime);
   }
