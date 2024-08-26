@@ -25,9 +25,6 @@ public class MainMenuController {
   @FXML private Label welcomeLabel;
 
   @FXML private Button syncButton;
-  
-  @FXML
-  private Button syncButton;
 
   @FXML private Label syncLabel;
 
@@ -93,5 +90,4 @@ public class MainMenuController {
   private void handleinstructionsButtonAction() {
     Main.setUi(AppUI.INFORMATION);
   }
-
 }
