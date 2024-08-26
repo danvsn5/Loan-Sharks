@@ -1,5 +1,6 @@
 package uoa.lavs.backend.oop.customer;
 
+// customer Address object with the details required to formulate address, alongside getters and setters
 public class Address {
   private String customerId;
   private int addressId;

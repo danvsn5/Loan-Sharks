@@ -3,6 +3,7 @@ package uoa.lavs.backend.oop.customer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+// sets the customer details with constructor with getters and setters
 public abstract class Customer implements ICustomer {
   private String customerId;
   private String title;
@@ -74,7 +75,7 @@ public abstract class Customer implements ICustomer {
     return this.visa;
   }
 
-  @Override 
+  @Override
   public String getCitizenship() {
     return this.citizenship;
   }
@@ -134,7 +135,7 @@ public abstract class Customer implements ICustomer {
     this.visa = visa;
   }
 
-  @Override 
+  @Override
   public void setCitizenship(String citizenship) {
     this.citizenship = citizenship;
   }

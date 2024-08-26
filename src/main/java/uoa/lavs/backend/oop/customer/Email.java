@@ -1,5 +1,6 @@
 package uoa.lavs.backend.oop.customer;
 
+// sets the email object with constructor and getters and setters
 public class Email {
   private String customerId;
   private int emailId;

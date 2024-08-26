@@ -1,5 +1,6 @@
 package uoa.lavs.backend.oop.customer;
 
+// sets the phone details constructor with getters and setters
 public class Phone {
   private String customerId;
   private int phoneId;
