@@ -50,9 +50,19 @@ public class LoanCoborrower extends AbstractLoanController implements AccessType
     SearchCustomer searchCustomer = new SearchCustomer();
     Connection connection = Instance.getConnection();
 
-    if (!coborrowerIDField1.getText().isEmpty()) {
+    String coborrowerId1 = coborrowerIDField1.getText();
+    String coborrowerId2 = coborrowerIDField2.getText();
+    String coborrowerId3 = coborrowerIDField3.getText();
+
+    coborrowerIDField1.setStyle("");
+    coborrowerIDField2.setStyle("");
+    coborrowerIDField3.setStyle("");
+
+    if (!coborrowerId1.isEmpty()) {
       if (!coborrowerIDField1.getText().equals(personalLoan.getCustomerId())
-          && searchCustomer.searchCustomerById(coborrowerIDField1.getText(), connection) != null) {
+          && searchCustomer.searchCustomerById(coborrowerIDField1.getText(), connection) != null
+          && !coborrowerId1.equals(coborrowerId2)
+          && !coborrowerId1.equals(coborrowerId3)) {
         coborrowerIDField1.setStyle("");
       } else {
         coborrowerIDField1.setStyle("-fx-border-color: red");
@@ -61,7 +71,9 @@ public class LoanCoborrower extends AbstractLoanController implements AccessType
     }
     if (!coborrowerIDField2.getText().isEmpty()) {
       if (!coborrowerIDField2.getText().equals(personalLoan.getCustomerId())
-          && searchCustomer.searchCustomerById(coborrowerIDField2.getText(), connection) != null) {
+          && searchCustomer.searchCustomerById(coborrowerIDField2.getText(), connection) != null
+          && !coborrowerId2.equals(coborrowerId1)
+          && !coborrowerId2.equals(coborrowerId3)) {
         coborrowerIDField2.setStyle("");
       } else {
         coborrowerIDField2.setStyle("-fx-border-color: red");
@@ -70,7 +82,9 @@ public class LoanCoborrower extends AbstractLoanController implements AccessType
     }
     if (!coborrowerIDField3.getText().isEmpty()) {
       if (!coborrowerIDField3.getText().equals(personalLoan.getCustomerId())
-          && searchCustomer.searchCustomerById(coborrowerIDField3.getText(), connection) != null) {
+          && searchCustomer.searchCustomerById(coborrowerIDField3.getText(), connection) != null
+          && !coborrowerId3.equals(coborrowerId1)
+          && !coborrowerId3.equals(coborrowerId2)) {
         coborrowerIDField3.setStyle("");
       } else {
         coborrowerIDField3.setStyle("-fx-border-color: red");

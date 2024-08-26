@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-
 import uoa.lavs.backend.oop.loan.LoanDuration;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
@@ -56,7 +55,8 @@ public class LoanDurationDAO {
 
   public void updateLoanDuration(LoanDuration duration) {
     String sql =
-        "UPDATE loan_duration SET startDate = ?, period = ?, loanTerm = ? WHERE durationId = ?";
+        "UPDATE loan_duration SET startDate = ?, period = ?, loanTerm = ?, lastModified ="
+            + " CURRENT_TIMESTAMP WHERE durationId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setDate(1, Date.valueOf(duration.getStartDate()));

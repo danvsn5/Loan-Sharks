@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.backend.oop.loan.LoanPayment;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
@@ -55,7 +54,7 @@ public class LoanPaymentDAO {
   public void updateLoanPayment(LoanPayment payment) {
     String sql =
         "UPDATE loan_payment SET compounding = ?, paymentFrequency = ?, paymentAmount = ?,"
-            + " interestOnly = ? WHERE loanId = ?";
+            + " interestOnly = ?, lastModified = CURRENT_TIMESTAMP WHERE loanId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, payment.getCompounding());
