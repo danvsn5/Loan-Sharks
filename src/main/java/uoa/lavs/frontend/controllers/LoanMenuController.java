@@ -16,15 +16,20 @@ import uoa.lavs.legacy.mainframe.Request;
 import uoa.lavs.legacy.mainframe.Response;
 
 public class LoanMenuController {
-  @FXML private Button createNewLoanButton;
+  @FXML
+  private Button createNewLoanButton;
 
-  @FXML private Button findLoanButton;
+  @FXML
+  private Button findLoanButton;
 
-  @FXML private ImageView staticReturnImageView;
+  @FXML
+  private ImageView staticReturnImageView;
 
-  @FXML private ImageView connectionSymbol;
+  @FXML
+  private ImageView connectionSymbol;
 
-  @FXML private Label connectionLabel;
+  @FXML
+  private Label connectionLabel;
 
   @FXML
   private void initialize() {
@@ -46,12 +51,11 @@ public class LoanMenuController {
         || status.getErrorCode() == 1010
         || status.getErrorCode() == 1020) {
       setRedSymbol();
-      connectionLabel.setText(status.getErrorMessage());
+      connectionLabel.setText("Remote host is not available. Loan cannot be created.");
       return;
     } else {
       // catch all for other messages
       setGreenSymbol();
-      // connectionLabel.setText(status.getErrorMessage());
     }
     PersonalLoanSingleton.resetInstance();
     AppState.setIsCreatingLoan(true);

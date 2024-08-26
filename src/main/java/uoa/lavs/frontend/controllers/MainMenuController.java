@@ -13,28 +13,36 @@ import uoa.lavs.frontend.SceneManager.AppUI;
 import uoa.lavs.legacy.mainframe.Status;
 
 public class MainMenuController {
-  @FXML private Button customerButton;
+  @FXML
+  private Button customerButton;
 
-  @FXML private Button loanButton;
+  @FXML
+  private Button loanButton;
 
-  @FXML private Button logOutButton;
+  @FXML
+  private Button logOutButton;
 
-  @FXML private Button instructionsButton;
+  @FXML
+  private Button instructionsButton;
 
-  @FXML private Label welcomeLabel;
+  @FXML
+  private Label welcomeLabel;
 
-  @FXML private ImageView staticReturnImageView;
+  @FXML
+  private ImageView staticReturnImageView;
 
-  @FXML private Button syncButton;
+  @FXML
+  private Button syncButton;
 
-  @FXML private Label syncLabel;
+  @FXML
+  private Label syncLabel;
 
   @FXML
   private void initialize() throws SQLException {
     if (SyncManager.checkIfNeedsSyncing()) {
-      syncLabel.setText("Sync needed");
+      syncLabel.setText("Local changes detected. Sync is required.");
     } else {
-      syncLabel.setText("No need to sync");
+      syncLabel.setText("No local changes detected. Sync is not required.");
     }
     welcomeLabel.setText("Welcome!");
     staticReturnImageView.setDisable(true);
@@ -60,7 +68,7 @@ public class MainMenuController {
         syncLabel.setText("Sync successful");
       } else {
         System.out.println("Sync failed: " + status.getErrorMessage());
-        syncLabel.setText("Sync failed: " + status.getErrorMessage());
+        syncLabel.setText("Sync failed: Could not connect to mainframe. Local changes were not saved.");
       }
     } else {
       System.out.println("No need to sync");
