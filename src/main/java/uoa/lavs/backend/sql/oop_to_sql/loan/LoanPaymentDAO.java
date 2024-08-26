@@ -8,6 +8,8 @@ import uoa.lavs.backend.oop.loan.LoanPayment;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
 public class LoanPaymentDAO {
+
+  // Adds a loan payment to the database
   public void addLoanPayment(LoanPayment payment) {
     String sql =
         "INSERT INTO loan_payment (loanId, paymentId, compounding, paymentFrequency, paymentAmount,"
@@ -33,6 +35,7 @@ public class LoanPaymentDAO {
     }
   }
 
+  // Get the next paymentId for a loan when adding a new payment
   private int getNextPaymentIdForLoan(String loanId) {
     String sql = "SELECT MAX(paymentId) FROM loan_payment WHERE loanId = ?";
     try (Connection conn = DatabaseConnection.connect();
@@ -51,6 +54,7 @@ public class LoanPaymentDAO {
     return 1;
   }
 
+  // Updates a loan payment in the database with new details from the payment object
   public void updateLoanPayment(LoanPayment payment) {
     String sql =
         "UPDATE loan_payment SET compounding = ?, paymentFrequency = ?, paymentAmount = ?,"
@@ -69,6 +73,7 @@ public class LoanPaymentDAO {
     }
   }
 
+  // Get a loan payment from the database using the loanId
   public LoanPayment getLoanPayment(String loanId) {
     String sql = "SELECT * FROM loan_payment WHERE loanId = ?";
     LoanPayment payment = null;

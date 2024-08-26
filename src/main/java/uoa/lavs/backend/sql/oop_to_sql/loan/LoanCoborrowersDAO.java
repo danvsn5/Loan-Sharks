@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import uoa.lavs.backend.sql.DatabaseConnection;
 
 public class LoanCoborrowersDAO {
+  // Adds coborrowers to a loan in the database
   public void addCoborrowers(String loanId, ArrayList<String> coborrowerIds) {
     String sql = "INSERT INTO loan_coborrower (loanId, coborrowerId, number) VALUES (?, ?, ?)";
 
@@ -24,6 +24,7 @@ public class LoanCoborrowersDAO {
     }
   }
 
+  // Updates coborrowers for a loan in the database
   public void updateCoborrowers(String loanId, ArrayList<String> coborrowerIds) {
     String sql = "DELETE FROM loan_coborrower WHERE loanId = ?";
     try (Connection conn = DatabaseConnection.connect();
@@ -37,6 +38,7 @@ public class LoanCoborrowersDAO {
     addCoborrowers(loanId, coborrowerIds);
   }
 
+  // Gets coborrowers for a loan from the database
   public ArrayList<String> getCoborrowers(String loanId) {
     String sql = "SELECT coborrowerId FROM loan_coborrower WHERE loanId = ?";
     ArrayList<String> coborrowerIds = new ArrayList<>();
