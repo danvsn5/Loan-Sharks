@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import uoa.lavs.backend.oop.customer.Phone;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
 public class PhoneDAO {
 
+  // Adds a phone to the database
   public void addPhone(Phone phone) {
     String customerId = phone.getCustomerId();
     // Find the next phoneId for this customerId
@@ -38,6 +38,7 @@ public class PhoneDAO {
     }
   }
 
+  // Adds multiple phone numbers to the database for a customer
   public void addPhones(ArrayList<Phone> phones) {
     String customerId = phones.get(0).getCustomerId();
 
@@ -68,6 +69,7 @@ public class PhoneDAO {
     }
   }
 
+  // Finds the next phoneId for a customer to use when adding a new phone
   public int getNextPhoneIdForCustomer(String customerId) {
     String sql = "SELECT MAX(phoneId) FROM customer_phone WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
@@ -86,6 +88,7 @@ public class PhoneDAO {
     return 1;
   }
 
+  // Updates a phone in the database with new details from the phone object
   public void updatePhone(Phone phone) {
     String sql =
         "UPDATE customer_phone SET type = ?, prefix = ?, phoneNumber = ?, isPrimary = ?,"
@@ -110,6 +113,7 @@ public class PhoneDAO {
     }
   }
 
+  // Retrieves a phone from the database with the given customerId and phoneId
   public Phone getPhone(String customerId, int phoneId) {
     String sql = "SELECT * FROM customer_phone WHERE customerId = ? AND phoneId = ?";
     try (Connection conn = DatabaseConnection.connect();
@@ -138,6 +142,7 @@ public class PhoneDAO {
     return null;
   }
 
+  // Retrieves all phones for a customer from the database
   public ArrayList<Phone> getPhones(String customerId) {
     ArrayList<Phone> phones = new ArrayList<>();
 

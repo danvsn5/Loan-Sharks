@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DatabaseConnection {
   private static String DB_URL = DatabaseState.getActiveDB();
 
-  public DatabaseConnection() {
-  }
+  public DatabaseConnection() {}
 
+  // Connect to the database
   public static Connection connect() {
     Connection conn = null;
     try {
@@ -20,6 +20,7 @@ public class DatabaseConnection {
     return conn;
   }
 
+  // Close the database connection
   public static void close(Connection conn) {
     try {
       if (conn != null) {

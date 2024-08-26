@@ -14,25 +14,18 @@ import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
 
 public abstract class AbstractCustomerController {
-  @FXML
-  protected Button customerDetailsButton;
-  @FXML
-  protected Button customerAddressButton;
-  @FXML
-  protected Button customerContactButton;
-  @FXML
-  protected Button customerEmployerButton;
+  @FXML protected Button customerDetailsButton;
+  @FXML protected Button customerAddressButton;
+  @FXML protected Button customerContactButton;
+  @FXML protected Button customerEmployerButton;
 
-  @FXML
-  protected Button editButton;
-  @FXML
-  protected ImageView staticReturnImageView;
-  @FXML
-  protected Label idBanner;
+  @FXML protected Button editButton;
+  @FXML protected ImageView staticReturnImageView;
+  @FXML protected Label idBanner;
 
   protected IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
-  // sets the initial values for the customer
+  // sets the initial values for the customer after a search
   protected abstract void startWithCustomerID();
 
   // sets the details for each tab

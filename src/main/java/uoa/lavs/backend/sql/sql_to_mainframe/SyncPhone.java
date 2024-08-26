@@ -8,6 +8,7 @@ import uoa.lavs.legacy.mainframe.messages.customer.FindCustomerPhoneNumber;
 import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerPhoneNumber;
 
 public class SyncPhone extends Sync {
+  // Syncs the phone data from the local database to the mainframe
   @Override
   protected Status syncMainframeData(
       ResultSet resultSet,
@@ -42,12 +43,13 @@ public class SyncPhone extends Sync {
     return status;
   }
 
+  // Override the SQL query to retrieve phone data from the local database
   @Override
   protected String getSqlQuery() {
     return "SELECT * FROM customer_phone WHERE lastModified > ?";
   }
 
-  // update address
+  // Update the phone data from the local database to the mainframe
   private UpdateCustomerPhoneNumber updateCustomerPhone(ResultSet resultSet, String customerId) {
     UpdateCustomerPhoneNumber updateCustomerPhone = new UpdateCustomerPhoneNumber();
     try {

@@ -6,6 +6,7 @@ import java.sql.Statement;
 
 public class InitialiseDatabase {
 
+  // Creates the database tables if they do not exist
   public static void createDatabase() {
     try (Connection conn = DatabaseConnection.connect()) {
 
@@ -44,6 +45,7 @@ public class InitialiseDatabase {
     }
   }
 
+  // SQL queries to create the customer entity
   private static String getCreateCustomerEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer (\n"
@@ -61,6 +63,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the phone entity
   private static String getCreatePhoneEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_phone (\n"
@@ -78,6 +81,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the email entity
   private static String getCreateEmailEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_email (\n"
@@ -93,6 +97,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the customer address entity
   private static String getCreateCustomerAddressEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_address (\n"
@@ -115,6 +120,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the customer notes entity
   private static String getCreateCustomerNotesEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_notes (\n"
@@ -129,6 +135,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the customer employer entity
   private static String getCreateCustomerEmployerEntity() {
     String sql =
         "CREATE TABLE IF NOT EXISTS customer_employer ( "
@@ -152,6 +159,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the loan entity
   private static String getCreateLoanEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan (\n"
@@ -167,6 +175,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the loan duration entity
   private static String getCreateLoanDurationEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_duration (\n"
@@ -183,6 +192,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the loan payment entity
   private static String getCreateLoanPaymentEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_payment (\n"
@@ -200,6 +210,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the loan coborrower entity
   private static String getCreateLoanCoborrowerEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS loan_coborrower (\n"
@@ -215,6 +226,7 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to create the sync info entity
   private static String getCreateSyncInfoEntityQuery() {
     String sql =
         "CREATE TABLE IF NOT EXISTS sync_info (\n"
@@ -225,15 +237,9 @@ public class InitialiseDatabase {
     return sql;
   }
 
+  // SQL queries to initialise the sync info entity
   private static String getInitialiseSyncInfoQuery() {
     String insert = "INSERT INTO sync_info (id, needsSyncing) VALUES (1, 0);";
     return insert;
   }
-
-  /*
-  public static void main(String[] args) {
-    createDatabase();
-  }
-
-  */
 }

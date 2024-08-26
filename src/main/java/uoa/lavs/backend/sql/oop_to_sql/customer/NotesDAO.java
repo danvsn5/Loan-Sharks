@@ -9,6 +9,8 @@ import uoa.lavs.backend.oop.customer.Note;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
 public class NotesDAO {
+
+  // Adds a note to the database
   public void addNote(Note note) {
     String customerId = note.getCustomerId();
 
@@ -27,24 +29,7 @@ public class NotesDAO {
     }
   }
 
-  // private int getNextNoteIdForCustomer(String customerId) {
-  //   String sql = "SELECT MAX(noteId) FROM customer_notes WHERE customerId = ?";
-  //   try (Connection conn = DatabaseConnection.connect();
-  //       PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-  //     pstmt.setString(1, customerId);
-  //     ResultSet rs = pstmt.executeQuery();
-
-  //     if (rs.next()) {
-  //       int maxNoteId = rs.getInt(1);
-  //       return maxNoteId + 1;
-  //     }
-  //   } catch (SQLException e) {
-  //     System.out.println(e.getMessage());
-  //   }
-  //   return 1;
-  // }
-
+  // Updates a note in the database with new details from the note object
   public void updateNote(Note note) {
     String customerId = note.getCustomerId();
 
@@ -62,6 +47,7 @@ public class NotesDAO {
     }
   }
 
+  // Deletes a note from the database associated with a customer
   public void deleteNotes(String customerId) {
     String sql = "DELETE FROM customer_notes WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
@@ -73,6 +59,7 @@ public class NotesDAO {
     }
   }
 
+  // Adds or updates a list of notes in the database with new details from the note list
   public void addOrUpdateNotes(ArrayList<Note> notes) {
     String customerId = notes.get(0).getCustomerId();
 
@@ -117,6 +104,7 @@ public class NotesDAO {
     }
   }
 
+  // Retrieves all notes for a customer from the database
   public ArrayList<Note> getNotes(String customerId) {
     ArrayList<Note> notes = new ArrayList<>();
     for (int i = 0; i < 100; i++) {

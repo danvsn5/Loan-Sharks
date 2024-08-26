@@ -72,6 +72,15 @@ public abstract class Sync {
       ResultSet resultSet, uoa.lavs.legacy.mainframe.Connection connection, Connection localConn)
       throws SQLException, IOException;
 
+  /**
+   * Sync data to the mainframe
+   *
+   * @param lastSyncTime
+   * @param mainframeConnection
+   * @param localConnection
+   * @return
+   * @throws IOException
+   */
   public Status syncToMainframe(
       LocalDateTime lastSyncTime,
       uoa.lavs.legacy.mainframe.Connection mainframeConnection,
@@ -110,5 +119,6 @@ public abstract class Sync {
     return new Status(0, "Successfully synced data to mainframe", 0);
   }
 
+  // Get the SQL query to retrieve data from the local database
   protected abstract String getSqlQuery();
 }
