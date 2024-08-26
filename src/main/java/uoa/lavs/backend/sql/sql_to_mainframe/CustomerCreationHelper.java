@@ -44,7 +44,8 @@ public class CustomerCreationHelper {
     } else if (addresses.get(0).getAddressType().equals("")
         || addresses.get(0).getAddressLineOne().equals("")
         || addresses.get(0).getAddressLineOne().length() > 60
-        || addresses.get(0).getAddressLineTwo().length() > 60
+        || (addresses.get(0).getAddressLineTwo().length() > 60
+            && !(addresses.get(0).getAddressLineTwo() == null))
         || addresses.get(0).getSuburb().equals("")
         || addresses.get(0).getSuburb().length() > 30
         || addresses.get(0).getPostCode().equals("")
@@ -130,7 +131,7 @@ public class CustomerCreationHelper {
         || !employer.getEmployerPhone().matches("^\\+?[0-9\\-]{1,30}$")
         || employer.getLineOne().equals("")
         || employer.getLineOne().length() > 60
-        || employer.getLineTwo().length() > 60
+        || (employer.getLineTwo().length() > 60 && !(employer.getLineTwo() == null))
         || employer.getSuburb().equals("")
         || employer.getSuburb().length() > 30
         || employer.getCity().equals("")
