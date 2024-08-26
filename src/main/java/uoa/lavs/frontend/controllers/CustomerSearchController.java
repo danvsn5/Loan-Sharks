@@ -94,41 +94,60 @@ public class CustomerSearchController {
   private void handleSearchWithCustomerIDLabelAction() throws IOException {
     String searchString = idField.getText();
     SearchCustomer searchCustomer = new SearchCustomer();
+    List<Customer> listOfCustomers = new ArrayList<>();
     try {
       Connection connection = Instance.getConnection();
       Customer customer = searchCustomer.searchCustomerById(searchString, connection);
+
+      // if a customer is found, then move to next page, set the fields to empty,
+      // symbol to green, and label to ""
+
+      System.out.println("CUSTOMER ID RETRIEVED = " + customer.getCustomerId());
+
+      listOfCustomers.add(customer);
+      if (listOfCustomers.size() > 0) {
+        connectionLabel.setText("Search successful.");
+        setGreenSymbol();
+        AppState.loadCustomerSearchResults(listOfCustomers);
+        idField.setStyle("");
+        idField.setText("");
+        return;
+      }
+
+      // I am quite sure this code is unreachable, but I will leave it here for now;
+
+      // // if search was unsuccessful, check if mainframe was the cause; if mainframe
+      // // was cause, the no customers are in local system
+      // if (searchCustomer.getStatusInstance().getErrorCode() == 1000
+      //     || searchCustomer.getStatusInstance().getErrorCode() == 1010
+      //     || searchCustomer.getStatusInstance().getErrorCode() == 1020) {
+      //   setRedSymbol();
+      //   connectionLabel.setText("Remote host is not available. No customers found in local system.");
+      // } else {
+      //   // search was unsuccessful and mainframe was not the cause, so no customers are
+      //   // found in entire system
+      //   setOrangeSymbol();
+      //   connectionLabel.setText("No customers found in mainframe or local system.");
+      // }
+    } catch (Exception e) {
+      // connection somehow failed and errors are shown
+      System.out.println("----------");
+      System.out.println(listOfCustomers.size());
+      System.out.println(searchCustomer.getStatusInstance().getErrorCode());
+      System.out.println("----------");
 
       if (searchCustomer.getStatusInstance().getErrorCode() == 1000
           || searchCustomer.getStatusInstance().getErrorCode() == 1010
           || searchCustomer.getStatusInstance().getErrorCode() == 1020) {
         setRedSymbol();
-        connectionLabel.setText("Remote host is not available.");
-      } else if (searchCustomer.getStatusInstance().getErrorCode() == 0) {
-        setGreenSymbol();
+        connectionLabel.setText("Remote host is not available. No customers found in local system.");
       } else {
         setOrangeSymbol();
-      }
-
-      List<Customer> listOfCustomers = new ArrayList<>();
-      listOfCustomers.add(customer);
-      if (listOfCustomers.size() > 0) {
-        connectionLabel.setText("Search successful.");
-        setGreenSymbol();
-      } else if (!connectionLabel.getText().equals("Remote host is not available.")) {
-        // mainframe is available but no customers found
         connectionLabel.setText("No customers found in mainframe or local system.");
-        setOrangeSymbol();
       }
 
-      AppState.loadCustomerSearchResults(listOfCustomers);
-      idField.setStyle("");
-      idField.setText("");
-    } catch (Exception e) {
-      // connection somehow failed and errors are shown
       idField.setStyle("-fx-border-color: red;");
       System.out.println("No customers found with ID: " + searchString);
-      connectionLabel.setText("Remote host is not available. No customers found in local system.");
-      setRedSymbol();
     }
   }
 
