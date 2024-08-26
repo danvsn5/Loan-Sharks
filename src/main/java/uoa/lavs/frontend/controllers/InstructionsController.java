@@ -27,11 +27,12 @@ public class InstructionsController {
           + "Welcome to Lone Sharks LAVS. Here, you will see a list of instructions and some"
           + " information as to how the application is to be used. \n"
           + " \n"
-          + " * It is intended that the first address, email and phone number that are inputted are primary\n"
-          + " * Customers are created first, where their details are inputted into the system"
-          + " and stored in the local database, to be synced to the mainframe \n"
-          + " * Customers can be searched for by their name or ID, and their details can be"
-          + " viewed and edited \n"
+          + " * It is intended that the first address, email and phone number that are inputted are"
+          + " primary\n"
+          + " * Customers are created first, where their details are inputted into the system and"
+          + " stored in the local database, to be synced to the mainframe \n"
+          + " * Customers can be searched for by their name or ID, and their details can be viewed"
+          + " and edited \n"
           + " * Loans will only be created once all customers associated with that loan have been"
           + " created; if any co-borrowers are part of the loan that is to be created, then their"
           + " ID will be dotted down by the MMM to be inputted in the loan creation screen \n"
@@ -39,10 +40,11 @@ public class InstructionsController {
           + " * If connection is lost while an MMM is creating a loan or customer, then the entity"
           + " will still be created and stored in their local database; this database will send the"
           + " required information to the mainframe once connectivity is restored. \n"
-          + " Once connection is restored, you are able to sync"
-          + " any new data from the local database to the mainframe with the usage of the sync"
-          + " button on the main menu. \n"
-          + " \n";
+          + " Once connection is restored, you are able to sync any new data from the local"
+          + " database to the mainframe with the usage of the sync button on the main menu. \n"
+          + " \n"
+          + "If Loan creation does not work at all, despite fields being valid. Please run"
+          + " ResetDatabase.java at \\src\\main\\java\\uoa\\lavs\\backend\\sql ";
 
   @FXML
   private void initialize() {
