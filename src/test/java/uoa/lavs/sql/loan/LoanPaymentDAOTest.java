@@ -58,6 +58,13 @@ public class LoanPaymentDAOTest {
   }
 
   @Test
+  public void testAddLoanPaymentSQLException() {
+    String invalidSQL = "INSERT INTO non_existent_table VALUES (1, 2, 3, 4)";
+    loanPaymentDAO.add(loanPayment, invalidSQL);
+
+  }
+
+  @Test
   public void testUpdateLoanPayment() {
     loanPaymentDAO.addLoanPayment(loanPayment);
 
@@ -85,6 +92,14 @@ public class LoanPaymentDAOTest {
   }
 
   @Test
+  public void testUpdateLoanPaymentSQLException() {
+    loanPaymentDAO.addLoanPayment(loanPayment);
+
+    String invalidSQL = "UPDATE non_existent_table SET compounding = ? WHERE loanId = ?";
+    loanPaymentDAO.update(loanPayment, invalidSQL);
+  }
+
+  @Test
   public void testGetLoanPayment() {
     loanPaymentDAO.addLoanPayment(loanPayment);
 
@@ -94,6 +109,16 @@ public class LoanPaymentDAOTest {
     Assertions.assertEquals("weekly", retrievedLoanPayment.getPaymentFrequency());
     Assertions.assertEquals("1000", retrievedLoanPayment.getPaymentAmount());
     Assertions.assertEquals(false, retrievedLoanPayment.getInterestOnly());
+  }
+
+  @Test
+  public void testGetLoanPaymentSQLException() {
+    loanPaymentDAO.addLoanPayment(loanPayment);
+
+    String invalidSQL = "SELECT * FROM non_existent_table WHERE loanId = ?";
+    LoanPayment retrievedLoanPayment = loanPaymentDAO.get("-1", invalidSQL);
+
+    Assertions.assertNull(retrievedLoanPayment);
   }
 
   @Test

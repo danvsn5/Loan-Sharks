@@ -2,6 +2,7 @@ package uoa.lavs.backend.sql.oop_to_sql.loan;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import uoa.lavs.backend.sql.DatabaseConnection;
@@ -27,6 +28,13 @@ public class LoanCoborrowersDAO {
   // Updates coborrowers for a loan in the database
   public void updateCoborrowers(String loanId, ArrayList<String> coborrowerIds) {
     String sql = "DELETE FROM loan_coborrower WHERE loanId = ?";
+    delete(loanId, sql);
+    addCoborrowers(loanId, coborrowerIds);
+  }
+
+  // Helper to delete coborrowers for a loan from the database
+  public void delete(String loanId, String sql) {
+
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, loanId);
@@ -34,19 +42,22 @@ public class LoanCoborrowersDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-
-    addCoborrowers(loanId, coborrowerIds);
   }
 
   // Gets coborrowers for a loan from the database
   public ArrayList<String> getCoborrowers(String loanId) {
     String sql = "SELECT coborrowerId FROM loan_coborrower WHERE loanId = ?";
+    return get(loanId, sql);
+  }
+
+  // helper to get coborrowers for a loan from the database
+  public ArrayList<String> get(String loanId, String sql) {
     ArrayList<String> coborrowerIds = new ArrayList<>();
 
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, loanId);
-      var rs = pstmt.executeQuery();
+      ResultSet rs = pstmt.executeQuery();
 
       while (rs.next()) {
         coborrowerIds.add(rs.getString("coborrowerId"));

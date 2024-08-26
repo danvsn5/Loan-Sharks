@@ -1,4 +1,4 @@
-package uoa.lavs.backend.sql.oop_to_sql.customer;
+package uoa.lavs.backend.sql.oop_to_sql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

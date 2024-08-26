@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import uoa.lavs.backend.oop.customer.Phone;
 import uoa.lavs.backend.sql.DatabaseConnection;
+import uoa.lavs.backend.sql.oop_to_sql.AbstractDAO;
 
 public class PhoneDAO extends AbstractDAO{
 

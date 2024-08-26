@@ -79,6 +79,12 @@ public class LoanCoborrowersDAOTest {
   }
 
   @Test
+  public void testDeleteCoborrowersSQLException() {
+    String invalidSQL = "INSERT INTO non_existent_table VALUES (1, 2, 3, 4)";
+    loanCoborrowersDAO.delete("-1", invalidSQL);
+  }
+
+  @Test
   public void testGetCoborrowers() {
     ArrayList<String> coborrowers = loanCoborrowersDAO.getCoborrowers("-1");
 
