@@ -17,9 +17,23 @@ import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerPhoneNumbers;
 
 public class SearchCustomer {
   public Status statusInstance;
+  public FindCustomerAdvanced findCustomerAdvanced;
+  public LoadCustomer loadCustomer;
+  public LoadCustomerAddresses loadCustomerAddresses;
+  public LoadCustomerEmployer loadCustomerEmployer;
+  public LoadCustomerPhoneNumbers loadCustomerPhones;
+  public LoadCustomerEmails loadCustomerEmails;
+  public LoadCustomerNote loadCustomerNotes;
 
   public SearchCustomer() {
     this.statusInstance = null;
+    this.findCustomerAdvanced = new FindCustomerAdvanced();
+    this.loadCustomer = new LoadCustomer();
+    this.loadCustomerAddresses = new LoadCustomerAddresses();
+    this.loadCustomerEmployer = new LoadCustomerEmployer();
+    this.loadCustomerPhones = new LoadCustomerPhoneNumbers();
+    this.loadCustomerEmails = new LoadCustomerEmails();
+    this.loadCustomerNotes = new LoadCustomerNote();
   }
 
   public Status getStatusInstance() {
@@ -31,13 +45,6 @@ public class SearchCustomer {
   }
 
   public Customer searchCustomerById(String customerId, Connection connection) {
-    LoadCustomer loadCustomer = new LoadCustomer();
-    LoadCustomerAddresses loadCustomerAddresses = new LoadCustomerAddresses();
-    LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
-    LoadCustomerPhoneNumbers loadCustomerPhones = new LoadCustomerPhoneNumbers();
-    LoadCustomerEmails loadCustomerEmails = new LoadCustomerEmails();
-    LoadCustomerNote loadCustomerNotes = new LoadCustomerNote();
-
     loadCustomer.setCustomerId(customerId);
     loadCustomerEmployer.setCustomerId(customerId);
     loadCustomerPhones.setCustomerId(customerId);
@@ -63,6 +70,12 @@ public class SearchCustomer {
 
     setStatusInstance(status);
 
+    // print all the error codes
+    System.out.println("Status: " + status.getErrorCode());
+    System.out.println("Address Status: " + addressStatus.getErrorCode());
+    System.out.println("Employer Status: " + employerStatus.getErrorCode());
+    System.out.println("Phone Status: " + phoneStatus.getErrorCode());
+
     if (status.getErrorCode() == 1000
         || status.getErrorCode() == 1010
         || status.getErrorCode() == 1020) {
@@ -75,9 +88,8 @@ public class SearchCustomer {
       if (customer != null) {
         System.out.println(customer.getName());
         return customer;
-      } else {
-        System.out.println("Customer not found in local database.");
       }
+      System.out.println("Customer not found in local database.");
       return null;
     }
 
@@ -139,13 +151,6 @@ public class SearchCustomer {
 
   // search customer by name
   public List<Customer> searchCustomerByName(String name, Connection connection) {
-    FindCustomerAdvanced findCustomerAdvanced = new FindCustomerAdvanced();
-    LoadCustomerAddresses loadCustomerAddresses = new LoadCustomerAddresses();
-    LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
-    LoadCustomerPhoneNumbers loadCustomerPhones = new LoadCustomerPhoneNumbers();
-    LoadCustomerEmails loadCustomerEmails = new LoadCustomerEmails();
-    LoadCustomerNote loadCustomerNotes = new LoadCustomerNote();
-
     findCustomerAdvanced.setSearchName(name);
     Status status = findCustomerAdvanced.send(connection);
 
@@ -195,6 +200,7 @@ public class SearchCustomer {
       loadCustomerPhones.setCustomerId(customerId);
       loadCustomerEmails.setCustomerId(customerId);
       loadCustomerNotes.setCustomerId(customerId);
+      loadCustomerNotes.setNumber(1);
 
       // Send the request for address
       Status addressStatus = loadCustomerAddresses.send(connection);
@@ -207,11 +213,6 @@ public class SearchCustomer {
       Status emailStatus = loadCustomerEmails.send(connection);
 
       Status noteStatus = loadCustomerNotes.send(connection);
-
-      if (status.getErrorCode() != 0) {
-        System.out.println("Error loading customer: " + status.getErrorCode());
-        return null;
-      }
 
       Customer customer =
           new IndividualCustomer(
@@ -248,9 +249,7 @@ public class SearchCustomer {
       if (employerStatus.getErrorCode() == 0) {
         System.out.println("Updating employer...");
         updateCustomerEmployer(loadCustomerEmployer, customer);
-      } else {
-        System.out.println("Employer error: " + employerStatus.getErrorCode());
-      }
+      } 
 
       if (phoneStatus.getErrorCode() == 0) {
         updateCustomerPhones(loadCustomerPhones, customer);
@@ -284,13 +283,18 @@ public class SearchCustomer {
     customer.setVisa(loadCustomer.getVisaFromServer());
   }
 
-  private void updateCustomerAddresses(
+  public void updateCustomerAddresses(
       LoadCustomerAddresses loadCustomerAddresses, Customer customer, Connection connection) {
     ArrayList<Address> addresses = new ArrayList<>();
 
     Integer count = loadCustomerAddresses.getCountFromServer();
     int primary = 0;
     int mailing = 0;
+
+    if (count == null || count == 0) {
+      customer.setAddresses(addresses);
+      return;
+    }
 
     for (int i = 1; i <= count; i++) {
       if (loadCustomerAddresses.getIsPrimaryFromServer(i)) {
@@ -299,11 +303,6 @@ public class SearchCustomer {
       if (loadCustomerAddresses.getIsMailingFromServer(i)) {
         mailing = i;
       }
-    }
-
-    if (count == null || count == 0) {
-      customer.setAddresses(addresses);
-      return;
     }
 
     for (int i = 1; i <= count; i++) {
@@ -413,7 +412,10 @@ public class SearchCustomer {
       loadCustomerNotes.send(Instance.getConnection());
       Note note = new Note(customer.getCustomerId(), new String[19]);
       note.setNoteId(i);
-      int lineCount = loadCustomerNotes.getLineCountFromServer();
+      Integer lineCount = loadCustomerNotes.getLineCountFromServer();
+      if (lineCount == null) {
+        continue;
+      }
       for (int j = 1; j <= lineCount; j++) {
         note.setLine(j - 1, loadCustomerNotes.getLineFromServer(j));
       }
@@ -422,10 +424,91 @@ public class SearchCustomer {
     customer.setNotes(notes);
   }
 
-  // public static void main(String[] args) {
-  //   SearchCustomer searchCustomer = new SearchCustomer();
-  //   Connection connection = Instance.getConnection();
-  //   Customer customer = searchCustomer.searchCustomerById("1", connection);
-  //   System.out.println(customer.getCitizenship());
-  // }
+  // mock method to test statuses for find customer advanced
+  public void createMockFindCustomerAdvanced(Integer errorCode) {
+    this.findCustomerAdvanced =
+        new FindCustomerAdvanced() {
+          @Override
+          public Status send(Connection connection) {
+            return new Status(errorCode, "Error finding customer", 1);
+          }
+        };
+  }
+
+  // mock method to test statuses for load customer
+  public void createMockLoadCustomer(Integer errorCode) {
+    this.loadCustomer =
+        new LoadCustomer() {
+          @Override
+          public Status send(Connection connection) {
+            return new Status(errorCode, "Error loading customer", 1);
+          }
+        };
+  }
+
+  // mock method to test statuses for load customer addresses
+  public void createMockLoadCustomerAddresses(Integer errorCode) {
+    this.loadCustomerAddresses =
+        new LoadCustomerAddresses() {
+          @Override
+          public Status send(Connection connection) {
+            return new Status(errorCode, "Error loading customer addresses", 1);
+          }
+        };
+  }
+
+  // mock method to test statuses for load customer employer
+  public void createMockLoadCustomerEmployer(Integer errorCode) {
+    this.loadCustomerEmployer =
+        new LoadCustomerEmployer() {
+          @Override
+          public Status send(Connection connection) {
+            return new Status(errorCode, "Error loading customer employer", 1);
+          }
+        };
+  }
+
+  // mock method to test statuses for load customer phone numbers
+  public void createMockLoadCustomerPhoneNumbers(Integer errorCode) {
+    this.loadCustomerPhones =
+        new LoadCustomerPhoneNumbers() {
+          @Override
+          public Status send(Connection connection) {
+            return new Status(errorCode, "Error loading customer phone numbers", 1);
+          }
+        };
+  }
+
+  // mock method to test statuses for load customer emails
+  public void createMockLoadCustomerEmails(Integer errorCode) {
+    this.loadCustomerEmails =
+        new LoadCustomerEmails() {
+          @Override
+          public Status send(Connection connection) {
+            return new Status(errorCode, "Error loading customer emails", 1);
+          }
+        };
+  }
+
+  // mock method to test statuses for load customer notes
+  public void createMockLoadCustomerNotes(Integer errorCode) {
+    this.loadCustomerNotes =
+        new LoadCustomerNote() {
+          @Override
+          public Status send(Connection connection) {
+            return new Status(errorCode, "Error loading customer notes", 1);
+          }
+        };
+  }
+
+  // method to reset load messages
+  public void resetLoadMessages() {
+    this.findCustomerAdvanced = new FindCustomerAdvanced();
+    this.loadCustomer = new LoadCustomer();
+    this.loadCustomerAddresses = new LoadCustomerAddresses();
+    this.loadCustomerEmployer = new LoadCustomerEmployer();
+    this.loadCustomerPhones = new LoadCustomerPhoneNumbers();
+    this.loadCustomerEmails = new LoadCustomerEmails();
+    this.loadCustomerNotes = new LoadCustomerNote();
+  }
 }
