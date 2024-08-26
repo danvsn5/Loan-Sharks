@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import uoa.lavs.backend.oop.customer.Customer;
 import uoa.lavs.backend.oop.customer.SearchCustomer;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
@@ -58,33 +59,47 @@ public class LoanCoborrower extends AbstractLoanController implements AccessType
     coborrowerIDField2.setStyle("");
     coborrowerIDField3.setStyle("");
 
+    // This will check if the coborrower exists in the database, and is not either the customer or
+    // another coborrower. It also checks if it conforms to the loan requirements. If it does not,
+    // you cannot proceed.
     if (!coborrowerId1.isEmpty()) {
+      Customer customer1 =
+          searchCustomer.searchCustomerById(coborrowerIDField1.getText(), connection);
       if (!coborrowerIDField1.getText().equals(personalLoan.getCustomerId())
-          && searchCustomer.searchCustomerById(coborrowerIDField1.getText(), connection) != null
+          && customer1 != null
           && !coborrowerId1.equals(coborrowerId2)
-          && !coborrowerId1.equals(coborrowerId3)) {
+          && !coborrowerId1.equals(coborrowerId3)
+          && AppState.validateCustomerForLoan(customer1)) {
         coborrowerIDField1.setStyle("");
       } else {
         coborrowerIDField1.setStyle("-fx-border-color: red");
         isValid = false;
       }
     }
+
     if (!coborrowerIDField2.getText().isEmpty()) {
+      Customer customer2 =
+          searchCustomer.searchCustomerById(coborrowerIDField2.getText(), connection);
       if (!coborrowerIDField2.getText().equals(personalLoan.getCustomerId())
-          && searchCustomer.searchCustomerById(coborrowerIDField2.getText(), connection) != null
+          && customer2 != null
           && !coborrowerId2.equals(coborrowerId1)
-          && !coborrowerId2.equals(coborrowerId3)) {
+          && !coborrowerId2.equals(coborrowerId3)
+          && AppState.validateCustomerForLoan(customer2)) {
         coborrowerIDField2.setStyle("");
       } else {
         coborrowerIDField2.setStyle("-fx-border-color: red");
         isValid = false;
       }
     }
+
     if (!coborrowerIDField3.getText().isEmpty()) {
+      Customer customer3 =
+          searchCustomer.searchCustomerById(coborrowerIDField3.getText(), connection);
       if (!coborrowerIDField3.getText().equals(personalLoan.getCustomerId())
-          && searchCustomer.searchCustomerById(coborrowerIDField3.getText(), connection) != null
+          && customer3 != null
           && !coborrowerId3.equals(coborrowerId1)
-          && !coborrowerId3.equals(coborrowerId2)) {
+          && !coborrowerId3.equals(coborrowerId2)
+          && AppState.validateCustomerForLoan(customer3)) {
         coborrowerIDField3.setStyle("");
       } else {
         coborrowerIDField3.setStyle("-fx-border-color: red");
