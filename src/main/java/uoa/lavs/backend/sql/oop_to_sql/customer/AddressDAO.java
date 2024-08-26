@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import uoa.lavs.backend.oop.customer.Address;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
 public class AddressDAO {
 
+  // Handles the addition of an address to the database
   public void addAddress(Address address) {
     String customerId = address.getCustomerId();
     // Find the next addressId for this customerId
@@ -23,6 +23,7 @@ public class AddressDAO {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+      // Set the values for the prepared statement from the address object
       pstmt.setString(1, customerId);
       pstmt.setInt(2, nextAddressId);
       pstmt.setString(3, address.getAddressType());
@@ -43,8 +44,10 @@ public class AddressDAO {
     }
   }
 
+  // Finds the next addressId for a customer
   private int getNextAddressIdForCustomer(String customerId) {
     String sql = "SELECT MAX(addressId) FROM customer_address WHERE customerId = ?";
+
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -58,14 +61,15 @@ public class AddressDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-    return 1; 
+    return 1;
   }
 
+  // Updates the address in the database with the new address paramaters
   public void updateAddress(Address address) {
     String sql =
         "UPDATE customer_address SET addressType = ?, addressLineOne = ?, addressLineTwo = ?,"
-            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ?, lastModified = CURRENT_TIMESTAMP WHERE customerId = ? AND addressId"
-            + " = ?";
+            + " suburb = ?, postCode = ?, city = ?, country = ?, isPrimary = ?, isMailing = ?,"
+            + " lastModified = CURRENT_TIMESTAMP WHERE customerId = ? AND addressId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -89,6 +93,7 @@ public class AddressDAO {
     }
   }
 
+  // Retrieves an address from the database
   public Address getAddress(String customerId, int addressId) {
     String sql = "SELECT * FROM customer_address WHERE customerId = ? AND addressId = ?";
     try (Connection conn = DatabaseConnection.connect();
@@ -133,6 +138,7 @@ public class AddressDAO {
     return null;
   }
 
+  // Retrieves all addresses for a customer
   public ArrayList<Address> getAddresses(String customerId) {
     ArrayList<Address> addresses = new ArrayList<>();
 
@@ -177,5 +183,4 @@ public class AddressDAO {
     }
     return null;
   }
-
 }

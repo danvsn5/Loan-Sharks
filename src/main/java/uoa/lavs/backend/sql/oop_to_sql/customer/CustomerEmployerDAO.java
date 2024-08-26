@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
 public class CustomerEmployerDAO {
 
+  // Adds a customer employer to the database
   public void addCustomerEmployer(CustomerEmployer employer) {
     String sql =
         "INSERT INTO customer_employer (customerId, employerName, addressLineOne, addressLineTwo,"
@@ -18,7 +18,7 @@ public class CustomerEmployerDAO {
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-          // print out all to console too
+      // print out all to console too
       pstmt.setString(1, employer.getCustomerId());
       System.out.println("Employer Name: " + employer.getEmployerName());
       pstmt.setString(2, employer.getEmployerName());
@@ -26,7 +26,7 @@ public class CustomerEmployerDAO {
       pstmt.setString(3, employer.getLineOne());
       System.out.println("Address Line Two: " + employer.getLineTwo());
       pstmt.setString(4, employer.getLineTwo());
-        System.out.println(employer.getCountry());
+      System.out.println(employer.getCountry());
       pstmt.setString(5, employer.getSuburb());
       pstmt.setString(6, employer.getPostCode());
       pstmt.setString(7, employer.getCity());
@@ -36,13 +36,13 @@ public class CustomerEmployerDAO {
       pstmt.setString(11, employer.getEmployerPhone());
       pstmt.setBoolean(12, employer.getOwnerOfCompany());
 
-      
       pstmt.executeUpdate();
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
   }
 
+  // Updates a customer employer in the database with new details
   public void updateCustomerEmployer(CustomerEmployer employer) {
     String sql =
         "UPDATE customer_employer SET employerName = ?, addressLineOne = ?, addressLineTwo = ?,"
@@ -72,6 +72,7 @@ public class CustomerEmployerDAO {
     }
   }
 
+  // Retrieves a customer employer from the database with the given customerId
   public CustomerEmployer getCustomerEmployer(String customerId) {
     String sql = "SELECT * FROM customer_employer WHERE customerId = ?";
     try (Connection conn = DatabaseConnection.connect();
@@ -115,5 +116,4 @@ public class CustomerEmployerDAO {
     }
     return null;
   }
-
 }

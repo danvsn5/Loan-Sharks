@@ -5,11 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import uoa.lavs.backend.oop.customer.Email;
 import uoa.lavs.backend.sql.DatabaseConnection;
 
 public class EmailDAO {
+
+  // Adds an email to the database
   public void addEmail(Email email) {
     String customerId = email.getCustomerId();
     // Find the next emailId for this customerId
@@ -34,6 +35,7 @@ public class EmailDAO {
     }
   }
 
+  // Finds the next emailId for a customer when new email is added
   public int getNextEmailIdForCustomer(String customerId) {
     int maxEmailId = 0;
     String sql = "SELECT MAX(emailId) FROM customer_email WHERE customerId = ?";
@@ -45,7 +47,6 @@ public class EmailDAO {
 
       if (rs.next()) {
         maxEmailId = rs.getInt(1);
-        
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -53,6 +54,7 @@ public class EmailDAO {
     return maxEmailId + 1;
   }
 
+  // Updates an email in the database with new details from the email object
   public void updateEmail(Email email) {
     String sql =
         "UPDATE customer_email SET emailAddress = ?, isPrimary = ?,"
@@ -73,6 +75,7 @@ public class EmailDAO {
     }
   }
 
+  // Retrieves an email from the database with the given emailId and customerId
   public Email getEmail(String customerId, int emailId) {
     Email retrievedEmail = null;
     ArrayList<Email> emails = getEmails(customerId);
@@ -85,6 +88,7 @@ public class EmailDAO {
     return retrievedEmail;
   }
 
+  // Retrieves all emails for a customer from the database
   public ArrayList<Email> getEmails(String customerId) {
     ArrayList<Email> emails = new ArrayList<>();
 
