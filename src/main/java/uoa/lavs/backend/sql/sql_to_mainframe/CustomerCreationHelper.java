@@ -93,8 +93,7 @@ public class CustomerCreationHelper {
         || !phones.get(0).getPrefix().matches("[0-9\\+]+")
         || phones.get(0).getPhoneNumber().equals("")
         || phones.get(0).getPhoneNumber().length() > 20
-        || !phones.get(0).getPhoneNumber().matches("[0-9\\-]+")
-        || phones.get(0).getType().equals("")) {
+        || !phones.get(0).getPhoneNumber().matches("[0-9\\-]+")) {
       return false;
     }
     boolean primaryPhoneSet = false;
