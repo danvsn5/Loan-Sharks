@@ -201,6 +201,7 @@ public class CustomerResultsController {
     Customer customer = searchResultList.get((currentPage - 1) * 6 + index - 1);
     if (AppState.getIsCreatingLoan()) {
       if (AppState.validateCustomerForLoan(customer)) {
+        nullLabel.setVisible(false);
         AppState.setSelectedCustomer(customer);
         PersonalLoanSingleton.resetInstance();
         AppState.loadLoans("CREATE");

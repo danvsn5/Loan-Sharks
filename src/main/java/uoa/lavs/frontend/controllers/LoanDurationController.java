@@ -62,7 +62,7 @@ public class LoanDurationController extends AbstractLoanController implements Ac
     ControllerHelper.updateUIBasedOnAccessTypeLoan(
         AppState.getLoanDetailsAccessType(),
         editButton,
-        new TextField[] {periodField, termField},
+        new TextField[] {periodField},
         new ComboBox<?>[] {},
         new DatePicker[] {startDatePicker},
         new RadioButton[] {});
