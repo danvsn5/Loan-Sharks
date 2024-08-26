@@ -6,10 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import uoa.lavs.backend.oop.loan.LoanPayment;
-import uoa.lavs.backend.oop.loan.PersonalLoan;
-import uoa.lavs.backend.oop.loan.PersonalLoanSingleton;
 import uoa.lavs.frontend.AccessTypeNotifier;
 import uoa.lavs.frontend.AccessTypeObserver;
 import uoa.lavs.frontend.AppState;
@@ -20,18 +17,6 @@ public class LoanFinanceDetails extends AbstractLoanController implements Access
   @FXML private ComboBox<String> paymentFrequencyBox;
   @FXML private TextField paymentValueField;
   @FXML private RadioButton interestOnlyButton;
-
-  @FXML private Button coborrowerButton;
-  @FXML private Button durationButton;
-  @FXML private Button financeButton;
-  @FXML private Button primaryButton;
-
-  @FXML private Button summaryButton;
-  @FXML private ImageView staticReturnImageView;
-
-  @FXML private Button editButton;
-
-  PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
   @FXML
   private void initialize() {
