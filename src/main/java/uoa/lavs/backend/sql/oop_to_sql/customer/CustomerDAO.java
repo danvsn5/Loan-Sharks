@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import uoa.lavs.backend.oop.customer.Address;
 import uoa.lavs.backend.oop.customer.Customer;
 import uoa.lavs.backend.oop.customer.CustomerEmployer;
@@ -55,7 +54,10 @@ public class CustomerDAO {
         if (smallestId != null) {
           try {
             int idNumber = Integer.parseInt(smallestId);
-            previousId = String.valueOf(idNumber - 1);
+            // Previous id already -1, so only changes previd if idNumber is less than that
+            if (idNumber < 0) {
+              previousId = String.valueOf(idNumber - 1);
+            }
           } catch (NumberFormatException e) {
             System.out.println("Error parsing customerId: " + e.getMessage());
           }
@@ -143,7 +145,7 @@ public class CustomerDAO {
     String sql = "SELECT * FROM customer WHERE name LIKE ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-          pstmt.setString(1, "%" + name + "%");
+      pstmt.setString(1, "%" + name + "%");
 
       ResultSet rs = pstmt.executeQuery();
 

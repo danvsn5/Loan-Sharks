@@ -5,16 +5,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import uoa.lavs.backend.oop.customer.IndividualCustomer;
+import uoa.lavs.backend.oop.customer.IndividualCustomerSingleton;
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.customer.FindCustomer;
 import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomer;
 
 public class SyncCustomer extends Sync {
 
+  IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
+
   @Override
   protected Status syncMainframeData(
-      ResultSet resultSet, uoa.lavs.legacy.mainframe.Connection connection, java.sql.Connection localConn)
+      ResultSet resultSet,
+      uoa.lavs.legacy.mainframe.Connection connection,
+      java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
     FindCustomer findCustomer = new FindCustomer();
@@ -35,11 +40,26 @@ public class SyncCustomer extends Sync {
       customer_id = updateCustomer.getCustomerIdFromServer();
       System.out.println("New customer ID from mainframe: " + customer_id);
     }
-
     if (customer_id != null) {
       System.out.print("Updating customer ID in local database... ");
-      updateCustomerIdInLocalDB(resultSet.getString("customerId"), customer_id, localConn);
+      String oldCustomerId = resultSet.getString("customerId");
+      updateCustomerIdInLocalDB(oldCustomerId, customer_id, localConn);
     }
+
+    customer.setCustomerId(customer_id);
+    for (int i = 0; i < customer.getAddresses().size(); i++) {
+      customer.getAddresses().get(i).setCustomerId(customer_id);
+    }
+    for (int i = 0; i < customer.getEmails().size(); i++) {
+      customer.getEmails().get(i).setCustomerId(customer_id);
+    }
+    for (int i = 0; i < customer.getPhones().size(); i++) {
+      customer.getPhones().get(i).setCustomerId(customer_id);
+    }
+    for (int i = 0; i < customer.getNotes().size(); i++) {
+      customer.getNotes().get(i).setCustomerId(customer_id);
+    }
+    customer.getEmployer().setCustomerId(customer_id);
 
     if (status.getErrorCode() == 0) {
       System.out.println(

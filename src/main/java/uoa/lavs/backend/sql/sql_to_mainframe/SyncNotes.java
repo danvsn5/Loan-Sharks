@@ -3,7 +3,6 @@ package uoa.lavs.backend.sql.sql_to_mainframe;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerNote;
 import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerNote;
@@ -11,27 +10,28 @@ import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerNote;
 public class SyncNotes extends Sync {
   @Override
   protected Status syncMainframeData(
-      ResultSet resultSet, uoa.lavs.legacy.mainframe.Connection connection, java.sql.Connection localConn)
+      ResultSet resultSet,
+      uoa.lavs.legacy.mainframe.Connection connection,
+      java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
-    // Integer note_id = resultSet.getInt("noteId");
+    Integer note_id = resultSet.getInt("noteId");
     LoadCustomerNote loadCustomerNote = new LoadCustomerNote();
     loadCustomerNote.setCustomerId(customer_id);
+    loadCustomerNote.setNumber(note_id);
     loadCustomerNote.send(connection);
 
-    Integer pageCount = loadCustomerNote.getPageCountFromServer();
-
-    if (pageCount == null) {
-      System.out.println("Notes not found in mainframe. Creating new notes.");
-    } else {
-      System.out.println("Page count of notes from mainframe: " + pageCount);
-    }
+    Integer lineCount = loadCustomerNote.getLineCountFromServer();
 
     UpdateCustomerNote updateCustomerNote = updateCustomerNote(resultSet, customer_id);
 
-    // System.out.println("NoteID from mainframe: " + note_id);
-    // updateCustomerNote.setNumber(note_id);
-
+    if (lineCount == null) {
+      System.out.println("Note " + note_id + " not found in mainframe. Creating new notes.");
+      updateCustomerNote.setNumber(null);
+    } else {
+      System.out.println("Note " + note_id + "found in mainframe. Updating notes.");
+      updateCustomerNote.setNumber(note_id);
+    }
     Status status = updateCustomerNote.send(connection);
 
     if (status.getErrorCode() == 0) {
@@ -48,16 +48,14 @@ public class SyncNotes extends Sync {
     try {
       updateCustomerNote.setCustomerId(customerId);
 
-      while (resultSet.next()) {
-        int noteId = resultSet.getInt("noteId");
-        String note = resultSet.getString("note");
+      int noteId = resultSet.getInt("noteId");
+      String note = resultSet.getString("note");
 
-        updateCustomerNote.setNumber(noteId);
+      updateCustomerNote.setNumber(noteId);
 
-        String[] lines = note.split("::");
-        for (int i = 1; i < lines.length; i++) {
-          updateCustomerNote.setLine(i, lines[i]);
-        }
+      String[] lines = note.split("::");
+      for (int i = 0; i < lines.length; i++) {
+        updateCustomerNote.setLine(i + 1, lines[i]);
       }
 
     } catch (SQLException e) {

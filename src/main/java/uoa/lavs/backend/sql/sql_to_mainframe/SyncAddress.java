@@ -3,7 +3,6 @@ package uoa.lavs.backend.sql.sql_to_mainframe;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.customer.FindCustomerAddress;
 import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerAddress;
@@ -11,9 +10,12 @@ import uoa.lavs.legacy.mainframe.messages.customer.UpdateCustomerAddress;
 public class SyncAddress extends Sync {
   @Override
   protected Status syncMainframeData(
-      ResultSet resultSet, uoa.lavs.legacy.mainframe.Connection connection, java.sql.Connection localConn)
+      ResultSet resultSet,
+      uoa.lavs.legacy.mainframe.Connection connection,
+      java.sql.Connection localConn)
       throws SQLException, IOException {
     String customer_id = resultSet.getString("customerId");
+
     Integer address_id = resultSet.getInt("addressId");
     FindCustomerAddress findCustomerAddress = new FindCustomerAddress();
     findCustomerAddress.setCustomerId(customer_id);
@@ -24,7 +26,7 @@ public class SyncAddress extends Sync {
     UpdateCustomerAddress updateCustomerAddress = updateCustomerAddress(resultSet, customer_id);
 
     if (address_id == null) {
-      System.out.println("Address not found in mainframe. Creating new address.");
+      System.out.println("Address not found in mainframe. Creating new address. " + customer_id);
     } else {
       System.out.println("AddressID from mainframe: " + address_id);
     }
@@ -52,6 +54,7 @@ public class SyncAddress extends Sync {
     UpdateCustomerAddress updateCustomerAddress = new UpdateCustomerAddress();
     try {
       updateCustomerAddress.setCustomerId(customerId);
+      System.out.println("setting id to " + customerId);
       updateCustomerAddress.setType(resultSet.getString("addressType"));
       updateCustomerAddress.setLine1(resultSet.getString("addressLineOne"));
       updateCustomerAddress.setLine2(resultSet.getString("addressLineTwo"));
