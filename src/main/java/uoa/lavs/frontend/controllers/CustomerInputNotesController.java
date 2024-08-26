@@ -19,61 +19,35 @@ import uoa.lavs.frontend.SceneManager.AppUI;
 public class CustomerInputNotesController extends AbstractCustomerController
     implements AccessTypeObserver {
 
-  @FXML
-  private Button editButton;
-  @FXML
-  private ImageView staticReturnImageView;
-  @FXML
-  private Label notesPageNumber;
-  @FXML
-  private ImageView incNotes;
-  @FXML
-  private ImageView decNotes;
+  @FXML private Button editButton;
+  @FXML private ImageView staticReturnImageView;
+  @FXML private Label notesPageNumber;
+  @FXML private ImageView incNotes;
+  @FXML private ImageView decNotes;
 
-  @FXML
-  private Pane notesPane;
+  @FXML private Pane notesPane;
 
-  @FXML
-  private TextField noteField1;
-  @FXML
-  private TextField noteField2;
-  @FXML
-  private TextField noteField3;
-  @FXML
-  private TextField noteField4;
-  @FXML
-  private TextField noteField5;
-  @FXML
-  private TextField noteField6;
-  @FXML
-  private TextField noteField7;
-  @FXML
-  private TextField noteField8;
-  @FXML
-  private TextField noteField9;
-  @FXML
-  private TextField noteField10;
-  @FXML
-  private TextField noteField11;
-  @FXML
-  private TextField noteField12;
-  @FXML
-  private TextField noteField13;
-  @FXML
-  private TextField noteField14;
-  @FXML
-  private TextField noteField15;
-  @FXML
-  private TextField noteField16;
-  @FXML
-  private TextField noteField17;
-  @FXML
-  private TextField noteField18;
-  @FXML
-  private TextField noteField19;
+  @FXML private TextField noteField1;
+  @FXML private TextField noteField2;
+  @FXML private TextField noteField3;
+  @FXML private TextField noteField4;
+  @FXML private TextField noteField5;
+  @FXML private TextField noteField6;
+  @FXML private TextField noteField7;
+  @FXML private TextField noteField8;
+  @FXML private TextField noteField9;
+  @FXML private TextField noteField10;
+  @FXML private TextField noteField11;
+  @FXML private TextField noteField12;
+  @FXML private TextField noteField13;
+  @FXML private TextField noteField14;
+  @FXML private TextField noteField15;
+  @FXML private TextField noteField16;
+  @FXML private TextField noteField17;
+  @FXML private TextField noteField18;
+  @FXML private TextField noteField19;
 
-  @FXML
-  private Button fakeButton;
+  @FXML private Button fakeButton;
 
   private ArrayList<Note> notes = new ArrayList<>();
 
@@ -89,29 +63,6 @@ public class CustomerInputNotesController extends AbstractCustomerController
     // Initialize notes with 100 notes, with all lines empty
     for (int i = 0; i < 100; i++) {
       notes.add(new Note("", new String[19]));
-    }
-
-    // Set dummy values
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
-      noteField1.setText("Note 1");
-      noteField2.setText("Note 2");
-      noteField3.setText("Note 3");
-      noteField4.setText("Note 4");
-      noteField5.setText("Note 5");
-      noteField6.setText("Note 6");
-      noteField7.setText("Note 7");
-      noteField8.setText("Note 8");
-      noteField9.setText("Note 9");
-      noteField10.setText("Note 10");
-      noteField11.setText("Note 11");
-      noteField12.setText("Note 12");
-      noteField13.setText("Note 13");
-      noteField14.setText("Note 14");
-      noteField15.setText("Note 15");
-      noteField16.setText("Note 16");
-      noteField17.setText("Note 17");
-      noteField18.setText("Note 18");
-      noteField19.setText("Note 19");
     }
 
     if (AppState.getIsAccessingFromSearch()) {

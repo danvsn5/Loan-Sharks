@@ -11,23 +11,17 @@ import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.SceneManager.AppUI;
 
 public class CustomerMenuController {
-  @FXML
-  private Button addNewCustomerButton;
+  @FXML private Button addNewCustomerButton;
 
-  @FXML
-  private Button findCustomerButton;
+  @FXML private Button findCustomerButton;
 
-  @FXML
-  private Button backButton;
+  @FXML private Button backButton;
 
-  @FXML
-  private ImageView staticReturnImageView;
+  @FXML private ImageView staticReturnImageView;
 
-  @FXML
-  private ImageView connectionSymbol;
+  @FXML private ImageView connectionSymbol;
 
-  @FXML
-  private Label connectionLabel;
+  @FXML private Label connectionLabel;
 
   // enters UI for customer creation or customer search
   @FXML
@@ -36,7 +30,6 @@ public class CustomerMenuController {
     IndividualCustomerSingleton.resetInstance();
     AppState.loadAllCustomerDetails("CREATE");
     Main.setUi(AppUI.CI_DETAILS);
-
   }
 
   @FXML

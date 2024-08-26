@@ -26,16 +26,9 @@ public class LoanFinanceDetails extends AbstractLoanController implements Access
     paymentFrequencyBox.getItems().addAll("Weekly", "Fortnightly", "Monthly");
 
     personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
-
-    // Set dummy values
-    if (AppState.getLoanDetailsAccessType().equals("CREATE")) {
-      compoundingBox.setValue("Monthly");
-      paymentFrequencyBox.setValue("Monthly");
-      paymentValueField.setText("10");
-    }
   }
 
-  // updates the UI 
+  // updates the UI
   @FXML
   @Override
   public void updateUIBasedOnAccessType() {

@@ -199,15 +199,17 @@ public class CustomerResultsController {
 
   private void loadCustomer(int index) throws IOException {
     Customer customer = searchResultList.get((currentPage - 1) * 6 + index - 1);
-    if (AppState.getIsCreatingLoan() && validateCustomerForLoan(customer)) {
-      if (validateCustomerForLoan(customer)) {
+    if (AppState.getIsCreatingLoan()) {
+      if (AppState.validateCustomerForLoan(customer)) {
+        nullLabel.setVisible(false);
         AppState.setSelectedCustomer(customer);
         PersonalLoanSingleton.resetInstance();
         AppState.loadLoans("CREATE");
         Main.setUi(AppUI.LC_PRIMARY);
       } else {
         nullLabel.setVisible(true);
-        nullLabel.setText("Customer does not have a mailing address and/or contact method");
+        nullLabel.setText("Customer does not have a valid mailing address and/or contact method");
+        return;
       }
     } else {
       nullFields(customer);
@@ -218,40 +220,7 @@ public class CustomerResultsController {
     }
   }
 
-  private boolean validateCustomerForLoan(Customer customer) {
-    /**
-     * Check that the customer has at least one mailing address (see Screen 06: Customer Address.)
-     * If the customer does not have a mailing address, the loan cannot proceed. Check that the
-     * customer has at least one alternate contact method (phone or email.)
-     */
-    System.out.println("Validating customer");
-    boolean hasAddress = false;
-    boolean hasMailingAddress = false;
-    boolean hasPrimaryAddress = false;
-
-    boolean hasContact = false;
-    if (customer.getAddresses().size() > 0) {
-      System.out.println("Customer has addresses");
-      hasAddress = true;
-      for (int i = 0; i < customer.getAddresses().size(); i++) {
-        if (customer.getAddresses().get(i).getIsMailing()) {
-          System.out.println("Customer has mailing address");
-          hasMailingAddress = true;
-        }
-        if (customer.getAddresses().get(i).getIsPrimary()) {
-          System.out.println("Customer has primary address");
-          hasPrimaryAddress = true;
-        }
-      }
-    }
-    if (customer.getPhones().size() > 0 || customer.getEmails().size() > 0) {
-      System.out.println("Customer has contact");
-      hasContact = true;
-    }
-
-    return hasAddress && hasMailingAddress && hasPrimaryAddress && hasContact;
-  }
-
+  // set null fields to empty strings when viewing customer
   private void nullFields(Customer customer) {
     // This method checks for any null / empty fields in the customer object. If any are found, it
     // will set the values within as empty strings.

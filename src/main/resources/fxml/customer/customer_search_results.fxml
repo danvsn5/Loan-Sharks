@@ -50,9 +50,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label fx:id="nullLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="606.0" prefHeight="144.0" prefWidth="1280.0" stylesheets="@../../css/index.css" text="Customer Details Loading Failed. Retry Search." textFill="RED" textOverrun="CLIP" visible="false">
+      <Label fx:id="nullLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="144.0" prefHeight="62.0" prefWidth="1287.0" stylesheets="@../../css/index.css" text="Customer does not have a mailing address and/or contact method" textFill="RED" textOverrun="CLIP" visible="false">
          <font>
-            <Font size="39.0" />
+            <Font size="31.0" />
          </font>
       </Label>
       <Label fx:id="pageLabel" layoutX="605.0" layoutY="661.0" styleClass="regular-subtitle" stylesheets="@../../css/index.css" text="Page 1" />

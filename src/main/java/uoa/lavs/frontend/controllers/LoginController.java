@@ -14,14 +14,18 @@ import uoa.lavs.frontend.SceneManager;
 import uoa.lavs.frontend.SceneManager.AppUI;
 
 public class LoginController {
-  @FXML
-  private Button loginButton;
+  @FXML private Button loginButton;
+
+  @FXML private TextField usernameField;
+
+  @FXML private PasswordField passwordField;
 
   @FXML
-  private TextField usernameField;
-
-  @FXML
-  private PasswordField passwordField;
+  private void initialize() {
+    // sets the focus to the username field for improved UX
+    usernameField.setText("Moana");
+    passwordField.setText("Password");
+  }
 
   @FXML
   private void handleLoginButtonAction() throws Exception {

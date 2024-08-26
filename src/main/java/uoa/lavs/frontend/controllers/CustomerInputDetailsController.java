@@ -63,16 +63,6 @@ public class CustomerInputDetailsController extends AbstractCustomerController
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
 
-    // Set dummy values
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
-      customerTitleComboBox.setValue("Mr");
-      customerNameField.setText("John Doe Bingus");
-      customerDOBPicker.setValue(LocalDate.now());
-      customerOccupationField.setText("Software Developer");
-      customerVisaBox.setValue("NZ Citizen");
-      customerCitizenshipBox.setValue("New Zealand");
-    }
-
     if (AppState.getIsAccessingFromSearch()) {
       startWithCustomerID();
     }

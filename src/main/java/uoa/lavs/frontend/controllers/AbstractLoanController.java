@@ -15,22 +15,15 @@ import uoa.lavs.legacy.mainframe.messages.loan.LoadLoanSummary;
 
 public abstract class AbstractLoanController {
 
-  @FXML
-  protected Button coborrowerButton;
-  @FXML
-  protected Button durationButton;
-  @FXML
-  protected Button financeButton;
-  @FXML
-  protected Button primaryButton;
+  @FXML protected Button coborrowerButton;
+  @FXML protected Button durationButton;
+  @FXML protected Button financeButton;
+  @FXML protected Button primaryButton;
 
-  @FXML
-  protected Button summaryButton;
-  @FXML
-  protected ImageView staticReturnImageView;
+  @FXML protected Button summaryButton;
+  @FXML protected ImageView staticReturnImageView;
 
-  @FXML
-  protected Button editButton;
+  @FXML protected Button editButton;
 
   protected PersonalLoan personalLoan = PersonalLoanSingleton.getInstance();
 
@@ -73,6 +66,9 @@ public abstract class AbstractLoanController {
   // sets the tab to coborrower
   @FXML
   private void handleCoborrowerButtonAction() {
+    if (!validateData()) {
+      return;
+    }
     setLoanDetails();
     Main.setUi(AppUI.LC_COBORROWER);
   }
