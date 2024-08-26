@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import uoa.lavs.backend.sql.oop_to_sql.customer.CustomerDAO;
 import uoa.lavs.legacy.mainframe.Connection;
+import uoa.lavs.legacy.mainframe.Instance;
 import uoa.lavs.legacy.mainframe.Status;
 import uoa.lavs.legacy.mainframe.messages.customer.FindCustomerAdvanced;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomer;
@@ -11,6 +12,7 @@ import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerAddress;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerAddresses;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerEmails;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerEmployer;
+import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerNote;
 import uoa.lavs.legacy.mainframe.messages.customer.LoadCustomerPhoneNumbers;
 
 public class SearchCustomer {
@@ -34,6 +36,7 @@ public class SearchCustomer {
     LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
     LoadCustomerPhoneNumbers loadCustomerPhones = new LoadCustomerPhoneNumbers();
     LoadCustomerEmails loadCustomerEmails = new LoadCustomerEmails();
+    LoadCustomerNote loadCustomerNotes = new LoadCustomerNote();
 
     loadCustomer.setCustomerId(customerId);
     loadCustomerEmployer.setCustomerId(customerId);
@@ -41,6 +44,8 @@ public class SearchCustomer {
     loadCustomerEmails.setCustomerId(customerId);
     loadCustomerEmployer.setNumber(1);
     loadCustomerAddresses.setCustomerId(customerId);
+    loadCustomerNotes.setCustomerId(customerId);
+    loadCustomerNotes.setNumber(1);
 
     // Send the request for customer
 
@@ -53,6 +58,8 @@ public class SearchCustomer {
     Status phoneStatus = loadCustomerPhones.send(connection);
     // Send the request for email
     Status emailStatus = loadCustomerEmails.send(connection);
+
+    Status noteStatus = loadCustomerNotes.send(connection);
 
     setStatusInstance(status);
 
@@ -120,6 +127,11 @@ public class SearchCustomer {
       updateCustomerEmails(loadCustomerEmails, customer);
     }
 
+    if (noteStatus.getErrorCode() == 0) {
+      System.out.println("Updating notes...");
+      updateCustomerNotes(loadCustomerNotes, customer);
+    }
+
     System.out.println("Customer found: " + customer.getName());
 
     return customer;
@@ -132,6 +144,7 @@ public class SearchCustomer {
     LoadCustomerEmployer loadCustomerEmployer = new LoadCustomerEmployer();
     LoadCustomerPhoneNumbers loadCustomerPhones = new LoadCustomerPhoneNumbers();
     LoadCustomerEmails loadCustomerEmails = new LoadCustomerEmails();
+    LoadCustomerNote loadCustomerNotes = new LoadCustomerNote();
 
     findCustomerAdvanced.setSearchName(name);
     Status status = findCustomerAdvanced.send(connection);
@@ -181,6 +194,7 @@ public class SearchCustomer {
       loadCustomerEmployer.setNumber(1);
       loadCustomerPhones.setCustomerId(customerId);
       loadCustomerEmails.setCustomerId(customerId);
+      loadCustomerNotes.setCustomerId(customerId);
 
       // Send the request for address
       Status addressStatus = loadCustomerAddresses.send(connection);
@@ -191,6 +205,8 @@ public class SearchCustomer {
       Status phoneStatus = loadCustomerPhones.send(connection);
       // Send the request for email
       Status emailStatus = loadCustomerEmails.send(connection);
+
+      Status noteStatus = loadCustomerNotes.send(connection);
 
       if (status.getErrorCode() != 0) {
         System.out.println("Error loading customer: " + status.getErrorCode());
@@ -242,6 +258,11 @@ public class SearchCustomer {
 
       if (emailStatus.getErrorCode() == 0) {
         updateCustomerEmails(loadCustomerEmails, customer);
+      }
+
+      if (noteStatus.getErrorCode() == 0) {
+        System.out.println("Updating notes...");
+        updateCustomerNotes(loadCustomerNotes, customer);
       }
 
       customers.add(customer);
@@ -329,15 +350,6 @@ public class SearchCustomer {
       }
       address.setAddressId(i);
       addresses.add(address);
-      System.out.println("address type: " + address.getAddressType());
-      System.out.println("address line 1: " + address.getAddressLineOne());
-      System.out.println("address line 2: " + address.getAddressLineTwo());
-      System.out.println("address suburb: " + address.getSuburb());
-      System.out.println("address city: " + address.getCity());
-      System.out.println("address country: " + address.getCountry());
-      System.out.println("address post code: " + address.getPostCode());
-      System.out.println("address is primary: " + address.getIsPrimary());
-      System.out.println("address is mailing: " + address.getIsMailing());
     }
     customer.setAddresses(addresses);
   }
@@ -391,6 +403,23 @@ public class SearchCustomer {
       emails.add(email);
     }
     customer.setEmails(emails);
+  }
+
+  private void updateCustomerNotes(LoadCustomerNote loadCustomerNotes, Customer customer) {
+    ArrayList<Note> notes = new ArrayList<>();
+    int count = loadCustomerNotes.getPageCountFromServer();
+    for (int i = 1; i <= count; i++) {
+      loadCustomerNotes.setNumber(i);
+      loadCustomerNotes.send(Instance.getConnection());
+      Note note = new Note(customer.getCustomerId(), new String[19]);
+      note.setNoteId(i);
+      int lineCount = loadCustomerNotes.getLineCountFromServer();
+      for (int j = 1; j <= lineCount; j++) {
+        note.setLine(j - 1, loadCustomerNotes.getLineFromServer(j));
+      }
+      notes.add(note);
+    }
+    customer.setNotes(notes);
   }
 
   // public static void main(String[] args) {
