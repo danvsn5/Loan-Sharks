@@ -26,8 +26,13 @@ public class CustomerDAO {
             + " ) VALUES (?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      String customerId;
+      if (customer.getCustomerId().equals("") || Integer.parseInt(customer.getCustomerId()) < 0) {
+        customerId = getNextCustomerId();
+      } else {
+        customerId = customer.getCustomerId();
+      }
 
-      String customerId = getNextCustomerId();
       pstmt.setString(1, customerId);
       pstmt.setString(2, customer.getTitle());
       pstmt.setString(3, customer.getName());

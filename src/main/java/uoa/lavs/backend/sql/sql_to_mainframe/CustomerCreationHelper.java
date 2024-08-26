@@ -155,6 +155,8 @@ public class CustomerCreationHelper {
     // if the customer does not currently exist, add the customer to the database, otherwise update
     if (!currentlyExists) {
       customerdao.addCustomer(customer);
+    } else if (customerdao.getCustomer(customer.getCustomerId()) == null) {
+      customerdao.addCustomer(customer);
     } else {
       customerdao.updateCustomer(customer);
     }
@@ -263,6 +265,8 @@ public class CustomerCreationHelper {
     CustomerEmployerDAO employerdao = new CustomerEmployerDAO();
     customer.getEmployer().setCustomerId(customerId);
     if (!currentlyExists) {
+      employerdao.addCustomerEmployer(customer.getEmployer());
+    } else if (employerdao.getCustomerEmployer(customerId) == null) {
       employerdao.addCustomerEmployer(customer.getEmployer());
     } else {
       employerdao.updateCustomerEmployer(customer.getEmployer());
