@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import uoa.lavs.backend.oop.customer.Customer;
 import uoa.lavs.backend.oop.loan.ILoan;
 import uoa.lavs.backend.oop.loan.Loan;
@@ -35,7 +34,8 @@ public class LoanDAO {
 
   public void updateLoan(ILoan loan) {
     String sql =
-        "UPDATE loan SET customerId = ?, principal = ?, rate = ?, rateType = ? WHERE loanId = ?";
+        "UPDATE loan SET customerId = ?, principal = ?, rate = ?, rateType = ?, lastModified ="
+            + " CURRENT_TIMESTAMP WHERE loanId = ?";
     try (Connection conn = DatabaseConnection.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, loan.getCustomerId());
