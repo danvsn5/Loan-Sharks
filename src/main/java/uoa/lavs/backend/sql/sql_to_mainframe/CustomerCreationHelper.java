@@ -39,23 +39,43 @@ public class CustomerCreationHelper {
       return false;
     }
 
+    for (int i = addresses.size(); i > 0; i--) {
+      // cull empty addresses
+      Address address = addresses.get(i - 1);
+      if (address.getAddressType() == "" && address.getAddressLineOne() == "" && address.getAddressLineTwo() == ""
+          && address.getSuburb() == "" && address.getPostCode() == "" && address.getCity() == ""
+          && address.getCountry() == "" && address.getIsPrimary() == false && address.getIsMailing() == false) {
+        addresses.remove(address);
+      }
+    }
+
+    System.out.println("There are " + addresses.size() + " unculled addresses");
+    for (Address address : addresses) {
+      System.out.println(address.getAddressId());
+    }
+
     // ADDRESS VALIDATION
     if (addresses.size() == 0) {
       return false;
-    } else if (addresses.get(0).getAddressType().equals("")
-        || addresses.get(0).getAddressLineOne().equals("")
-        || addresses.get(0).getAddressLineOne().length() > 60
-        || (addresses.get(0).getAddressLineTwo().length() > 60
-            && !(addresses.get(0).getAddressLineTwo() == null))
-        || addresses.get(0).getSuburb().equals("")
-        || addresses.get(0).getSuburb().length() > 30
-        || addresses.get(0).getPostCode().equals("")
-        || addresses.get(0).getPostCode().length() > 10
-        || !addresses.get(0).getPostCode().matches("[0-9]+")
-        || addresses.get(0).getCity().equals("")
-        || addresses.get(0).getCity().length() > 30
-        || addresses.get(0).getCountry().equals("")) {
-      return false;
+    } else {
+
+      for (Address address : addresses) {
+        if (address.getAddressType().equals("")
+            || address.getAddressLineOne().equals("")
+            || address.getAddressLineOne().length() > 60
+            || (address.getAddressLineTwo().length() > 60 && !(address.getAddressLineTwo() == null))
+            || address.getSuburb().equals("")
+            || address.getSuburb().length() > 30
+            || address.getPostCode().equals("")
+            || address.getPostCode().length() > 10
+            || !address.getPostCode().matches("[0-9]+")
+            || address.getCity().equals("")
+            || address.getCity().length() > 30
+            || address.getCountry().equals("")) {
+          return false;
+        }
+
+      }
     }
 
     // CHECK IF PRIMARY AND MAILING ADDRESS ARE SET IN ALL ADDRESSES
@@ -152,7 +172,8 @@ public class CustomerCreationHelper {
 
     CustomerDAO customerdao = new CustomerDAO();
 
-    // if the customer does not currently exist, add the customer to the database, otherwise update
+    // if the customer does not currently exist, add the customer to the database,
+    // otherwise update
     if (!currentlyExists) {
       customerdao.addCustomer(customer);
     } else {
@@ -255,7 +276,8 @@ public class CustomerCreationHelper {
         // then create an email instead of adding one
         if (email.getEmailId() > numberOfDatabaseEmails) {
           emaildao.addEmail(email);
-        } else emaildao.updateEmail(email);
+        } else
+          emaildao.updateEmail(email);
       }
     }
 
@@ -282,9 +304,8 @@ public class CustomerCreationHelper {
       lastSyncTime = LocalDateTime.now(ZoneOffset.UTC).minusDays(1);
     }
 
-    SyncManager syncManager =
-        new SyncManager(
-            List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
+    SyncManager syncManager = new SyncManager(
+        List.of(syncCustomer, syncAddress, syncEmployer, syncPhone, syncEmail, syncNotes));
 
     syncManager.syncAll(lastSyncTime, connection);
   }
