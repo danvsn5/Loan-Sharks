@@ -54,12 +54,6 @@ public class LoanDurationController extends AbstractLoanController implements Ac
 
     personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
     termField.setText("30");
-
-    // Set dummy values
-    if (AppState.getLoanDetailsAccessType().equals("CREATE")) {
-      startDatePicker.setValue(LocalDate.now());
-      periodField.setText("30");
-    }
   }
 
   @FXML

@@ -16,19 +16,13 @@ import uoa.lavs.frontend.ControllerHelper;
 
 public class CustomerInputEmployerController extends AbstractCustomerController
     implements AccessTypeObserver {
-  @FXML
-  private TextField employerNameField;
-  @FXML
-  private TextField employerEmailField;
-  @FXML
-  private TextField employerWebsiteField;
-  @FXML
-  private TextField employerPhoneField;
-  @FXML
-  private RadioButton customerIsEmployerCheckbox;
+  @FXML private TextField employerNameField;
+  @FXML private TextField employerEmailField;
+  @FXML private TextField employerWebsiteField;
+  @FXML private TextField employerPhoneField;
+  @FXML private RadioButton customerIsEmployerCheckbox;
 
-  @FXML
-  private Button employerAddressButton;
+  @FXML private Button employerAddressButton;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -36,15 +30,6 @@ public class CustomerInputEmployerController extends AbstractCustomerController
   private void initialize() {
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
-
-    // Set dummy values
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
-      employerNameField.setText("Fake Company");
-      employerEmailField.setText("dada@dada.com");
-      employerWebsiteField.setText("www.fake.com");
-      employerPhoneField.setText("1234567890");
-      customerIsEmployerCheckbox.setSelected(true);
-    }
 
     if (AppState.getIsAccessingFromSearch()) {
       startWithCustomerID();
@@ -116,11 +101,11 @@ public class CustomerInputEmployerController extends AbstractCustomerController
         editButton,
         idBanner,
         new TextField[] {
-            employerNameField, employerEmailField, employerWebsiteField, employerPhoneField
+          employerNameField, employerEmailField, employerWebsiteField, employerPhoneField
         },
         new ComboBox<?>[] {},
         new DatePicker[] {},
-        new RadioButton[] { customerIsEmployerCheckbox });
+        new RadioButton[] {customerIsEmployerCheckbox});
   }
 
   @Override

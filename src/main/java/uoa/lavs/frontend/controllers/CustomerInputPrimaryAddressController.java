@@ -23,29 +23,18 @@ import uoa.lavs.frontend.SceneManager.AppUI;
 
 public class CustomerInputPrimaryAddressController extends AbstractCustomerController
     implements AccessTypeObserver {
-  @FXML
-  private ComboBox<String> customerAddressTypeComboBox;
-  @FXML
-  private TextField customerAddressLine1Field;
-  @FXML
-  private TextField customerAddressLine2Field;
-  @FXML
-  private TextField customerSuburbField;
-  @FXML
-  private TextField customerCityField;
-  @FXML
-  private TextField customerPostcodeField;
-  @FXML
-  private RadioButton mailingAddressRadio;
-  @FXML
-  private RadioButton primaryAddressRadio;
+  @FXML private ComboBox<String> customerAddressTypeComboBox;
+  @FXML private TextField customerAddressLine1Field;
+  @FXML private TextField customerAddressLine2Field;
+  @FXML private TextField customerSuburbField;
+  @FXML private TextField customerCityField;
+  @FXML private TextField customerPostcodeField;
+  @FXML private RadioButton mailingAddressRadio;
+  @FXML private RadioButton primaryAddressRadio;
 
-  @FXML
-  private ImageView incAddress;
-  @FXML
-  private ImageView decAddress;
-  @FXML
-  private Label addressPageLabel;
+  @FXML private ImageView incAddress;
+  @FXML private ImageView decAddress;
+  @FXML private Label addressPageLabel;
 
   private IndividualCustomer customer = IndividualCustomerSingleton.getInstance();
 
@@ -64,18 +53,6 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
     updateUIBasedOnAccessType();
     addressPageLabel.setText("Address: " + (currentAddress + 1));
 
-    // Set dummy values
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
-      customerAddressTypeComboBox.setValue("Home");
-      customerAddressLine1Field.setText("123 Fake Street");
-      customerAddressLine2Field.setText("Apt 1");
-      customerSuburbField.setText("Fake Suburb");
-      customerCityField.setText("Fake City");
-      customerPostcodeField.setText("123456");
-      mailingAddressRadio.setSelected(false);
-      primaryAddressRadio.setSelected(false);
-    }
-
     if (AppState.getIsAccessingFromSearch()) {
       startWithCustomerID();
     }
@@ -89,15 +66,15 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
         editButton,
         idBanner,
         new TextField[] {
-            customerAddressLine1Field,
-            customerAddressLine2Field,
-            customerSuburbField,
-            customerCityField,
-            customerPostcodeField
+          customerAddressLine1Field,
+          customerAddressLine2Field,
+          customerSuburbField,
+          customerCityField,
+          customerPostcodeField
         },
-        new ComboBox<?>[] { customerAddressTypeComboBox },
+        new ComboBox<?>[] {customerAddressTypeComboBox},
         new DatePicker[] {},
-        new RadioButton[] { mailingAddressRadio, primaryAddressRadio });
+        new RadioButton[] {mailingAddressRadio, primaryAddressRadio});
   }
 
   @Override
@@ -197,26 +174,25 @@ public class CustomerInputPrimaryAddressController extends AbstractCustomerContr
   private boolean setAddressDetails(String location) {
 
     if (location != "dec") {
-      if (!checkFields())
-        return false;
+      if (!checkFields()) return false;
     }
 
     // create a new address with input details
-    Address address = new Address(
-        customer.getCustomerId(),
-        customerAddressTypeComboBox.getValue(),
-        customerAddressLine1Field.getText(),
-        customerAddressLine2Field.getText(),
-        customerSuburbField.getText(),
-        customerPostcodeField.getText(),
-        customerCityField.getText(),
-        "New Zealand",
-        primaryAddressRadio.isSelected(),
-        mailingAddressRadio.isSelected());
+    Address address =
+        new Address(
+            customer.getCustomerId(),
+            customerAddressTypeComboBox.getValue(),
+            customerAddressLine1Field.getText(),
+            customerAddressLine2Field.getText(),
+            customerSuburbField.getText(),
+            customerPostcodeField.getText(),
+            customerCityField.getText(),
+            "New Zealand",
+            primaryAddressRadio.isSelected(),
+            mailingAddressRadio.isSelected());
 
     if (currentAddress == existingCustomerAddresses.size()) {
-      if (validateData())
-        existingCustomerAddresses.add(address);
+      if (validateData()) existingCustomerAddresses.add(address);
     } else {
       existingCustomerAddresses.set(currentAddress, address);
     }

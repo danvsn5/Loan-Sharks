@@ -15,38 +15,21 @@ import uoa.lavs.frontend.ControllerHelper;
 
 public class CustomerInputEmployerAddressController extends AbstractCustomerController
     implements AccessTypeObserver {
-  @FXML
-  private TextField employerAddressLine1Field;
-  @FXML
-  private TextField employerAddressLine2Field;
-  @FXML
-  private TextField employerSuburbField;
-  @FXML
-  private TextField employerCityField;
-  @FXML
-  private TextField employerPostcodeField;
+  @FXML private TextField employerAddressLine1Field;
+  @FXML private TextField employerAddressLine2Field;
+  @FXML private TextField employerSuburbField;
+  @FXML private TextField employerCityField;
+  @FXML private TextField employerPostcodeField;
 
-  @FXML
-  private ComboBox<String> employerCountryBox;
+  @FXML private ComboBox<String> employerCountryBox;
 
-  @FXML
-  private Button employerAddressButton;
+  @FXML private Button employerAddressButton;
 
   @FXML
   private void initialize() {
     employerCountryBox.getItems().addAll(AppState.getAllCountries());
     AccessTypeNotifier.registerCustomerObserver(this);
     updateUIBasedOnAccessType();
-
-    // Set Dummy data
-    if (AppState.getCustomerDetailsAccessType() == "CREATE") {
-      employerAddressLine1Field.setText("123 Fake Street");
-      employerAddressLine2Field.setText("Apt 1");
-      employerSuburbField.setText("Fake Suburb");
-      employerCityField.setText("Fake City");
-      employerPostcodeField.setText("123456");
-      employerCountryBox.setValue("New Zealand");
-    }
 
     if (AppState.getIsAccessingFromSearch()) {
       startWithCustomerID();
@@ -120,14 +103,14 @@ public class CustomerInputEmployerAddressController extends AbstractCustomerCont
         editButton,
         idBanner,
         new TextField[] {
-            employerAddressLine1Field,
-            employerAddressLine2Field,
-            employerSuburbField,
-            employerCityField,
-            employerPostcodeField
+          employerAddressLine1Field,
+          employerAddressLine2Field,
+          employerSuburbField,
+          employerCityField,
+          employerPostcodeField
         },
         new ComboBox<?>[] {
-            employerCountryBox,
+          employerCountryBox,
         },
         new DatePicker[] {},
         new RadioButton[] {});

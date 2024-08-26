@@ -12,14 +12,10 @@ import uoa.lavs.frontend.AppState;
 import uoa.lavs.frontend.ControllerHelper;
 
 public class LoanPrimaryDetails extends AbstractLoanController implements AccessTypeObserver {
-  @FXML
-  private TextField borrowerIDField;
-  @FXML
-  private TextField principalField;
-  @FXML
-  private TextField interestRateField;
-  @FXML
-  private ComboBox<String> rateTypeBox;
+  @FXML private TextField borrowerIDField;
+  @FXML private TextField principalField;
+  @FXML private TextField interestRateField;
+  @FXML private ComboBox<String> rateTypeBox;
 
   @FXML
   private void initialize() {
@@ -30,13 +26,6 @@ public class LoanPrimaryDetails extends AbstractLoanController implements Access
 
     personalLoan.setCustomerId(AppState.getSelectedCustomer().getCustomerId());
     borrowerIDField.setText(personalLoan.getCustomerId());
-
-    // Set dummy values
-    if (AppState.getLoanDetailsAccessType().equals("CREATE")) {
-      principalField.setText("100");
-      interestRateField.setText("10");
-      rateTypeBox.setValue("Floating");
-    }
   }
 
   @FXML
@@ -45,9 +34,9 @@ public class LoanPrimaryDetails extends AbstractLoanController implements Access
     ControllerHelper.updateUIBasedOnAccessTypeLoan(
         AppState.getLoanDetailsAccessType(),
         editButton,
-        new TextField[] { principalField, interestRateField },
+        new TextField[] {principalField, interestRateField},
         new ComboBox<?>[] {
-            rateTypeBox,
+          rateTypeBox,
         },
         new DatePicker[] {},
         new RadioButton[] {});

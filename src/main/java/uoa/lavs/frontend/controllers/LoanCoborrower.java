@@ -60,8 +60,8 @@ public class LoanCoborrower extends AbstractLoanController implements AccessType
     coborrowerIDField3.setStyle("");
 
     // This will check if the coborrower exists in the database, and is not either the customer or
-    // another coborrower. It also checks if it conforms to the loan requirements. If it does not,
-    // you cannot proceed.
+    // another coborrower. It also checks if it conforms to the loan requirements. If it does not
+    // pass, you cannot proceed.
     if (!coborrowerId1.isEmpty()) {
       Customer customer1 =
           searchCustomer.searchCustomerById(coborrowerIDField1.getText(), connection);

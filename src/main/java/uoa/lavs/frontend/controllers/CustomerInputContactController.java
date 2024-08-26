@@ -21,39 +21,24 @@ import uoa.lavs.frontend.ControllerHelper;
 
 public class CustomerInputContactController extends AbstractCustomerController
     implements AccessTypeObserver {
-  @FXML
-  private TextField customerEmailTextField;
-  @FXML
-  private TextField customerPhoneNumberOne;
+  @FXML private TextField customerEmailTextField;
+  @FXML private TextField customerPhoneNumberOne;
 
-  @FXML
-  private TextField customerPhonePrefixField;
-  @FXML
-  private ComboBox<String> customerPhoneTypeBox;
-  @FXML
-  private RadioButton sendTextRadio;
-  @FXML
-  private RadioButton phonePrimaryRadio;
-  @FXML
-  private RadioButton emailPrimaryRadio;
+  @FXML private TextField customerPhonePrefixField;
+  @FXML private ComboBox<String> customerPhoneTypeBox;
+  @FXML private RadioButton sendTextRadio;
+  @FXML private RadioButton phonePrimaryRadio;
+  @FXML private RadioButton emailPrimaryRadio;
 
-  @FXML
-  private ImageView incPhone;
-  @FXML
-  private ImageView incEmail;
-  @FXML
-  private ImageView decPhone;
-  @FXML
-  private ImageView decEmail;
-  @FXML
-  private Label emailPageLabel;
-  @FXML
-  private Label phonePageLabel;
+  @FXML private ImageView incPhone;
+  @FXML private ImageView incEmail;
+  @FXML private ImageView decPhone;
+  @FXML private ImageView decEmail;
+  @FXML private Label emailPageLabel;
+  @FXML private Label phonePageLabel;
 
-  @FXML
-  private TextField customerPreferredContactBox;
-  @FXML
-  private TextField customerAltContactBox;
+  @FXML private TextField customerPreferredContactBox;
+  @FXML private TextField customerAltContactBox;
 
   private ArrayList<Phone> existingCustomerPhones = customer.getPhones();
   private int currentNumberPage = 0;
@@ -73,24 +58,6 @@ public class CustomerInputContactController extends AbstractCustomerController
     updateUIBasedOnAccessType();
     phonePageLabel.setText("Phone Number: " + (currentNumberPage + 1));
     emailPageLabel.setText("Email: " + (currentEmailPage + 1));
-
-    // Set dummy data
-    if (AppState.getCustomerDetailsAccessType().equals("CREATE")) {
-
-      customerPhoneTypeBox.setValue("Mobile");
-      customerPhonePrefixField.setText("+1");
-      customerPhoneNumberOne.setText("1234567890");
-      sendTextRadio.setSelected(true);
-      phonePrimaryRadio.setSelected(true);
-      isPrimaryPhoneSet = true;
-
-      customerEmailTextField.setText("dummy@example.com");
-      emailPrimaryRadio.setSelected(true);
-      isPrimaryEmailSet = true;
-
-      customerPreferredContactBox.setText("Preferred Contact");
-      customerAltContactBox.setText("Alternate Contact");
-    }
 
     if (AppState.getIsAccessingFromSearch()) {
       startWithCustomerID();
@@ -153,15 +120,15 @@ public class CustomerInputContactController extends AbstractCustomerController
         editButton,
         idBanner,
         new TextField[] {
-            customerEmailTextField,
-            customerPhoneNumberOne,
-            customerPreferredContactBox,
-            customerAltContactBox,
-            customerPhonePrefixField
+          customerEmailTextField,
+          customerPhoneNumberOne,
+          customerPreferredContactBox,
+          customerAltContactBox,
+          customerPhonePrefixField
         },
-        new ComboBox<?>[] { customerPhoneTypeBox },
+        new ComboBox<?>[] {customerPhoneTypeBox},
         new DatePicker[] {},
-        new RadioButton[] { sendTextRadio, phonePrimaryRadio, emailPrimaryRadio });
+        new RadioButton[] {sendTextRadio, phonePrimaryRadio, emailPrimaryRadio});
   }
 
   @FXML
@@ -223,8 +190,7 @@ public class CustomerInputContactController extends AbstractCustomerController
     isPhoneValid = validatePhone();
     isEmailValid = validateEmail();
 
-    if (!isPhoneValid || !isEmailValid)
-      return false;
+    if (!isPhoneValid || !isEmailValid) return false;
 
     System.out.println("Phone and email are valid");
     return true;
@@ -300,23 +266,25 @@ public class CustomerInputContactController extends AbstractCustomerController
     }
 
     // create a new phone number
-    Phone newPhone = new Phone(
-        customer.getCustomerId(),
-        customerPhoneTypeBox.getValue(),
-        customerPhonePrefixField.getText(),
-        customerPhoneNumberOne.getText(),
-        phonePrimaryRadio.isSelected(),
-        sendTextRadio.isSelected());
+    Phone newPhone =
+        new Phone(
+            customer.getCustomerId(),
+            customerPhoneTypeBox.getValue(),
+            customerPhonePrefixField.getText(),
+            customerPhoneNumberOne.getText(),
+            phonePrimaryRadio.isSelected(),
+            sendTextRadio.isSelected());
 
     // if the current number page is the same as the amount of valid numbers
     existingCustomerPhones.set(currentNumberPage, newPhone);
     customer.setPhones(existingCustomerPhones);
 
     // create a new email
-    Email newEmail = new Email(
-        customer.getCustomerId(),
-        customerEmailTextField.getText(),
-        emailPrimaryRadio.isSelected());
+    Email newEmail =
+        new Email(
+            customer.getCustomerId(),
+            customerEmailTextField.getText(),
+            emailPrimaryRadio.isSelected());
 
     // if the current email page is the same as the amount of valid emails
     existingCustomerEmails.set(currentEmailPage, newEmail);
@@ -333,13 +301,14 @@ public class CustomerInputContactController extends AbstractCustomerController
     }
 
     // create a new phone number
-    Phone newPhone = new Phone(
-        customer.getCustomerId(),
-        customerPhoneTypeBox.getValue(),
-        customerPhonePrefixField.getText(),
-        customerPhoneNumberOne.getText(),
-        phonePrimaryRadio.isSelected(),
-        sendTextRadio.isSelected());
+    Phone newPhone =
+        new Phone(
+            customer.getCustomerId(),
+            customerPhoneTypeBox.getValue(),
+            customerPhonePrefixField.getText(),
+            customerPhoneNumberOne.getText(),
+            phonePrimaryRadio.isSelected(),
+            sendTextRadio.isSelected());
 
     if (currentNumberPage == existingCustomerPhones.size()) {
       if (validatePhone()) {
@@ -369,10 +338,11 @@ public class CustomerInputContactController extends AbstractCustomerController
     }
 
     // create a new email
-    Email newEmail = new Email(
-        customer.getCustomerId(),
-        customerEmailTextField.getText(),
-        emailPrimaryRadio.isSelected());
+    Email newEmail =
+        new Email(
+            customer.getCustomerId(),
+            customerEmailTextField.getText(),
+            emailPrimaryRadio.isSelected());
 
     // sets the details for the current email page for the existing emails;
     if (currentEmailPage == existingCustomerEmails.size()) {
@@ -635,7 +605,7 @@ public class CustomerInputContactController extends AbstractCustomerController
     return customerContactButton;
   }
 
-  // helper methods to set the UI for filling out fields based on pages 
+  // helper methods to set the UI for filling out fields based on pages
   public void setPhoneDetailsUI(String setting) {
 
     if (setting == "empty") {
