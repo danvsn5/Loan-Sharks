@@ -67,16 +67,6 @@ public class CustomerCreationHelper {
             || address.getCity().equals("")
             || address.getCity().length() > 30) {
           System.out.println("Address: " + address.getAddressId() + " is invalid. Please fill in details correctly.");
-          // print out all address details 
-          System.out.println("Address Type: " + address.getAddressType());
-          System.out.println("Address Line One: " + address.getAddressLineOne());
-          System.out.println("Address Line Two: " + address.getAddressLineTwo());
-          System.out.println("Suburb: " + address.getSuburb());
-          System.out.println("Post Code: " + address.getPostCode());
-          System.out.println("City: " + address.getCity());
-          System.out.println("Country: " + address.getCountry());
-          System.out.println("Is Primary: " + address.getIsPrimary());
-          System.out.println("Is Mailing: " + address.getIsMailing());
           return false;
         }
 
