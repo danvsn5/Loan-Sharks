@@ -65,8 +65,7 @@ public class CustomerCreationHelper {
             || address.getPostCode().length() > 10
             || !address.getPostCode().matches("[0-9]+")
             || address.getCity().equals("")
-            || address.getCity().length() > 30
-            || address.getCountry().equals("")) {
+            || address.getCity().length() > 30) {
           System.out.println("Address: " + address.getAddressId() + " is invalid. Please fill in details correctly.");
           return false;
         }
