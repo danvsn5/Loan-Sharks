@@ -42,6 +42,39 @@ public class CustomerEmployerDAO {
     }
   }
 
+  // Adds a customer employer to the database
+  public void addCustomerEmployerLegacy(CustomerEmployer employer) {
+    String sql =
+        "INSERT INTO customer_employer (customerId, employerName, addressLineOne, addressLineTwo,"
+            + " suburb, postCode, city, country, employerEmail, employerWebsite, employerPhone,"
+            + " ownerOfCompany) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      // print out all to console too
+      pstmt.setString(1, employer.getCustomerId());
+      System.out.println("Employer Name: " + employer.getEmployerName());
+      pstmt.setString(2, employer.getEmployerName());
+      System.out.println("Address Line 1: " + employer.getLineOne());
+      pstmt.setString(3, employer.getLineOne());
+      System.out.println("Address Line Two: " + employer.getLineTwo());
+      pstmt.setString(4, employer.getLineTwo());
+      System.out.println(employer.getCountry());
+      pstmt.setString(5, employer.getSuburb());
+      pstmt.setString(6, employer.getPostCode());
+      pstmt.setString(7, employer.getCity());
+      pstmt.setString(8, employer.getCountry());
+      pstmt.setString(9, employer.getEmployerEmail());
+      pstmt.setString(10, employer.getEmployerWebsite());
+      pstmt.setString(11, employer.getEmployerPhone());
+      pstmt.setBoolean(12, employer.getOwnerOfCompany());
+
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
   // Updates a customer employer in the database with new details
   public void updateCustomerEmployer(CustomerEmployer employer) {
     String sql =

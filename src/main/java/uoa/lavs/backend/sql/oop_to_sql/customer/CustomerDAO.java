@@ -43,6 +43,28 @@ public class CustomerDAO {
     }
   }
 
+  // Adds a customer to the database
+  public void addCustomerLegacy(ICustomer customer) {
+    String sql =
+        "INSERT INTO customer (customerId, title, name, dateOfBirth, occupation, visa, citizenship"
+            + " ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    try (Connection conn = DatabaseConnection.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      String customerId = customer.getCustomerId();
+      pstmt.setString(1, customerId);
+      pstmt.setString(2, customer.getTitle());
+      pstmt.setString(3, customer.getName());
+      pstmt.setDate(4, Date.valueOf(customer.getDateOfBirth()));
+      pstmt.setString(5, customer.getOccupation());
+      pstmt.setString(6, customer.getVisa());
+      pstmt.setString(7, customer.getCitizenship());
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
   // Finds the next customerId for generating a customer
   private String getNextCustomerId() {
     String sql = "SELECT MIN(CAST(customerId AS INTEGER)) AS smallestId FROM customer";
